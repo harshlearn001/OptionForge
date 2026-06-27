@@ -62,6 +62,8 @@ TESTS = [
 
     "tests/integration/test_pipeline.py",
 
+    "tests/intelligence/test_expected_move.py",
+
 ]
 
 print("=" * 65)
