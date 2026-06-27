@@ -68,6 +68,14 @@ TESTS = [
 
     "tests/intelligence/test_iv_percentile.py",
 
+    "tests/intelligence/test_max_pain.py",
+
+    "tests/intelligence/test_oi_wall.py",
+
+    "tests/intelligence/test_oi_change.py",
+
+    "tests/intelligence/test_oi_shift.py",
+
 ]
 
 print("=" * 65)
