@@ -8,6 +8,8 @@ from .max_pain_result import MaxPainResult
 from .oi_wall_result import OIWallResult
 from .oi_change_result import OIChangeResult
 from .oi_shift_result import OIShiftResult
+from .support_strength_result import SupportStrengthResult
+from .resistance_strength_result import ResistanceStrengthResult
 
 
 __all__ = [
@@ -32,4 +34,7 @@ __all__ = [
 
     "OIShiftResult",
 
+    "SupportStrengthResult",
+
+    "ResistanceStrengthResult",
 ]

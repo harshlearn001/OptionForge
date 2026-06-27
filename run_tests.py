@@ -76,6 +76,10 @@ TESTS = [
 
     "tests/intelligence/test_oi_shift.py",
 
+    "tests/intelligence/test_support_strength.py",
+
+    "tests/intelligence/test_resistance_strength.py",
+
 ]
 
 print("=" * 65)

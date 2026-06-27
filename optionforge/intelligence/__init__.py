@@ -14,6 +14,8 @@ from .max_pain import MaxPain
 from .oi_wall import OIWall
 from .oi_change import OIChange
 from .oi_shift import OIShift
+from .support_strength import SupportStrength
+from .resistance_strength import ResistanceStrength
 
 __all__ = [
 
@@ -31,4 +33,7 @@ __all__ = [
 
     "OIShift",
 
+    "SupportStrength",
+
+    "ResistanceStrength",
 ]
