@@ -10,6 +10,8 @@ from .oi_change_result import OIChangeResult
 from .oi_shift_result import OIShiftResult
 from .support_strength_result import SupportStrengthResult
 from .resistance_strength_result import ResistanceStrengthResult
+from .market_structure_result import MarketStructureResult
+from .probability_result import ProbabilityResult
 
 
 __all__ = [
@@ -37,4 +39,8 @@ __all__ = [
     "SupportStrengthResult",
 
     "ResistanceStrengthResult",
+
+    "MarketStructureResult"
+
+    "ProbabilityResult",
 ]

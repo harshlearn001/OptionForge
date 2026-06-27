@@ -80,6 +80,10 @@ TESTS = [
 
     "tests/intelligence/test_resistance_strength.py",
 
+    "tests/intelligence/test_market_structure.py",
+
+    "tests/intelligence/test_probability.py",
+    
 ]
 
 print("=" * 65)
