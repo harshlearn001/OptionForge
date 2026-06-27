@@ -1,0 +1,111 @@
+"""
+==============================================================
+OptionForge
+Run Complete Test Suite
+==============================================================
+"""
+
+from pathlib import Path
+import subprocess
+import sys
+
+ROOT = Path(__file__).resolve().parent
+
+
+TESTS = [
+
+    # ---------------------------------------------------------
+    # CORE
+    # ---------------------------------------------------------
+
+    "tests/core/test_distribution.py",
+
+    "tests/core/test_root_solver.py",
+
+    "tests/core/test_black_scholes.py",
+
+    "tests/core/test_iv.py",
+
+    "tests/core/test_greeks.py",
+
+    # ---------------------------------------------------------
+    # MODELS
+    # ---------------------------------------------------------
+
+    "tests/models/test_option_contract.py",
+
+    "tests/models/test_market_snapshot.py",
+
+    # ---------------------------------------------------------
+    # ANALYTICS
+    # ---------------------------------------------------------
+
+    "tests/analytics/test_analytics.py",
+
+    "tests/analytics/test_option_chain.py",
+
+    # ---------------------------------------------------------
+    # STORAGE
+    # ---------------------------------------------------------
+
+    "tests/storage/test_storage.py",
+
+    # ---------------------------------------------------------
+    # VALIDATION
+    # ---------------------------------------------------------
+
+    "tests/validation/test_broker_validation.py",
+
+    # ---------------------------------------------------------
+    # INTEGRATION
+    # ---------------------------------------------------------
+
+    "tests/integration/test_pipeline.py",
+
+]
+
+print("=" * 65)
+print("OPTIONFORGE COMPLETE TEST SUITE")
+print("=" * 65)
+
+passed = 0
+
+failed = 0
+
+for test in TESTS:
+
+    print()
+    print("-" * 65)
+    print(test)
+    print("-" * 65)
+
+    result = subprocess.run(
+        [sys.executable, str(ROOT / test)]
+    )
+
+    if result.returncode == 0:
+
+        passed += 1
+
+    else:
+
+        failed += 1
+
+print()
+print("=" * 65)
+
+print("TOTAL TESTS :", len(TESTS))
+
+print("PASSED      :", passed)
+
+print("FAILED      :", failed)
+
+print("=" * 65)
+
+if failed == 0:
+
+    print("OPTIONFORGE STATUS : ALL TESTS PASSED")
+
+else:
+
+    print("OPTIONFORGE STATUS : SOME TESTS FAILED")

@@ -1,0 +1,15 @@
+# ============================================================
+# OptionForge Foundation v0.1
+# ============================================================
+
+# Numerical Computing
+numpy>=2.3.0
+
+# Data Analysis
+pandas>=2.3.0
+
+# Parquet Support
+pyarrow>=21.0.0
+
+# Console Output
+rich>=14.0.0
