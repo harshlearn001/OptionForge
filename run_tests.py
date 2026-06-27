@@ -83,6 +83,8 @@ TESTS = [
     "tests/intelligence/test_market_structure.py",
 
     "tests/intelligence/test_probability.py",
+
+    "tests/intelligence/test_strategy.py",
     
 ]
 

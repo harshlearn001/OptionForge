@@ -12,6 +12,7 @@ from .support_strength_result import SupportStrengthResult
 from .resistance_strength_result import ResistanceStrengthResult
 from .market_structure_result import MarketStructureResult
 from .probability_result import ProbabilityResult
+from .strategy_result import StrategyResult
 
 
 __all__ = [
@@ -40,7 +41,9 @@ __all__ = [
 
     "ResistanceStrengthResult",
 
-    "MarketStructureResult"
+    "MarketStructureResult",
 
     "ProbabilityResult",
+
+    "StrategyResult",
 ]
