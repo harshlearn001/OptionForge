@@ -64,6 +64,10 @@ TESTS = [
 
     "tests/intelligence/test_expected_move.py",
 
+    "tests/intelligence/test_iv_rank.py",
+
+    "tests/intelligence/test_iv_percentile.py",
+
 ]
 
 print("=" * 65)
