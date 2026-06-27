@@ -260,3 +260,68 @@ Private Project
 Copyright © 2026 OptionForge
 
 All Rights Reserved.
+11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+OptionForge
+
+Professional Quantitative Options Analytics Framework
+
+✓ Black-Scholes Pricing
+
+✓ Greeks
+
+✓ Implied Volatility
+
+✓ Option Chain Analytics
+
+✓ Expected Move
+
+✓ IV Rank
+
+✓ IV Percentile
+
+✓ Max Pain
+
+✓ OI Wall
+
+✓ OI Change
+
+✓ OI Shift
+
+✓ Support Strength
+
+✓ Resistance Strength
+
+✓ Market Structure
+
+✓ Probability Engine
+
+✓ Strategy Engine
+
+Market Data
+
+↓
+
+Quant Engine
+
+↓
+
+Analytics
+
+↓
+
+Intelligence
+
+↓
+
+Market Structure
+
+↓
+
+Probability
+
+↓
+
+Strategy
+Current Release
+
+v0.6.0
