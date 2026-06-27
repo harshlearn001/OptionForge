@@ -108,3 +108,5 @@ data/
 # Local Configuration
 # ------------------------------------------------------------
 config.local.py
+# Temporary test files
+sample.csv
