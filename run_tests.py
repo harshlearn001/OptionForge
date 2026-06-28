@@ -91,6 +91,10 @@ TESTS = [
     "tests/dashboard/test_dashboard.py",
 
     "tests/intelligence/test_scanner.py",
+
+    "tests/datasource/test_market_data.py",
+
+    "tests/storage/test_schema.py",
     
 ]
 

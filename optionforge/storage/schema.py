@@ -3,32 +3,100 @@
 OptionForge
 storage/schema.py
 --------------------------------------------------------------
-Master Storage Schema
+OptionForge Standard Option Chain Schema
 ==============================================================
 """
 
-REQUIRED_COLUMNS = [
+from __future__ import annotations
 
-    "SYMBOL",
-    "TRADE_DATE",
-    "EXPIRY_DATE",
 
-    "STRIKE_PRICE",
-    "OPTION_TYPE",
+class OptionChainSchema:
+    """
+    Standard OptionForge Option Chain Schema.
 
-    "OPTION_CLOSE",
-    "SPOT_CLOSE",
+    Every data source (CSV, NSE, Broker API, Database)
+    should be converted into this schema before entering
+    the analytics engine.
+    """
 
-    "OPEN_INTEREST",
-    "CHANGE_IN_OI",
-    "OPTION_VOLUME",
+    # ==========================================================
+    # Required Columns
+    # ==========================================================
 
-    "IV",
-    "DELTA",
-    "GAMMA",
-    "THETA",
-    "VEGA",
+    REQUIRED_COLUMNS = [
 
-    "INTRINSIC_VALUE",
-    "TIME_VALUE",
-]
+        "SYMBOL",
+
+        "EXPIRY",
+
+        "STRIKE",
+
+        "OPTION_TYPE",
+
+        "LTP",
+
+        "IV",
+
+        "OI",
+
+        "CHANGE_IN_OI",
+
+        "VOLUME",
+
+        "SPOT",
+
+    ]
+
+    # ==========================================================
+    # Optional Columns
+    # ==========================================================
+
+    OPTIONAL_COLUMNS = [
+
+        "OPEN",
+
+        "HIGH",
+
+        "LOW",
+
+        "CLOSE",
+
+        "BID",
+
+        "ASK",
+
+        "TIMESTAMP",
+
+    ]
+
+    # ==========================================================
+    # Complete Schema
+    # ==========================================================
+
+    ALL_COLUMNS = REQUIRED_COLUMNS + OPTIONAL_COLUMNS
+
+    # ==========================================================
+    # Validation
+    # ==========================================================
+
+    @classmethod
+    def validate(cls, columns: list[str]) -> tuple[bool, list[str]]:
+        """
+        Validate incoming column names.
+
+        Returns
+        -------
+        (is_valid, missing_columns)
+        """
+
+        missing = [
+
+            column
+
+            for column in cls.REQUIRED_COLUMNS
+
+            if column not in columns
+
+        ]
+
+        return len(missing) == 0, missing

@@ -11,21 +11,55 @@ from pathlib import Path
 
 import pandas as pd
 
-from optionforge.storage.schema import REQUIRED_COLUMNS
+from optionforge.storage.schema import OptionChainSchema
 
 
 class StorageWriter:
 
     @staticmethod
     def save_daily_chain(
-        dataframe: pd.DataFrame,
-        folder: str,
-        filename: str,
-    ) -> Path:
+        dataframe,
+        folder,
+        filename,
+    ):
 
+        # ---------------------------------------------
+        # Convert Legacy Names
+        # ---------------------------------------------
+
+        COLUMN_MAPPING = {
+
+            "EXPIRY_DATE": "EXPIRY",
+
+            "STRIKE_PRICE": "STRIKE",
+
+            "OPTION_CLOSE": "LTP",
+
+            "SPOT_CLOSE": "SPOT",
+
+            "OPEN_INTEREST": "OI",
+
+            "OPTION_VOLUME": "VOLUME",
+
+        }
+
+        dataframe = dataframe.rename(columns=COLUMN_MAPPING)
+
+        # ---------------------------------------------
+        # Validate Schema
+        # ---------------------------------------------
+
+        valid, missing = OptionChainSchema.validate(dataframe.columns)
+
+        if not valid:
+            raise ValueError(
+                f"Missing columns : {missing}"
+            )
+
+        ...
         missing = [
             c
-            for c in REQUIRED_COLUMNS
+            for c in OptionChainSchema.REQUIRED_COLUMNS
             if c not in dataframe.columns
         ]
 

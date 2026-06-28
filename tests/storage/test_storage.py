@@ -46,6 +46,7 @@ path = StorageWriter.save_daily_chain(
     dataframe=df,
     folder="output/history",
     filename="nifty_20260627.parquet",
+    
 )
 
 print("Saved :", path)
