@@ -89,6 +89,8 @@ TESTS = [
     "tests/reports/test_report.py",
 
     "tests/dashboard/test_dashboard.py",
+
+    "tests/intelligence/test_scanner.py",
     
 ]
 
