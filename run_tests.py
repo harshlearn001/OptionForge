@@ -96,6 +96,7 @@ TESTS = [
 
     "tests/storage/test_schema.py",
     
+    "tests/pipeline/test_pipeline_runner.py",
 ]
 
 print("=" * 65)

@@ -9,8 +9,9 @@ Professional Market Data Loader
 
 from __future__ import annotations
 
-import pandas as pd
 from pathlib import Path
+
+import pandas as pd
 
 
 class MarketData:
@@ -31,4 +32,20 @@ class MarketData:
                 f"CSV file not found: {file_path}"
             )
 
-        return pd.read_csv(file_path)
+        # Read CSV
+        df = pd.read_csv(
+            file_path,
+            encoding="utf-8-sig",
+        )
+
+        # Normalize column names
+        df.columns = (
+            df.columns
+            .str.replace("\ufeff", "", regex=False)
+            .str.strip()
+            .str.upper()
+        )
+
+        print("Loaded Columns:", df.columns.tolist())
+
+        return df
