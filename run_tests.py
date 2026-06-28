@@ -97,6 +97,12 @@ TESTS = [
     "tests/storage/test_schema.py",
     
     "tests/pipeline/test_pipeline_runner.py",
+
+    "tests/adapters/test_nse_adapter.py",
+
+    "tests/workflow/test_workflow.py",
+
+    "tests/session/test_market_session.py",
 ]
 
 print("=" * 65)
