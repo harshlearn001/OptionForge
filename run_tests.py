@@ -106,7 +106,9 @@ TESTS = [
 
     "tests/live/test_live_data.py",
 
-    "tests/config/test_settings.py"
+    "tests/config/test_settings.py",
+
+    "tests/app/test_application.py",
 ]
 
 print("=" * 65)
