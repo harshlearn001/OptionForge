@@ -103,6 +103,10 @@ TESTS = [
     "tests/workflow/test_workflow.py",
 
     "tests/session/test_market_session.py",
+
+    "tests/live/test_live_data.py",
+
+    "tests/config/test_settings.py"
 ]
 
 print("=" * 65)

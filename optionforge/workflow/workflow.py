@@ -16,8 +16,11 @@ import pandas as pd
 from optionforge.datasource import MarketData
 from optionforge.adapters import NSEAdapter
 from optionforge.pipeline import OptionForgePipeline
-
-
+from optionforge.config.settings import (
+    OUTPUT_FOLDER,
+    RUNTIME_FOLDER,
+)
+from optionforge.config.settings import RUNTIME_FOLDER
 class WorkflowEngine:
     """
     Professional Workflow Engine
@@ -57,7 +60,7 @@ class WorkflowEngine:
         # Save temporary standardized data
         # --------------------------------------------------
 
-        temp_file = Path("output") / "workflow_input.csv"
+        temp_file = RUNTIME_FOLDER / "workflow_input.csv"
         temp_file.parent.mkdir(parents=True, exist_ok=True)
 
         dataframe.to_csv(temp_file, index=False)

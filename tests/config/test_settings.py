@@ -1,7 +1,7 @@
 """
 ============================================================
 OptionForge
-WORKFLOW ENGINE TEST
+CONFIG TEST
 ============================================================
 """
 
@@ -11,24 +11,17 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parents[2]
 sys.path.append(str(BASE_DIR))
 
-from optionforge.config.settings import LIVE_FOLDER
-from optionforge.workflow import WorkflowEngine
+from optionforge.config.settings import *
 
 print("=" * 60)
 print("OPTIONFORGE")
-print("WORKFLOW TEST")
+print("CONFIG TEST")
 print("=" * 60)
 
-csv_file = LIVE_FOLDER / "sample_option_chain.csv"
-
-df = WorkflowEngine.run(csv_file)
-
-print()
-print(df.head())
-
-print()
-print("Rows    :", len(df))
-print("Columns :", len(df.columns))
+print("Project :", PROJECT_ROOT)
+print("Data    :", DATA_FOLDER)
+print("Output  :", OUTPUT_FOLDER)
+print("Runtime :", RUNTIME_FOLDER)
 
 print()
 print("MISSION COMPLETE")

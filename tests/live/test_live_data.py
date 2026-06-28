@@ -1,7 +1,7 @@
 """
 ============================================================
 OptionForge
-WORKFLOW ENGINE TEST
+LIVE DATA TEST
 ============================================================
 """
 
@@ -12,16 +12,14 @@ BASE_DIR = Path(__file__).resolve().parents[2]
 sys.path.append(str(BASE_DIR))
 
 from optionforge.config.settings import LIVE_FOLDER
-from optionforge.workflow import WorkflowEngine
+from optionforge.live import LiveData
 
 print("=" * 60)
 print("OPTIONFORGE")
-print("WORKFLOW TEST")
+print("LIVE DATA TEST")
 print("=" * 60)
 
-csv_file = LIVE_FOLDER / "sample_option_chain.csv"
-
-df = WorkflowEngine.run(csv_file)
+df = LiveData.load(LIVE_FOLDER / "sample_option_chain.csv")
 
 print()
 print(df.head())
