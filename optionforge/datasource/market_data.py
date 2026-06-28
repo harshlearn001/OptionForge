@@ -46,6 +46,6 @@ class MarketData:
             .str.upper()
         )
 
-        print("Loaded Columns:", df.columns.tolist())
+        
 
         return df
