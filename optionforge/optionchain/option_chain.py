@@ -95,7 +95,36 @@ class OptionChain:
             .sort_values()
             .reset_index(drop=True)
         )
+    # ---------------------------------------------------------
+    # Metadata
+    # ---------------------------------------------------------
 
+    def trade_date(self):
+        """
+        Returns the trading date of the current chain.
+        """
+        return self.df["TRADE_DATE"].iloc[0]
+
+
+    def expiry(self):
+        """
+        Returns the expiry date of the current chain.
+        """
+        return self.df["EXPIRY"].iloc[0]
+
+
+    def symbol(self):
+        """
+        Returns the underlying symbol.
+        """
+        return self.df["SYMBOL"].iloc[0]
+
+
+    def instrument(self):
+        """
+        Returns the instrument type.
+        """
+        return self.df["INSTRUMENT"].iloc[0]
     # ==========================================================
     # Magic Methods
     # ==========================================================
