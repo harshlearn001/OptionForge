@@ -1,171 +1,491 @@
 # OptionForge
 
-> **Professional Quantitative Options Intelligence Framework**
+> **Professional Quantitative Options Research Platform**
 
-OptionForge is a modular, test-driven Python framework for quantitative options analysis.
+> **Let's build it right.**
 
-It transforms raw option-chain data into structured analytics, market intelligence, probability estimation, strategy generation, dashboards, reports, and market scanners through a clean, reusable architecture.
+---
+
+# Overview
+
+OptionForge is a professional, modular, and research-driven quantitative options platform designed for serious options traders, quantitative researchers, software engineers, and financial analysts.
+
+Unlike traditional options libraries that focus only on pricing models or isolated indicators, OptionForge models the options market using real financial concepts and transforms raw market data into structured intelligence.
+
+Every component is designed around software engineering principles, financial correctness, mathematical accuracy, and long-term maintainability.
+
+OptionForge is built to become a platform—not a collection of scripts.
 
 ---
 
 # Vision
 
-OptionForge is designed to be a long-term quantitative engineering framework rather than a collection of standalone scripts.
+To build a world-class quantitative options research platform that remains correct, maintainable, explainable, and extensible for years.
 
-The project emphasizes:
+The objective is not to create the largest options library.
 
-* Modular Architecture
-* Test-Driven Development
-* Reusable Components
-* Clean Engineering
-* Stable Releases
-* Maintainable Code
+The objective is to create one of the most trusted options engineering platforms.
 
-Every module has a single responsibility and integrates into a unified analysis pipeline.
+---
+
+# Mission
+
+OptionForge exists to bridge three disciplines into one unified framework.
+
+- Quantitative Finance
+- Software Engineering
+- Market Research
+
+Every calculation, every engine, every module, and every research model must satisfy all three disciplines.
+
+---
+
+# Philosophy
+
+OptionForge follows one simple philosophy.
+
+> **Build it right.**
+
+This philosophy influences every engineering decision.
+
+Correctness is preferred over shortcuts.
+
+Readability is preferred over clever code.
+
+Engineering discipline is preferred over rapid feature development.
+
+The project is designed for long-term evolution rather than short-term development.
 
 ---
 
 # Why OptionForge?
 
-Many options projects begin as independent scripts.
+Most options projects begin as independent scripts.
 
-As they grow, calculations become duplicated, testing becomes difficult, and maintenance becomes increasingly complex.
+Over time they become difficult to understand.
 
-OptionForge solves this problem by providing a structured framework where every component is reusable and professionally organized.
+Calculations become duplicated.
 
-Instead of isolated scripts, OptionForge provides:
+Business logic becomes scattered.
 
-* Quantitative Pricing
-* Volatility Intelligence
-* Open Interest Intelligence
-* Market Structure Analysis
-* Probability Estimation
-* Strategy Generation
-* Professional Reports
-* Dashboard Generation
-* Market Scanning
-* Extensible Data Loading
+Testing becomes difficult.
 
-The goal is simple:
+Maintenance becomes expensive.
 
-> **Build a framework that remains clean, testable, and maintainable for years.**
+OptionForge solves these problems by creating a professional engineering framework where every financial concept has one responsibility and every calculation has one home.
+
+Instead of disconnected scripts, OptionForge provides a complete quantitative ecosystem.
 
 ---
 
-# Features
+# Core Principles
 
-## Quantitative Engine
+OptionForge is built around the following permanent principles.
 
-* Black-Scholes Pricing
-* Greeks
+## 1. Build it right.
 
-  * Delta
-  * Gamma
-  * Theta
-  * Vega
-* Implied Volatility Solver
-* Root Solver
-* Normal Distribution
+Never sacrifice correctness for speed.
 
 ---
 
-## Analytics
+## 2. Financial truth before software convenience.
 
-* Option Analytics
-* Option Chain Analytics
-* Market Snapshot
+Software must represent the financial market correctly.
 
----
-
-## Market Intelligence
-
-* Expected Move
-* IV Rank
-* IV Percentile
-* Max Pain
-* OI Wall
-* OI Change
-* OI Shift
-* Support Strength
-* Resistance Strength
-* Market Structure
-* Probability Engine
-* Strategy Engine
+The market never changes because software is easier.
 
 ---
 
-## Applications
+## 3. One responsibility per module.
 
-* Professional Report Engine
-* Professional Dashboard
-* Professional Market Scanner
+Every module has exactly one reason to exist.
 
 ---
 
-## Data
+## 4. One owner per financial concept.
 
-* Market Data Loader
-* Storage Layer
-* Validation Framework
+Every important financial concept belongs to exactly one object.
+
+No duplication.
 
 ---
 
-# Architecture
+## 5. Research before assumptions.
+
+Every important engineering decision should be supported by evidence.
+
+---
+
+## 6. Tests before trust.
+
+If it cannot be tested,
+it cannot be trusted.
+
+---
+
+## 7. Documentation is part of the product.
+
+Documentation is never considered optional.
+
+---
+
+## 8. Simplicity beats unnecessary complexity.
+
+If two solutions solve the same problem equally well,
+
+the simpler solution wins.
+
+---
+
+# Engineering Principles
+
+OptionForge follows professional software engineering standards.
+
+- Domain Driven Design
+- Clean Architecture
+- Test Driven Development
+- Modular Design
+- Strong Typing
+- Explicit APIs
+- Immutable Domain Objects where appropriate
+- Reusable Components
+- Small Pull Requests
+- Professional Git Workflow
+
+---
+
+# Design Goals
+
+The platform is designed to be
+
+- Correct
+- Stable
+- Modular
+- Reusable
+- Testable
+- Explainable
+- Extensible
+- Maintainable
+
+These qualities are considered more important than the total number of implemented features.
+
+---
+
+# What OptionForge Is
+
+OptionForge is
+
+- a quantitative research platform
+- a professional Python library
+- an options analytics framework
+- a reusable engineering toolkit
+- a financial domain model
+- a research environment
+
+---
+
+# What OptionForge Is NOT
+
+OptionForge is not
+
+- a trading bot
+- a signal selling platform
+- a collection of indicators
+- a copy of existing options libraries
+- a dashboard-only project
+
+Its purpose is to provide trusted financial infrastructure for quantitative research.
+
+---
+
+# Architecture Philosophy
+
+The architecture models the financial market rather than software convenience.
+
+Every major object represents a real financial entity.
+
+The project separates
+
+- Domain Model
+- Analytics
+- Research
+- Infrastructure
+- Visualization
+
+This separation allows every layer to evolve independently while maintaining a stable foundation.
+
+---
+
+# Core Domain Model
+
+The entire platform is built on the following financial hierarchy.
 
 ```text
-Market Data
-      │
-      ▼
+TradingSession
+        │
+        ▼
+Symbol
+        │
+        ▼
+Expiry
+        │
+        ▼
+Strike
+        │
+        ▼
+Contract
+        │
+        ▼
 Analytics
-      │
-      ▼
-Intelligence
-      │
-      ▼
-Market Structure
-      │
-      ▼
-Probability
-      │
-      ▼
-Strategy
-      │
-      ▼
-Scanner
-      │
-      ▼
-Dashboard
-      │
-      ▼
-Reports
+        │
+        ▼
+Research
+        │
+        ▼
+Decision Engine
 ```
+
+Every layer builds upon the layer beneath it.
+
+No layer bypasses the domain model.
 
 ---
 
-# Project Structure
+# Engineering Constitution
+
+Every Pull Request must satisfy the following requirements.
+
+✅ Financially Correct
+
+✅ Mathematically Correct
+
+✅ Type Safe
+
+✅ Tested
+
+✅ Documented
+
+✅ Maintainable
+
+✅ Review Ready
+
+Only then is a Pull Request considered complete.
+
+---
+
+# Repository Structure
 
 ```text
 OptionForge/
 
+├── docs/
+│
+├── examples/
+│
 ├── optionforge/
+│   │
+│   ├── common/
+│   ├── kernel/
 │   ├── analytics/
-│   ├── dashboard/
-│   ├── datasource/
-│   ├── intelligence/
-│   ├── models/
-│   ├── quant/
-│   ├── reports/
+│   ├── research/
+│   ├── downloader/
 │   ├── storage/
+│   ├── visualization/
 │   └── utils/
 │
 ├── tests/
 │
 ├── README.md
 ├── pyproject.toml
-├── requirements.txt
-├── run_tests.py
-└── optionforge_scanner.py
+├── LICENSE
+├── CHANGELOG.md
+└── .gitignore
 ```
+
+---
+
+# Package Overview
+
+The project is divided into several logical layers.
+
+### common
+
+Shared constants, enumerations, exceptions, helper utilities, validation rules, and reusable infrastructure.
+
+---
+
+### kernel
+
+Core financial domain objects.
+
+Examples include
+
+- TradingSession
+- Symbol
+- Expiry
+- Strike
+- Contract
+
+These classes represent the financial language of OptionForge.
+
+---
+
+### analytics
+
+Deterministic quantitative calculations.
+
+Examples include
+
+- Black-Scholes
+- Greeks
+- Implied Volatility
+- Probability
+- Expected Move
+### research
+
+The research layer contains experimental and validated quantitative research.
+
+Examples include
+
+- Modified PCR
+- Dealer Position
+- OI Migration
+- Market Memory
+- Volatility Regime
+- Smart Money Models
+- AI Ranking Models
+
+Research modules are separated from production analytics until they are fully validated.
+
+---
+
+### downloader
+
+Responsible for collecting market data from supported data providers.
+
+Responsibilities include
+
+- Historical Data
+- Live Market Data
+- Option Chain Data
+- Future Data
+- Session Management
+
+---
+
+### storage
+
+Provides a unified persistence layer.
+
+Supported storage formats include
+
+- CSV
+- Parquet
+- SQLite
+- Future Database Integration
+
+---
+
+### visualization
+
+Professional dashboards, reports, charts, and market visualization.
+
+Visualization never performs financial calculations.
+
+It only presents already validated results.
+
+---
+
+### tests
+
+Contains the complete automated testing suite.
+
+Every production module must include unit tests.
+
+No feature is considered complete without passing tests.
+
+---
+
+# Feature Roadmap
+
+OptionForge is developed in logical layers.
+
+## Foundation
+
+- Trading Session
+- Symbol
+- Expiry
+- Strike
+- Contract
+- Domain Validation
+
+---
+
+## Quantitative Mathematics
+
+- Black-Scholes
+- Greeks
+- Implied Volatility
+- Root Solver
+- Normal Distribution
+- Probability Models
+
+---
+
+## Market Analytics
+
+- Option Chain Analytics
+- Open Interest Analytics
+- OI Change
+- OI Shift
+- PCR
+- Modified PCR
+- Max Pain
+- Support Strength
+- Resistance Strength
+- Expected Move
+- IV Rank
+- IV Percentile
+- Volatility Surface
+
+---
+
+## Market Intelligence
+
+- Dealer Position
+- Gamma Exposure
+- Delta Exposure
+- Market Structure
+- Volatility Regime
+- Liquidity Analysis
+- Smart Money Detection
+
+---
+
+## Decision Engine
+
+The Decision Engine combines multiple analytics into explainable outputs.
+
+Every signal should answer
+
+- What happened?
+- Why?
+- Confidence?
+- Supporting Evidence?
+- Risk?
+
+Signals should never be black boxes.
+
+---
+
+## Professional Applications
+
+- Dashboard
+- Scanner
+- Professional Reports
+- Daily Workflow
+- Research Notebook
+- Strategy Evaluation
 
 ---
 
@@ -177,10 +497,30 @@ Clone the repository
 git clone https://github.com/harshlearn001/OptionForge.git
 ```
 
-Enter the project directory
+Move into the project
 
 ```bash
 cd OptionForge
+```
+
+Create a virtual environment
+
+```bash
+python -m venv .venv
+```
+
+Activate the environment
+
+Windows
+
+```bash
+.venv\Scripts\activate
+```
+
+Linux / macOS
+
+```bash
+source .venv/bin/activate
 ```
 
 Install dependencies
@@ -191,23 +531,17 @@ pip install -r requirements.txt
 
 ---
 
-# Running the Test Suite
+# Quick Start
 
-```bash
-python run_tests.py
-```
-
----
-
-# Example
+Example
 
 ```python
-from optionforge.quant.black_scholes import BlackScholes
+from optionforge.analytics.black_scholes import BlackScholes
 
 price = BlackScholes.call_price(
     spot=25000,
     strike=25000,
-    time=30 / 365,
+    time=30/365,
     rate=0.06,
     volatility=0.20,
 )
@@ -217,94 +551,151 @@ print(price)
 
 ---
 
-# Professional Workflow
+# Development Workflow
+
+Every feature follows the same engineering process.
 
 ```text
-Market Data
-
-↓
-
-Analytics
-
-↓
-
-Intelligence
-
-↓
-
-Probability
-
-↓
-
-Strategy
-
-↓
-
-Scanner
-
-↓
-
-Dashboard
-
-↓
-
-Report
+Research
+      │
+      ▼
+Design
+      │
+      ▼
+Implementation
+      │
+      ▼
+Unit Tests
+      │
+      ▼
+Code Review
+      │
+      ▼
+Git Commit
+      │
+      ▼
+Merge
 ```
 
----
-
-# Current Status
-
-| Item               | Status           |
-| ------------------ | ---------------- |
-| Current Version    | **v0.9.0**       |
-| Professional Tests | **28 / 28 PASS** |
-| Repository         | Stable           |
-| Architecture       | Modular          |
-| Development        | Active           |
+No step should be skipped.
 
 ---
 
-# Release History
+# Testing Philosophy
 
-| Version | Major Milestone                |
-| ------- | ------------------------------ |
-| v0.1.0  | Core Quant Engine              |
-| v0.2.0  | Volatility Intelligence        |
-| v0.3.0  | Professional OI Intelligence   |
-| v0.4.0  | Market Strength                |
-| v0.5.0  | Market Structure & Probability |
-| v0.6.0  | Strategy Engine                |
-| v0.7.0  | Professional Report Engine     |
-| v0.8.0  | Professional Dashboard         |
-| v0.9.0  | Professional Market Scanner    |
+Testing is considered part of development.
+
+Every important module should include
+
+- Happy Path Tests
+- Boundary Tests
+- Invalid Input Tests
+- Serialization Tests
+- Regression Tests
+
+If it cannot be tested,
+
+it cannot be trusted.
+
+---
+
+# Documentation Philosophy
+
+Every major module should explain
+
+- Purpose
+- Financial Theory
+- Mathematical Model
+- Implementation
+- Examples
+- Limitations
+
+Documentation is considered a production asset.
+
+---
+
+# Contributing
+
+Future contributors should follow these principles.
+
+- Build it right.
+- Keep modules focused.
+- Write readable code.
+- Add tests.
+- Update documentation.
+- Keep Pull Requests small.
+- Respect the domain model.
+
+---
+
+# Versioning
+
+OptionForge follows Semantic Versioning.
+
+```text
+MAJOR.MINOR.PATCH
+```
+
+Example
+
+```text
+1.2.0
+```
+
+- MAJOR → Breaking Changes
+- MINOR → New Features
+- PATCH → Bug Fixes
 
 ---
 
 # Roadmap
 
-Upcoming milestones include:
+Planned milestones
 
-* Real Market Data Integration
-* Daily Workflow Engine
-* Historical Database Support
-* Backtesting Framework
-* OptionForge v1.0
+- Foundation Layer
+- Quantitative Mathematics
+- Market Intelligence
+- Research Platform
+- Decision Engine
+- Professional Dashboard
+- Historical Database
+- Backtesting Framework
+- OptionForge v1.0
+
+The roadmap evolves through validated engineering decisions rather than feature accumulation.
 
 ---
 
 # Engineering Philosophy
 
-OptionForge follows these principles:
+OptionForge follows one permanent philosophy.
 
-* One Responsibility per Module
-* Reusable Components
-* Structured Data Models
-* Test-Driven Development
-* Stable Versioned Releases
-* Professional Git Workflow
+> Build it right.
 
-> **Build for years, not for today.**
+That means
+
+- correctness before speed
+- simplicity before complexity
+- evidence before assumptions
+- research before implementation
+- tests before trust
+
+The objective is not to write more code.
+
+The objective is to write better software.
+
+---
+
+# Current Status
+
+| Item | Status |
+|------|--------|
+| Architecture | Locked |
+| Engineering Standards | Established |
+| Domain Model | Complete |
+| Development | Active |
+| Testing Philosophy | Defined |
+| Documentation | Active |
 
 ---
 
@@ -315,3 +706,17 @@ Private Project
 Copyright © 2026 OptionForge
 
 All Rights Reserved.
+
+---
+
+# Founder Quote
+
+> "Great software is not built by writing the most code.
+>
+> Great software is built by making thousands of small, correct engineering decisions."
+
+---
+
+# Motto
+
+> **Let's build it right.**
