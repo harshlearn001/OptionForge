@@ -4,9 +4,9 @@ optionforge.common.enums
 
 Centralized enumerations used throughout the OptionForge framework.
 
-This module contains all shared enumerations that define the financial
-language of the project. Keeping them in one location ensures consistency,
-type safety, readability, and prevents duplicate definitions across modules.
+This module defines the shared financial enumerations used across
+OptionForge. Keeping them in one location ensures consistency,
+type safety, readability, and prevents duplicate definitions.
 
 Engineering Principles
 ----------------------
@@ -22,67 +22,78 @@ OptionForge Engineering Team
 
 from __future__ import annotations
 
-from enum import Enum
+from enum import Enum, unique
 
 
+@unique
 class Exchange(str, Enum):
-    """
-    Supported exchanges.
-
-    Attributes
-    ----------
-    NSE
-        National Stock Exchange of India.
-
-    BSE
-        Bombay Stock Exchange.
-    """
+    """Supported stock exchanges."""
 
     NSE = "NSE"
     BSE = "BSE"
 
+    def __str__(self) -> str:
+        return self.value
 
+
+@unique
 class InstrumentType(str, Enum):
-    """
-    Supported financial instrument types.
-    """
+    """Supported financial instrument types."""
 
     EQUITY = "EQUITY"
     INDEX = "INDEX"
     FUTURE = "FUTURE"
     OPTION = "OPTION"
 
+    def __str__(self) -> str:
+        return self.value
 
+
+@unique
 class OptionType(str, Enum):
-    """
-    Option contract type.
-    """
+    """Option contract type."""
 
     CALL = "CALL"
     PUT = "PUT"
 
+    def __str__(self) -> str:
+        return self.value
+
     @property
     def short_name(self) -> str:
-        """Return exchange representation."""
+        """Return the exchange abbreviation."""
         return "CE" if self is OptionType.CALL else "PE"
 
 
+@unique
 class ExpiryType(str, Enum):
-    """
-    Expiry classification.
-    """
+    """Expiry classification."""
 
     WEEKLY = "WEEKLY"
     MONTHLY = "MONTHLY"
 
+    def __str__(self) -> str:
+        return self.value
 
+
+@unique
 class MarketStatus(str, Enum):
-    """
-    Trading session status.
-    """
+    """Trading session status."""
 
     PRE_OPEN = "PRE_OPEN"
     OPEN = "OPEN"
     CLOSED = "CLOSED"
     POST_CLOSE = "POST_CLOSE"
     HOLIDAY = "HOLIDAY"
+
+    def __str__(self) -> str:
+        return self.value
+
+
+__all__ = [
+    "Exchange",
+    "InstrumentType",
+    "OptionType",
+    "ExpiryType",
+    "MarketStatus",
+]
