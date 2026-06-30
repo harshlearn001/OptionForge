@@ -1,119 +1,161 @@
 """
-=========================================================
-OptionForge
-Expiry
-=========================================================
+optionforge.kernel.expiry
+=========================
 
-Represents one option expiry for an underlying symbol.
+Expiry domain model.
 
-An Expiry belongs to exactly one Symbol and contains
-metadata about the expiry. It does NOT contain option
-contracts directly.
+An Expiry represents one option expiry belonging to a Symbol.
 
-Author : OptionForge
+It contains expiry metadata only.
+It does NOT contain strikes, contracts, Greeks,
+volatility, pricing or option chain data.
+
+Engineering Principles
+----------------------
+- Immutable domain object
+- One responsibility
+- Financially correct
+- Fully testable
+
+Author
+------
+OptionForge Engineering Team
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date
-from enum import Enum
 
-
-class ExpiryType(Enum):
-    """Supported expiry types."""
-
-    WEEKLY = "WEEKLY"
-    MONTHLY = "MONTHLY"
+from optionforge.common.enums import ExpiryType
+from optionforge.common.exceptions import InvalidExpiryError
+from optionforge.kernel.symbol import Symbol
 
 
 @dataclass(frozen=True, slots=True)
 class Expiry:
     """
-    Represents one option expiry.
-
-    Parameters
-    ----------
-    expiry_date : date
-        Expiry date.
-
-    expiry_type : ExpiryType
-        Weekly or Monthly expiry.
-
-    trading_date : date
-        Current trading date.
-
-    symbol : str
-        Underlying symbol.
+    Represents one option expiry for one Symbol.
     """
 
-    symbol: str
-    trading_date: date
+    symbol: Symbol
+
     expiry_date: date
+
     expiry_type: ExpiryType
 
     def __post_init__(self) -> None:
+        """
+        Validate Expiry.
+        """
 
-        object.__setattr__(self, "symbol", self.symbol.upper().strip())
-
-        if not self.symbol:
-            raise ValueError("Symbol cannot be empty.")
-
-        if self.expiry_date < self.trading_date:
-            raise ValueError(
+        if self.expiry_date < self.symbol.trading_session.trading_date:
+            raise InvalidExpiryError(
                 "Expiry date cannot be before trading date."
             )
 
     @property
-    def dte(self) -> int:
-        """
-        Days to Expiry.
-        """
-        return (self.expiry_date - self.trading_date).days
-
-    @property
-    def is_expiry_day(self) -> bool:
-        """
-        Returns True if trading date equals expiry date.
-        """
-        return self.trading_date == self.expiry_date
-
-    @property
-    def is_weekly(self) -> bool:
-        return self.expiry_type is ExpiryType.WEEKLY
-
-    @property
-    def is_monthly(self) -> bool:
-        return self.expiry_type is ExpiryType.MONTHLY
-
-    @property
     def expiry_id(self) -> str:
         """
-        Unique expiry identifier.
+        Returns unique expiry identifier.
         """
+
         return (
-            f"{self.symbol}_"
+            f"{self.symbol.ticker}_"
             f"{self.expiry_date:%Y%m%d}_"
             f"{self.expiry_type.value}"
         )
 
+    @property
+    def is_weekly(self) -> bool:
+        """
+        Returns True if expiry is weekly.
+        """
+        return self.expiry_type is ExpiryType.WEEKLY
+
+    @property
+    def is_monthly(self) -> bool:
+        """
+        Returns True if expiry is monthly.
+        """
+        return self.expiry_type is ExpiryType.MONTHLY
+
+    def days_to_expiry(
+        self,
+        reference_date: date,
+    ) -> int:
+        """
+        Returns days to expiry.
+        """
+
+        return (
+            self.expiry_date -
+            reference_date
+        ).days
+
+    def is_expired(
+        self,
+        reference_date: date,
+    ) -> bool:
+        """
+        Returns True if already expired.
+        """
+
+        return reference_date > self.expiry_date
+    
+    
+    def is_expiry_day(
+        self,
+        reference_date: date,
+    ) -> bool:
+        """
+        Returns True if the supplied reference date
+        is the expiry date.
+        """
+
+        return reference_date == self.expiry_date
+
     def to_dict(self) -> dict:
         """
-        Convert Expiry to dictionary.
+        Convert Expiry to a serializable dictionary.
         """
+
         return {
             "expiry_id": self.expiry_id,
-            "symbol": self.symbol,
-            "trading_date": self.trading_date.isoformat(),
+            "symbol": self.symbol.ticker,
+            "exchange": self.symbol.exchange.value,
+            "instrument_type": self.symbol.instrument_type.value,
             "expiry_date": self.expiry_date.isoformat(),
             "expiry_type": self.expiry_type.value,
-            "dte": self.dte,
-            "is_expiry_day": self.is_expiry_day,
+            "days_to_expiry": self.days_to_expiry(
+                self.symbol.trading_session.trading_date
+            ),
+            "is_weekly": self.is_weekly,
+            "is_monthly": self.is_monthly,
+            "is_expiry_day": self.is_expiry_day(
+        self.symbol.trading_session.trading_date
+            ),
         }
 
     def __str__(self) -> str:
+        """
+        Human-readable representation.
+        """
+
         return (
-            f"{self.symbol} "
+            f"{self.symbol.ticker} "
             f"{self.expiry_date.isoformat()} "
             f"[{self.expiry_type.value}]"
+        )
+
+    def __repr__(self) -> str:
+        """
+        Developer-friendly representation.
+        """
+
+        return (
+            "Expiry("
+            f"symbol='{self.symbol.ticker}', "
+            f"expiry_date={self.expiry_date.isoformat()}, "
+            f"expiry_type={self.expiry_type.value})"
         )
