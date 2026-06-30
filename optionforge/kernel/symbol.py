@@ -1,119 +1,179 @@
 """
-=========================================================
-OptionForge
-Symbol
-=========================================================
+optionforge.kernel.symbol
+=========================
 
-Represents an underlying trading instrument.
+Symbol domain model.
 
-A Symbol is the underlying asset (Index, Equity, ETF, etc.).
-It does NOT contain option chain, Greeks, IV or Open Interest.
+A Symbol represents one tradable underlying instrument
+such as an Index, Equity or Future.
 
-Author : OptionForge
+It contains only identity and contract specification.
+It does NOT contain option chain, Greeks, volatility,
+pricing, or market data.
+
+Engineering Principles
+----------------------
+- Immutable domain object
+- One responsibility
+- Strong validation
+- Financially correct
+- Fully testable
+
+Author
+------
+OptionForge Engineering Team
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from enum import Enum
-from typing import Optional
 
-
-class InstrumentType(Enum):
-    """Supported underlying instrument types."""
-
-    INDEX = "INDEX"
-    EQUITY = "EQUITY"
-    ETF = "ETF"
+from optionforge.common.enums import (
+    Exchange,
+    InstrumentType,
+)
+from optionforge.common.exceptions import (
+    InvalidSymbolError,
+)
+from optionforge.kernel.trading_session import (
+    TradingSession,
+)
 
 
 @dataclass(frozen=True, slots=True)
 class Symbol:
     """
-    Represents one underlying trading instrument.
+    Represents one tradable underlying instrument.
 
     Parameters
     ----------
-    name : str
-        Trading symbol (e.g. NIFTY, RELIANCE).
+    ticker
+        Trading symbol.
+        Example:
+            NIFTY
+            BANKNIFTY
+            RELIANCE
 
-    exchange : str
-        Exchange name (e.g. NSE).
+    exchange
+        Exchange where instrument trades.
 
-    instrument_type : InstrumentType
-        Type of underlying.
+    instrument_type
+        Type of financial instrument.
 
-    lot_size : int
+    lot_size
         Exchange lot size.
 
-    tick_size : float
+    tick_size
         Minimum price movement.
 
-    strike_interval : int
-        Strike spacing for options.
+    strike_interval
+        Standard option strike spacing.
 
-    isin : str | None
-        ISIN code (optional).
+    trading_session
+        Trading session associated with the symbol.
 
-    sector : str | None
-        Business sector (optional).
+    isin
+        Optional ISIN code.
+
+    sector
+        Optional business sector.
     """
 
-    name: str
-    exchange: str
+    ticker: str
+
+    exchange: Exchange
+
     instrument_type: InstrumentType
 
     lot_size: int
+
     tick_size: float
+
     strike_interval: int
 
-    isin: Optional[str] = None
-    sector: Optional[str] = None
+    trading_session: TradingSession
+
+    isin: str | None = None
+
+    sector: str | None = None
 
     def __post_init__(self) -> None:
+        """
+        Validate Symbol.
+        """
 
-        object.__setattr__(self, "name", self.name.upper().strip())
-        object.__setattr__(self, "exchange", self.exchange.upper().strip())
+        object.__setattr__(
+            self,
+            "ticker",
+            self.ticker.strip().upper(),
+        )
 
-        if not self.name:
-            raise ValueError("Symbol name cannot be empty.")
-
-        if not self.exchange:
-            raise ValueError("Exchange cannot be empty.")
+        if not self.ticker:
+            raise InvalidSymbolError(
+                "Ticker cannot be empty."
+            )
 
         if self.lot_size <= 0:
-            raise ValueError("Lot size must be positive.")
+            raise InvalidSymbolError(
+                "Lot size must be positive."
+            )
 
         if self.tick_size <= 0:
-            raise ValueError("Tick size must be positive.")
+            raise InvalidSymbolError(
+                "Tick size must be positive."
+            )
 
         if self.strike_interval <= 0:
-            raise ValueError("Strike interval must be positive.")
-
+            raise InvalidSymbolError(
+                "Strike interval must be positive."
+            )
     @property
     def symbol_id(self) -> str:
-        """Unique symbol identifier."""
-        return f"{self.exchange}:{self.name}"
+        """
+        Returns a unique symbol identifier.
 
+        Example
+        -------
+        NSE:NIFTY
+        """
+        return f"{self.exchange}:{self.ticker}"
+    @property
     def is_index(self) -> bool:
-        """Returns True if symbol is an index."""
+        """
+        Returns True if this symbol represents an index.
+        """
         return self.instrument_type is InstrumentType.INDEX
-
+    
+    @property
     def is_equity(self) -> bool:
-        """Returns True if symbol is an equity."""
+        """
+        Returns True if this symbol represents an equity.
+        """
         return self.instrument_type is InstrumentType.EQUITY
 
-    def is_etf(self) -> bool:
-        """Returns True if symbol is an ETF."""
-        return self.instrument_type is InstrumentType.ETF
+    @property
+    def is_future(self) -> bool:
+        """
+        Returns True if this symbol represents a futures contract.
+        """
+        return self.instrument_type is InstrumentType.FUTURE
+
+    @property
+    def is_option(self) -> bool:
+        """
+        Returns True if this symbol represents an option.
+        """
+        return self.instrument_type is InstrumentType.OPTION
 
     def to_dict(self) -> dict:
-        """Convert Symbol to dictionary."""
+        """
+        Convert Symbol to a serializable dictionary.
+        """
 
         return {
             "symbol_id": self.symbol_id,
-            "name": self.name,
-            "exchange": self.exchange,
+            "ticker": self.ticker,
+            "exchange": self.exchange.value,
             "instrument_type": self.instrument_type.value,
             "lot_size": self.lot_size,
             "tick_size": self.tick_size,
@@ -123,4 +183,18 @@ class Symbol:
         }
 
     def __str__(self) -> str:
+        """
+        Human-readable representation.
+        """
         return self.symbol_id
+
+    def __repr__(self) -> str:
+        """
+        Developer-friendly representation.
+        """
+        return (
+            "Symbol("
+            f"ticker='{self.ticker}', "
+            f"exchange={self.exchange.value}, "
+            f"instrument_type={self.instrument_type.value})"
+        )
