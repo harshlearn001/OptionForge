@@ -1,8 +1,10 @@
 """
-Tests for optionforge.optionchain.filters
+Tests for optionforge.optionchain.atm_selector
 """
 
 from datetime import date, time
+
+import pytest
 
 from optionforge.common.enums import (
     Exchange,
@@ -21,7 +23,7 @@ from optionforge.kernel.trading_session import TradingSession
 from optionforge.market.market_snapshot import MarketSnapshot
 from optionforge.market.option_chain import OptionChain
 
-from optionforge.optionchain.filters import ChainFilters
+from optionforge.optionchain.atm_selector import ATMSelector
 
 
 # ==========================================================
@@ -58,39 +60,28 @@ def build_expiry() -> Expiry:
     )
 
 
-def build_contract(
-    strike: int,
+def build_snapshot(
+    strike_price: int,
     option_type: OptionType,
-) -> OptionContract:
+) -> MarketSnapshot:
 
-    return OptionContract(
+    contract = OptionContract(
         strike=Strike(
             expiry=build_expiry(),
-            strike_price=strike,
+            strike_price=strike_price,
         ),
         option_type=option_type,
     )
 
-
-def build_snapshot(
-    strike: int,
-    option_type: OptionType,
-    oi: int,
-    volume: int,
-) -> MarketSnapshot:
-
     return MarketSnapshot(
-        contract=build_contract(
-            strike,
-            option_type,
-        ),
+        contract=contract,
         open=100,
         high=120,
         low=90,
         close=110,
-        volume=volume,
-        open_interest=oi,
-        change_in_open_interest=100,
+        volume=1000,
+        open_interest=500,
+        change_in_open_interest=50,
     )
 
 
@@ -98,61 +89,63 @@ def build_chain() -> OptionChain:
 
     return OptionChain(
         (
-            build_snapshot(25100, OptionType.CALL, 1000, 500),
-            build_snapshot(25100, OptionType.PUT, 2000, 800),
-            build_snapshot(25150, OptionType.CALL, 3000, 1000),
-            build_snapshot(25150, OptionType.PUT, 4000, 1200),
+            build_snapshot(25000, OptionType.CALL),
+            build_snapshot(25000, OptionType.PUT),
+            build_snapshot(25050, OptionType.CALL),
+            build_snapshot(25050, OptionType.PUT),
+            build_snapshot(25100, OptionType.CALL),
+            build_snapshot(25100, OptionType.PUT),
         )
     )
 
 
 # ==========================================================
-# Calls
+# Exact ATM
 # ==========================================================
 
-def test_calls():
+def test_exact_atm():
 
-    chain = build_chain()
-
-    result = ChainFilters.calls(chain)
+    result = ATMSelector.select(
+        build_chain(),
+        25050,
+    )
 
     assert len(result) == 2
 
     assert all(
-        s.option_type is OptionType.CALL
+        s.contract.strike_price == 25050
         for s in result
     )
 
 
 # ==========================================================
-# Puts
+# Nearest Lower
 # ==========================================================
 
-def test_puts():
+def test_nearest_lower():
 
-    chain = build_chain()
-
-    result = ChainFilters.puts(chain)
+    result = ATMSelector.select(
+        build_chain(),
+        25038,
+    )
 
     assert len(result) == 2
 
     assert all(
-        s.option_type is OptionType.PUT
+        s.contract.strike_price == 25050
         for s in result
     )
 
 
 # ==========================================================
-# Strike
+# Nearest Higher
 # ==========================================================
 
-def test_by_strike():
+def test_nearest_higher():
 
-    chain = build_chain()
-
-    result = ChainFilters.by_strike(
-        chain,
-        25100,
+    result = ATMSelector.select(
+        build_chain(),
+        25088,
     )
 
     assert len(result) == 2
@@ -164,79 +157,51 @@ def test_by_strike():
 
 
 # ==========================================================
-# Option Type
+# Below Lowest Strike
 # ==========================================================
 
-def test_by_option_type():
+def test_below_lowest():
 
-    chain = build_chain()
-
-    result = ChainFilters.by_option_type(
-        chain,
-        OptionType.PUT,
+    result = ATMSelector.select(
+        build_chain(),
+        24000,
     )
 
     assert len(result) == 2
 
     assert all(
-        s.option_type is OptionType.PUT
+        s.contract.strike_price == 25000
         for s in result
     )
 
 
 # ==========================================================
-# Open Interest
+# Above Highest Strike
 # ==========================================================
 
-def test_by_open_interest():
+def test_above_highest():
 
-    chain = build_chain()
-
-    result = ChainFilters.by_open_interest(
-        chain,
-        minimum=2500,
-    )
-
-    assert len(result) == 2
-
-    assert all(
-        s.open_interest >= 2500
-        for s in result
-    )
-
-
-# ==========================================================
-# Volume
-# ==========================================================
-
-def test_by_volume():
-
-    chain = build_chain()
-
-    result = ChainFilters.by_volume(
-        chain,
-        minimum=900,
-    )
-
-    assert len(result) == 2
-
-    assert all(
-        s.volume >= 900
-        for s in result
-    )
-
-
-# ==========================================================
-# Empty Result
-# ==========================================================
-
-def test_empty_result():
-
-    chain = build_chain()
-
-    result = ChainFilters.by_strike(
-        chain,
+    result = ATMSelector.select(
+        build_chain(),
         26000,
     )
 
-    assert result == ()
+    assert len(result) == 2
+
+    assert all(
+        s.contract.strike_price == 25100
+        for s in result
+    )
+
+
+# ==========================================================
+# Empty Chain
+# ==========================================================
+
+def test_empty_chain():
+
+    with pytest.raises(ValueError):
+        ATMSelector.select(
+            OptionChain(()),
+            25000,
+        )

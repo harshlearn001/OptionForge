@@ -1,8 +1,10 @@
 """
-Tests for optionforge.optionchain.filters
+Tests for optionforge.optionchain.strike_selector
 """
 
 from datetime import date, time
+
+import pytest
 
 from optionforge.common.enums import (
     Exchange,
@@ -21,7 +23,7 @@ from optionforge.kernel.trading_session import TradingSession
 from optionforge.market.market_snapshot import MarketSnapshot
 from optionforge.market.option_chain import OptionChain
 
-from optionforge.optionchain.filters import ChainFilters
+from optionforge.optionchain.strike_selector import StrikeSelector
 
 
 # ==========================================================
@@ -58,39 +60,28 @@ def build_expiry() -> Expiry:
     )
 
 
-def build_contract(
-    strike: int,
+def build_snapshot(
+    strike_price: int,
     option_type: OptionType,
-) -> OptionContract:
+) -> MarketSnapshot:
 
-    return OptionContract(
+    contract = OptionContract(
         strike=Strike(
             expiry=build_expiry(),
-            strike_price=strike,
+            strike_price=strike_price,
         ),
         option_type=option_type,
     )
 
-
-def build_snapshot(
-    strike: int,
-    option_type: OptionType,
-    oi: int,
-    volume: int,
-) -> MarketSnapshot:
-
     return MarketSnapshot(
-        contract=build_contract(
-            strike,
-            option_type,
-        ),
+        contract=contract,
         open=100,
         high=120,
         low=90,
         close=110,
-        volume=volume,
-        open_interest=oi,
-        change_in_open_interest=100,
+        volume=1000,
+        open_interest=500,
+        change_in_open_interest=50,
     )
 
 
@@ -98,145 +89,140 @@ def build_chain() -> OptionChain:
 
     return OptionChain(
         (
-            build_snapshot(25100, OptionType.CALL, 1000, 500),
-            build_snapshot(25100, OptionType.PUT, 2000, 800),
-            build_snapshot(25150, OptionType.CALL, 3000, 1000),
-            build_snapshot(25150, OptionType.PUT, 4000, 1200),
+            build_snapshot(25000, OptionType.CALL),
+            build_snapshot(25000, OptionType.PUT),
+            build_snapshot(25050, OptionType.CALL),
+            build_snapshot(25050, OptionType.PUT),
+            build_snapshot(25100, OptionType.CALL),
+            build_snapshot(25100, OptionType.PUT),
+            build_snapshot(25150, OptionType.CALL),
+            build_snapshot(25150, OptionType.PUT),
         )
     )
 
 
 # ==========================================================
-# Calls
+# Exact Strike
 # ==========================================================
 
-def test_calls():
+def test_exact():
 
-    chain = build_chain()
-
-    result = ChainFilters.calls(chain)
+    result = StrikeSelector.exact(
+        build_chain(),
+        25050,
+    )
 
     assert len(result) == 2
 
     assert all(
-        s.option_type is OptionType.CALL
+        s.contract.strike_price == 25050
         for s in result
     )
 
 
 # ==========================================================
-# Puts
+# Between
 # ==========================================================
 
-def test_puts():
+def test_between():
 
-    chain = build_chain()
-
-    result = ChainFilters.puts(chain)
-
-    assert len(result) == 2
-
-    assert all(
-        s.option_type is OptionType.PUT
-        for s in result
-    )
-
-
-# ==========================================================
-# Strike
-# ==========================================================
-
-def test_by_strike():
-
-    chain = build_chain()
-
-    result = ChainFilters.by_strike(
-        chain,
+    result = StrikeSelector.between(
+        build_chain(),
+        25050,
         25100,
     )
 
-    assert len(result) == 2
+    assert len(result) == 4
 
     assert all(
-        s.contract.strike_price == 25100
+        25050 <= s.contract.strike_price <= 25100
         for s in result
     )
 
 
 # ==========================================================
-# Option Type
+# Around
 # ==========================================================
 
-def test_by_option_type():
+def test_around():
 
-    chain = build_chain()
-
-    result = ChainFilters.by_option_type(
-        chain,
-        OptionType.PUT,
+    result = StrikeSelector.around(
+        build_chain(),
+        center=25060,
+        width=1,
     )
 
-    assert len(result) == 2
-
-    assert all(
-        s.option_type is OptionType.PUT
+    strikes = {
+        s.contract.strike_price
         for s in result
-    )
+    }
+
+    assert strikes == {
+        25000,
+        25050,
+        25100,
+            }
 
 
 # ==========================================================
-# Open Interest
+# Exact Not Found
 # ==========================================================
 
-def test_by_open_interest():
+def test_exact_not_found():
 
-    chain = build_chain()
-
-    result = ChainFilters.by_open_interest(
-        chain,
-        minimum=2500,
-    )
-
-    assert len(result) == 2
-
-    assert all(
-        s.open_interest >= 2500
-        for s in result
-    )
-
-
-# ==========================================================
-# Volume
-# ==========================================================
-
-def test_by_volume():
-
-    chain = build_chain()
-
-    result = ChainFilters.by_volume(
-        chain,
-        minimum=900,
-    )
-
-    assert len(result) == 2
-
-    assert all(
-        s.volume >= 900
-        for s in result
-    )
-
-
-# ==========================================================
-# Empty Result
-# ==========================================================
-
-def test_empty_result():
-
-    chain = build_chain()
-
-    result = ChainFilters.by_strike(
-        chain,
+    result = StrikeSelector.exact(
+        build_chain(),
         26000,
     )
 
     assert result == ()
+
+
+# ==========================================================
+# Invalid Range
+# ==========================================================
+
+def test_invalid_range():
+
+    with pytest.raises(ValueError):
+
+        StrikeSelector.between(
+            build_chain(),
+            25100,
+            25000,
+        )
+
+
+# ==========================================================
+# Negative Width
+# ==========================================================
+
+def test_negative_width():
+
+    with pytest.raises(ValueError):
+
+        StrikeSelector.around(
+            build_chain(),
+            center=25050,
+            width=-1,
+        )
+
+
+# ==========================================================
+# Width Zero
+# ==========================================================
+
+def test_zero_width():
+
+    result = StrikeSelector.around(
+        build_chain(),
+        center=25050,
+        width=0,
+    )
+
+    assert len(result) == 2
+
+    assert all(
+        s.contract.strike_price == 25050
+        for s in result
+    )

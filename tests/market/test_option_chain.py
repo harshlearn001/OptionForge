@@ -1,8 +1,11 @@
 """
-Tests for optionforge.optionchain.filters
+Tests for optionforge.market.option_chain
 """
 
+from dataclasses import FrozenInstanceError
 from datetime import date, time
+
+import pytest
 
 from optionforge.common.enums import (
     Exchange,
@@ -11,7 +14,6 @@ from optionforge.common.enums import (
     MarketStatus,
     OptionType,
 )
-
 from optionforge.kernel.expiry import Expiry
 from optionforge.kernel.option_contract import OptionContract
 from optionforge.kernel.strike import Strike
@@ -20,8 +22,6 @@ from optionforge.kernel.trading_session import TradingSession
 
 from optionforge.market.market_snapshot import MarketSnapshot
 from optionforge.market.option_chain import OptionChain
-
-from optionforge.optionchain.filters import ChainFilters
 
 
 # ==========================================================
@@ -59,184 +59,214 @@ def build_expiry() -> Expiry:
 
 
 def build_contract(
-    strike: int,
+    strike_price: int,
     option_type: OptionType,
 ) -> OptionContract:
 
+    strike = Strike(
+        expiry=build_expiry(),
+        strike_price=strike_price,
+    )
+
     return OptionContract(
-        strike=Strike(
-            expiry=build_expiry(),
-            strike_price=strike,
-        ),
+        strike=strike,
         option_type=option_type,
     )
 
 
 def build_snapshot(
-    strike: int,
+    strike_price: int,
     option_type: OptionType,
-    oi: int,
-    volume: int,
 ) -> MarketSnapshot:
 
     return MarketSnapshot(
         contract=build_contract(
-            strike,
+            strike_price,
             option_type,
         ),
         open=100,
         high=120,
-        low=90,
+        low=95,
         close=110,
-        volume=volume,
-        open_interest=oi,
-        change_in_open_interest=100,
+        volume=100000,
+        open_interest=50000,
+        change_in_open_interest=1000,
     )
 
 
 def build_chain() -> OptionChain:
 
     return OptionChain(
-        (
-            build_snapshot(25100, OptionType.CALL, 1000, 500),
-            build_snapshot(25100, OptionType.PUT, 2000, 800),
-            build_snapshot(25150, OptionType.CALL, 3000, 1000),
-            build_snapshot(25150, OptionType.PUT, 4000, 1200),
-        )
+        [
+            build_snapshot(25100, OptionType.CALL),
+            build_snapshot(25100, OptionType.PUT),
+            build_snapshot(25150, OptionType.CALL),
+            build_snapshot(25150, OptionType.PUT),
+        ]
     )
 
 
 # ==========================================================
-# Calls
+# Creation
 # ==========================================================
 
-def test_calls():
+def test_creation():
 
     chain = build_chain()
 
-    result = ChainFilters.calls(chain)
+    assert chain.snapshot_count == 4
 
-    assert len(result) == 2
 
-    assert all(
-        s.option_type is OptionType.CALL
-        for s in result
+# ==========================================================
+# Identity
+# ==========================================================
+
+def test_symbol():
+
+    assert build_chain().symbol.ticker == "NIFTY"
+
+
+def test_exchange():
+
+    assert build_chain().exchange is Exchange.NSE
+
+
+def test_expiry():
+
+    assert (
+        build_chain().expiry.expiry_date
+        == date(2026, 7, 2)
+    )
+
+
+def test_trading_date():
+
+    assert (
+        build_chain().trading_date
+        == date(2026, 7, 1)
     )
 
 
 # ==========================================================
-# Puts
+# Collection
 # ==========================================================
 
-def test_puts():
+def test_len():
+
+    assert len(build_chain()) == 4
+
+
+def test_iteration():
+
+    assert sum(1 for _ in build_chain()) == 4
+
+
+def test_contains():
 
     chain = build_chain()
 
-    result = ChainFilters.puts(chain)
-
-    assert len(result) == 2
-
-    assert all(
-        s.option_type is OptionType.PUT
-        for s in result
-    )
-
-
-# ==========================================================
-# Strike
-# ==========================================================
-
-def test_by_strike():
-
-    chain = build_chain()
-
-    result = ChainFilters.by_strike(
-        chain,
+    snapshot = build_snapshot(
         25100,
+        OptionType.CALL,
     )
 
-    assert len(result) == 2
-
-    assert all(
-        s.contract.strike_price == 25100
-        for s in result
-    )
+    assert snapshot in chain
 
 
 # ==========================================================
-# Option Type
+# Lookup
 # ==========================================================
 
-def test_by_option_type():
+def test_get():
 
     chain = build_chain()
 
-    result = ChainFilters.by_option_type(
-        chain,
-        OptionType.PUT,
+    contract = build_contract(
+        25100,
+        OptionType.CALL,
     )
 
-    assert len(result) == 2
-
-    assert all(
-        s.option_type is OptionType.PUT
-        for s in result
-    )
+    assert chain.get(contract) is not None
 
 
-# ==========================================================
-# Open Interest
-# ==========================================================
-
-def test_by_open_interest():
+def test_exists():
 
     chain = build_chain()
 
-    result = ChainFilters.by_open_interest(
-        chain,
-        minimum=2500,
+    contract = build_contract(
+        25100,
+        OptionType.CALL,
     )
 
-    assert len(result) == 2
-
-    assert all(
-        s.open_interest >= 2500
-        for s in result
-    )
+    assert chain.exists(contract)
 
 
 # ==========================================================
-# Volume
+# Serialization
 # ==========================================================
 
-def test_by_volume():
+def test_to_dict():
+
+    data = build_chain().to_dict()
+
+    assert data["symbol"] == "NIFTY"
+    assert data["snapshot_count"] == 4
+
+
+def test_to_list():
+
+    data = build_chain().to_list()
+
+    assert len(data) == 4
+
+
+# ==========================================================
+# Representation
+# ==========================================================
+
+def test_str():
+
+    assert "NIFTY" in str(build_chain())
+
+
+def test_repr():
+
+    assert "OptionChain" in repr(build_chain())
+
+
+# ==========================================================
+# Validation
+# ==========================================================
+
+def test_empty_chain():
+
+    with pytest.raises(ValueError):
+        OptionChain([])
+
+
+def test_duplicate_contract():
+
+    snapshot = build_snapshot(
+        25100,
+        OptionType.CALL,
+    )
+
+    with pytest.raises(ValueError):
+        OptionChain(
+            [
+                snapshot,
+                snapshot,
+            ]
+        )
+
+
+# ==========================================================
+# Frozen
+# ==========================================================
+
+def test_frozen():
 
     chain = build_chain()
 
-    result = ChainFilters.by_volume(
-        chain,
-        minimum=900,
-    )
-
-    assert len(result) == 2
-
-    assert all(
-        s.volume >= 900
-        for s in result
-    )
-
-
-# ==========================================================
-# Empty Result
-# ==========================================================
-
-def test_empty_result():
-
-    chain = build_chain()
-
-    result = ChainFilters.by_strike(
-        chain,
-        26000,
-    )
-
-    assert result == ()
+    with pytest.raises(FrozenInstanceError):
+        chain.snapshots = ()
