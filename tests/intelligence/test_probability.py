@@ -1,90 +1,150 @@
-"""
-==============================================================
-OptionForge
-tests/intelligence/test_probability.py
---------------------------------------------------------------
-Professional Probability Engine Test
-==============================================================
-"""
+import pytest
 
-import sys
-from pathlib import Path
-
-BASE_DIR = Path(__file__).resolve().parents[2]
-sys.path.append(str(BASE_DIR))
-
-from optionforge.intelligence import (
-    MarketStructure,
-    Probability,
+from optionforge.intelligence import Probability
+from optionforge.models import (
+    MarketStructureResult,
+    ProbabilityResult,
 )
 
-print("=" * 60)
-print("OPTIONFORGE")
-print("PROBABILITY ENGINE TEST")
-print("=" * 60)
 
-# ---------------------------------------------------------
-# Step 1 : Market Structure
-# ---------------------------------------------------------
+def market(score: float) -> MarketStructureResult:
 
-market = MarketStructure.calculate(
+    return MarketStructureResult(
+        score=score,
+        bias="BULLISH",
+        confidence="HIGH",
+        stars=5,
+        recommendation="Buy",
+        support_strength=80.0,
+        resistance_strength=25.0,
+        expected_move=250.0,
+        iv_rank=45.0,
+        iv_percentile=55.0,
+        max_pain=25000.0,
+        interpretation="Market structure test",
+    )
 
-    support_strength=96,
 
-    resistance_strength=91,
+def test_returns_probability_result():
 
-    expected_move=82,
+    result = Probability.calculate(
+        market(75),
+    )
 
-    iv_rank=42,
+    assert isinstance(result, ProbabilityResult)
 
-    iv_percentile=51,
 
-    max_pain=88,
-
-    oi_wall_score=90,
-
-    oi_shift_score=84,
-
-    oi_change_score=80,
-
+@pytest.mark.parametrize(
+    ("score", "bull", "bear"),
+    [
+        (0, 0, 100),
+        (25, 25, 75),
+        (50, 50, 50),
+        (75, 75, 25),
+        (100, 100, 0),
+    ],
 )
+def test_probability_values(score, bull, bear):
 
-# ---------------------------------------------------------
-# Step 2 : Probability
-# ---------------------------------------------------------
+    result = Probability.calculate(
+        market(score),
+    )
 
-result = Probability.calculate(market)
+    assert result.bullish_probability == bull
+    assert result.bearish_probability == bear
 
-print()
 
-print(f"Bullish Probability : {result.bullish_probability:.2f}%")
+@pytest.mark.parametrize(
+    ("score", "grade"),
+    [
+        (95, "A+"),
+        (82, "A"),
+        (75, "B"),
+        (62, "C"),
+        (45, "D"),
+    ],
+)
+def test_trade_quality(score, grade):
 
-print(f"Bearish Probability : {result.bearish_probability:.2f}%")
+    result = Probability.calculate(
+        market(score),
+    )
 
-print()
+    assert result.trade_quality == grade
 
-print(f"Confidence          : {result.confidence}")
 
-print(f"Stars               : {'★' * result.stars}")
+@pytest.mark.parametrize(
+    ("score", "risk"),
+    [
+        (95, "LOW"),
+        (80, "MEDIUM"),
+        (70, "MEDIUM"),
+        (60, "HIGH"),
+        (25, "HIGH"),
+    ],
+)
+def test_risk(score, risk):
 
-print()
+    result = Probability.calculate(
+        market(score),
+    )
 
-print(f"Trade Quality       : {result.trade_quality}")
+    assert result.risk_level == risk
 
-print(f"Risk Level          : {result.risk_level}")
 
-print()
+@pytest.mark.parametrize(
+    ("score", "text"),
+    [
+        (90, "Bullish"),
+        (70, "Moderately bullish"),
+        (50, "Balanced"),
+        (20, "Bearish"),
+    ],
+)
+def test_recommendation(score, text):
 
-print("Recommendation")
+    result = Probability.calculate(
+        market(score),
+    )
 
-print(result.recommendation)
+    assert text in result.recommendation
 
-print()
 
-print("Interpretation")
+def test_confidence_preserved():
 
-print(result.interpretation)
+    result = Probability.calculate(
+        market(70),
+    )
 
-print()
+    assert result.confidence == "HIGH"
 
-print("MISSION COMPLETE")
+
+def test_stars_preserved():
+
+    result = Probability.calculate(
+        market(70),
+    )
+
+    assert result.stars == 5
+
+
+def test_interpretation_exists():
+
+    result = Probability.calculate(
+        market(70),
+    )
+
+    assert isinstance(result.interpretation, str)
+    assert result.interpretation
+
+
+def test_probability_sum():
+
+    result = Probability.calculate(
+        market(73),
+    )
+
+    assert (
+        result.bullish_probability +
+        result.bearish_probability
+    ) == pytest.approx(100.0)
