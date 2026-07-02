@@ -21,6 +21,8 @@ from .probability import Probability
 from .strategy import Strategy
 from .scanner import Scanner
 from .gamma_exposure import GammaExposure
+from .delta_exposure import DeltaExposure
+
 __all__ = [
 
     "ExpectedMove",
@@ -50,4 +52,6 @@ __all__ = [
     "Scanner",
 
     "GammaExposure",
+
+    "DeltaExposure",
 ]

@@ -15,6 +15,7 @@ from .probability_result import ProbabilityResult
 from .strategy_result import StrategyResult
 from .scanner_result import ScannerResult
 from .gamma_exposure_result import GammaExposureResult
+from .delta_exposure_result import DeltaExposureResult
 
 
 __all__ = [
@@ -52,4 +53,6 @@ __all__ = [
     "ScannerResult",
 
     "GammaExposureResult",
+
+    "DeltaExposureResult"
 ]
