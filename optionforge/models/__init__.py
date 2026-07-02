@@ -16,6 +16,7 @@ from .strategy_result import StrategyResult
 from .scanner_result import ScannerResult
 from .gamma_exposure_result import GammaExposureResult
 from .delta_exposure_result import DeltaExposureResult
+from .vanna_exposure_result import VannaExposureResult
 
 
 __all__ = [
@@ -54,5 +55,7 @@ __all__ = [
 
     "GammaExposureResult",
 
-    "DeltaExposureResult"
+    "DeltaExposureResult",
+
+    "VannaExposureResult"
 ]
