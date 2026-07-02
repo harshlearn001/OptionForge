@@ -17,6 +17,7 @@ from .scanner_result import ScannerResult
 from .gamma_exposure_result import GammaExposureResult
 from .delta_exposure_result import DeltaExposureResult
 from .vanna_exposure_result import VannaExposureResult
+from .charm_exposure_result import CharmExposureResult
 
 
 __all__ = [
@@ -57,5 +58,7 @@ __all__ = [
 
     "DeltaExposureResult",
 
-    "VannaExposureResult"
+    "VannaExposureResult",
+
+    "CharmExposureResult"
 ]
