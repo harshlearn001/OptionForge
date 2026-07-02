@@ -20,7 +20,7 @@ from .market_structure import MarketStructure
 from .probability import Probability
 from .strategy import Strategy
 from .scanner import Scanner
-
+from .gamma_exposure import GammaExposure
 __all__ = [
 
     "ExpectedMove",
@@ -47,5 +47,7 @@ __all__ = [
     
     "Strategy",
     
-    "Scanner"
+    "Scanner",
+
+    "GammaExposure",
 ]

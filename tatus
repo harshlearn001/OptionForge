@@ -1,0 +1,41 @@
+* [33m53d2fba[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m test: add Strategy intelligence tests (253 passing tests)
+* [33m6c2dfe4[m test: add Probability intelligence tests (232 passing tests)
+* [33me57500b[m test: add IV Percentile intelligence tests (208 passing tests)
+* [33m23696e0[m test: add IV Rank intelligence tests (195 passing tests)
+* [33mcff3eba[m test: add ExpectedMove intelligence tests (181 passing tests)
+* [33mb34c822[m test: add OptionChainAnalytics test suite (163 passing tests)
+* [33m840ef38[m test: add analytics unit tests and fixture framework (148 passing tests)
+* [33m6f07198[m test(optionchain): complete OptionChain infrastructure test suite
+* [33medb3e86[m feat: add market models and option chain infrastructure
+* [33m2ae84c8[m chore(tests): remove legacy MarketSnapshot test after migration
+* [33m5650911[m feat(kernel): implement immutable OptionContract domain model
+* [33mb033d51[m feat(kernel): implement immutable Strike domain model
+* [33me65f62d[m feat(kernel): implement immutable Expiry domain model
+* [33m86be0a3[m feat(kernel): implement immutable Symbol domain model
+* [33m7b41105[m feat(kernel): implement immutable TradingSession domain model
+* [33md8e7160[m refactor(common): finalize exception hierarchy and test coverage
+* [33m3b41996[m refactor(common): improve enum API and test coverage
+* [33mcb45d7e[m feat(common): implement shared enumerations
+* [33m9422a68[m docs: redesign repository foundation and engineering documentation
+* [33mc4efada[m[33m ([m[1;33mtag: [m[1;33mv1.0.0[m[33m)[m feat: add OptionChain enhancements and OI by Strike analytics
+* [33m65c0c83[m[33m ([m[1;33mtag: [m[1;33mv0.9.10[m[33m)[m feat: add professional option chain and OI summary engine
+* [33m9f41998[m[33m ([m[1;33mtag: [m[1;33mv0.9.9[m[33m)[m feat: add professional strike intelligence engine
+* [33m51a8f57[m[33m ([m[1;33mtag: [m[1;33mv0.9.8[m[33m)[m feat: add intelligent expiry selection engine
+* [33m88c1f75[m[33m ([m[1;33mtag: [m[1;33mv0.9.7[m[33m)[m feat: complete market data adapter foundation
+* [33m1246c75[m[33m ([m[1;33mtag: [m[1;33mv0.9.6[m[33m)[m feat: add application layer and complete 36 test suite
+* [33m7e60764[m[33m ([m[1;33mtag: [m[1;33mv0.9.5[m[33m)[m feat: add professional configuration system
+* [33ma685765[m[33m ([m[1;33mtag: [m[1;33mv0.9.4[m[33m)[m feat: add professional market session
+* [33m0585dc0[m[33m ([m[1;33mtag: [m[1;33mv0.9.3[m[33m)[m chore: finalize v0.9.2 release
+* [33me2212af[m[33m ([m[1;33mtag: [m[1;33mv0.9.2[m[33m)[m feat: add professional pipeline foundation
+* [33m8f029a9[m[33m ([m[1;33mtag: [m[1;33mv0.9.1[m[33m)[m feat: standardize option chain schema and storage compatibility
+* [33m277521e[m[33m ([m[1;33mtag: [m[1;33mv0.9.0[m[33m)[m feat: add Professional Market Scanner
+* [33mbc4cf8c[m[33m ([m[1;33mtag: [m[1;33mv0.8.0[m[33m)[m feat: add Professional Live Dashboard
+* [33mc14b9ef[m[33m ([m[1;33mtag: [m[1;33mv0.7.0[m[33m)[m feat: add Professional Report Engine
+* [33mc16a18f[m[33m ([m[1;33mtag: [m[1;33mv0.6.0[m[33m)[m feat: add Strategy Intelligence Engine
+* [33mef3e9f0[m[33m ([m[1;33mtag: [m[1;33mv0.5.0[m[33m)[m feat: add Probability Intelligence Engine
+* [33m53febd1[m[33m ([m[1;33mtag: [m[1;33mv0.4.0[m[33m)[m feat: add Market Strength Intelligence Engines
+* [33mc469334[m chore: remove temporary sample.csv and update gitignore
+* [33mada94fb[m[33m ([m[1;33mtag: [m[1;33mv0.3.0[m[33m)[m feat: add Professional OI Intelligence Engine
+* [33mbb8f8e9[m[33m ([m[1;33mtag: [m[1;33mv0.2.0[m[33m)[m feat: add IV Percentile Intelligence Engine
+* [33m113cc40[m feat: add Expected Move Intelligence Engine
+* [33m325113c[m[33m ([m[1;33mtag: [m[1;33mv0.1.0[m[33m)[m Release: OptionForge Foundation v0.1.0

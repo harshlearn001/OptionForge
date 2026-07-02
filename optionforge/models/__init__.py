@@ -14,6 +14,7 @@ from .market_structure_result import MarketStructureResult
 from .probability_result import ProbabilityResult
 from .strategy_result import StrategyResult
 from .scanner_result import ScannerResult
+from .gamma_exposure_result import GammaExposureResult
 
 
 __all__ = [
@@ -48,5 +49,7 @@ __all__ = [
 
     "StrategyResult",
 
-    "ScannerResult"
+    "ScannerResult",
+
+    "GammaExposureResult",
 ]
