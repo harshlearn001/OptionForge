@@ -150,7 +150,7 @@ class MarketSnapshot:
         Returns trading date.
         """
         return self.symbol.trading_session.trading_date
-        # =====================================================
+    # =====================================================
     # Price Statistics
     # =====================================================
 

@@ -9,10 +9,10 @@ Professional Max Pain Engine
 
 from __future__ import annotations
 
-import pandas as pd
+
 
 from optionforge.models.max_pain_result import MaxPainResult
-
+import pandas as pd
 
 class MaxPain:
 
@@ -40,7 +40,7 @@ class MaxPain:
 
                     call_pain += (
                         settlement - row["STRIKE_PRICE"]
-                    ) * row["OPEN_INTEREST"]
+                    ) * row["OPEN_INTEREST"]       
 
             # -------------------------
             # Put Pain
@@ -125,3 +125,4 @@ class MaxPain:
                 "combined option writer payout is minimized."
             ),
         )
+    

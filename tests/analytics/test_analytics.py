@@ -1,48 +1,103 @@
-import sys
-from pathlib import Path
 from datetime import date
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT))
-
 from optionforge.analytics import OptionAnalytics
-from optionforge.models import OptionContract
+from optionforge.models import (
+    AnalyticsResult,
+    OptionContract,
+)
 from optionforge.quant.black_scholes import BlackScholes
 
-print("=" * 60)
-print("OPTIONFORGE")
-print("ANALYTICS TEST")
-print("=" * 60)
 
-spot = 25000
-strike = 25000
-time = 30 / 365
-rate = 0.06
-volatility = 0.20
+def build_contract() -> OptionContract:
 
-market_price = BlackScholes.call_price(
-    spot,
-    strike,
-    time,
-    rate,
-    volatility,
-)
+    spot = 25000
+    strike = 25000
+    rate = 0.06
+    time = 30 / 365
+    volatility = 0.20
 
-contract = OptionContract(
-    symbol="NIFTY",
-    trade_date=date(2026, 6, 27),
-    expiry_date=date(2026, 7, 2),
-    strike=strike,
-    option_type="CE",
-    market_price=market_price,
-    spot_price=spot,
-    risk_free_rate=rate,
-    time_to_expiry=time,
-)
+    market_price = BlackScholes.call_price(
+        spot,
+        strike,
+        time,
+        rate,
+        volatility,
+    )
 
-result = OptionAnalytics.calculate(contract)
+    return OptionContract(
+        symbol="NIFTY",
+        trade_date=date(2026, 6, 27),
+        expiry_date=date(2026, 7, 2),
+        strike=strike,
+        option_type="CE",
+        market_price=market_price,
+        spot_price=spot,
+        risk_free_rate=rate,
+        time_to_expiry=time,
+    )
 
-print()
-print(result)
-print()
-print("MISSION COMPLETE")
+
+def test_returns_result():
+
+    result = OptionAnalytics.calculate(
+        build_contract()
+    )
+
+    assert isinstance(
+        result,
+        AnalyticsResult,
+    )
+
+
+def test_iv_positive():
+
+    result = OptionAnalytics.calculate(
+        build_contract()
+    )
+
+    assert result.implied_volatility > 0
+
+
+def test_delta_range():
+
+    result = OptionAnalytics.calculate(
+        build_contract()
+    )
+
+    assert 0 <= result.delta <= 1
+
+
+def test_gamma_positive():
+
+    result = OptionAnalytics.calculate(
+        build_contract()
+    )
+
+    assert result.gamma > 0
+
+
+def test_vega_positive():
+
+    result = OptionAnalytics.calculate(
+        build_contract()
+    )
+
+    assert result.vega > 0
+
+
+def test_intrinsic_value():
+
+    result = OptionAnalytics.calculate(
+        build_contract()
+    )
+
+    assert result.intrinsic_value == 0
+
+
+def test_time_value_positive():
+
+    result = OptionAnalytics.calculate(
+        build_contract()
+    )
+
+    assert result.time_value > 0

@@ -1,0 +1,55 @@
+"""
+Tests for MaxPainEngine.
+"""
+
+from optionforge.analytics.max_pain.engine import (
+    MaxPainEngine,
+)
+from optionforge.models.max_pain_result import (
+    MaxPainResult,
+)
+
+from tests.fixtures.option_chain_fixture import (
+    build_option_chain,
+)
+
+
+def test_returns_result():
+
+    chain = build_option_chain()
+
+    result = MaxPainEngine.calculate(chain)
+
+    assert isinstance(result, MaxPainResult)
+
+
+def test_evaluated_strikes():
+
+    chain = build_option_chain()
+
+    result = MaxPainEngine.calculate(chain)
+
+    assert result.evaluated_strikes == 3
+
+
+def test_pain_table_not_empty():
+
+    chain = build_option_chain()
+
+    result = MaxPainEngine.calculate(chain)
+
+    assert not result.pain_table.empty
+
+
+def test_max_pain_is_valid_strike():
+
+    chain = build_option_chain()
+
+    result = MaxPainEngine.calculate(chain)
+
+    strikes = {
+        snapshot.contract.strike_price
+        for snapshot in chain
+    }
+
+    assert result.max_pain in strikes
