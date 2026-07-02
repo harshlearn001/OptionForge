@@ -1,60 +1,179 @@
-"""
-==============================================================
-OptionForge
-tests/intelligence/test_expected_move.py
---------------------------------------------------------------
-Expected Move Intelligence Test
-==============================================================
-"""
+from math import sqrt
 
-import sys
-from pathlib import Path
+import pytest
 
-BASE_DIR = Path(__file__).resolve().parents[2]
-sys.path.append(str(BASE_DIR))
-
-from optionforge.intelligence import ExpectedMove
+from optionforge.intelligence.expected_move import ExpectedMove
+from optionforge.models import ExpectedMoveResult
 
 
-print("=" * 60)
-print("OPTIONFORGE")
-print("EXPECTED MOVE TEST")
-print("=" * 60)
+def test_returns_expected_move_result():
 
-print()
+    result = ExpectedMove.calculate(
+        spot=25000,
+        atm_iv=0.20,
+        days=30,
+    )
 
-result = ExpectedMove.calculate(
+    assert isinstance(result, ExpectedMoveResult)
 
-    spot=25000,
 
-    atm_iv=0.20,
+def test_expected_move_positive():
 
-    days=7,
+    result = ExpectedMove.calculate(
+        spot=25000,
+        atm_iv=0.20,
+        days=30,
+    )
 
+    assert result.expected_move > 0
+
+
+def test_expected_move_formula():
+
+    spot = 25000
+    iv = 0.20
+    days = 30
+
+    expected = (
+        spot *
+        iv *
+        sqrt(days / 365)
+    )
+
+    result = ExpectedMove.calculate(
+        spot=spot,
+        atm_iv=iv,
+        days=days,
+    )
+
+    assert result.expected_move == pytest.approx(expected)
+
+
+def test_upper_68():
+
+    result = ExpectedMove.calculate(
+        spot=25000,
+        atm_iv=0.20,
+        days=30,
+    )
+
+    assert result.upper_68 == pytest.approx(
+        25000 + result.expected_move
+    )
+
+
+def test_lower_68():
+
+    result = ExpectedMove.calculate(
+        spot=25000,
+        atm_iv=0.20,
+        days=30,
+    )
+
+    assert result.lower_68 == pytest.approx(
+        25000 - result.expected_move
+    )
+
+
+def test_upper_95():
+
+    result = ExpectedMove.calculate(
+        spot=25000,
+        atm_iv=0.20,
+        days=30,
+    )
+
+    assert result.upper_95 == pytest.approx(
+        25000 + (2 * result.expected_move)
+    )
+
+
+def test_lower_95():
+
+    result = ExpectedMove.calculate(
+        spot=25000,
+        atm_iv=0.20,
+        days=30,
+    )
+
+    assert result.lower_95 == pytest.approx(
+        25000 - (2 * result.expected_move)
+    )
+
+
+def test_daily_move_positive():
+
+    result = ExpectedMove.calculate(
+        spot=25000,
+        atm_iv=0.20,
+        days=30,
+    )
+
+    assert result.one_day_move > 0
+
+
+def test_weekly_move_greater_than_daily():
+
+    result = ExpectedMove.calculate(
+        spot=25000,
+        atm_iv=0.20,
+        days=30,
+    )
+
+    assert result.weekly_move > result.one_day_move
+
+
+def test_monthly_move_greater_than_weekly():
+
+    result = ExpectedMove.calculate(
+        spot=25000,
+        atm_iv=0.20,
+        days=30,
+    )
+
+    assert result.monthly_move > result.weekly_move
+
+
+@pytest.mark.parametrize(
+    "spot",
+    [0, -1, -25000],
 )
+def test_invalid_spot(spot):
 
-print("Expected Move :", round(result.expected_move, 2))
+    with pytest.raises(ValueError):
 
-print()
+        ExpectedMove.calculate(
+            spot=spot,
+            atm_iv=0.20,
+            days=30,
+        )
 
-print("68% Range")
 
-print("Upper :", round(result.upper_68, 2))
-print("Lower :", round(result.lower_68, 2))
+@pytest.mark.parametrize(
+    "iv",
+    [0, -0.20],
+)
+def test_invalid_iv(iv):
 
-print()
+    with pytest.raises(ValueError):
 
-print("95% Range")
+        ExpectedMove.calculate(
+            spot=25000,
+            atm_iv=iv,
+            days=30,
+        )
 
-print("Upper :", round(result.upper_95, 2))
-print("Lower :", round(result.lower_95, 2))
 
-print()
+@pytest.mark.parametrize(
+    "days",
+    [0, -1, -30],
+)
+def test_invalid_days(days):
 
-print("Daily Move   :", round(result.one_day_move, 2))
-print("Weekly Move  :", round(result.weekly_move, 2))
-print("Monthly Move :", round(result.monthly_move, 2))
+    with pytest.raises(ValueError):
 
-print()
-
-print("MISSION COMPLETE")
+        ExpectedMove.calculate(
+            spot=25000,
+            atm_iv=0.20,
+            days=days,
+        )
