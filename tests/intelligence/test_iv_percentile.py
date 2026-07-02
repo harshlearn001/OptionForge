@@ -1,71 +1,114 @@
-"""
-==============================================================
-OptionForge
-tests/intelligence/test_iv_percentile.py
---------------------------------------------------------------
-IV Percentile Intelligence Test
-==============================================================
-"""
 
-import sys
-from pathlib import Path
-
-BASE_DIR = Path(__file__).resolve().parents[2]
-sys.path.append(str(BASE_DIR))
+import pytest
 
 from optionforge.intelligence import IVPercentile
+from optionforge.models import IVPercentileResult
 
 
-print("=" * 60)
-print("OPTIONFORGE")
-print("IV PERCENTILE TEST")
-print("=" * 60)
+def history():
+    return [10, 12, 14, 16, 18, 20, 22, 24, 26, 28]
 
-print()
 
-historical_iv = [
+def test_returns_result():
 
-    12.0,
-    15.0,
-    18.0,
-    14.0,
-    16.0,
-    20.0,
-    25.0,
-    22.0,
-    17.0,
-    19.0,
+    result = IVPercentile.calculate(
+        current_iv=20,
+        historical_iv=history(),
+    )
 
-]
+    assert isinstance(result, IVPercentileResult)
 
-result = IVPercentile.calculate(
 
-    current_iv=18.0,
+def test_observation_count():
 
-    historical_iv=historical_iv,
+    result = IVPercentile.calculate(
+        current_iv=20,
+        historical_iv=history(),
+    )
 
+    assert result.observations == 10
+
+
+def test_below_count():
+
+    result = IVPercentile.calculate(
+        current_iv=20,
+        historical_iv=history(),
+    )
+
+    assert result.below_count == 5
+
+
+def test_percentile_formula():
+
+    result = IVPercentile.calculate(
+        current_iv=20,
+        historical_iv=history(),
+    )
+
+    assert result.iv_percentile == pytest.approx(50.0)
+
+
+def test_zero_percentile():
+
+    result = IVPercentile.calculate(
+        current_iv=5,
+        historical_iv=history(),
+    )
+
+    assert result.iv_percentile == 0
+
+
+def test_hundred_percentile():
+
+    result = IVPercentile.calculate(
+        current_iv=100,
+        historical_iv=history(),
+    )
+
+    assert result.iv_percentile == 100
+
+
+@pytest.mark.parametrize(
+    ("current_iv", "status"),
+    [
+        (5, "VERY LOW"),
+        (16, "LOW"),
+        (20, "NORMAL"),
+        (24, "HIGH"),
+        (100, "VERY HIGH"),
+    ],
 )
+def test_status(current_iv, status):
 
-print("Current IV :", result.current_iv)
+    result = IVPercentile.calculate(
+        current_iv=current_iv,
+        historical_iv=history(),
+    )
 
-print("Historical Observations :", result.observations)
+    assert result.status == status
 
-print("IV Below Current :", result.below_count)
 
-print()
+def test_interpretation_exists():
 
-print("IV Percentile :", round(result.iv_percentile, 2), "%")
+    result = IVPercentile.calculate(
+        current_iv=20,
+        historical_iv=history(),
+    )
 
-print()
+    assert isinstance(
+        result.interpretation,
+        str,
+    )
 
-print("Status :", result.status)
+    assert result.interpretation
 
-print()
 
-print("Interpretation")
+def test_empty_history():
 
-print(result.interpretation)
+    with pytest.raises(ValueError):
 
-print()
-
-print("MISSION COMPLETE")
+        IVPercentile.calculate(
+            current_iv=20,
+            historical_iv=[],
+        )
