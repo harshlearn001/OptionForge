@@ -1,113 +1,206 @@
-"""
-==============================================================
-OptionForge
-tests/intelligence/test_strategy.py
---------------------------------------------------------------
-Professional Strategy Engine Test
-==============================================================
-"""
+import pytest
 
-import sys
-from pathlib import Path
-
-BASE_DIR = Path(__file__).resolve().parents[2]
-sys.path.append(str(BASE_DIR))
-
-from optionforge.intelligence import (
-    MarketStructure,
-    Probability,
-    Strategy,
+from optionforge.intelligence import Strategy
+from optionforge.models import (
+    ProbabilityResult,
+    StrategyResult,
 )
 
-print("=" * 60)
-print("OPTIONFORGE")
-print("STRATEGY ENGINE TEST")
-print("=" * 60)
 
-# ---------------------------------------------------------
-# Step 1 : Market Structure
-# ---------------------------------------------------------
+def probability(score: float) -> ProbabilityResult:
 
-market = MarketStructure.calculate(
+    return ProbabilityResult(
+        bullish_probability=score,
+        bearish_probability=100 - score,
+        confidence="HIGH",
+        stars=5,
+        trade_quality="A",
+        risk_level="LOW",
+        recommendation="Test",
+        interpretation="Probability Test",
+    )
 
-    support_strength=96,
 
-    resistance_strength=91,
+def test_returns_strategy_result():
 
-    expected_move=82,
+    result = Strategy.calculate(
+        probability(85),
+        spot_price=25000,
+        expected_move=500,
+    )
 
-    iv_rank=42,
+    assert isinstance(result, StrategyResult)
 
-    iv_percentile=51,
 
-    max_pain=88,
-
-    oi_wall_score=90,
-
-    oi_shift_score=84,
-
-    oi_change_score=80,
-
+@pytest.mark.parametrize(
+    ("bull", "action"),
+    [
+        (90, "BUY"),
+        (70, "BUY ON DIP"),
+        (50, "WAIT"),
+        (20, "SELL"),
+    ],
 )
+def test_action(bull, action):
 
-# ---------------------------------------------------------
-# Step 2 : Probability
-# ---------------------------------------------------------
+    result = Strategy.calculate(
+        probability(bull),
+        25000,
+        500,
+    )
 
-probability = Probability.calculate(market)
+    assert result.action == action
 
-# ---------------------------------------------------------
-# Step 3 : Strategy
-# ---------------------------------------------------------
 
-strategy = Strategy.calculate(
+def test_entry_zone():
 
-    probability=probability,
+    result = Strategy.calculate(
+        probability(80),
+        25000,
+        500,
+    )
 
-    spot_price=25000,
+    assert result.entry_zone == "24900.00 - 25000.00"
 
-    expected_move=692,
 
+def test_stop_loss():
+
+    result = Strategy.calculate(
+        probability(80),
+        25000,
+        500,
+    )
+
+    assert result.stop_loss == pytest.approx(24775.00)
+
+
+def test_target1():
+
+    result = Strategy.calculate(
+        probability(80),
+        25000,
+        500,
+    )
+
+    assert result.target_1 == pytest.approx(25250.00)
+
+
+def test_target2():
+
+    result = Strategy.calculate(
+        probability(80),
+        25000,
+        500,
+    )
+
+    assert result.target_2 == pytest.approx(25500.00)
+
+
+def test_risk_reward():
+
+    result = Strategy.calculate(
+        probability(80),
+        25000,
+        500,
+    )
+
+    assert result.risk_reward == pytest.approx(2.22)
+
+
+def test_trade_quality_preserved():
+
+    result = Strategy.calculate(
+        probability(80),
+        25000,
+        500,
+    )
+
+    assert result.trade_quality == "A"
+
+
+def test_confidence_preserved():
+
+    result = Strategy.calculate(
+        probability(80),
+        25000,
+        500,
+    )
+
+    assert result.confidence == "HIGH"
+
+
+def test_stars_preserved():
+
+    result = Strategy.calculate(
+        probability(80),
+        25000,
+        500,
+    )
+
+    assert result.stars == 5
+
+
+@pytest.mark.parametrize(
+    ("bull", "text"),
+    [
+        (90, "Momentum"),
+        (70, "pullback"),
+        (50, "No high-quality"),
+        (20, "Selling rallies"),
+    ],
 )
+def test_recommendation(bull, text):
 
-print()
+    result = Strategy.calculate(
+        probability(bull),
+        25000,
+        500,
+    )
 
-print(f"Action            : {strategy.action}")
+    assert text in result.recommendation
 
-print(f"Entry Zone        : {strategy.entry_zone}")
 
-print(f"Stop Loss         : {strategy.stop_loss:.2f}")
+def test_interpretation_exists():
 
-print()
+    result = Strategy.calculate(
+        probability(75),
+        25000,
+        500,
+    )
 
-print(f"Target 1          : {strategy.target_1:.2f}")
+    assert isinstance(result.interpretation, str)
+    assert "75.00%" in result.interpretation
 
-print(f"Target 2          : {strategy.target_2:.2f}")
 
-print()
+def test_targets_order():
 
-print(f"Risk Reward       : 1 : {strategy.risk_reward:.2f}")
+    result = Strategy.calculate(
+        probability(80),
+        25000,
+        500,
+    )
 
-print()
+    assert result.target_2 > result.target_1
 
-print(f"Trade Quality     : {strategy.trade_quality}")
 
-print(f"Confidence        : {strategy.confidence}")
+def test_stop_below_entry():
 
-print(f"Stars             : {'★' * strategy.stars}")
+    result = Strategy.calculate(
+        probability(80),
+        25000,
+        500,
+    )
 
-print()
+    assert result.stop_loss < 24900
 
-print("Recommendation")
 
-print(strategy.recommendation)
+def test_target_above_entry():
 
-print()
+    result = Strategy.calculate(
+        probability(80),
+        25000,
+        500,
+    )
 
-print("Interpretation")
-
-print(strategy.interpretation)
-
-print()
-
-print("MISSION COMPLETE")
+    assert result.target_1 > 25000
+    assert result.target_2 > 25000
