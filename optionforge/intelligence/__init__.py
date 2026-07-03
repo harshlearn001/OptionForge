@@ -31,6 +31,7 @@ from .dealer_hedging_flow import DealerHedgingFlow
 from .dashboard import Dashboard
 from .institutional_signal import InstitutionalSignal
 from .dealer_pressure import DealerPressure
+from .market_explosion_risk import MarketExplosionRisk
 
 
 __all__ = [
@@ -82,4 +83,6 @@ __all__ = [
     "InstitutionalSignal",
 
     "DealerPressure",
+
+    "MarketExplosionRisk"
 ]
