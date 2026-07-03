@@ -21,6 +21,7 @@ from .charm_exposure_result import CharmExposureResult
 from .dealer_position_result import DealerPositionResult
 from .gamma_flip_result import GammaFlipResult
 from .zero_gamma_result import ZeroGammaResult
+from .dealer_hedging_flow_result import DealerHedgingFlowResult
 
 
 __all__ = [
@@ -70,4 +71,8 @@ __all__ = [
     "GammaFlipResult",
 
     "ZeroGammaResult"
+
+    "DealerHedgingFlowResult"
+
+
 ]

@@ -27,6 +27,7 @@ from .charm_exposure import CharmExposure
 from .dealer_position import DealerPosition
 from .gamma_flip import GammaFlip
 from .zero_gamma import ZeroGamma
+from .dealer_hedging_flow import DealerHedgingFlow
 
 
 __all__ = [
@@ -70,4 +71,6 @@ __all__ = [
     "GammaFlip",
 
     "ZeroGamma",
+
+    "DealerHedgingFlow"
 ]
