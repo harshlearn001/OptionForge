@@ -25,6 +25,7 @@ from .delta_exposure import DeltaExposure
 from .vanna_exposure import VannaExposure
 from .charm_exposure import CharmExposure
 from .dealer_position import DealerPosition
+from .gamma_flip import GammaFlip
 
 
 __all__ = [
@@ -64,4 +65,6 @@ __all__ = [
     "CharmExposure",
 
     "DealerPosition",
+
+    "GammaFlip",
 ]
