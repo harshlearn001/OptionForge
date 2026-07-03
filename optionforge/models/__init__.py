@@ -18,6 +18,7 @@ from .gamma_exposure_result import GammaExposureResult
 from .delta_exposure_result import DeltaExposureResult
 from .vanna_exposure_result import VannaExposureResult
 from .charm_exposure_result import CharmExposureResult
+from .dealer_position_result import DealerPositionResult
 
 
 __all__ = [
@@ -60,5 +61,7 @@ __all__ = [
 
     "VannaExposureResult",
 
-    "CharmExposureResult"
+    "CharmExposureResult",
+
+    "DealerPositionResult",
 ]
