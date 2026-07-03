@@ -29,6 +29,7 @@ from .gamma_flip import GammaFlip
 from .zero_gamma import ZeroGamma
 from .dealer_hedging_flow import DealerHedgingFlow
 from .dashboard import Dashboard
+from .institutional_signal import InstitutionalSignal
 
 
 __all__ = [
@@ -76,4 +77,6 @@ __all__ = [
     "DealerHedgingFlow",
 
     "Dashboard",
+
+    "InstitutionalSignal",
 ]
