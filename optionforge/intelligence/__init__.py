@@ -26,6 +26,7 @@ from .vanna_exposure import VannaExposure
 from .charm_exposure import CharmExposure
 from .dealer_position import DealerPosition
 from .gamma_flip import GammaFlip
+from .zero_gamma import ZeroGamma
 
 
 __all__ = [
@@ -67,4 +68,6 @@ __all__ = [
     "DealerPosition",
 
     "GammaFlip",
+
+    "ZeroGamma",
 ]
