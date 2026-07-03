@@ -28,6 +28,7 @@ from .dealer_position import DealerPosition
 from .gamma_flip import GammaFlip
 from .zero_gamma import ZeroGamma
 from .dealer_hedging_flow import DealerHedgingFlow
+from .dashboard import Dashboard
 
 
 __all__ = [
@@ -72,5 +73,7 @@ __all__ = [
 
     "ZeroGamma",
 
-    "DealerHedgingFlow"
+    "DealerHedgingFlow",
+
+    "Dashboard",
 ]
