@@ -9,15 +9,16 @@ Central orchestration pipeline.
 
 Responsibilities
 ----------------
-- Coordinate execution
-- Delegate work to analytics
-- Delegate work to intelligence
-- Delegate work to decision layer
-- Build final snapshot
+- Build MarketSnapshot
+- Execute analytics
+- Execute intelligence
+- Execute decision layer
+- Execute strategy layer
+- Execute execution layer
 
 Contains NO business logic.
 
-Version : 2.1
+Version : 3.0
 Author  : OptionForge
 ==============================================================
 """
@@ -26,29 +27,28 @@ from __future__ import annotations
 
 from typing import Any
 
+from optionforge.market_snapshot.snapshot_builder import SnapshotBuilder
 from optionforge.pipeline.pipeline_context import PipelineContext
 
 
 class OptionForgePipeline:
     """
-    Main orchestration pipeline.
+    Central orchestration pipeline.
 
-    This class coordinates the complete
-    institutional workflow.
-
-    It contains NO business logic.
+    Operates entirely on immutable MarketSnapshot
+    objects and never accesses files directly.
     """
 
     def __init__(
         self,
         *,
-        loader: Any,
-        analytics: dict[str, Any],
+        snapshot_builder: SnapshotBuilder,
+        analytics: dict[str, Any] | None = None,
     ) -> None:
 
-        self.loader = loader
+        self._snapshot_builder = snapshot_builder
 
-        self.analytics_engines = analytics
+        self._analytics_engines = analytics or {}
 
         self._context = PipelineContext()
 
@@ -56,43 +56,22 @@ class OptionForgePipeline:
     # Stage 1
     # ==========================================================
 
-    def load(
+    def build_snapshot(
         self,
-        *,
-        option_file: str,
-        future_file: str,
-        spot_file: str,
-    ) -> dict[str, Any]:
-        """
-        Load required market datasets.
-        """
+        symbol: str,
+    ):
 
-        self._context.market_data = {
+        snapshot = self._snapshot_builder.build(symbol)
 
-            "option": self.loader.load_option(
-                option_file,
-            ),
+        self._context.market_snapshot = snapshot
 
-            "future": self.loader.load_future(
-                future_file,
-            ),
-
-            "spot": self.loader.load_spot(
-                spot_file,
-            ),
-
-        }
-
-        return self._context.market_data
+        return snapshot
 
     # ==========================================================
     # Stage 2
     # ==========================================================
 
     def analytics(self) -> None:
-        """
-        Register analytics engines.
-        """
 
         self._context.analytics = {
 
@@ -104,7 +83,7 @@ class OptionForgePipeline:
 
             "market": {},
 
-            "registry": self.analytics_engines,
+            "registry": self._analytics_engines,
 
         }
 
@@ -113,10 +92,6 @@ class OptionForgePipeline:
     # ==========================================================
 
     def intelligence(self) -> None:
-        """
-        Execute intelligence layer.
-        """
-
         pass
 
     # ==========================================================
@@ -124,47 +99,40 @@ class OptionForgePipeline:
     # ==========================================================
 
     def decision(self) -> None:
-        """
-        Execute institutional decision layer.
-        """
-
         pass
 
     # ==========================================================
     # Stage 5
     # ==========================================================
 
-    def snapshot(self) -> Any:
-        """
-        Return final Institutional Snapshot.
-        """
-
-        return self._context.snapshot
+    def strategy(self) -> None:
+        pass
 
     # ==========================================================
-    # Execute Pipeline
+    # Stage 6
+    # ==========================================================
+
+    def execution(self) -> None:
+        pass
+
+    # ==========================================================
+    # Result
+    # ==========================================================
+
+    def result(self):
+
+        return self._context.market_snapshot
+
+    # ==========================================================
+    # Execute
     # ==========================================================
 
     def execute(
         self,
-        *,
-        option_file: str,
-        future_file: str,
-        spot_file: str,
-    ) -> Any:
-        """
-        Execute the complete pipeline.
-        """
+        symbol: str,
+    ):
 
-        self.load(
-
-            option_file=option_file,
-
-            future_file=future_file,
-
-            spot_file=spot_file,
-
-        )
+        self.build_snapshot(symbol)
 
         self.analytics()
 
@@ -172,4 +140,8 @@ class OptionForgePipeline:
 
         self.decision()
 
-        return self.snapshot()
+        self.strategy()
+
+        self.execution()
+
+        return self.result()

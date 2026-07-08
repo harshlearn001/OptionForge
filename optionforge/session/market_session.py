@@ -1,42 +1,80 @@
 """
-==============================================================
+============================================================
 OptionForge
-session/market_session.py
---------------------------------------------------------------
-Professional Market Session
-==============================================================
+Market Session
+============================================================
+
+Author      : OptionForge
+Module      : market_session.py
+Purpose     : Public entry point into OptionForge.
+
+Responsibilities
+----------------
+- Create workflow
+- Execute institutional pipeline
+- Return MarketSnapshot
+
+Contains NO business logic.
+
+Version : 3.0
+Author  : OptionForge
+============================================================
 """
 
 from __future__ import annotations
 
 from pathlib import Path
-import pandas as pd
+from typing import Any
 
-from optionforge.workflow import WorkflowEngine
+from optionforge.workflow.workflow import WorkflowEngine
 
 
 class MarketSession:
     """
-    Professional Market Session
+    Public entry point for OptionForge.
 
-    Responsibilities
-    ----------------
-    1. Load market data
-    2. Execute workflow
-    3. Return standardized dataframe
-
-    Future Versions
-    ----------------
-    Analytics
-    Strategy
-    Scanner
-    Dashboard
-    Report
+    The session owns the WorkflowEngine and exposes
+    a simple symbol-based API.
     """
 
-    @staticmethod
-    def run(csv_file: str | Path) -> pd.DataFrame:
+    def __init__(
+        self,
+        *,
+        marketforge_root: str | Path,
+        analytics: dict[str, Any] | None = None,
+    ) -> None:
 
-        dataframe = WorkflowEngine.run(csv_file)
+        self._workflow = WorkflowEngine(
 
-        return dataframe
+            marketforge_root=marketforge_root,
+
+            analytics=analytics,
+
+        )
+
+    # ======================================================
+    # Execute
+    # ======================================================
+
+    def run(
+        self,
+        symbol: str,
+    ):
+        """
+        Execute the complete OptionForge workflow.
+
+        Parameters
+        ----------
+        symbol
+            Market symbol (e.g. NIFTY, BANKNIFTY, RELIANCE)
+
+        Returns
+        -------
+        MarketSnapshot
+        """
+
+        return self._workflow.run(
+
+            symbol,
+
+        )

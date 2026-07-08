@@ -4,13 +4,15 @@ OptionForge
 Workflow Engine
 ============================================================
 
-Professional Workflow Engine (v2)
+Author      : OptionForge
+Module      : workflow.py
+Purpose     : Composition root for OptionForge.
 
 Responsibilities
 ----------------
-- Resolve market data paths
-- Construct pipeline
-- Execute institutional pipeline
+- Build infrastructure
+- Wire dependencies
+- Execute pipeline
 
 Contains NO business logic.
 
@@ -20,10 +22,19 @@ Contains NO business logic.
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
-from optionforge.datasource.path_manager import (
-    PathManager,
+from optionforge.repository import (
+    RepositoryContext,
+    RepositoryFactory,
 )
+
+from optionforge.utils.loader import Loader
+
+from optionforge.market_snapshot.snapshot_builder import (
+    SnapshotBuilder,
+)
+
 from optionforge.pipeline.optionforge_pipeline import (
     OptionForgePipeline,
 )
@@ -31,48 +42,82 @@ from optionforge.pipeline.optionforge_pipeline import (
 
 class WorkflowEngine:
     """
-    Professional Workflow Engine.
+    Composition root for OptionForge.
+
+    Creates all infrastructure dependencies and
+    executes the institutional pipeline.
     """
 
     def __init__(
         self,
         *,
-        loader,
-        analytics: dict,
         marketforge_root: str | Path,
+        analytics: dict[str, Any] | None = None,
     ) -> None:
 
-        self._paths = PathManager(
-            marketforge_root,
-        )
+        self._marketforge_root = Path(marketforge_root)
 
-        self._pipeline = OptionForgePipeline(
+        self._analytics = analytics or {}
 
-            loader=loader,
-
-            analytics=analytics,
-
-        )
-
-    # -----------------------------------------------------
+    # ======================================================
+    # Execute
+    # ======================================================
 
     def run(
         self,
-        *,
-        option_file: str | Path,
-        future_file: str | Path,
-        spot_file: str | Path,
+        symbol: str,
     ):
-        """
-        Execute complete institutional pipeline.
-        """
 
-        return self._pipeline.run(
+        # -----------------------------------------------
+        # Repository Layer
+        # -----------------------------------------------
 
-            option_file=str(option_file),
+        context = RepositoryContext(
 
-            future_file=str(future_file),
+            marketforge_root=self._marketforge_root,
 
-            spot_file=str(spot_file),
+        )
+
+        repository_factory = RepositoryFactory(
+
+            context,
+
+        )
+
+        # -----------------------------------------------
+        # Loader
+        # -----------------------------------------------
+
+        loader = Loader(
+
+            repository_factory,
+
+        )
+
+        # -----------------------------------------------
+        # Snapshot Builder
+        # -----------------------------------------------
+
+        snapshot_builder = SnapshotBuilder(
+
+            loader,
+
+        )
+
+        # -----------------------------------------------
+        # Pipeline
+        # -----------------------------------------------
+
+        pipeline = OptionForgePipeline(
+
+            snapshot_builder=snapshot_builder,
+
+            analytics=self._analytics,
+
+        )
+
+        return pipeline.execute(
+
+            symbol,
 
         )

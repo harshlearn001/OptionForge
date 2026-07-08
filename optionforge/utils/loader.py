@@ -1,34 +1,92 @@
 """
+============================================================
 OptionForge
-engine/loader.py
+Loader V2
+============================================================
+
+Repository-backed market data loader.
+
+Responsibilities
+----------------
+- Load option market data
+- Load future market data
+- Load spot market data
+- Return synchronized datasets
+
+Contains NO business logic.
+
+============================================================
 """
 
-from pathlib import Path
+from __future__ import annotations
+
+from dataclasses import dataclass
+
 import pandas as pd
+
+from optionforge.repository import RepositoryFactory
+
+
+@dataclass(frozen=True, slots=True)
+class MarketData:
+    """
+    Loaded market datasets.
+    """
+
+    option: pd.DataFrame
+    future: pd.DataFrame
+    spot: pd.DataFrame
 
 
 class Loader:
+    """
+    Repository-backed market loader.
+    """
 
-    def __init__(self):
+    def __init__(
+        self,
+        repository_factory: RepositoryFactory,
+    ) -> None:
 
-        self.option_path = None
-        self.future_path = None
-        self.spot_path = None
+        self._repository_factory = repository_factory
 
-    def load_option(self, file_path):
+    def load(
+        self,
+        symbol: str,
+    ) -> MarketData:
+        """
+        Load all market datasets for a symbol.
+        """
 
-        self.option_path = Path(file_path)
+        option = self._repository_factory.option().load(symbol)
 
-        return pd.read_csv(self.option_path)
+        future = self._repository_factory.future().load(symbol)
 
-    def load_future(self, file_path):
+        spot = self._repository_factory.spot().load(symbol)
 
-        self.future_path = Path(file_path)
+        return MarketData(
+            option=option,
+            future=future,
+            spot=spot,
+        )
 
-        return pd.read_csv(self.future_path)
+    def load_option(
+        self,
+        symbol: str,
+    ) -> pd.DataFrame:
 
-    def load_spot(self, file_path):
+        return self._repository_factory.option().load(symbol)
 
-        self.spot_path = Path(file_path)
+    def load_future(
+        self,
+        symbol: str,
+    ) -> pd.DataFrame:
 
-        return pd.read_csv(self.spot_path)
+        return self._repository_factory.future().load(symbol)
+
+    def load_spot(
+        self,
+        symbol: str,
+    ) -> pd.DataFrame:
+
+        return self._repository_factory.spot().load(symbol)
