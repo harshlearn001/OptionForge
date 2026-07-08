@@ -33,8 +33,10 @@ class OptionForgePipeline:
     """
     Main orchestration pipeline.
 
-    This class coordinates the complete OptionForge workflow.
-    It never performs calculations itself.
+    This class coordinates the complete
+    institutional workflow.
+
+    It contains NO business logic.
     """
 
     def __init__(
@@ -45,6 +47,7 @@ class OptionForgePipeline:
     ) -> None:
 
         self.loader = loader
+
         self.analytics_engines = analytics
 
         self._context = PipelineContext()
@@ -59,18 +62,24 @@ class OptionForgePipeline:
         option_file: str,
         future_file: str,
         spot_file: str,
-    ):
+    ) -> dict[str, Any]:
         """
-        Load all required market datasets.
+        Load required market datasets.
         """
 
         self._context.market_data = {
 
-            "option": self.loader.load_option(option_file),
+            "option": self.loader.load_option(
+                option_file,
+            ),
 
-            "future": self.loader.load_future(future_file),
+            "future": self.loader.load_future(
+                future_file,
+            ),
 
-            "spot": self.loader.load_spot(spot_file),
+            "spot": self.loader.load_spot(
+                spot_file,
+            ),
 
         }
 
@@ -83,9 +92,6 @@ class OptionForgePipeline:
     def analytics(self) -> None:
         """
         Register analytics engines.
-
-        Analytics execution will be integrated
-        incrementally in future sprints.
         """
 
         self._context.analytics = {
@@ -110,6 +116,7 @@ class OptionForgePipeline:
         """
         Execute intelligence layer.
         """
+
         pass
 
     # ==========================================================
@@ -120,35 +127,43 @@ class OptionForgePipeline:
         """
         Execute institutional decision layer.
         """
+
         pass
 
     # ==========================================================
     # Stage 5
     # ==========================================================
 
-    def snapshot(self):
+    def snapshot(self) -> Any:
         """
-        Return the final Institutional Snapshot.
+        Return final Institutional Snapshot.
         """
 
         return self._context.snapshot
 
     # ==========================================================
-    # Complete Pipeline
+    # Execute Pipeline
     # ==========================================================
 
-    def run(
+    def execute(
         self,
         *,
         option_file: str,
         future_file: str,
         spot_file: str,
-    ):
+    ) -> Any:
+        """
+        Execute the complete pipeline.
+        """
 
         self.load(
+
             option_file=option_file,
+
             future_file=future_file,
+
             spot_file=spot_file,
+
         )
 
         self.analytics()

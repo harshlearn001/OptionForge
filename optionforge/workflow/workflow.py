@@ -1,74 +1,78 @@
 """
-==============================================================
+============================================================
 OptionForge
-workflow/workflow.py
---------------------------------------------------------------
-Professional Workflow Engine
-==============================================================
+Workflow Engine
+============================================================
+
+Professional Workflow Engine (v2)
+
+Responsibilities
+----------------
+- Resolve market data paths
+- Construct pipeline
+- Execute institutional pipeline
+
+Contains NO business logic.
+
+============================================================
 """
 
 from __future__ import annotations
 
 from pathlib import Path
 
-import pandas as pd
-
-from optionforge.datasource import MarketData
-from optionforge.adapters import NSEAdapter
-from optionforge.pipeline import OptionForgePipeline
-from optionforge.config.settings import (
-    OUTPUT_FOLDER,
-    RUNTIME_FOLDER,
+from optionforge.datasource.path_manager import (
+    PathManager,
 )
-from optionforge.config.settings import RUNTIME_FOLDER
+from optionforge.pipeline.optionforge_pipeline import (
+    OptionForgePipeline,
+)
+
+
 class WorkflowEngine:
     """
-    Professional Workflow Engine
-
-    Responsibilities
-    ----------------
-    1. Load market data
-    2. Standardize schema
-    3. Execute pipeline
-
-    Future Versions
-    ----------------
-    - Analytics
-    - Intelligence
-    - Strategy
-    - Scanner
-    - Dashboard
-    - Report
+    Professional Workflow Engine.
     """
 
-    @staticmethod
-    def run(csv_file: str | Path) -> pd.DataFrame:
+    def __init__(
+        self,
+        *,
+        loader,
+        analytics: dict,
+        marketforge_root: str | Path,
+    ) -> None:
 
-        # --------------------------------------------------
-        # Load raw market data
-        # --------------------------------------------------
+        self._paths = PathManager(
+            marketforge_root,
+        )
 
-        dataframe = MarketData.from_csv(csv_file)
+        self._pipeline = OptionForgePipeline(
 
-        # --------------------------------------------------
-        # Standardize schema
-        # --------------------------------------------------
+            loader=loader,
 
-        dataframe = NSEAdapter.convert(dataframe)
+            analytics=analytics,
 
-        # --------------------------------------------------
-        # Save temporary standardized data
-        # --------------------------------------------------
+        )
 
-        temp_file = RUNTIME_FOLDER / "workflow_input.csv"
-        temp_file.parent.mkdir(parents=True, exist_ok=True)
+    # -----------------------------------------------------
 
-        dataframe.to_csv(temp_file, index=False)
+    def run(
+        self,
+        *,
+        option_file: str | Path,
+        future_file: str | Path,
+        spot_file: str | Path,
+    ):
+        """
+        Execute complete institutional pipeline.
+        """
 
-        # --------------------------------------------------
-        # Execute pipeline
-        # --------------------------------------------------
+        return self._pipeline.run(
 
-        result = OptionForgePipeline.run(temp_file)
+            option_file=str(option_file),
 
-        return result
+            future_file=str(future_file),
+
+            spot_file=str(spot_file),
+
+        )
