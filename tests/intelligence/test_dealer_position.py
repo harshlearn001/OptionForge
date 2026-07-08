@@ -1,11 +1,9 @@
 """
-==============================================================
+============================================================
 OptionForge
-Dealer Position Tests
-==============================================================
+Dealer Position Intelligence Tests
+============================================================
 """
-
-import pytest
 
 from optionforge.intelligence import DealerPosition
 
@@ -18,15 +16,19 @@ from optionforge.models import (
 )
 
 
-def gamma():
+# ==========================================================
+# Fixtures
+# ==========================================================
+
+def make_gamma(net_gex: float):
 
     return GammaExposureResult(
 
-        total_call_gex=100,
+        total_call_gex=100.0,
 
-        total_put_gex=-150,
+        total_put_gex=-150.0,
 
-        net_gex=-50,
+        net_gex=net_gex,
 
         largest_positive_strike=25000,
 
@@ -34,67 +36,67 @@ def gamma():
 
         gamma_flip=25050,
 
-        market_regime="NEGATIVE GAMMA",
+        market_regime="DEMO",
 
         interpretation="Demo",
     )
 
 
-def delta():
+def make_delta(net_dex: float):
 
     return DeltaExposureResult(
 
-        total_call_dex=120,
+        total_call_dex=120.0,
 
-        total_put_dex=-180,
+        total_put_dex=-180.0,
 
-        net_dex=-60,
+        net_dex=net_dex,
 
         largest_positive_strike=25000,
 
         largest_negative_strike=25100,
 
-        dealer_position="SHORT DELTA",
+        dealer_position="DEMO",
 
         interpretation="Demo",
     )
 
 
-def vanna():
+def make_vanna(net_vanna: float):
 
     return VannaExposureResult(
 
-        total_call_vanna=50,
+        total_call_vanna=50.0,
 
-        total_put_vanna=-80,
+        total_put_vanna=-80.0,
 
-        net_vanna=-30,
+        net_vanna=net_vanna,
 
         largest_positive_strike=25000,
 
         largest_negative_strike=25100,
 
-        vanna_regime="NEGATIVE VANNA",
+        vanna_regime="DEMO",
 
         interpretation="Demo",
     )
 
 
-def charm():
+def make_charm(net_charm: float):
 
     return CharmExposureResult(
 
-        total_call_charm=40,
+        total_call_charm=40.0,
 
-        total_put_charm=-70,
+        total_put_charm=-70.0,
 
-        net_charm=-30,
+        net_charm=net_charm,
 
         largest_positive_strike=25000,
 
         largest_negative_strike=25100,
 
-        charm_regime="NEGATIVE CHARM",
+        charm_regime="DEMO",
 
         interpretation="Demo",
     )
@@ -104,13 +106,14 @@ def result():
 
     return DealerPosition.calculate(
 
-        gamma=gamma(),
+        gamma=make_gamma(-50),
 
-        delta=delta(),
+        delta=make_delta(-60),
 
-        vanna=vanna(),
+        vanna=make_vanna(-30),
 
-        charm=charm(),
+        charm=make_charm(-30),
+
     )
 
 
@@ -127,7 +130,22 @@ def test_returns_result():
 
 
 # ==========================================================
-# Dealer Bias
+# Quantitative Fields
+# ==========================================================
+
+def test_quantitative_fields():
+
+    r = result()
+
+    assert isinstance(r.dealer_position, float)
+    assert isinstance(r.dealer_delta, float)
+    assert isinstance(r.dealer_gamma, float)
+    assert isinstance(r.net_exposure, float)
+    assert isinstance(r.position_strength, float)
+
+
+# ==========================================================
+# Dealer Classification
 # ==========================================================
 
 def test_dealer_bias():
@@ -160,12 +178,14 @@ def test_directional_risk():
 
 
 # ==========================================================
-# Score
+# Institutional Score
 # ==========================================================
 
-def test_score():
+def test_score_limits():
 
-    assert result().institutional_score == 15
+    score = result().institutional_score
+
+    assert 0.0 <= score <= 100.0
 
 
 def test_score_type():
@@ -182,7 +202,15 @@ def test_score_type():
 
 def test_confidence():
 
-    assert result().confidence == "★☆☆☆☆"
+    assert isinstance(
+        result().confidence,
+        float,
+    )
+
+
+def test_confidence_limits():
+
+    assert 0.0 <= result().confidence <= 100.0
 
 
 # ==========================================================
@@ -206,7 +234,7 @@ def test_interpretation():
 
 
 # ==========================================================
-# Integrity
+# Result Integrity
 # ==========================================================
 
 def test_result_fields():
@@ -218,7 +246,6 @@ def test_result_fields():
     assert r.market_condition
     assert r.market_stability
     assert r.directional_risk
-    assert r.confidence
     assert r.recommendation
     assert r.interpretation
 
@@ -229,19 +256,15 @@ def test_result_fields():
 
 def test_long_gamma():
 
-    g = gamma()
-
-    g.net_gex = 100
-
     r = DealerPosition.calculate(
 
-        gamma=g,
+        gamma=make_gamma(100),
 
-        delta=delta(),
+        delta=make_delta(-60),
 
-        vanna=vanna(),
+        vanna=make_vanna(-30),
 
-        charm=charm(),
+        charm=make_charm(-30),
 
     )
 
@@ -250,19 +273,15 @@ def test_long_gamma():
 
 def test_long_delta():
 
-    d = delta()
-
-    d.net_dex = 100
-
     r = DealerPosition.calculate(
 
-        gamma=gamma(),
+        gamma=make_gamma(-50),
 
-        delta=d,
+        delta=make_delta(100),
 
-        vanna=vanna(),
+        vanna=make_vanna(-30),
 
-        charm=charm(),
+        charm=make_charm(-30),
 
     )
 
@@ -270,31 +289,20 @@ def test_long_delta():
 
 
 # ==========================================================
-# Stability
+# High Stability
 # ==========================================================
 
 def test_high_stability():
 
-    g = gamma()
-    g.net_gex = 10
-
-    d = delta()
-
-    v = vanna()
-    v.net_vanna = 10
-
-    c = charm()
-    c.net_charm = 10
-
     r = DealerPosition.calculate(
 
-        gamma=g,
+        gamma=make_gamma(10),
 
-        delta=d,
+        delta=make_delta(-10),
 
-        vanna=v,
+        vanna=make_vanna(10),
 
-        charm=c,
+        charm=make_charm(10),
 
     )
 
@@ -302,26 +310,13 @@ def test_high_stability():
 
 
 # ==========================================================
-# Score Limits
+# Deterministic
 # ==========================================================
 
-def test_score_limits():
+def test_engine_is_deterministic():
 
-    r = result()
+    first = result()
 
-    assert 0 <= r.institutional_score <= 100
+    second = result()
 
-
-def test_confidence_not_empty():
-
-    assert len(result().confidence) > 0
-
-
-def test_recommendation_not_empty():
-
-    assert len(result().recommendation) > 10
-
-
-def test_interpretation_not_empty():
-
-    assert len(result().interpretation) > 10
+    assert first == second

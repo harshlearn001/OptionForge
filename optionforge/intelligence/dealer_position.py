@@ -1,10 +1,10 @@
 """
-==============================================================
+============================================================
 OptionForge
 intelligence/dealer_position.py
---------------------------------------------------------------
-Dealer Positioning Intelligence Engine
-==============================================================
+------------------------------------------------------------
+Institutional Dealer Position Intelligence Engine
+============================================================
 """
 
 from __future__ import annotations
@@ -20,8 +20,10 @@ from optionforge.models import (
 
 class DealerPosition:
     """
-    Combines all dealer exposure engines into one
-    institutional positioning assessment.
+    Institutional Dealer Position Engine.
+
+    Combines Gamma, Delta, Vanna and Charm into a single
+    institutional dealer positioning assessment.
     """
 
     @staticmethod
@@ -33,79 +35,80 @@ class DealerPosition:
         charm: CharmExposureResult,
     ) -> DealerPositionResult:
 
-        # --------------------------------------------------
-        # Dealer Bias (Gamma)
-        # --------------------------------------------------
+        # ==================================================
+        # Quantitative Metrics
+        # ==================================================
 
-        if gamma.net_gex >= 0:
-            dealer_bias = "LONG GAMMA"
-        else:
-            dealer_bias = "SHORT GAMMA"
+        dealer_gamma = gamma.net_gex
+        dealer_delta = delta.net_dex
 
-        # --------------------------------------------------
-        # Dealer Direction (Delta)
-        # --------------------------------------------------
+        net_exposure = (
+            dealer_gamma
+            + dealer_delta
+            + vanna.net_vanna
+            + charm.net_charm
+        )
 
-        if delta.net_dex >= 0:
-            dealer_direction = "LONG DELTA"
-        else:
-            dealer_direction = "SHORT DELTA"
+        position_strength = abs(net_exposure)
 
-        # --------------------------------------------------
+        # ==================================================
+        # Dealer Bias
+        # ==================================================
+
+        dealer_bias = (
+            "LONG GAMMA"
+            if dealer_gamma >= 0
+            else "SHORT GAMMA"
+        )
+
+        dealer_direction = (
+            "LONG DELTA"
+            if dealer_delta >= 0
+            else "SHORT DELTA"
+        )
+
+        # ==================================================
         # Market Stability
-        # --------------------------------------------------
+        # ==================================================
 
-        stability_score = 0
-
-        if gamma.net_gex >= 0:
-            stability_score += 1
-
-        if vanna.net_vanna >= 0:
-            stability_score += 1
-
-        if charm.net_charm >= 0:
-            stability_score += 1
+        stability_score = sum([
+            dealer_gamma >= 0,
+            vanna.net_vanna >= 0,
+            charm.net_charm >= 0,
+        ])
 
         if stability_score == 3:
-
             market_stability = "HIGH"
 
         elif stability_score == 2:
-
             market_stability = "MODERATE"
 
         else:
-
             market_stability = "LOW"
 
-        # --------------------------------------------------
+        # ==================================================
         # Market Condition
-        # --------------------------------------------------
+        # ==================================================
 
-        if dealer_bias == "LONG GAMMA":
+        market_condition = (
+            "RANGE-BOUND"
+            if dealer_gamma >= 0
+            else "TRENDING"
+        )
 
-            market_condition = "RANGE-BOUND"
-
-        else:
-
-            market_condition = "TRENDING"
-
-        # --------------------------------------------------
+        # ==================================================
         # Directional Risk
-        # --------------------------------------------------
+        # ==================================================
 
-        if (
-            dealer_bias == "SHORT GAMMA"
-            and dealer_direction == "SHORT DELTA"
-        ):
+        if dealer_gamma < 0 and dealer_delta < 0:
 
             directional_risk = "VERY HIGH"
 
-        elif dealer_bias == "SHORT GAMMA":
+        elif dealer_gamma < 0:
 
             directional_risk = "HIGH"
 
-        elif dealer_direction == "SHORT DELTA":
+        elif dealer_delta < 0:
 
             directional_risk = "MEDIUM"
 
@@ -113,16 +116,16 @@ class DealerPosition:
 
             directional_risk = "LOW"
 
-        # --------------------------------------------------
+        # ==================================================
         # Institutional Score
-        # --------------------------------------------------
+        # ==================================================
 
         score = 100.0
 
-        if dealer_bias == "SHORT GAMMA":
+        if dealer_gamma < 0:
             score -= 30
 
-        if dealer_direction == "SHORT DELTA":
+        if dealer_delta < 0:
             score -= 25
 
         if vanna.net_vanna < 0:
@@ -133,46 +136,29 @@ class DealerPosition:
 
         score = max(0.0, min(100.0, score))
 
-        # --------------------------------------------------
-        # Confidence
-        # --------------------------------------------------
+        confidence = score
 
-        if score >= 85:
-            confidence = "★★★★★"
-
-        elif score >= 70:
-            confidence = "★★★★☆"
-
-        elif score >= 55:
-            confidence = "★★★☆☆"
-
-        elif score >= 40:
-            confidence = "★★☆☆☆"
-
-        else:
-            confidence = "★☆☆☆☆"
-
-        # --------------------------------------------------
+        # ==================================================
         # Recommendation
-        # --------------------------------------------------
+        # ==================================================
 
         if directional_risk == "VERY HIGH":
 
             recommendation = (
                 "Expect strong directional moves. "
-                "Risk management is essential."
+                "Maintain strict risk management."
             )
 
         elif directional_risk == "HIGH":
 
             recommendation = (
-                "Directional moves may accelerate."
+                "Directional volatility is elevated."
             )
 
         elif directional_risk == "MEDIUM":
 
             recommendation = (
-                "Balanced market with moderate risk."
+                "Balanced environment with moderate risk."
             )
 
         else:
@@ -181,17 +167,34 @@ class DealerPosition:
                 "Dealer positioning favors market stability."
             )
 
-        # --------------------------------------------------
+        # ==================================================
         # Interpretation
-        # --------------------------------------------------
+        # ==================================================
 
         interpretation = (
-            f"{dealer_bias} / {dealer_direction}. "
-            f"Market appears {market_condition.lower()} "
-            f"with {directional_risk.lower()} directional risk."
+            f"{dealer_bias} | "
+            f"{dealer_direction} | "
+            f"{market_condition} | "
+            f"Risk: {directional_risk}"
         )
 
+        # ==================================================
+        # Result
+        # ==================================================
+
         return DealerPositionResult(
+
+            dealer_position=float(net_exposure),
+
+            dealer_delta=float(dealer_delta),
+
+            dealer_gamma=float(dealer_gamma),
+
+            net_exposure=float(net_exposure),
+
+            position_strength=float(position_strength),
+
+            institutional_score=float(score),
 
             dealer_bias=dealer_bias,
 
@@ -203,9 +206,7 @@ class DealerPosition:
 
             directional_risk=directional_risk,
 
-            institutional_score=score,
-
-            confidence=confidence,
+            confidence=float(confidence),
 
             recommendation=recommendation,
 
