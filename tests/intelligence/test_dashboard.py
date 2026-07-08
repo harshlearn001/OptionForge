@@ -6,7 +6,7 @@ Dashboard Tests
 """
 
 from optionforge.intelligence import Dashboard
-
+from dataclasses import replace
 from optionforge.models import (
     DashboardResult,
     DealerPositionResult,
@@ -20,6 +20,26 @@ def dealer():
 
     return DealerPositionResult(
 
+        # --------------------------------------------------
+        # Quantitative Metrics
+        # --------------------------------------------------
+
+        dealer_position=-250000.0,
+
+        dealer_delta=-18500.0,
+
+        dealer_gamma=-4200.0,
+
+        net_exposure=-268700.0,
+
+        position_strength=82.0,
+
+        institutional_score=15.0,
+
+        # --------------------------------------------------
+        # Classification
+        # --------------------------------------------------
+
         dealer_bias="SHORT GAMMA",
 
         dealer_direction="SHORT DELTA",
@@ -30,13 +50,16 @@ def dealer():
 
         directional_risk="VERY HIGH",
 
-        institutional_score=15.0,
+        # --------------------------------------------------
+        # Decision Support
+        # --------------------------------------------------
 
-        confidence="★☆☆☆☆",
+        confidence=0.15,
 
         recommendation="Demo",
 
         interpretation="Demo",
+
     )
 
 
@@ -182,7 +205,7 @@ def test_score_type():
 
 def test_confidence():
 
-    assert result().confidence == "★☆☆☆☆"
+    assert result().confidence == 0.15
 
 
 # ==========================================================
@@ -219,17 +242,25 @@ def test_summary_not_empty():
 
 def test_mean_reversion():
 
-    d = dealer()
+    d = replace(
 
-    d.dealer_bias = "LONG GAMMA"
+        dealer(),
 
-    d.dealer_direction = "LONG DELTA"
+        dealer_bias="LONG GAMMA",
 
-    d.institutional_score = 95.0
+        dealer_direction="LONG DELTA",
 
-    h = hedging()
+        institutional_score=95.0,
 
-    h.flow_direction = "BUY WEAKNESS"
+    )
+
+    h = replace(
+
+        hedging(),
+
+        flow_direction="BUY WEAKNESS",
+
+    )
 
     r = Dashboard.calculate(
 

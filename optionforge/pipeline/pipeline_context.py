@@ -4,6 +4,14 @@ OptionForge
 Pipeline
 Pipeline Context
 ==============================================================
+
+Shared mutable state used by the OptionForge pipeline.
+
+Contains NO business logic.
+
+Version : 4.0
+Author  : OptionForge
+==============================================================
 """
 
 from __future__ import annotations
@@ -12,23 +20,48 @@ from dataclasses import dataclass, field
 from typing import Any
 
 
-@dataclass(slots=True)
+@dataclass(
+    slots=True,
+)
 class PipelineContext:
     """
     Shared state passed between pipeline stages.
     """
 
-    # Raw loaded data
-    market_data: Any | None = None
+    # ---------------------------------------------------------
+    # Snapshots
+    # ---------------------------------------------------------
 
-    # Analytics results
-    analytics: dict[str, Any] = field(default_factory=dict)
+    market_snapshot: Any | None = None
 
-    # Intelligence results
-    intelligence: dict[str, Any] = field(default_factory=dict)
+    institutional_snapshot: Any | None = None
 
-    # Institutional decision
+    # ---------------------------------------------------------
+    # Analytics
+    # ---------------------------------------------------------
+
+    analytics: dict[str, Any] = field(
+        default_factory=dict,
+    )
+
+    evidence: dict[str, Any] = field(
+        default_factory=dict,
+    )
+
+    intelligence: dict[str, Any] = field(
+        default_factory=dict,
+    )
+
+    market_dna: dict[str, Any] = field(
+        default_factory=dict,
+    )
+
+    # ---------------------------------------------------------
+    # Decision
+    # ---------------------------------------------------------
+
     decision: Any | None = None
 
-    # Final snapshot
-    snapshot: Any | None = None
+    strategy: Any | None = None
+
+    execution: Any | None = None

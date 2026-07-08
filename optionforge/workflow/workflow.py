@@ -16,6 +16,7 @@ Responsibilities
 
 Contains NO business logic.
 
+Version : 4.0
 ============================================================
 """
 
@@ -35,6 +36,10 @@ from optionforge.market_snapshot.snapshot_builder import (
     SnapshotBuilder,
 )
 
+from optionforge.institutional import (
+    InstitutionalSnapshotBuilder,
+)
+
 from optionforge.pipeline.optionforge_pipeline import (
     OptionForgePipeline,
 )
@@ -43,9 +48,6 @@ from optionforge.pipeline.optionforge_pipeline import (
 class WorkflowEngine:
     """
     Composition root for OptionForge.
-
-    Creates all infrastructure dependencies and
-    executes the institutional pipeline.
     """
 
     def __init__(
@@ -55,7 +57,9 @@ class WorkflowEngine:
         analytics: dict[str, Any] | None = None,
     ) -> None:
 
-        self._marketforge_root = Path(marketforge_root)
+        self._marketforge_root = Path(
+            marketforge_root,
+        )
 
         self._analytics = analytics or {}
 
@@ -68,9 +72,9 @@ class WorkflowEngine:
         symbol: str,
     ):
 
-        # -----------------------------------------------
+        # -------------------------------------------------
         # Repository Layer
-        # -----------------------------------------------
+        # -------------------------------------------------
 
         context = RepositoryContext(
 
@@ -84,9 +88,9 @@ class WorkflowEngine:
 
         )
 
-        # -----------------------------------------------
+        # -------------------------------------------------
         # Loader
-        # -----------------------------------------------
+        # -------------------------------------------------
 
         loader = Loader(
 
@@ -94,9 +98,9 @@ class WorkflowEngine:
 
         )
 
-        # -----------------------------------------------
+        # -------------------------------------------------
         # Snapshot Builder
-        # -----------------------------------------------
+        # -------------------------------------------------
 
         snapshot_builder = SnapshotBuilder(
 
@@ -104,17 +108,35 @@ class WorkflowEngine:
 
         )
 
-        # -----------------------------------------------
+        # -------------------------------------------------
+        # Institutional Snapshot Builder
+        # -------------------------------------------------
+
+        institutional_snapshot_builder = (
+
+            InstitutionalSnapshotBuilder()
+
+        )
+
+        # -------------------------------------------------
         # Pipeline
-        # -----------------------------------------------
+        # -------------------------------------------------
 
         pipeline = OptionForgePipeline(
 
             snapshot_builder=snapshot_builder,
 
+            institutional_snapshot_builder=(
+                institutional_snapshot_builder
+            ),
+
             analytics=self._analytics,
 
         )
+
+        # -------------------------------------------------
+        # Execute
+        # -------------------------------------------------
 
         return pipeline.execute(
 

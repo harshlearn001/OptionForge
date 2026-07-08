@@ -5,7 +5,7 @@ Repository Context
 ============================================================
 
 Author      : OptionForge
-Module      : repository_context.py
+Module      : marketforge_root: str | Path
 Purpose     : Immutable repository configuration.
 
 ============================================================
@@ -34,12 +34,24 @@ class RepositoryContext:
 
     validate_schema: bool = True
 
-    def __post_init__(self) -> None:
+    def __post_init__(self):
 
-        if not self.marketforge_root.exists():
+        root = Path(self.marketforge_root)
+
+        object.__setattr__(
+
+            self,
+
+            "marketforge_root",
+
+            root,
+
+        )
+
+        if not root.exists():
 
             raise FileNotFoundError(
 
-                self.marketforge_root
+                f"MarketForge root not found: {root}"
 
             )

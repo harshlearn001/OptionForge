@@ -5,6 +5,8 @@ Dealer Pressure Tests
 ==============================================================
 """
 
+from os import replace
+from dataclasses import replace
 from optionforge.intelligence import DealerPressure
 
 from optionforge.models import (
@@ -19,25 +21,26 @@ def dealer():
 
     return DealerPositionResult(
 
-        dealer_bias="SHORT GAMMA",
-
-        dealer_direction="SHORT DELTA",
-
-        market_condition="TRENDING",
-
-        market_stability="LOW",
-
-        directional_risk="VERY HIGH",
-
+        # Quantitative Metrics
+        dealer_position=-250000.0,
+        dealer_delta=-18500.0,
+        dealer_gamma=-4200.0,
+        net_exposure=-268700.0,
+        position_strength=92.0,
         institutional_score=15.0,
 
-        confidence="★☆☆☆☆",
+        # Classification
+        dealer_bias="SHORT GAMMA",
+        dealer_direction="SHORT DELTA",
+        market_condition="TRENDING",
+        market_stability="LOW",
+        directional_risk="VERY HIGH",
 
+        # Decision Support
+        confidence=0.15,
         recommendation="Demo",
-
         interpretation="Demo",
     )
-
 
 def hedging():
 
@@ -170,17 +173,23 @@ def test_interpretation_not_empty():
 # ==========================================================
 
 def test_low_pressure():
+ 
+    d = replace(
+        dealer(),
+        dealer_bias="LONG GAMMA",
+        dealer_direction="LONG DELTA",
+    )
 
-    d = dealer()
-    d.dealer_bias = "LONG GAMMA"
-    d.dealer_direction = "LONG DELTA"
+    h = replace(
+        hedging(),
+        hedging_bias="COUNTER-CYCLICAL",
+        volatility_effect="VOLATILITY STABLE",
+    )
 
-    h = hedging()
-    h.hedging_bias = "COUNTER-CYCLICAL"
-    h.volatility_effect = "VOLATILITY STABLE"
-
-    s = signal()
-    s.overall_signal = "BULLISH"
+    s = replace(
+        signal(),
+        overall_signal="BULLISH",
+    )
 
     r = DealerPressure.calculate(
 

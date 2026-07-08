@@ -69,7 +69,10 @@ class PathManager:
 
     @property
     def options_master(self) -> Path:
-        return self._master / "Options_master"
+        """
+        Canonical MarketForge option master directory.
+        """
+        return self._master / "option_master"
 
     @property
     def option_indices(self) -> Path:

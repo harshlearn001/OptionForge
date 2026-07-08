@@ -31,13 +31,11 @@ def repository(tmp_path):
     root = tmp_path / "MarketForge"
 
     folder = (
-
         root
         / "data"
         / "master"
-        / "Options_master"
+        / "option_master"
         / "INDICES"
-
     )
 
     folder.mkdir(parents=True)

@@ -5,13 +5,12 @@ WORKFLOW ENGINE TEST
 ============================================================
 """
 
-import sys
 from pathlib import Path
+import sys
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 sys.path.append(str(BASE_DIR))
 
-from optionforge.config.settings import LIVE_FOLDER
 from optionforge.workflow import WorkflowEngine
 
 print("=" * 60)
@@ -19,16 +18,18 @@ print("OPTIONFORGE")
 print("WORKFLOW TEST")
 print("=" * 60)
 
-csv_file = LIVE_FOLDER / "sample_option_chain.csv"
+workflow = WorkflowEngine(
+    marketforge_root=r"H:\MarketForge",
+)
 
-df = WorkflowEngine.run(csv_file)
+snapshot = workflow.run("NIFTY")
 
 print()
-print(df.head())
-
-print()
-print("Rows    :", len(df))
-print("Columns :", len(df.columns))
+print("Symbol :", snapshot.symbol)
+print("Stage  :", snapshot.stage.name)
+print("Option Rows :", snapshot.market_snapshot.option_rows)
+print("Future Rows :", snapshot.market_snapshot.future_rows)
+print("Spot Rows   :", snapshot.market_snapshot.spot_rows)
 
 print()
 print("MISSION COMPLETE")
