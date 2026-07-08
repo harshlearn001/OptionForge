@@ -20,7 +20,15 @@ Examples
 """
 
 from optionforge.providers.base_provider import BaseProvider
+from optionforge.providers.greeks.gamma_exposure_provider import (
+    GammaExposureProvider,
+)
+from optionforge.providers.volatility.expected_move_provider import (
+    ExpectedMoveProvider,
+)
 
 __all__ = [
     "BaseProvider",
+    "GammaExposureProvider",
+    "ExpectedMoveProvider",
 ]
