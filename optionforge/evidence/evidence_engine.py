@@ -85,45 +85,33 @@ class EvidenceEngine:
         if bias == "LONG GAMMA":
 
             return Evidence(
-
                 id="dealer_long_gamma",
-
                 name="Dealer Long Gamma",
-
                 type=EvidenceType.DEALER,
-
                 level=self._level(score),
-
                 score=score,
-
                 confidence=confidence,
-
+                description=(
+                    "Dealers are positioned long gamma. "
+                    "Hedging activity is expected to dampen volatility."
+                ),
                 source=FeatureId.DEALER_POSITION,
-
                 metadata=feature.metadata,
-
             )
-
         return Evidence(
-
             id="dealer_short_gamma",
-
             name="Dealer Short Gamma",
-
             type=EvidenceType.DEALER,
-
             level=self._level(score),
-
             score=score,
-
             confidence=confidence,
-
+            description=(
+                "Dealers are positioned short gamma. "
+                "Hedging activity may amplify price movement."
+            ),
             source=FeatureId.DEALER_POSITION,
-
             metadata=feature.metadata,
-
         )
-
     # -----------------------------------------------------
     # Volatility Evidence
     # -----------------------------------------------------
@@ -134,25 +122,18 @@ class EvidenceEngine:
     ) -> Evidence:
 
         return Evidence(
-
             id=feature.id.name.lower(),
-
             name=feature.name,
-
             type=EvidenceType.VOLATILITY,
-
             level=self._level(feature.confidence),
-
             score=feature.value,
-
             confidence=feature.confidence,
-
+            description=(
+                f"{feature.name} indicates elevated implied volatility conditions."
+            ),
             source=feature.id,
-
             metadata=feature.metadata,
-
         )
-
     # -----------------------------------------------------
     # Strength
     # -----------------------------------------------------

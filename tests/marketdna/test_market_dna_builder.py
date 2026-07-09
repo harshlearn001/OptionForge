@@ -31,21 +31,17 @@ def registry() -> EvidenceRegistry:
     r.add(
 
         Evidence(
-
             id="dealer_long_gamma",
-
             name="Dealer Long Gamma",
-
             type=EvidenceType.DEALER,
-
             level=EvidenceLevel.VERY_STRONG,
-
             score=90.0,
-
             confidence=95.0,
-
+            description=(
+                "Dealers are positioned long gamma. "
+                "Hedging flows are expected to reduce market volatility."
+            ),
             source=FeatureId.DEALER_POSITION,
-
         )
 
     )
@@ -53,21 +49,16 @@ def registry() -> EvidenceRegistry:
     r.add(
 
         Evidence(
-
             id="iv_rank",
-
             name="IV Rank",
-
             type=EvidenceType.VOLATILITY,
-
             level=EvidenceLevel.STRONG,
-
             score=82.0,
-
             confidence=88.0,
-
+            description=(
+                "IV Rank is elevated, indicating relatively expensive implied volatility."
+            ),
             source=FeatureId.IV_RANK,
-
         )
 
     )
