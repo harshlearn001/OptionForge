@@ -9,33 +9,55 @@ Module      : decision_builder.py
 
 Purpose
 -------
-Builds an immutable Decision from MarketDNA.
+Builds immutable institutional trading decisions
+from MarketDNA.
 
-This is the ONLY component responsible for creating
-Decision objects.
+The DecisionBuilder is the ONLY component responsible
+for constructing Decision objects.
+
+Responsibilities
+----------------
+✓ Convert MarketDNA into Decision
+✓ Select DecisionType
+✓ Select StrategyType
+✓ Determine ConfidenceLevel
+✓ Generate institutional rationale
+✓ Attach decision metadata
+
+Contains NO market analytics.
 
 ============================================================
 """
 
 from __future__ import annotations
 
+from datetime import UTC, datetime
+
 from optionforge.decision.confidence_level import (
     ConfidenceLevel,
 )
-from optionforge.decision.decision import Decision
+from optionforge.decision.decision import (
+    Decision,
+)
 from optionforge.decision.decision_type import (
     DecisionType,
 )
 from optionforge.decision.strategy_type import (
     StrategyType,
 )
-from optionforge.marketdna.market_dna import MarketDNA
+from optionforge.marketdna.market_dna import (
+    MarketDNA,
+)
 
 
 class DecisionBuilder:
     """
-    Builds institutional trading decisions.
+    Builds immutable institutional trading decisions.
     """
+
+    # =====================================================
+    # Public API
+    # =====================================================
 
     def build(
         self,
@@ -58,13 +80,18 @@ class DecisionBuilder:
         )
 
         recommendation = (
-            strategy.name.replace(
-                "_",
-                " ",
-            ).title()
+            strategy.name
+            .replace("_", " ")
+            .title()
         )
 
         rationale = self._rationale(
+            market_dna,
+            decision,
+            strategy,
+        )
+
+        metadata = self._metadata(
             market_dna,
         )
 
@@ -84,9 +111,13 @@ class DecisionBuilder:
 
             rationale=rationale,
 
+            metadata=metadata,
+
         )
 
-    # -----------------------------------------------------
+    # =====================================================
+    # Decision Type
+    # =====================================================
 
     @staticmethod
     def _decision_type(
@@ -115,7 +146,9 @@ class DecisionBuilder:
 
         return DecisionType.HOLD
 
-    # -----------------------------------------------------
+    # =====================================================
+    # Strategy Selection
+    # =====================================================
 
     @staticmethod
     def _strategy(
@@ -141,14 +174,22 @@ class DecisionBuilder:
 
         return StrategyType.CASH
 
-    # -----------------------------------------------------
+    # =====================================================
+    # Institutional Rationale
+    # =====================================================
 
     @staticmethod
     def _rationale(
         dna: MarketDNA,
+        decision: DecisionType,
+        strategy: StrategyType,
     ) -> tuple[str, ...]:
 
         return (
+
+            f"Decision: {decision.name}",
+
+            f"Strategy: {strategy.name}",
 
             f"Market Regime: {dna.regime}",
 
@@ -158,8 +199,51 @@ class DecisionBuilder:
 
             f"Liquidity: {dna.liquidity}",
 
-            f"Dealer: {dna.dealer_position}",
+            f"Dealer Position: {dna.dealer_position}",
 
             f"Confidence: {dna.confidence:.1f}%",
 
         )
+
+    # =====================================================
+    # Metadata
+    # =====================================================
+
+    @staticmethod
+    def _metadata(
+        dna: MarketDNA,
+    ) -> dict:
+
+        return {
+
+            "builder": "DecisionBuilder",
+
+            "decision_version": 1,
+
+            "generated_at": (
+                datetime.now(UTC).isoformat()
+            ),
+
+            "market_regime": str(
+                dna.regime
+            ),
+
+            "trend": str(
+                dna.trend
+            ),
+
+            "volatility": str(
+                dna.volatility
+            ),
+
+            "liquidity": str(
+                dna.liquidity
+            ),
+
+            "dealer_position": str(
+                dna.dealer_position
+            ),
+
+            "confidence": dna.confidence,
+
+        }
