@@ -6,11 +6,11 @@ Risk Profile
 
 Author      : OptionForge
 Module      : risk_profile.py
-Purpose     : Defines institutional risk profiles.
+Purpose     : Defines institutional trading risk profiles.
 
 RiskProfile determines the acceptable level of risk
-used by the Strategy Engine when selecting an options
-strategy.
+used by the Strategy framework when selecting an
+options strategy.
 
 ============================================================
 """
@@ -26,59 +26,26 @@ class RiskProfile(Enum):
     """
 
     # -----------------------------------------------------
-    # Conservative
+    # Profiles
     # -----------------------------------------------------
 
     CONSERVATIVE = auto()
 
-    # -----------------------------------------------------
-    # Balanced
-    # -----------------------------------------------------
-
     MODERATE = auto()
 
-    # -----------------------------------------------------
-    # Aggressive
-    # -----------------------------------------------------
-
     AGGRESSIVE = auto()
-
-    # -----------------------------------------------------
-    # Professional
-    # -----------------------------------------------------
 
     INSTITUTIONAL = auto()
 
     # -----------------------------------------------------
-    # Convenience
+    # Capital Allocation
     # -----------------------------------------------------
-
-    @property
-    def allows_unlimited_risk(self) -> bool:
-        """
-        Returns True if unlimited-risk strategies
-        may be selected.
-        """
-
-        return self is RiskProfile.INSTITUTIONAL
-
-    @property
-    def prefers_defined_risk(self) -> bool:
-        """
-        Returns True if defined-risk strategies
-        are preferred.
-        """
-
-        return self in (
-            RiskProfile.CONSERVATIVE,
-            RiskProfile.MODERATE,
-        )
 
     @property
     def max_position_size(self) -> float:
         """
         Suggested maximum position size as a
-        percentage of portfolio.
+        percentage of portfolio capital.
         """
 
         return {
@@ -93,8 +60,14 @@ class RiskProfile(Enum):
 
         }[self]
 
+    # -----------------------------------------------------
+    # Probability Preference
+    # -----------------------------------------------------
+
     @property
-    def preferred_probability_of_profit(self) -> float:
+    def preferred_probability_of_profit(
+        self,
+    ) -> float:
         """
         Minimum preferred probability of profit.
         """
@@ -111,33 +84,89 @@ class RiskProfile(Enum):
 
         }[self]
 
+    # -----------------------------------------------------
+    # Behaviour
+    # -----------------------------------------------------
+
     @property
-    def prefers_income(self) -> bool:
+    def prefers_defined_risk(self) -> bool:
         """
-        Returns True for profiles that generally
-        favor premium-selling strategies.
+        Prefers defined-risk option structures.
         """
 
         return self in (
+
             RiskProfile.CONSERVATIVE,
+
             RiskProfile.MODERATE,
+
+        )
+
+    @property
+    def allows_unlimited_risk(self) -> bool:
+        """
+        Allows unlimited-risk strategies.
+        """
+
+        return self is RiskProfile.INSTITUTIONAL
+
+    @property
+    def prefers_income(self) -> bool:
+        """
+        Prefers premium-selling strategies.
+        """
+
+        return self in (
+
+            RiskProfile.CONSERVATIVE,
+
+            RiskProfile.MODERATE,
+
         )
 
     @property
     def prefers_directional(self) -> bool:
         """
-        Returns True for profiles that generally
-        favor directional trades.
+        Prefers directional strategies.
         """
 
         return self in (
+
             RiskProfile.AGGRESSIVE,
+
             RiskProfile.INSTITUTIONAL,
+
         )
 
-    def __str__(self) -> str:
+    @property
+    def prefers_volatility(self) -> bool:
         """
-        Human-readable representation.
+        Prefers long volatility opportunities.
         """
 
-        return self.name.replace("_", " ").title()
+        return self in (
+
+            RiskProfile.AGGRESSIVE,
+
+            RiskProfile.INSTITUTIONAL,
+
+        )
+
+    @property
+    def prefers_capital_preservation(self) -> bool:
+        """
+        Prefers capital preservation.
+        """
+
+        return self is RiskProfile.CONSERVATIVE
+
+    # -----------------------------------------------------
+    # Representation
+    # -----------------------------------------------------
+
+    def __str__(self) -> str:
+
+        return self.name.replace(
+            "_",
+            " ",
+        ).title()

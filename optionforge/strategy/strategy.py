@@ -20,7 +20,12 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from typing import Any, Mapping
 
-from optionforge.decision.strategy_type import StrategyType
+from optionforge.strategy.strategy_risk import (
+    StrategyRisk,
+)
+from optionforge.strategy.strategy_type import (
+    StrategyType,
+)
 
 
 @dataclass(
@@ -52,9 +57,13 @@ class Strategy:
 
     market_environment: str
 
+    risk: StrategyRisk
+
     # -----------------------------------------------------
-    # Risk
+    # Trading Metrics
     # -----------------------------------------------------
+
+    capital_required: float
 
     max_profit: str
 
@@ -64,11 +73,9 @@ class Strategy:
 
     risk_reward: str
 
-    # -----------------------------------------------------
-    # Confidence
-    # -----------------------------------------------------
-
     confidence: float
+
+    rationale: tuple[str, ...] = ()
 
     # -----------------------------------------------------
     # Metadata
@@ -102,6 +109,11 @@ class Strategy:
                 "Probability of profit must be between 0 and 100."
             )
 
+        if self.capital_required < 0:
+            raise ValueError(
+                "Capital required cannot be negative."
+            )
+
         if not self.risk_reward.strip():
             raise ValueError(
                 "risk_reward cannot be empty."
@@ -113,44 +125,26 @@ class Strategy:
 
     @property
     def is_bullish(self) -> bool:
-        """
-        Returns True for bullish strategies.
-        """
         return self.type.is_bullish
 
     @property
     def is_bearish(self) -> bool:
-        """
-        Returns True for bearish strategies.
-        """
         return self.type.is_bearish
 
     @property
     def is_neutral(self) -> bool:
-        """
-        Returns True for neutral strategies.
-        """
         return self.type.is_neutral
 
     @property
     def is_volatility(self) -> bool:
-        """
-        Returns True for volatility strategies.
-        """
         return self.type.is_volatility
 
     @property
     def is_hedge(self) -> bool:
-        """
-        Returns True for hedging strategies.
-        """
         return self.type.is_hedge
 
     @property
     def is_cash(self) -> bool:
-        """
-        Returns True when no position is recommended.
-        """
         return self.type.is_cash
 
     # -----------------------------------------------------
@@ -173,6 +167,10 @@ class Strategy:
 
             "market_environment": self.market_environment,
 
+            "risk": self.risk.name,
+
+            "capital_required": self.capital_required,
+
             "max_profit": self.max_profit,
 
             "max_loss": self.max_loss,
@@ -183,6 +181,9 @@ class Strategy:
             "risk_reward": self.risk_reward,
 
             "confidence": self.confidence,
+
+            "rationale":
+                list(self.rationale),
 
             "timestamp":
                 self.timestamp.isoformat(),
@@ -216,7 +217,7 @@ class Strategy:
 
             f"type={self.type.name}, "
 
-            f"title={self.title!r}, "
+            f"risk={self.risk.name}, "
 
             f"confidence={self.confidence:.1f})"
 

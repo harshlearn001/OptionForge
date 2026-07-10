@@ -6,28 +6,45 @@ Strategy Builder
 
 Author      : OptionForge
 Module      : strategy_builder.py
-Purpose     : Builds immutable Strategy objects.
+Purpose     : Builds immutable institutional Strategy objects.
 
 StrategyBuilder is the ONLY component responsible for
-constructing Strategy instances.
+constructing Strategy instances from Decision objects.
 
 ============================================================
 """
 
 from __future__ import annotations
 
-from optionforge.decision.decision import Decision
+from datetime import UTC, datetime
+from typing import Any
 
-from optionforge.strategy.strategy import Strategy
+from optionforge.decision.decision import (
+    Decision,
+)
+
+from optionforge.strategy.strategy import (
+    Strategy,
+)
+from optionforge.strategy.strategy_risk import (
+    StrategyRisk,
+)
 from optionforge.strategy.strategy_selector import (
     StrategySelector,
+)
+from optionforge.strategy.strategy_type import (
+    StrategyType,
 )
 
 
 class StrategyBuilder:
     """
-    Builds immutable Strategy objects.
+    Builds immutable institutional Strategy objects.
     """
+
+    # =====================================================
+    # Constructor
+    # =====================================================
 
     def __init__(
         self,
@@ -35,102 +52,167 @@ class StrategyBuilder:
     ) -> None:
 
         self._selector = (
+
             selector
+
             if selector is not None
+
             else StrategySelector()
+
         )
 
-    # -----------------------------------------------------
+    # =====================================================
+    # Public API
+    # =====================================================
 
     def build(
         self,
         decision: Decision,
     ) -> Strategy:
         """
-        Build Strategy from Decision.
+        Build an institutional Strategy from
+        a Decision.
         """
 
-        strategy_type = self._selector.select(
+        strategy = self._selector.select(
             decision,
+        )
+
+        risk = self._risk(
+            strategy,
         )
 
         return Strategy(
 
-            type=strategy_type,
+            type=strategy,
 
-            title=self._title(strategy_type),
+            title=self._title(
+                strategy,
+            ),
 
-            summary=self._summary(strategy_type),
+            summary=self._summary(
+                strategy,
+            ),
 
-            direction=self._direction(strategy_type),
+            direction=self._direction(
+                strategy,
+            ),
 
-            volatility_view=self._volatility(strategy_type),
+            volatility_view=self._volatility(
+                strategy,
+            ),
 
             market_environment=str(
                 decision.market_dna.regime
             ),
 
-            max_profit=self._max_profit(strategy_type),
+            risk=risk,
 
-            max_loss=self._max_loss(strategy_type),
+            capital_required=self._capital_required(
+                strategy,
+            ),
+
+            max_profit=self._max_profit(
+                strategy,
+            ),
+
+            max_loss=self._max_loss(
+                strategy,
+            ),
 
             probability_of_profit=self._pop(
-                strategy_type,
+                strategy,
             ),
 
             risk_reward=self._risk_reward(
-                strategy_type,
+                strategy,
             ),
 
             confidence=decision.confidence,
 
+            rationale=self._rationale(
+                decision,
+                strategy,
+                risk,
+            ),
+
+            metadata=self._metadata(
+                decision,
+                strategy,
+                risk,
+            ),
+
         )
 
-    # -----------------------------------------------------
-    # Private Helpers
-    # -----------------------------------------------------
+    # =====================================================
+    # Identity
+    # =====================================================
 
     @staticmethod
-    def _title(strategy) -> str:
-
-        return strategy.name.replace(
-            "_",
-            " ",
-        ).title()
-
-    # -----------------------------------------------------
-
-    @staticmethod
-    def _summary(strategy) -> str:
+    def _title(
+        strategy: StrategyType,
+    ) -> str:
 
         return (
 
-            f"Institutional "
+            strategy.name
 
-            f"{strategy.name.replace('_', ' ').title()} "
+            .replace(
+                "_",
+                " ",
+            )
 
-            f"strategy."
+            .title()
 
         )
 
     # -----------------------------------------------------
 
     @staticmethod
-    def _direction(strategy) -> str:
+    def _summary(
+        strategy: StrategyType,
+    ) -> str:
+
+        return (
+
+            "Institutional "
+
+            f"{strategy.name.replace('_', ' ').title()} "
+
+            "strategy generated by OptionForge."
+
+        )
+    
+        # =====================================================
+    # Classification
+    # =====================================================
+
+    @staticmethod
+    def _direction(
+        strategy: StrategyType,
+    ) -> str:
+        """
+        Human-readable market direction.
+        """
 
         if strategy.is_bullish:
+
             return "Bullish"
 
         if strategy.is_bearish:
+
             return "Bearish"
 
         if strategy.is_neutral:
+
             return "Neutral"
 
         if strategy.is_volatility:
+
             return "Volatility"
 
         if strategy.is_hedge:
+
             return "Hedging"
 
         return "Cash"
@@ -138,80 +220,332 @@ class StrategyBuilder:
     # -----------------------------------------------------
 
     @staticmethod
-    def _volatility(strategy) -> str:
+    def _volatility(
+        strategy: StrategyType,
+    ) -> str:
+        """
+        Volatility expectation.
+        """
 
-        if strategy.is_volatility:
+        if strategy in (
+
+            StrategyType.LONG_STRADDLE,
+
+            StrategyType.LONG_STRANGLE,
+
+            StrategyType.BACKSPREAD,
+
+            StrategyType.RATIO_SPREAD,
+
+        ):
+
             return "High"
+
+        if strategy in (
+
+            StrategyType.SHORT_STRADDLE,
+
+            StrategyType.SHORT_STRANGLE,
+
+            StrategyType.IRON_CONDOR,
+
+            StrategyType.IRON_BUTTERFLY,
+
+        ):
+
+            return "Low"
 
         return "Normal"
 
-    # -----------------------------------------------------
+    # =====================================================
+    # Risk Classification
+    # =====================================================
 
     @staticmethod
-    def _max_profit(strategy) -> str:
+    def _risk(
+        strategy: StrategyType,
+    ) -> StrategyRisk:
+        """
+        Institutional strategy risk.
+        """
+
+        if strategy in (
+
+            StrategyType.CASH,
+
+            StrategyType.NO_POSITION,
+
+            StrategyType.PROTECTIVE_PUT,
+
+            StrategyType.COLLAR,
+
+        ):
+
+            return StrategyRisk.VERY_LOW
+
+        if strategy in (
+
+            StrategyType.BULL_CALL_SPREAD,
+
+            StrategyType.BULL_PUT_SPREAD,
+
+            StrategyType.BEAR_CALL_SPREAD,
+
+            StrategyType.BEAR_PUT_SPREAD,
+
+            StrategyType.COVERED_CALL,
+
+            StrategyType.IRON_CONDOR,
+
+        ):
+
+            return StrategyRisk.LOW
+
+        if strategy in (
+
+            StrategyType.LONG_CALL,
+
+            StrategyType.LONG_PUT,
+
+            StrategyType.CALENDAR_SPREAD,
+
+            StrategyType.DIAGONAL_SPREAD,
+
+        ):
+
+            return StrategyRisk.MODERATE
+
+        if strategy in (
+
+            StrategyType.LONG_STRADDLE,
+
+            StrategyType.LONG_STRANGLE,
+
+            StrategyType.SYNTHETIC_LONG,
+
+            StrategyType.SYNTHETIC_SHORT,
+
+        ):
+
+            return StrategyRisk.HIGH
+
+        return StrategyRisk.VERY_HIGH
+
+    # =====================================================
+    # Capital Requirement
+    # =====================================================
+
+    @staticmethod
+    def _capital_required(
+        strategy: StrategyType,
+    ) -> float:
+        """
+        Estimated capital required.
+
+        Placeholder values until the
+        Portfolio/Execution engines provide
+        live margin calculations.
+        """
+
+        capital = {
+
+            StrategyType.CASH: 0.0,
+
+            StrategyType.NO_POSITION: 0.0,
+
+            StrategyType.LONG_CALL: 25000.0,
+
+            StrategyType.LONG_PUT: 25000.0,
+
+            StrategyType.BULL_CALL_SPREAD: 45000.0,
+
+            StrategyType.BULL_PUT_SPREAD: 70000.0,
+
+            StrategyType.BEAR_CALL_SPREAD: 70000.0,
+
+            StrategyType.BEAR_PUT_SPREAD: 45000.0,
+
+            StrategyType.IRON_CONDOR: 120000.0,
+
+            StrategyType.IRON_BUTTERFLY: 120000.0,
+
+            StrategyType.LONG_STRADDLE: 50000.0,
+
+            StrategyType.LONG_STRANGLE: 45000.0,
+
+            StrategyType.CALENDAR_SPREAD: 60000.0,
+
+            StrategyType.DIAGONAL_SPREAD: 65000.0,
+
+            StrategyType.PROTECTIVE_PUT: 35000.0,
+
+            StrategyType.COVERED_CALL: 150000.0,
+
+            StrategyType.COLLAR: 160000.0,
+
+            StrategyType.DELTA_HEDGE: 200000.0,
+
+            StrategyType.SYNTHETIC_LONG: 85000.0,
+
+            StrategyType.SYNTHETIC_SHORT: 85000.0,
+
+            StrategyType.RATIO_SPREAD: 95000.0,
+
+            StrategyType.BACKSPREAD: 90000.0,
+
+            StrategyType.SHORT_STRANGLE: 140000.0,
+
+            StrategyType.SHORT_STRADDLE: 150000.0,
+
+        }
+
+        return capital.get(
+
+            strategy,
+
+            50000.0,
+
+        )
+
+    # =====================================================
+    # Profit / Loss
+    # =====================================================
+
+    @staticmethod
+    def _max_profit(
+        strategy: StrategyType,
+    ) -> str:
+        """
+        Institutional maximum profit description.
+        """
 
         if strategy.is_cash:
+
             return "None"
 
         if strategy.is_hedge:
-            return "Protection"
+
+            return "Capital Protection"
 
         if strategy.is_volatility:
+
             return "Variable"
 
-        return "Defined"
+        if strategy in (
+
+            StrategyType.BULL_CALL_SPREAD,
+
+            StrategyType.BEAR_PUT_SPREAD,
+
+            StrategyType.IRON_CONDOR,
+
+            StrategyType.IRON_BUTTERFLY,
+
+        ):
+
+            return "Defined"
+
+        return "Unlimited"
 
     # -----------------------------------------------------
 
     @staticmethod
-    def _max_loss(strategy) -> str:
+    def _max_loss(
+        strategy: StrategyType,
+    ) -> str:
+        """
+        Institutional maximum loss description.
+        """
 
         if strategy.is_cash:
+
             return "None"
 
         return "Defined"
-
-    # -----------------------------------------------------
+    
+        # =====================================================
+    # Probability of Profit
+    # =====================================================
 
     @staticmethod
-    def _pop(strategy) -> float:
+    def _pop(
+        strategy: StrategyType,
+    ) -> float:
+        """
+        Estimated Probability of Profit (POP).
+
+        Placeholder values until replaced by the
+        Probability Engine.
+        """
 
         probabilities = {
 
-            strategy.LONG_CALL: 45.0,
+            StrategyType.LONG_CALL: 45.0,
 
-            strategy.BULL_CALL_SPREAD: 65.0,
+            StrategyType.BULL_CALL_SPREAD: 65.0,
 
-            strategy.BULL_PUT_SPREAD: 72.0,
+            StrategyType.BULL_PUT_SPREAD: 72.0,
 
-            strategy.LONG_PUT: 45.0,
+            StrategyType.SYNTHETIC_LONG: 55.0,
 
-            strategy.BEAR_PUT_SPREAD: 65.0,
+            StrategyType.LONG_PUT: 45.0,
 
-            strategy.BEAR_CALL_SPREAD: 72.0,
+            StrategyType.BEAR_PUT_SPREAD: 65.0,
 
-            strategy.IRON_CONDOR: 70.0,
+            StrategyType.BEAR_CALL_SPREAD: 72.0,
 
-            strategy.IRON_BUTTERFLY: 68.0,
+            StrategyType.SYNTHETIC_SHORT: 55.0,
 
-            strategy.LONG_STRADDLE: 42.0,
+            StrategyType.IRON_CONDOR: 78.0,
 
-            strategy.LONG_STRANGLE: 40.0,
+            StrategyType.IRON_BUTTERFLY: 74.0,
+
+            StrategyType.SHORT_STRANGLE: 76.0,
+
+            StrategyType.SHORT_STRADDLE: 70.0,
+
+            StrategyType.CALENDAR_SPREAD: 60.0,
+
+            StrategyType.DIAGONAL_SPREAD: 58.0,
+
+            StrategyType.LONG_STRADDLE: 42.0,
+
+            StrategyType.LONG_STRANGLE: 40.0,
+
+            StrategyType.RATIO_SPREAD: 48.0,
+
+            StrategyType.BACKSPREAD: 45.0,
+
+            StrategyType.PROTECTIVE_PUT: 100.0,
+
+            StrategyType.COVERED_CALL: 68.0,
+
+            StrategyType.COLLAR: 82.0,
+
+            StrategyType.DELTA_HEDGE: 100.0,
+
+            StrategyType.CASH: 100.0,
+
+            StrategyType.NO_POSITION: 100.0,
 
         }
 
         return probabilities.get(
-
             strategy,
-
             50.0,
-
         )
 
-    # -----------------------------------------------------
+    # =====================================================
+    # Risk / Reward
+    # =====================================================
 
     @staticmethod
-    def _risk_reward(strategy) -> str:
+    def _risk_reward(
+        strategy: StrategyType,
+    ) -> str:
+        """
+        Institutional risk/reward estimate.
+        """
 
         if strategy.is_cash:
 
@@ -225,4 +559,132 @@ class StrategyBuilder:
 
             return "Variable"
 
-        return "1:2"
+        mapping = {
+
+            StrategyType.LONG_CALL: "1:3",
+
+            StrategyType.LONG_PUT: "1:3",
+
+            StrategyType.BULL_CALL_SPREAD: "1:2",
+
+            StrategyType.BULL_PUT_SPREAD: "1:2.5",
+
+            StrategyType.BEAR_CALL_SPREAD: "1:2.5",
+
+            StrategyType.BEAR_PUT_SPREAD: "1:2",
+
+            StrategyType.IRON_CONDOR: "1:1.5",
+
+            StrategyType.IRON_BUTTERFLY: "1:1.4",
+
+            StrategyType.CALENDAR_SPREAD: "1:2",
+
+            StrategyType.DIAGONAL_SPREAD: "1:2",
+
+            StrategyType.SYNTHETIC_LONG: "1:3",
+
+            StrategyType.SYNTHETIC_SHORT: "1:3",
+
+        }
+
+        return mapping.get(
+            strategy,
+            "Variable",
+        )
+
+    # =====================================================
+    # Institutional Rationale
+    # =====================================================
+
+    @staticmethod
+    def _rationale(
+        decision: Decision,
+        strategy: StrategyType,
+        risk: StrategyRisk,
+    ) -> tuple[str, ...]:
+        """
+        Institutional explanation of why the
+        strategy was selected.
+        """
+
+        dna = decision.market_dna
+
+        return (
+
+            f"Decision: {decision.decision.name}",
+
+            f"Strategy: {strategy.name}",
+
+            f"Risk: {risk.name}",
+
+            f"Market Regime: {dna.regime}",
+
+            f"Trend: {dna.trend}",
+
+            f"Volatility: {dna.volatility}",
+
+            f"Liquidity: {dna.liquidity}",
+
+            f"Dealer Position: {dna.dealer_position}",
+
+            f"Confidence: {decision.confidence:.1f}%",
+
+        )
+
+    # =====================================================
+    # Metadata
+    # =====================================================
+
+    @staticmethod
+    def _metadata(
+        decision: Decision,
+        strategy: StrategyType,
+        risk: StrategyRisk,
+    ) -> dict[str, Any]:
+        """
+        Builder metadata.
+        """
+
+        dna = decision.market_dna
+
+        return {
+
+            "builder": "StrategyBuilder",
+
+            "strategy_version": 1,
+
+            "generated_at": (
+                datetime.now(UTC).isoformat()
+            ),
+
+            "strategy": strategy.name,
+
+            "risk": risk.name,
+
+            "decision": decision.decision.name,
+
+            "market_regime": str(
+                dna.regime
+            ),
+
+            "trend": str(
+                dna.trend
+            ),
+
+            "volatility": str(
+                dna.volatility
+            ),
+
+            "liquidity": str(
+                dna.liquidity
+            ),
+
+            "dealer_position": str(
+                dna.dealer_position
+            ),
+
+            "confidence": (
+                decision.confidence
+            ),
+
+        }
