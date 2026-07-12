@@ -145,3 +145,28 @@ class OptionProvider:
         )
 
     __str__ = __repr__
+        # =====================================================
+    # Strike Discovery
+    # =====================================================
+
+    def strikes(
+        self,
+        symbol: str,
+        trade_date,
+        expiry,
+    ) -> list:
+        """
+        Return sorted unique strikes.
+        """
+
+        chain = self.option_chain(
+            symbol=symbol,
+            trade_date=trade_date,
+            expiry=expiry,
+        )
+
+        return sorted(
+            chain["STRIKE_PRICE"]
+            .drop_duplicates()
+            .tolist()
+        )

@@ -162,3 +162,41 @@ def test_repr():
     provider = OptionProvider(repo)
 
     assert "OptionProvider" in repr(provider)
+
+# ==========================================================
+# Strike Discovery
+# ==========================================================
+
+
+def test_strikes():
+
+    repo = Mock()
+
+    repo.load.return_value = sample_df()
+
+    provider = OptionProvider(repo)
+
+    strikes = provider.strikes(
+        "NIFTY",
+        20260101,
+        20260129,
+    )
+
+    assert strikes == [25000]
+
+
+def test_strikes_empty():
+
+    repo = Mock()
+
+    repo.load.return_value = sample_df()
+
+    provider = OptionProvider(repo)
+
+    strikes = provider.strikes(
+        "NIFTY",
+        20300101,
+        20300129,
+    )
+
+    assert strikes == []
