@@ -57,13 +57,13 @@ class OptionProvider:
         return self._repository
 
     # =====================================================
-    # Discovery
+    # Trade Date Discovery
     # =====================================================
 
-    def available_trade_dates(
+    def trade_dates(
         self,
         symbol: str,
-    ) -> list:
+    ) -> list[int]:
         """
         Return all available trade dates.
         """
@@ -71,27 +71,135 @@ class OptionProvider:
         df = self.repository.load(symbol)
 
         return sorted(
+
             df["TRADE_DATE"]
+
             .drop_duplicates()
+
+            .astype(int)
+
             .tolist()
+
         )
+
+    # -----------------------------------------------------
+
+    def available_trade_dates(
+        self,
+        symbol: str,
+    ) -> list[int]:
+        """
+        Backward-compatible alias.
+        """
+
+        return self.trade_dates(symbol)
+
+    # -----------------------------------------------------
+
+    def latest_trade_date(
+        self,
+        symbol: str,
+    ) -> int:
+        """
+        Return latest available trade date.
+        """
+
+        dates = self.trade_dates(symbol)
+
+        if not dates:
+
+            raise ValueError(
+
+                f"No trade dates found for '{symbol}'."
+
+            )
+
+        return dates[-1]
+
+    # =====================================================
+    # Expiry Discovery
+    # =====================================================
+
+    def expiries(
+        self,
+        symbol: str,
+        trade_date,
+    ) -> list[int]:
+        """
+        Return expiries available on a trade date.
+        """
+
+        df = self.repository.load(symbol)
+
+        df = df.loc[
+
+            df["TRADE_DATE"] == trade_date
+
+        ]
+
+        return sorted(
+
+            df["EXP_DATE"]
+
+            .drop_duplicates()
+
+            .astype(int)
+
+            .tolist()
+
+        )
+
+    # -----------------------------------------------------
+
+    def latest_expiry(
+        self,
+        symbol: str,
+        trade_date,
+    ) -> int:
+        """
+        Return nearest expiry for a trade date.
+        """
+
+        expiries = self.expiries(
+
+            symbol,
+
+            trade_date,
+
+        )
+
+        if not expiries:
+
+            raise ValueError(
+
+                f"No expiry found for '{symbol}' on {trade_date}."
+
+            )
+
+        return expiries[0]
 
     # -----------------------------------------------------
 
     def expiry_list(
         self,
         symbol: str,
-    ) -> list:
+    ) -> list[int]:
         """
-        Return all available expiries.
+        Return all expiries available in the dataset.
         """
 
         df = self.repository.load(symbol)
 
         return sorted(
+
             df["EXP_DATE"]
+
             .drop_duplicates()
+
+            .astype(int)
+
             .tolist()
+
         )
 
     # =====================================================
@@ -105,7 +213,7 @@ class OptionProvider:
         expiry=None,
     ) -> pd.DataFrame:
         """
-        Return option chain for a trade date.
+        Return option chain.
 
         Parameters
         ----------
@@ -122,30 +230,22 @@ class OptionProvider:
         df = self.repository.load(symbol)
 
         chain = df.loc[
+
             df["TRADE_DATE"] == trade_date
+
         ]
 
         if expiry is not None:
 
             chain = chain.loc[
+
                 chain["EXP_DATE"] == expiry
+
             ]
 
         return chain.reset_index(drop=True)
 
     # =====================================================
-    # Representation
-    # =====================================================
-
-    def __repr__(self) -> str:
-
-        return (
-            f"{self.__class__.__name__}("
-            f"repository={self.repository.__class__.__name__})"
-        )
-
-    __str__ = __repr__
-        # =====================================================
     # Strike Discovery
     # =====================================================
 
@@ -154,19 +254,45 @@ class OptionProvider:
         symbol: str,
         trade_date,
         expiry,
-    ) -> list:
+    ) -> list[int]:
         """
         Return sorted unique strikes.
         """
 
         chain = self.option_chain(
+
             symbol=symbol,
+
             trade_date=trade_date,
+
             expiry=expiry,
+
         )
 
         return sorted(
+
             chain["STRIKE_PRICE"]
+
             .drop_duplicates()
+
+            .astype(int)
+
             .tolist()
+
         )
+
+    # =====================================================
+    # Representation
+    # =====================================================
+
+    def __repr__(self) -> str:
+
+        return (
+
+            f"{self.__class__.__name__}("
+
+            f"repository={self.repository.__class__.__name__})"
+
+        )
+
+    __str__ = __repr__

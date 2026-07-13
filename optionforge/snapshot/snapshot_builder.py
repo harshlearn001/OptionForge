@@ -50,16 +50,12 @@ class SnapshotBuilder:
         self._option_provider = option_provider
         self._spot_provider = spot_provider
 
-    # =====================================================
-
     @property
     def option_provider(self) -> OptionProvider:
-
         return self._option_provider
 
     @property
     def spot_provider(self) -> SpotProvider:
-
         return self._spot_provider
 
     # =====================================================
@@ -94,6 +90,32 @@ class SnapshotBuilder:
 
             option_chain=option_chain,
 
+        )
+
+    # =====================================================
+
+    def build_latest(
+        self,
+        symbol: str,
+    ) -> InstitutionalSnapshot:
+        """
+        Build snapshot using the latest available
+        trade date and nearest expiry.
+        """
+
+        trade_date = self.option_provider.latest_trade_date(
+            symbol,
+        )
+
+        expiry = self.option_provider.latest_expiry(
+            symbol,
+            trade_date,
+        )
+
+        return self.build(
+            symbol=symbol,
+            trade_date=trade_date,
+            expiry=expiry,
         )
 
     # =====================================================
