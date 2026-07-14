@@ -15,7 +15,7 @@ def snapshot():
 
         {
 
-            "OPTION_TYPE": [
+            "OPT_TYPE": [
                 "CE",
                 "CE",
                 "PE",
