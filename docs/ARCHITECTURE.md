@@ -1,255 +1,194 @@
 # OptionForge Architecture
 
-## Vision
+## Overview
 
-OptionForge is an institutional-grade quantitative options research platform.
+OptionForge is an institutional-grade options research platform built
+around a layered architecture.
 
-Primary goals:
+Each layer has a single responsibility and communicates only with the
+layer immediately above or below it.
 
-- Historical options research
-- Historical replay
-- Signal generation
-- Strategy research
-- Feature engineering
-- Machine learning
-- Risk analytics
+This design provides:
 
----
-
-# Layer Architecture
-
-Application
-
-↓
-
-Research
-
-↓
-
-Analytics
-
-↓
-
-Snapshot
-
-↓
-
-Provider
-
-↓
-
-Repository
-
-↓
-
-Integration
-
-↓
-
-Contracts
+- Modular development
+- Testability
+- Maintainability
+- Reusability
+- Clear separation of concerns
 
 ---
 
-# Package Responsibilities
+# High-Level Architecture
 
-contracts/
+                    OptionForge
 
-Immutable schemas and interfaces.
-
-No pandas.
-No business logic.
-
----
-
-integration/
-
-Responsible for reading and validating data.
-
-Contains:
-
-- FileResolver
-- MarketValidator
-- MarketRepository
-
-Never calculates analytics.
-
----
-
-provider/
-
-Provides market data.
-
-Examples:
-
-- nearest expiry
-- option chain
-- spot history
-- futures history
-
----
-
-snapshot/
-
-Creates InstitutionalSnapshot objects.
-
-No file reading.
-
-No analytics.
+          ┌─────────────────────┐
+          │     Repository       │
+          └─────────┬───────────┘
+                    │
+          ┌─────────▼───────────┐
+          │      Providers      │
+          └─────────┬───────────┘
+                    │
+          ┌─────────▼───────────┐
+          │ Snapshot Builder    │
+          └─────────┬───────────┘
+                    │
+          ┌─────────▼───────────┐
+          │ Analytics Engine    │
+          └─────────┬───────────┘
+                    │
+          ┌─────────▼───────────┐
+          │ Knowledge Engine    │
+          └─────────┬───────────┘
+                    │
+          ┌─────────▼───────────┐
+          │ Decision Engine     │
+          └─────────┬───────────┘
+                    │
+          ┌─────────▼───────────┐
+          │ Strategy Engine     │
+          └─────────┬───────────┘
+                    │
+          ┌─────────▼───────────┐
+          │ Portfolio Engine    │
+          └─────────┬───────────┘
+                    │
+          ┌─────────▼───────────┐
+          │ Execution Engine    │
+          └─────────────────────┘
 
 ---
 
-analytics/
+# Layer Responsibilities
 
-Calculations only.
+## Repository
 
-Examples:
+Responsible for loading market data.
 
-- PCR
-- IV
+Examples
+
+- Spot Data
+- Futures
+- Option Chain
+- Risk-Free Rates
+
+---
+
+## Providers
+
+Convert raw market data into reusable features.
+
+Examples
+
+- IV Rank Provider
+- Expected Move Provider
+- Gamma Exposure Provider
+- Dealer Position Provider
+
+---
+
+## Snapshot
+
+Creates immutable market snapshots.
+
+Every analytics engine consumes snapshots rather than raw data.
+
+---
+
+## Analytics
+
+Performs quantitative calculations.
+
+Includes:
+
 - Greeks
-- OI analytics
-- Volatility
-- VWAP
+- Implied Volatility
+- IV Rank
+- IV Percentile
+- Expected Move
+- Gamma Exposure
+- Volatility Smile
+- Volatility Surface
+- PCR
 - Max Pain
-
-Analytics never read files.
-
----
-
-research/
-
-Research engines.
-
-Consumes InstitutionalSnapshot.
-
-Produces research results.
+- Dealer Position
 
 ---
 
-storage/
+## Knowledge
 
-Persistence.
+Transforms analytics into market intelligence.
 
-Parquet
+Examples:
 
-Cache
-
-History
-
----
-
-tests/
-
-Mirror package structure.
-
-Every production module has a matching test module.
+- Dealer positioning
+- Volatility regime
+- Risk state
+- Market bias
 
 ---
 
-# Dependency Rules
+## Decision
 
-contracts
+Combines evidence into actionable decisions.
 
-↓
+Examples:
 
-integration
-
-↓
-
-repository
-
-↓
-
-provider
-
-↓
-
-snapshot
-
-↓
-
-analytics
-
-↓
-
-research
-
-Dependencies only flow downward.
-
-No circular imports.
+- Buy
+- Sell
+- Hold
+- Neutral
 
 ---
 
-# Coding Rules
+## Strategy
 
-- Type hints required.
-- Public methods documented.
-- Single Responsibility Principle.
-- Prefer composition over inheritance.
-- No hidden global state.
-- Use custom exceptions.
-- Avoid magic strings.
-- Keep business logic out of repositories.
+Creates trading strategies from decisions.
 
 ---
 
-# Testing Rules
+## Portfolio
 
-Every production module must have tests.
-
-Required:
-
-- import test
-- success path
-- failure path
-- edge cases
-
-No feature is complete until tests pass.
+Portfolio construction and capital allocation.
 
 ---
 
-# Git Workflow
+## Execution
 
-Write code
-
-↓
-
-Write tests
-
-↓
-
-pytest
-
-↓
-
-Commit
-
-↓
-
-Push
-
-↓
-
-Tag milestones
+Execution planning and trade management.
 
 ---
 
-# Milestones
+# Design Principles
 
-v0.1.0
-Foundation ✅
+OptionForge follows:
 
-v0.2.0
-Repository
+- Layered Architecture
+- Single Responsibility Principle
+- Composition over Inheritance
+- Immutable Result Objects
+- Test-Driven Development
+- Strong Typing
 
-v0.3.0
-Provider
+---
 
-v0.4.0
-Snapshot
+# Testing
 
-v0.5.0
-Research
+Current regression suite:
+
+1665 automated tests
+
+All passing.
+
+---
+
+# Version
+
+Current stable branch:
+
+v0.9.9
+
+Preparing:
 
 v1.0.0
-OptionForge
