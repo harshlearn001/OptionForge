@@ -19,66 +19,43 @@ from optionforge.execution.trade import Trade
 def order():
 
     return Order(
-
         symbol="NIFTY",
-
         side=OrderSide.BUY,
-
         order_type=OrderType.MARKET,
-
         status=OrderStatus.PENDING,
-
         quantity=100,
-
         price=250.0,
-
     )
 
 
 def fill1():
 
     return Fill(
-
         order=order(),
-
         quantity=40,
-
         price=250.0,
-
         status=FillStatus.PARTIAL,
-
     )
 
 
 def fill2():
 
     return Fill(
-
         order=order(),
-
         quantity=60,
-
         price=251.0,
-
         status=FillStatus.COMPLETE,
-
     )
 
 
 def trade():
 
     return Trade(
-
         order=order(),
-
         fills=(
-
             fill1(),
-
             fill2(),
-
         ),
-
     )
 
 
@@ -104,24 +81,12 @@ def test_remaining_quantity():
 
 def test_notional_value():
 
-    assert trade().notional_value == (
-
-        fill1().notional_value
-
-        + fill2().notional_value
-
-    )
+    assert trade().notional_value == (fill1().notional_value + fill2().notional_value)
 
 
 def test_average_price():
 
-    expected = (
-
-        (40 * 250.0)
-
-        + (60 * 251.0)
-
-    ) / 100
+    expected = ((40 * 250.0) + (60 * 251.0)) / 100
 
     assert trade().average_price == expected
 
@@ -136,15 +101,8 @@ def test_complete():
 def test_partial():
 
     partial = Trade(
-
         order=order(),
-
-        fills=(
-
-            fill1(),
-
-        ),
-
+        fills=(fill1(),),
     )
 
     assert partial.is_partial
@@ -155,11 +113,8 @@ def test_partial():
 def test_unfilled():
 
     empty = Trade(
-
         order=order(),
-
         fills=(),
-
     )
 
     assert empty.is_unfilled
@@ -174,37 +129,21 @@ def test_validation():
     with pytest.raises(ValueError):
 
         Trade(
-
             order=order(),
-
             fills=(
-
                 Fill(
-
                     order=order(),
-
                     quantity=70,
-
                     price=250,
-
                     status=FillStatus.PARTIAL,
-
                 ),
-
                 Fill(
-
                     order=order(),
-
                     quantity=40,
-
                     price=250,
-
                     status=FillStatus.PARTIAL,
-
                 ),
-
             ),
-
         )
 
 

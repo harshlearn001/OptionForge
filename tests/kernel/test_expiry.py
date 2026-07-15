@@ -18,10 +18,10 @@ from optionforge.kernel.trading_session import TradingSession
 from optionforge.kernel.symbol import Symbol
 from optionforge.kernel.expiry import Expiry
 
-
 # ==========================================================
 # Builders
 # ==========================================================
+
 
 def build_session() -> TradingSession:
     return TradingSession(
@@ -57,6 +57,7 @@ def build_expiry() -> Expiry:
 # Creation
 # ==========================================================
 
+
 def test_expiry_creation():
     expiry = build_expiry()
 
@@ -68,6 +69,7 @@ def test_expiry_creation():
 # ==========================================================
 # Validation
 # ==========================================================
+
 
 def test_invalid_expiry_date():
     with pytest.raises(
@@ -84,6 +86,7 @@ def test_invalid_expiry_date():
 # ==========================================================
 # Date Logic
 # ==========================================================
+
 
 def test_days_to_expiry():
     expiry = build_expiry()
@@ -113,6 +116,7 @@ def test_is_expiry_day():
 # Properties
 # ==========================================================
 
+
 def test_weekly():
     assert build_expiry().is_weekly is True
 
@@ -130,15 +134,13 @@ def test_monthly():
 def test_expiry_id():
     expiry = build_expiry()
 
-    assert (
-        expiry.expiry_id
-        == "NIFTY_20260702_WEEKLY"
-    )
+    assert expiry.expiry_id == "NIFTY_20260702_WEEKLY"
 
 
 # ==========================================================
 # Serialization
 # ==========================================================
+
 
 def test_to_dict():
     data = build_expiry().to_dict()
@@ -153,6 +155,7 @@ def test_to_dict():
 # String Representation
 # ==========================================================
 
+
 def test_string_representation():
     expiry = build_expiry()
 
@@ -162,6 +165,7 @@ def test_string_representation():
 # ==========================================================
 # Immutability
 # ==========================================================
+
 
 def test_frozen_dataclass():
     expiry = build_expiry()

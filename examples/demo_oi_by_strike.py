@@ -4,13 +4,11 @@ OPTIONFORGE
 OI BY STRIKE TEST
 ==============================================================
 """
-
-import sys
 from pathlib import Path
+import sys
 
-BASE_DIR = Path(__file__).resolve().parents[2]
-sys.path.append(str(BASE_DIR))
-
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
 from optionforge.optionchain import OptionChain
 from optionforge.oi.oi_by_strike import OIByStrike
 
@@ -34,10 +32,10 @@ print("-" * 70)
 
 df = chain.dataframe()
 
-print("Trading Date :", df["TRADE_DATE"].iloc[0].date())
-print("Expiry Date  :", df["EXPIRY"].iloc[0].date())
-print("Symbol       :", df["SYMBOL"].iloc[0])
-print("Instrument   :", df["INSTRUMENT"].iloc[0])
+print("Trading Date :", df["trading_date"].iloc[0].date())
+print("Expiry Date  :", df["expiry_date"].iloc[0].date())
+print("Symbol       :", df["symbol"].iloc[0])
+print("Instrument   :", df["instrument"].iloc[0])
 
 print()
 
@@ -74,9 +72,9 @@ print("-" * 70)
 
 df = chain.dataframe()
 
-print("Trading Date :", df["TRADE_DATE"].iloc[0].date())
-print("Expiry Date  :", df["EXPIRY"].iloc[0].date())
-print("Symbol       :", df["SYMBOL"].iloc[0])
-print("Instrument   :", df["INSTRUMENT"].iloc[0])
+print("Trading Date :", df["trading_date"].iloc[0].date())
+print("Expiry Date  :", df["expiry_date"].iloc[0].date())
+print("Symbol       :", df["symbol"].iloc[0])
+print("Instrument   :", df["instrument"].iloc[0])
 
 print()

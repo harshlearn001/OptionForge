@@ -112,27 +112,20 @@ class MarketExplosionRisk:
         if probability == "VERY HIGH":
 
             recommendation = (
-                "Reduce leverage. "
-                "Prepare for sharp directional movement."
+                "Reduce leverage. " "Prepare for sharp directional movement."
             )
 
         elif probability == "HIGH":
 
-            recommendation = (
-                "Expect increased volatility."
-            )
+            recommendation = "Expect increased volatility."
 
         elif probability == "MODERATE":
 
-            recommendation = (
-                "Maintain disciplined risk management."
-            )
+            recommendation = "Maintain disciplined risk management."
 
         else:
 
-            recommendation = (
-                "Normal market conditions."
-            )
+            recommendation = "Normal market conditions."
 
         # --------------------------------------------------
         # Confidence
@@ -151,18 +144,11 @@ class MarketExplosionRisk:
         )
 
         return MarketExplosionRiskResult(
-
             explosion_score=score,
-
             explosion_probability=probability,
-
             market_state=market_state,
-
             expected_behavior=behavior,
-
             recommendation=recommendation,
-
             confidence=confidence,
-
             interpretation=interpretation,
         )

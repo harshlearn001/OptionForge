@@ -83,11 +83,8 @@ class IntelligenceEngine:
         for rule in self._rules:
 
             result = rule.evaluate(
-
                 knowledge=registry,
-
                 builder=self._builder,
-
             )
 
             if result is not None:

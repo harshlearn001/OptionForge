@@ -34,7 +34,6 @@ from optionforge.analytics.pcr.pcr_result import (
 
 
 class SmartPCR:
-
     """
     Institutional PCR Engine.
     """
@@ -116,46 +115,28 @@ class SmartPCR:
         # ---------------------------------------------
 
         confidence = min(
-
             abs(weighted - 1.0) * 100,
-
             100,
-
         )
 
         return InstitutionalPCRResult(
-
             symbol=snapshot.symbol,
-
             trade_date=snapshot.trade_date,
-
             expiry=snapshot.expiry,
-
             spot=spot,
-
             atm_strike=atm,
-
             major_call_strike=major_call,
-
             major_put_strike=major_put,
-
             call_oi=call_oi,
-
             put_oi=put_oi,
-
             classic_pcr=classic,
-
             weighted_pcr=weighted,
-
             institutional_bias=bias,
-
             confidence=round(
                 confidence,
                 2,
             ),
-
             contracts=len(df),
-
         )
 
     # -----------------------------------------------------

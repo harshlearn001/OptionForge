@@ -21,31 +21,18 @@ def main():
     # ======================================================
 
     market = MarketStructureResult(
-
         score=88.0,
-
         bias="STRONGLY BULLISH",
-
         confidence="HIGH",
-
         stars=4,
-
         recommendation="Buying dips is preferred.",
-
         support_strength=82.0,
-
         resistance_strength=74.0,
-
         expected_move=1.60,
-
         iv_rank=42.0,
-
         iv_percentile=48.0,
-
         max_pain=25000.0,
-
         interpretation="Bullish market structure.",
-
     )
 
     # ======================================================
@@ -53,23 +40,14 @@ def main():
     # ======================================================
 
     probability = ProbabilityResult(
-
         bullish_probability=88.0,
-
         bearish_probability=12.0,
-
         confidence="HIGH",
-
         stars=4,
-
         trade_quality="A",
-
         risk_level="LOW",
-
         recommendation="Bullish setup.",
-
         interpretation="Bullish probability is high.",
-
     )
 
     # ======================================================
@@ -77,11 +55,8 @@ def main():
     # ======================================================
 
     intelligence = MarketEngine.evaluate(
-
         market_structure=market,
-
         probability=probability,
-
     )
 
     # ======================================================

@@ -133,24 +133,23 @@ print("-" * 70)
 
 latest = df["TRADE_DATE"].max()
 
-latest_df = (
-    df[df["TRADE_DATE"] == latest]
-    .sort_values("EXPIRY")
-)
+latest_df = df[df["TRADE_DATE"] == latest].sort_values("EXPIRY")
 
-print(latest_df[
-    [
-        "TRADE_DATE",
-        "EXPIRY_TYPE",
-        "EXPIRY",
-        "OPEN",
-        "HIGH",
-        "LOW",
-        "CLOSE",
-        "OI",
-        "VOLUME",
+print(
+    latest_df[
+        [
+            "TRADE_DATE",
+            "EXPIRY_TYPE",
+            "EXPIRY",
+            "OPEN",
+            "HIGH",
+            "LOW",
+            "CLOSE",
+            "OI",
+            "VOLUME",
+        ]
     ]
-])
+)
 
 # ---------------------------------------------------------
 # Missing Values
@@ -177,9 +176,7 @@ print(df.duplicated().sum())
 print("\nNUMERIC SUMMARY")
 print("-" * 70)
 
-print(
-    df.describe().T
-)
+print(df.describe().T)
 
 # ---------------------------------------------------------
 # Final Result

@@ -76,39 +76,24 @@ class IntegrationResult:
     def to_dict(self) -> dict:
 
         return {
-
             "success": self.success,
-
             "filepath": self.filepath,
-
             "rows": self.rows,
-
             "columns": self.columns,
-
             "warnings": list(self.warnings),
-
             "errors": list(self.errors),
-
             "warning_count": self.warning_count,
-
             "error_count": self.error_count,
-
             "is_valid": self.is_valid,
-
         }
 
     def __repr__(self) -> str:
 
         return (
-
             "IntegrationResult("
-
             f"success={self.success}, "
-
             f"rows={self.rows}, "
-
             f"columns={self.columns})"
-
         )
 
     __str__ = __repr__

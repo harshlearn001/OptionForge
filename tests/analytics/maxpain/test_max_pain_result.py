@@ -8,27 +8,16 @@ from optionforge.analytics.maxpain.max_pain_result import (
 def sample():
 
     return MaxPainResult(
-
         symbol="NIFTY",
-
         trade_date=20260713,
-
         expiry=20260716,
-
         spot=25485.20,
-
         max_pain_strike=25500,
-
         total_pain=3245120.0,
-
         call_pain=1520000.0,
-
         put_pain=1725120.0,
-
         distance_from_spot=14.80,
-
         contracts=192,
-
     )
 
 

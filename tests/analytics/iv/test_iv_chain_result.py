@@ -8,55 +8,31 @@ from optionforge.analytics.iv.iv_chain_result import (
 def sample():
 
     chain = pd.DataFrame(
-
         {
-
             "STRIKE_PRICE": [
-
                 24900,
-
                 25000,
-
                 25100,
-
             ],
-
             "OPT_TYPE": [
-
                 "CE",
-
                 "CE",
-
                 "PE",
-
             ],
-
             "IV": [
-
                 0.19,
-
                 0.20,
-
                 0.21,
-
             ],
-
         }
-
     )
 
     return IVChainResult(
-
         symbol="NIFTY",
-
         trade_date=20260714,
-
         expiry=20260716,
-
         spot=25012.5,
-
         chain=chain,
-
     )
 
 

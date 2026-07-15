@@ -21,9 +21,7 @@ from optionforge.providers.volatility.iv_percentile_provider import (
 def context():
 
     snapshot = SimpleNamespace(
-
         current_iv=0.22,
-
         historical_iv=[
             0.15,
             0.18,
@@ -31,7 +29,6 @@ def context():
             0.25,
             0.30,
         ],
-
     )
 
     return MarketContext(
@@ -44,15 +41,10 @@ def context():
 def iv_percentile_result():
 
     return SimpleNamespace(
-
         iv_percentile=75.0,
-
         current_iv=0.22,
-
         lookback=252,
-
         observations=252,
-
     )
 
 

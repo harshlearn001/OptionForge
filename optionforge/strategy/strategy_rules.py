@@ -83,11 +83,8 @@ class StrategyRules:
         # --------------------------------------------------
 
         if decision.decision in (
-
             DecisionType.BUY,
-
             DecisionType.ACCUMULATE,
-
         ):
 
             if risk.prefers_defined_risk:

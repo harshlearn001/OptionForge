@@ -13,19 +13,12 @@ from optionforge.integration.integration_result import (
 def result():
 
     return IntegrationResult(
-
         success=True,
-
         filepath="marketforge.csv",
-
         rows=500,
-
         columns=42,
-
         warnings=(),
-
         errors=(),
-
     )
 
 
@@ -33,20 +26,19 @@ def result():
 # Construction
 # ==========================================================
 
+
 def test_create():
 
     assert isinstance(
-
         result(),
-
         IntegrationResult,
-
     )
 
 
 # ==========================================================
 # Stored Values
 # ==========================================================
+
 
 def test_success():
 
@@ -71,6 +63,7 @@ def test_columns():
 # ==========================================================
 # Properties
 # ==========================================================
+
 
 def test_warning_count():
 
@@ -101,6 +94,7 @@ def test_is_valid():
 # Dictionary
 # ==========================================================
 
+
 def test_to_dict():
 
     data = result().to_dict()
@@ -116,19 +110,16 @@ def test_to_dict():
 # Representation
 # ==========================================================
 
+
 def test_repr():
 
     assert "IntegrationResult" in repr(
-
         result(),
-
     )
 
 
 def test_str():
 
     assert "IntegrationResult" in str(
-
         result(),
-
     )

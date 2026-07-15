@@ -107,15 +107,10 @@ class StrategyType(Enum):
         """
 
         return self in (
-
             StrategyType.LONG_CALL,
-
             StrategyType.BULL_CALL_SPREAD,
-
             StrategyType.BULL_PUT_SPREAD,
-
             StrategyType.SYNTHETIC_LONG,
-
         )
 
     @property
@@ -125,15 +120,10 @@ class StrategyType(Enum):
         """
 
         return self in (
-
             StrategyType.LONG_PUT,
-
             StrategyType.BEAR_PUT_SPREAD,
-
             StrategyType.BEAR_CALL_SPREAD,
-
             StrategyType.SYNTHETIC_SHORT,
-
         )
 
     @property
@@ -143,19 +133,12 @@ class StrategyType(Enum):
         """
 
         return self in (
-
             StrategyType.IRON_CONDOR,
-
             StrategyType.IRON_BUTTERFLY,
-
             StrategyType.SHORT_STRADDLE,
-
             StrategyType.SHORT_STRANGLE,
-
             StrategyType.CALENDAR_SPREAD,
-
             StrategyType.DIAGONAL_SPREAD,
-
         )
 
     @property
@@ -165,15 +148,10 @@ class StrategyType(Enum):
         """
 
         return self in (
-
             StrategyType.LONG_STRADDLE,
-
             StrategyType.LONG_STRANGLE,
-
             StrategyType.RATIO_SPREAD,
-
             StrategyType.BACKSPREAD,
-
         )
 
     @property
@@ -183,15 +161,10 @@ class StrategyType(Enum):
         """
 
         return self in (
-
             StrategyType.PROTECTIVE_PUT,
-
             StrategyType.COVERED_CALL,
-
             StrategyType.COLLAR,
-
             StrategyType.DELTA_HEDGE,
-
         )
 
     @property
@@ -201,11 +174,8 @@ class StrategyType(Enum):
         """
 
         return self in (
-
             StrategyType.CASH,
-
             StrategyType.NO_POSITION,
-
         )
 
     def __str__(self) -> str:

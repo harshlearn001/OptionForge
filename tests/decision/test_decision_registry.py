@@ -37,60 +37,39 @@ from optionforge.marketdna.liquidity_regime import (
     LiquidityRegime,
 )
 
-
 # ==========================================================
 # Helpers
 # ==========================================================
 
+
 def dna(confidence: float = 90.0):
 
     return MarketDNA(
-
         regime=MarketRegime.STRONGLY_BULLISH,
-
         trend=TrendRegime.STRONG_UPTREND,
-
         volatility=VolatilityRegime.COMPRESSED,
-
         liquidity=LiquidityRegime.HIGH,
-
         dealer_position="LONG GAMMA",
-
         evidence_score=90.0,
-
         confidence=confidence,
-
     )
 
 
 def decision(
-
     dtype: DecisionType = DecisionType.BUY,
-
     confidence: float = 90.0,
-
 ):
 
     return Decision(
-
         decision=dtype,
-
         strategy=StrategyType.LONG_CALL,
-
         confidence_level=ConfidenceLevel.from_score(
-
             confidence,
-
         ),
-
         confidence=confidence,
-
         market_dna=dna(confidence),
-
         recommendation="Long Call",
-
         rationale=("Bullish",),
-
     )
 
 
@@ -98,15 +77,12 @@ def decision(
 # Tests
 # ==========================================================
 
+
 def test_add():
 
     registry = DecisionRegistry()
 
-    registry.add(
-
-        decision()
-
-    )
+    registry.add(decision())
 
     assert len(registry) == 1
 
@@ -119,28 +95,16 @@ def test_get():
 
     registry.add(obj)
 
-    assert registry.get(
-
-        DecisionType.BUY.name
-
-    ) == obj
+    assert registry.get(DecisionType.BUY.name) == obj
 
 
 def test_exists():
 
     registry = DecisionRegistry()
 
-    registry.add(
+    registry.add(decision())
 
-        decision()
-
-    )
-
-    assert registry.exists(
-
-        DecisionType.BUY.name
-
-    )
+    assert registry.exists(DecisionType.BUY.name)
 
 
 def test_by_type():
@@ -151,11 +115,7 @@ def test_by_type():
 
     registry.add(obj)
 
-    assert registry.by_type(
-
-        DecisionType.BUY
-
-    ) == obj
+    assert registry.by_type(DecisionType.BUY) == obj
 
 
 def test_best():
@@ -163,36 +123,20 @@ def test_best():
     registry = DecisionRegistry()
 
     registry.add(
-
         decision(
-
             DecisionType.BUY,
-
             82,
-
         )
-
     )
 
     registry.add(
-
         decision(
-
             DecisionType.STRONG_BUY,
-
             95,
-
         )
-
     )
 
-    assert (
-
-        registry.best.confidence
-
-        == 95
-
-    )
+    assert registry.best.confidence == 95
 
 
 def test_average_confidence():
@@ -200,47 +144,27 @@ def test_average_confidence():
     registry = DecisionRegistry()
 
     registry.add(
-
         decision(
-
             DecisionType.BUY,
-
             80,
-
         )
-
     )
 
     registry.add(
-
         decision(
-
             DecisionType.STRONG_BUY,
-
             100,
-
         )
-
     )
 
-    assert (
-
-        registry.average_confidence
-
-        == 90.0
-
-    )
+    assert registry.average_confidence == 90.0
 
 
 def test_clear():
 
     registry = DecisionRegistry()
 
-    registry.add(
-
-        decision()
-
-    )
+    registry.add(decision())
 
     registry.clear()
 
@@ -251,11 +175,7 @@ def test_iteration():
 
     registry = DecisionRegistry()
 
-    registry.add(
-
-        decision()
-
-    )
+    registry.add(decision())
 
     count = 0
 
@@ -270,11 +190,7 @@ def test_to_dict():
 
     registry = DecisionRegistry()
 
-    registry.add(
-
-        decision()
-
-    )
+    registry.add(decision())
 
     data = registry.to_dict()
 

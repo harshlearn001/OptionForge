@@ -21,24 +21,11 @@ class DummyEngine(AnalyticsEngine):
 def snapshot():
 
     return InstitutionalSnapshot(
-
         symbol="NIFTY",
-
         trade_date=20260101,
-
         expiry=20260129,
-
-        spot=pd.DataFrame(
-            {"CLOSE": [25000]}
-        ),
-
-        option_chain=pd.DataFrame(
-            {
-                "STRIKE_PRICE": [
-                    25000
-                ]
-            }
-        ),
+        spot=pd.DataFrame({"CLOSE": [25000]}),
+        option_chain=pd.DataFrame({"STRIKE_PRICE": [25000]}),
     )
 
 
@@ -69,7 +56,4 @@ def test_calculate():
 
     engine = DummyEngine()
 
-    assert (
-        engine.calculate(snapshot())
-        == "NIFTY"
-    )
+    assert engine.calculate(snapshot()) == "NIFTY"

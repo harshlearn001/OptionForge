@@ -77,15 +77,11 @@ class WorkflowEngine:
         # -------------------------------------------------
 
         context = RepositoryContext(
-
             marketforge_root=self._marketforge_root,
-
         )
 
         repository_factory = RepositoryFactory(
-
             context,
-
         )
 
         # -------------------------------------------------
@@ -93,9 +89,7 @@ class WorkflowEngine:
         # -------------------------------------------------
 
         loader = Loader(
-
             repository_factory,
-
         )
 
         # -------------------------------------------------
@@ -103,35 +97,23 @@ class WorkflowEngine:
         # -------------------------------------------------
 
         snapshot_builder = SnapshotBuilder(
-
             loader,
-
         )
 
         # -------------------------------------------------
         # Institutional Snapshot Builder
         # -------------------------------------------------
 
-        institutional_snapshot_builder = (
-
-            InstitutionalSnapshotBuilder()
-
-        )
+        institutional_snapshot_builder = InstitutionalSnapshotBuilder()
 
         # -------------------------------------------------
         # Pipeline
         # -------------------------------------------------
 
         pipeline = OptionForgePipeline(
-
             snapshot_builder=snapshot_builder,
-
-            institutional_snapshot_builder=(
-                institutional_snapshot_builder
-            ),
-
+            institutional_snapshot_builder=(institutional_snapshot_builder),
             analytics=self._analytics,
-
         )
 
         # -------------------------------------------------
@@ -139,7 +121,5 @@ class WorkflowEngine:
         # -------------------------------------------------
 
         return pipeline.execute(
-
             symbol,
-
         )

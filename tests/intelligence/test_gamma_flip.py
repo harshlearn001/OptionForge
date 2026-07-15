@@ -16,21 +16,13 @@ from optionforge.models import (
 def gamma():
 
     return GammaExposureResult(
-
         total_call_gex=171562500000.0,
-
         total_put_gex=209062500000.0,
-
         net_gex=-37500000000.0,
-
         largest_positive_strike=25000.0,
-
         largest_negative_strike=25100.0,
-
         gamma_flip=25050.0,
-
         market_regime="NEGATIVE GAMMA",
-
         interpretation="Demo",
     )
 
@@ -38,11 +30,8 @@ def gamma():
 def result():
 
     return GammaFlip.calculate(
-
         gamma=gamma(),
-
         current_spot=24980.0,
-
     )
 
 
@@ -50,20 +39,19 @@ def result():
 # Result
 # ==========================================================
 
+
 def test_returns_result():
 
     assert isinstance(
-
         result(),
-
         GammaFlipResult,
-
     )
 
 
 # ==========================================================
 # Values
 # ==========================================================
+
 
 def test_gamma_flip():
 
@@ -84,6 +72,7 @@ def test_distance():
 # Status
 # ==========================================================
 
+
 def test_flip_status():
 
     assert result().flip_status == "BELOW GAMMA FLIP"
@@ -98,14 +87,12 @@ def test_dealer_regime():
 # Above Flip
 # ==========================================================
 
+
 def test_above_flip():
 
     r = GammaFlip.calculate(
-
         gamma=gamma(),
-
         current_spot=25120.0,
-
     )
 
     assert r.flip_status == "ABOVE GAMMA FLIP"
@@ -119,14 +106,12 @@ def test_above_flip():
 # At Flip
 # ==========================================================
 
+
 def test_at_flip():
 
     r = GammaFlip.calculate(
-
         gamma=gamma(),
-
         current_spot=25050.0,
-
     )
 
     assert r.flip_status == "AT GAMMA FLIP"
@@ -138,38 +123,30 @@ def test_at_flip():
 # Interpretation
 # ==========================================================
 
+
 def test_interpretation():
 
     assert isinstance(
-
         result().interpretation,
-
         str,
-
     )
 
 
 def test_interpretation_not_empty():
 
-    assert len(
-
-        result().interpretation
-
-    ) > 20
+    assert len(result().interpretation) > 20
 
 
 # ==========================================================
 # Dealer Regime
 # ==========================================================
 
+
 def test_positive_gamma():
 
     r = GammaFlip.calculate(
-
         gamma=gamma(),
-
         current_spot=26000.0,
-
     )
 
     assert r.dealer_regime == "POSITIVE GAMMA"
@@ -178,11 +155,8 @@ def test_positive_gamma():
 def test_negative_gamma():
 
     r = GammaFlip.calculate(
-
         gamma=gamma(),
-
         current_spot=24000.0,
-
     )
 
     assert r.dealer_regime == "NEGATIVE GAMMA"
@@ -192,14 +166,12 @@ def test_negative_gamma():
 # Distance
 # ==========================================================
 
+
 def test_distance_positive():
 
     r = GammaFlip.calculate(
-
         gamma=gamma(),
-
         current_spot=25200.0,
-
     )
 
     assert r.distance > 0
@@ -208,11 +180,8 @@ def test_distance_positive():
 def test_distance_negative():
 
     r = GammaFlip.calculate(
-
         gamma=gamma(),
-
         current_spot=24800.0,
-
     )
 
     assert r.distance < 0
@@ -221,11 +190,8 @@ def test_distance_negative():
 def test_distance_zero():
 
     r = GammaFlip.calculate(
-
         gamma=gamma(),
-
         current_spot=25050.0,
-
     )
 
     assert r.distance == 0
@@ -234,6 +200,7 @@ def test_distance_zero():
 # ==========================================================
 # Integrity
 # ==========================================================
+
 
 def test_fields():
 
@@ -250,31 +217,22 @@ def test_fields():
 def test_distance_type():
 
     assert isinstance(
-
         result().distance,
-
         float,
-
     )
 
 
 def test_flip_status_type():
 
     assert isinstance(
-
         result().flip_status,
-
         str,
-
     )
 
 
 def test_regime_type():
 
     assert isinstance(
-
         result().dealer_regime,
-
         str,
-
     )

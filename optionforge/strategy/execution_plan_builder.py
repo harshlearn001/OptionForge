@@ -47,55 +47,38 @@ class ExecutionPlanBuilder:
         """
 
         return ExecutionPlan(
-
             strategy=strategy,
-
             entry_rule=self._entry_rule(
                 strategy,
             ),
-
             entry_price=self._entry_price(
                 strategy,
             ),
-
             target_rule=self._target_rule(
                 strategy,
             ),
-
             stop_loss_rule=self._stop_loss(
                 strategy,
             ),
-
             position_size=self._position_size(
                 strategy,
             ),
-
             max_capital=self._max_capital(
                 strategy,
             ),
-
             max_risk=self._max_risk(
                 strategy,
             ),
-
             expected_reward=self._expected_reward(
                 strategy,
             ),
-
             notes=self._notes(
                 strategy,
             ),
-
             metadata={
-
-                "builder":
-                    "ExecutionPlanBuilder",
-
-                "strategy":
-                    strategy.type.name,
-
+                "builder": "ExecutionPlanBuilder",
+                "strategy": strategy.type.name,
             },
-
         )
 
     # =====================================================
@@ -123,8 +106,9 @@ class ExecutionPlanBuilder:
             return "N/A"
 
         return "Market"
-    
+
         # =====================================================
+
     # Target
     # =====================================================
 
@@ -226,9 +210,9 @@ class ExecutionPlanBuilder:
             return "3% Portfolio"
 
         return "Defined by Risk Desk"
-    
 
         # =====================================================
+
     # Expected Reward
     # =====================================================
 
@@ -261,46 +245,26 @@ class ExecutionPlanBuilder:
     ) -> tuple[str, ...]:
 
         notes = [
-
             f"Strategy: {strategy.title}",
-
             f"Risk: {strategy.risk.name}",
-
             f"Confidence: {strategy.confidence:.1f}%",
-
         ]
 
         if strategy.is_cash:
 
-            notes.append(
-
-                "No trade recommended."
-
-            )
+            notes.append("No trade recommended.")
 
         elif strategy.is_hedge:
 
-            notes.append(
-
-                "Portfolio protection strategy."
-
-            )
+            notes.append("Portfolio protection strategy.")
 
         elif strategy.is_volatility:
 
-            notes.append(
-
-                "Monitor implied volatility closely."
-
-            )
+            notes.append("Monitor implied volatility closely.")
 
         else:
 
-            notes.append(
-
-                "Follow institutional risk management."
-
-            )
+            notes.append("Follow institutional risk management.")
 
         return tuple(notes)
 
@@ -312,9 +276,4 @@ class ExecutionPlanBuilder:
         self,
     ) -> str:
 
-        return (
-
-            f"{self.__class__.__name__}()"
-
-        )
-    
+        return f"{self.__class__.__name__}()"

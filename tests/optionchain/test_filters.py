@@ -23,10 +23,10 @@ from optionforge.market.option_chain import OptionChain
 
 from optionforge.optionchain.filters import ChainFilters
 
-
 # ==========================================================
 # Builders
 # ==========================================================
+
 
 def build_session() -> TradingSession:
     return TradingSession(
@@ -110,6 +110,7 @@ def build_chain() -> OptionChain:
 # Calls
 # ==========================================================
 
+
 def test_calls():
 
     chain = build_chain()
@@ -118,15 +119,13 @@ def test_calls():
 
     assert len(result) == 2
 
-    assert all(
-        s.option_type is OptionType.CALL
-        for s in result
-    )
+    assert all(s.option_type is OptionType.CALL for s in result)
 
 
 # ==========================================================
 # Puts
 # ==========================================================
+
 
 def test_puts():
 
@@ -136,15 +135,13 @@ def test_puts():
 
     assert len(result) == 2
 
-    assert all(
-        s.option_type is OptionType.PUT
-        for s in result
-    )
+    assert all(s.option_type is OptionType.PUT for s in result)
 
 
 # ==========================================================
 # Strike
 # ==========================================================
+
 
 def test_by_strike():
 
@@ -157,15 +154,13 @@ def test_by_strike():
 
     assert len(result) == 2
 
-    assert all(
-        s.contract.strike_price == 25100
-        for s in result
-    )
+    assert all(s.contract.strike_price == 25100 for s in result)
 
 
 # ==========================================================
 # Option Type
 # ==========================================================
+
 
 def test_by_option_type():
 
@@ -178,15 +173,13 @@ def test_by_option_type():
 
     assert len(result) == 2
 
-    assert all(
-        s.option_type is OptionType.PUT
-        for s in result
-    )
+    assert all(s.option_type is OptionType.PUT for s in result)
 
 
 # ==========================================================
 # Open Interest
 # ==========================================================
+
 
 def test_by_open_interest():
 
@@ -199,15 +192,13 @@ def test_by_open_interest():
 
     assert len(result) == 2
 
-    assert all(
-        s.open_interest >= 2500
-        for s in result
-    )
+    assert all(s.open_interest >= 2500 for s in result)
 
 
 # ==========================================================
 # Volume
 # ==========================================================
+
 
 def test_by_volume():
 
@@ -220,15 +211,13 @@ def test_by_volume():
 
     assert len(result) == 2
 
-    assert all(
-        s.volume >= 900
-        for s in result
-    )
+    assert all(s.volume >= 900 for s in result)
 
 
 # ==========================================================
 # Empty Result
 # ==========================================================
+
 
 def test_empty_result():
 

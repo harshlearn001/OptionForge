@@ -70,17 +70,7 @@ class OptionProvider:
 
         df = self.repository.load(symbol)
 
-        return sorted(
-
-            df["TRADE_DATE"]
-
-            .drop_duplicates()
-
-            .astype(int)
-
-            .tolist()
-
-        )
+        return sorted(df["TRADE_DATE"].drop_duplicates().astype(int).tolist())
 
     # -----------------------------------------------------
 
@@ -108,11 +98,7 @@ class OptionProvider:
 
         if not dates:
 
-            raise ValueError(
-
-                f"No trade dates found for '{symbol}'."
-
-            )
+            raise ValueError(f"No trade dates found for '{symbol}'.")
 
         return dates[-1]
 
@@ -131,23 +117,9 @@ class OptionProvider:
 
         df = self.repository.load(symbol)
 
-        df = df.loc[
+        df = df.loc[df["TRADE_DATE"] == trade_date]
 
-            df["TRADE_DATE"] == trade_date
-
-        ]
-
-        return sorted(
-
-            df["EXP_DATE"]
-
-            .drop_duplicates()
-
-            .astype(int)
-
-            .tolist()
-
-        )
+        return sorted(df["EXP_DATE"].drop_duplicates().astype(int).tolist())
 
     # -----------------------------------------------------
 
@@ -161,20 +133,13 @@ class OptionProvider:
         """
 
         expiries = self.expiries(
-
             symbol,
-
             trade_date,
-
         )
 
         if not expiries:
 
-            raise ValueError(
-
-                f"No expiry found for '{symbol}' on {trade_date}."
-
-            )
+            raise ValueError(f"No expiry found for '{symbol}' on {trade_date}.")
 
         return expiries[0]
 
@@ -190,17 +155,7 @@ class OptionProvider:
 
         df = self.repository.load(symbol)
 
-        return sorted(
-
-            df["EXP_DATE"]
-
-            .drop_duplicates()
-
-            .astype(int)
-
-            .tolist()
-
-        )
+        return sorted(df["EXP_DATE"].drop_duplicates().astype(int).tolist())
 
     # =====================================================
     # Option Chain
@@ -229,19 +184,11 @@ class OptionProvider:
 
         df = self.repository.load(symbol)
 
-        chain = df.loc[
-
-            df["TRADE_DATE"] == trade_date
-
-        ]
+        chain = df.loc[df["TRADE_DATE"] == trade_date]
 
         if expiry is not None:
 
-            chain = chain.loc[
-
-                chain["EXP_DATE"] == expiry
-
-            ]
+            chain = chain.loc[chain["EXP_DATE"] == expiry]
 
         return chain.reset_index(drop=True)
 
@@ -260,26 +207,12 @@ class OptionProvider:
         """
 
         chain = self.option_chain(
-
             symbol=symbol,
-
             trade_date=trade_date,
-
             expiry=expiry,
-
         )
 
-        return sorted(
-
-            chain["STRIKE_PRICE"]
-
-            .drop_duplicates()
-
-            .astype(int)
-
-            .tolist()
-
-        )
+        return sorted(chain["STRIKE_PRICE"].drop_duplicates().astype(int).tolist())
 
     # =====================================================
     # Representation
@@ -288,11 +221,8 @@ class OptionProvider:
     def __repr__(self) -> str:
 
         return (
-
             f"{self.__class__.__name__}("
-
             f"repository={self.repository.__class__.__name__})"
-
         )
 
     __str__ = __repr__

@@ -19,7 +19,7 @@ class OptionRecord:
     expiry_date: str
 
     strike_price: float
-    option_type: str      # CE / PE
+    option_type: str  # CE / PE
 
     # ==========================================================
     # MARKET DATA

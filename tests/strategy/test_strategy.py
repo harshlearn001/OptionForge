@@ -16,55 +16,38 @@ from optionforge.strategy.strategy_risk import (
     StrategyRisk,
 )
 
-
 # ==========================================================
 # Helper
 # ==========================================================
 
+
 def strategy() -> Strategy:
 
     return Strategy(
-
         type=StrategyType.LONG_CALL,
-
         title="Long Call",
-
         summary="Bullish directional strategy.",
-
         direction="Bullish",
-
         volatility_view="Normal",
-
         market_environment="Bull Market",
-
         max_profit="Unlimited",
-
         max_loss="Premium Paid",
-
         probability_of_profit=45.0,
-
         risk_reward="1:3",
-
         confidence=92.0,
-
         risk=StrategyRisk.MODERATE,
-
         capital_required=25000.0,
-
         rationale=(
-
             "Bullish trend",
-
             "Low volatility",
-
         ),
-
     )
 
 
 # ==========================================================
 # Tests
 # ==========================================================
+
 
 def test_strategy_creation():
 
@@ -115,33 +98,19 @@ def test_invalid_confidence():
     with pytest.raises(ValueError):
 
         Strategy(
-
             type=StrategyType.LONG_CALL,
-
             title="Bad",
-
             summary="",
-
             direction="Bullish",
-
             volatility_view="Normal",
-
             market_environment="",
-
             max_profit="Unlimited",
-
             max_loss="Premium",
-
             probability_of_profit=50,
-
             risk_reward="1:2",
-
             confidence=120,
-
             risk=StrategyRisk.MODERATE,
-
             capital_required=10000,
-
         )
 
 
@@ -152,33 +121,19 @@ def test_invalid_probability():
     with pytest.raises(ValueError):
 
         Strategy(
-
             type=StrategyType.LONG_CALL,
-
             title="Bad",
-
             summary="",
-
             direction="Bullish",
-
             volatility_view="Normal",
-
             market_environment="",
-
             max_profit="Unlimited",
-
             max_loss="Premium",
-
             probability_of_profit=150,
-
             risk_reward="1:2",
-
             confidence=80,
-
             risk=StrategyRisk.MODERATE,
-
             capital_required=10000,
-
         )
 
 
@@ -189,31 +144,17 @@ def test_invalid_risk_reward():
     with pytest.raises(ValueError):
 
         Strategy(
-
             type=StrategyType.LONG_CALL,
-
             title="Bad",
-
             summary="",
-
             direction="Bullish",
-
             volatility_view="Normal",
-
             market_environment="",
-
             max_profit="Unlimited",
-
             max_loss="Premium",
-
             probability_of_profit=50,
-
             risk_reward="",
-
             confidence=80,
-
             risk=StrategyRisk.MODERATE,
-
             capital_required=10000,
-
         )

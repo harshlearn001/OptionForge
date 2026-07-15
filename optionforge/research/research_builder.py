@@ -49,15 +49,9 @@ class ResearchBuilder:
         """
 
         return ResearchResult(
-
             research=research,
-
             performance_report=performance_report,
-
             research_score=research_score,
-
             approved=approved,
-
             recommendation=recommendation,
-
         )

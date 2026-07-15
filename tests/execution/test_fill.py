@@ -18,34 +18,22 @@ from optionforge.execution.order_type import OrderType
 def order():
 
     return Order(
-
         symbol="NIFTY",
-
         side=OrderSide.BUY,
-
         order_type=OrderType.MARKET,
-
         status=OrderStatus.PENDING,
-
         quantity=100,
-
         price=250.0,
-
     )
 
 
 def fill():
 
     return Fill(
-
         order=order(),
-
         quantity=40,
-
         price=251.0,
-
         status=FillStatus.PARTIAL,
-
     )
 
 
@@ -84,15 +72,10 @@ def test_partial():
 def test_complete():
 
     complete_fill = Fill(
-
         order=order(),
-
         quantity=100,
-
         price=250.0,
-
         status=FillStatus.COMPLETE,
-
     )
 
     assert complete_fill.is_complete
@@ -114,15 +97,10 @@ def test_negative_price():
     with pytest.raises(ValueError):
 
         Fill(
-
             order=order(),
-
             quantity=10,
-
             price=-1.0,
-
             status=FillStatus.PARTIAL,
-
         )
 
 
@@ -131,15 +109,10 @@ def test_zero_quantity():
     with pytest.raises(ValueError):
 
         Fill(
-
             order=order(),
-
             quantity=0,
-
             price=250.0,
-
             status=FillStatus.PARTIAL,
-
         )
 
 
@@ -148,15 +121,10 @@ def test_quantity_exceeds_order():
     with pytest.raises(ValueError):
 
         Fill(
-
             order=order(),
-
             quantity=101,
-
             price=250.0,
-
             status=FillStatus.PARTIAL,
-
         )
 
 

@@ -41,56 +41,28 @@ class DrawdownRule(RiskRule):
         if drawdown <= self._max_drawdown:
 
             return RuleResult(
-
                 rule_name=self.__class__.__name__,
-
                 score=5.0,
-
                 passed=True,
-
                 warnings=(),
-
-                reasons=(
-
-                    "Portfolio drawdown within limits.",
-
-                ),
-
+                reasons=("Portfolio drawdown within limits.",),
             )
 
         return RuleResult(
-
             rule_name=self.__class__.__name__,
-
             score=min(
                 100.0,
                 drawdown,
             ),
-
             passed=False,
-
             warnings=(
-
                 f"Portfolio drawdown "
                 f"{drawdown:.1f}% exceeds "
                 f"{self._max_drawdown:.1f}%",
-
             ),
-
-            reasons=(
-
-                "Portfolio drawdown exceeds policy.",
-
-            ),
-
+            reasons=("Portfolio drawdown exceeds policy.",),
         )
 
     def __repr__(self) -> str:
 
-        return (
-
-            f"DrawdownRule("
-
-            f"max_drawdown={self._max_drawdown})"
-
-        )
+        return f"DrawdownRule(" f"max_drawdown={self._max_drawdown})"

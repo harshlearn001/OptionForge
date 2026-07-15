@@ -25,14 +25,10 @@ class GammaExposure:
     ) -> GammaExposureResult:
 
         if spot_price <= 0:
-            raise ValueError(
-                "Spot price must be positive."
-            )
+            raise ValueError("Spot price must be positive.")
 
         if len(option_chain) == 0:
-            raise ValueError(
-                "Option chain cannot be empty."
-            )
+            raise ValueError("Option chain cannot be empty.")
 
         call_gex = 0.0
         put_gex = 0.0
@@ -47,23 +43,14 @@ class GammaExposure:
             lot = int(option["lot_size"])
             option_type = option["option_type"]
 
-            exposure = (
-                gamma
-                * oi
-                * lot
-                * (spot_price ** 2)
-                * 0.01
-            )
+            exposure = gamma * oi * lot * (spot_price**2) * 0.01
 
             if option_type == "CE":
                 call_gex += exposure
             else:
                 put_gex += exposure
 
-            strike_gex[strike] = (
-                strike_gex.get(strike, 0.0)
-                + exposure
-            )
+            strike_gex[strike] = strike_gex.get(strike, 0.0) + exposure
 
         net_gex = call_gex - put_gex
 
@@ -98,20 +85,12 @@ class GammaExposure:
             )
 
         return GammaExposureResult(
-
             total_call_gex=call_gex,
-
             total_put_gex=put_gex,
-
             net_gex=net_gex,
-
             largest_positive_strike=largest_positive,
-
             largest_negative_strike=largest_negative,
-
             gamma_flip=gamma_flip,
-
             market_regime=regime,
-
             interpretation=interpretation,
         )

@@ -9,23 +9,25 @@ from optionforge.portfolio.portfolio_type import (
     PortfolioType,
 )
 
-
 # ==========================================================
 # Enum
 # ==========================================================
 
+
 def test_enum_members():
 
-    assert len(
-
-        PortfolioType,
-
-    ) == 6
+    assert (
+        len(
+            PortfolioType,
+        )
+        == 6
+    )
 
 
 # ==========================================================
 # Directional
 # ==========================================================
+
 
 def test_directional():
 
@@ -42,6 +44,7 @@ def test_directional():
 # Income
 # ==========================================================
 
+
 def test_income():
 
     portfolio = PortfolioType.INCOME
@@ -56,6 +59,7 @@ def test_income():
 # ==========================================================
 # Volatility
 # ==========================================================
+
 
 def test_volatility():
 
@@ -72,6 +76,7 @@ def test_volatility():
 # Hedging
 # ==========================================================
 
+
 def test_hedging():
 
     portfolio = PortfolioType.HEDGING
@@ -87,6 +92,7 @@ def test_hedging():
 # Market Neutral
 # ==========================================================
 
+
 def test_market_neutral():
 
     portfolio = PortfolioType.MARKET_NEUTRAL
@@ -99,6 +105,7 @@ def test_market_neutral():
 # ==========================================================
 # Cash
 # ==========================================================
+
 
 def test_cash():
 
@@ -115,18 +122,14 @@ def test_cash():
 # String
 # ==========================================================
 
+
 def test_str():
 
     assert (
-
         str(
-
             PortfolioType.MARKET_NEUTRAL,
-
         )
-
         == "Market Neutral"
-
     )
 
 
@@ -134,12 +137,7 @@ def test_str():
 # Deterministic
 # ==========================================================
 
+
 def test_deterministic():
 
-    assert (
-
-        PortfolioType.CASH
-
-        is PortfolioType.CASH
-
-    )
+    assert PortfolioType.CASH is PortfolioType.CASH

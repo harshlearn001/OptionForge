@@ -25,10 +25,10 @@ from optionforge.market.option_chain import OptionChain
 
 from optionforge.optionchain.expiry_selector import ExpirySelector
 
-
 # ==========================================================
 # Builders
 # ==========================================================
+
 
 def build_session() -> TradingSession:
     return TradingSession(
@@ -113,6 +113,7 @@ def build_chains():
 # Exact
 # ==========================================================
 
+
 def test_exact():
 
     chains = build_chains()
@@ -131,21 +132,20 @@ def test_exact():
 # Nearest
 # ==========================================================
 
+
 def test_nearest():
 
     chain = ExpirySelector.nearest(
         build_chains(),
     )
 
-    assert (
-        chain.expiry.expiry_date
-        == date(2026, 7, 2)
-    )
+    assert chain.expiry.expiry_date == date(2026, 7, 2)
 
 
 # ==========================================================
 # Weekly
 # ==========================================================
+
 
 def test_weekly():
 
@@ -155,15 +155,13 @@ def test_weekly():
 
     assert len(result) == 2
 
-    assert all(
-        chain.expiry.is_weekly
-        for chain in result
-    )
+    assert all(chain.expiry.is_weekly for chain in result)
 
 
 # ==========================================================
 # Monthly
 # ==========================================================
+
 
 def test_monthly():
 
@@ -179,6 +177,7 @@ def test_monthly():
 # ==========================================================
 # Unknown Expiry
 # ==========================================================
+
 
 def test_unknown_expiry():
 
@@ -200,6 +199,7 @@ def test_unknown_expiry():
 # ==========================================================
 # Empty Chains
 # ==========================================================
+
 
 def test_empty():
 

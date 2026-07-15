@@ -19,12 +19,10 @@ class ResistanceStrength:
 
     @staticmethod
     def calculate(
-
         resistance: float,
         resistance_oi: int,
         max_call_oi: int,
         spot_price: float,
-
     ) -> ResistanceStrengthResult:
 
         # --------------------------------------------------
@@ -61,14 +59,7 @@ class ResistanceStrength:
         # Final Score
         # --------------------------------------------------
 
-        score = (
-
-            oi_score
-            + dominance_score
-            + distance_score
-            + strike_score
-
-        )
+        score = oi_score + dominance_score + distance_score + strike_score
 
         score = min(score, 100)
 
@@ -102,24 +93,14 @@ class ResistanceStrength:
             stars = 1
 
         interpretation = (
-
-            f"Resistance at {resistance:.0f} "
-            f"is classified as {rating}."
-
+            f"Resistance at {resistance:.0f} " f"is classified as {rating}."
         )
 
         return ResistanceStrengthResult(
-
             resistance=float(resistance),
-
             resistance_oi=int(resistance_oi),
-
             score=round(score, 2),
-
             stars=stars,
-
             rating=rating,
-
             interpretation=interpretation,
-
         )

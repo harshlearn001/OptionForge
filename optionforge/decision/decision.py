@@ -91,9 +91,7 @@ class Decision:
 
         if not (0.0 <= self.confidence <= 100.0):
 
-            raise ValueError(
-                "Confidence must be between 0 and 100."
-            )
+            raise ValueError("Confidence must be between 0 and 100.")
 
     # -----------------------------------------------------
     # Convenience
@@ -140,25 +138,15 @@ class Decision:
     def to_dict(self) -> dict[str, Any]:
 
         return {
-
             "decision": self.decision.name,
-
             "strategy": self.strategy.name,
-
             "confidence_level": self.confidence_level.name,
-
             "confidence": self.confidence,
-
             "recommendation": self.recommendation,
-
             "rationale": list(self.rationale),
-
             "market_dna": self.market_dna.to_dict(),
-
             "timestamp": self.timestamp.isoformat(),
-
             "metadata": dict(self.metadata),
-
         }
 
     # -----------------------------------------------------
@@ -168,27 +156,17 @@ class Decision:
     def __str__(self) -> str:
 
         return (
-
             f"Decision("
-
             f"{self.decision.name}, "
-
             f"{self.strategy.name}, "
-
             f"{self.confidence:.1f}%)"
-
         )
 
     def __repr__(self) -> str:
 
         return (
-
             f"Decision("
-
             f"decision={self.decision.name}, "
-
             f"strategy={self.strategy.name}, "
-
             f"confidence={self.confidence:.1f})"
-
         )

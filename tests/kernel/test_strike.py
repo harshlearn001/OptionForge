@@ -19,10 +19,10 @@ from optionforge.kernel.symbol import Symbol
 from optionforge.kernel.expiry import Expiry
 from optionforge.kernel.strike import Strike
 
-
 # ==========================================================
 # Builders
 # ==========================================================
+
 
 def build_session() -> TradingSession:
     return TradingSession(
@@ -65,6 +65,7 @@ def build_strike() -> Strike:
 # Creation
 # ==========================================================
 
+
 def test_strike_creation():
     strike = build_strike()
 
@@ -75,6 +76,7 @@ def test_strike_creation():
 # ==========================================================
 # Validation
 # ==========================================================
+
 
 def test_zero_strike():
     with pytest.raises(
@@ -102,6 +104,7 @@ def test_negative_strike():
 # Properties
 # ==========================================================
 
+
 def test_symbol_property():
     strike = build_strike()
 
@@ -117,15 +120,13 @@ def test_expiry_reference():
 def test_strike_id():
     strike = build_strike()
 
-    assert (
-        strike.strike_id
-        == "NIFTY_20260702_25150"
-    )
+    assert strike.strike_id == "NIFTY_20260702_25150"
 
 
 # ==========================================================
 # Serialization
 # ==========================================================
+
 
 def test_to_dict():
     data = build_strike().to_dict()
@@ -138,6 +139,7 @@ def test_to_dict():
 # ==========================================================
 # String Representation
 # ==========================================================
+
 
 def test_string_representation():
     strike = build_strike()
@@ -154,6 +156,7 @@ def test_repr():
 # ==========================================================
 # Immutability
 # ==========================================================
+
 
 def test_frozen_dataclass():
     strike = build_strike()

@@ -39,9 +39,7 @@ class PortfolioRegistry:
     """
 
     results: tuple[PortfolioResult, ...] = field(
-
         default_factory=tuple,
-
     )
 
     # =====================================================
@@ -53,9 +51,7 @@ class PortfolioRegistry:
     ) -> int:
 
         return len(
-
             self.results,
-
         )
 
     def __iter__(
@@ -63,9 +59,7 @@ class PortfolioRegistry:
     ) -> Iterator[PortfolioResult]:
 
         return iter(
-
             self.results,
-
         )
 
     def __getitem__(
@@ -84,11 +78,12 @@ class PortfolioRegistry:
         self,
     ) -> bool:
 
-        return len(
-
-            self,
-
-        ) == 0
+        return (
+            len(
+                self,
+            )
+            == 0
+        )
 
     @property
     def count(
@@ -96,9 +91,7 @@ class PortfolioRegistry:
     ) -> int:
 
         return len(
-
             self,
-
         )
 
     @property
@@ -112,6 +105,7 @@ class PortfolioRegistry:
 
         return self.results[-1]
         # =====================================================
+
     # Immutable Updates
     # =====================================================
 
@@ -125,15 +119,10 @@ class PortfolioRegistry:
         """
 
         return PortfolioRegistry(
-
             results=(
-
                 *self.results,
-
                 result,
-
             ),
-
         )
 
     def extend(
@@ -146,15 +135,10 @@ class PortfolioRegistry:
         """
 
         return PortfolioRegistry(
-
             results=(
-
                 *self.results,
-
                 *results,
-
             ),
-
         )
 
     # =====================================================
@@ -166,17 +150,8 @@ class PortfolioRegistry:
     ) -> dict:
 
         return {
-
             "count": self.count,
-
-            "results": [
-
-                result.to_dict()
-
-                for result in self.results
-
-            ],
-
+            "results": [result.to_dict() for result in self.results],
         }
 
     # =====================================================
@@ -187,22 +162,10 @@ class PortfolioRegistry:
         self,
     ) -> str:
 
-        return (
-
-            f"PortfolioRegistry("
-
-            f"{self.count} portfolios)"
-
-        )
+        return f"PortfolioRegistry(" f"{self.count} portfolios)"
 
     def __repr__(
         self,
     ) -> str:
 
-        return (
-
-            f"PortfolioRegistry("
-
-            f"count={self.count})"
-
-        )
+        return f"PortfolioRegistry(" f"count={self.count})"

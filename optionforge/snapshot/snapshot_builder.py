@@ -79,17 +79,11 @@ class SnapshotBuilder:
         spot = self.spot_provider.latest(symbol)
 
         return InstitutionalSnapshot(
-
             symbol=symbol,
-
             trade_date=trade_date,
-
             expiry=expiry,
-
             spot=spot,
-
             option_chain=option_chain,
-
         )
 
     # =====================================================

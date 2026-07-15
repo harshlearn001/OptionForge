@@ -56,27 +56,19 @@ class DrawdownAnalysis:
 
         if not (0.0 <= self.max_drawdown <= 100.0):
 
-            raise ValueError(
-                "max_drawdown must be between 0 and 100."
-            )
+            raise ValueError("max_drawdown must be between 0 and 100.")
 
         if not (0.0 <= self.current_drawdown <= 100.0):
 
-            raise ValueError(
-                "current_drawdown must be between 0 and 100."
-            )
+            raise ValueError("current_drawdown must be between 0 and 100.")
 
         if self.peak_equity < 0:
 
-            raise ValueError(
-                "peak_equity cannot be negative."
-            )
+            raise ValueError("peak_equity cannot be negative.")
 
         if self.lowest_equity < 0:
 
-            raise ValueError(
-                "lowest_equity cannot be negative."
-            )
+            raise ValueError("lowest_equity cannot be negative.")
 
     @property
     def has_drawdown(self) -> bool:
@@ -91,41 +83,23 @@ class DrawdownAnalysis:
     def to_dict(self) -> dict[str, Any]:
 
         return {
-
             "max_drawdown": self.max_drawdown,
-
             "current_drawdown": self.current_drawdown,
-
             "peak_equity": self.peak_equity,
-
             "lowest_equity": self.lowest_equity,
-
             "recovered": self.recovered,
-
             "equity_curve": self.equity_curve.to_dict(),
-
             "metadata": dict(self.metadata),
-
         }
 
     def __str__(self) -> str:
 
-        return (
-
-            f"DrawdownAnalysis("
-
-            f"max={self.max_drawdown:.2f}%)"
-
-        )
+        return f"DrawdownAnalysis(" f"max={self.max_drawdown:.2f}%)"
 
     def __repr__(self) -> str:
 
         return (
-
             f"DrawdownAnalysis("
-
             f"max_drawdown={self.max_drawdown:.2f}, "
-
             f"recovered={self.recovered})"
-
         )

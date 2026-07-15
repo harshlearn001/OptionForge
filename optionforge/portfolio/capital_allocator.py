@@ -76,35 +76,18 @@ class CapitalAllocator:
         """
 
         allocation = min(
-
             position.capital_used,
-
-            portfolio_value
-            * (
-                self._portfolio_risk.max_capital_per_trade
-                / 100.0
-            ),
-
+            portfolio_value * (self._portfolio_risk.max_capital_per_trade / 100.0),
         )
 
         return Allocation(
-
             position=position,
-
             allocated_capital=allocation,
-
-            available_capital=(
-
-                portfolio_value
-
-                - allocation
-
-            ),
-
+            available_capital=(portfolio_value - allocation),
             portfolio_value=portfolio_value,
-
         )
         # =====================================================
+
     # Callable Interface
     # =====================================================
 
@@ -119,11 +102,8 @@ class CapitalAllocator:
         """
 
         return self.allocate(
-
             position=position,
-
             portfolio_value=portfolio_value,
-
         )
 
     # =====================================================
@@ -142,19 +122,7 @@ class CapitalAllocator:
         limits.
         """
 
-        maximum = (
-
-            portfolio_value
-
-            * (
-
-                self._portfolio_risk.max_capital_per_trade
-
-                / 100.0
-
-            )
-
-        )
+        maximum = portfolio_value * (self._portfolio_risk.max_capital_per_trade / 100.0)
 
         return position.capital_used <= maximum
 
@@ -169,13 +137,8 @@ class CapitalAllocator:
         """
 
         return max(
-
-            portfolio_value
-
-            - allocated_capital,
-
+            portfolio_value - allocated_capital,
             0.0,
-
         )
 
     # =====================================================
@@ -187,11 +150,7 @@ class CapitalAllocator:
     ) -> str:
 
         return (
-
             f"{self.__class__.__name__}("
-
             f"portfolio_risk="
-
             f"{self._portfolio_risk.name})"
-
         )

@@ -144,7 +144,6 @@ def test_probability_sum():
         market(73),
     )
 
-    assert (
-        result.bullish_probability +
-        result.bearish_probability
-    ) == pytest.approx(100.0)
+    assert (result.bullish_probability + result.bearish_probability) == pytest.approx(
+        100.0
+    )

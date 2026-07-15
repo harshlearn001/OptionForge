@@ -64,17 +64,9 @@ class ExecutionEngine:
         builder = self._registry.get_builder()
 
         return builder.build(
-
             trades=trades,
-
         )
 
     def __repr__(self) -> str:
 
-        return (
-
-            f"ExecutionEngine("
-
-            f"registry={self._registry.__class__.__name__})"
-
-        )
+        return f"ExecutionEngine(" f"registry={self._registry.__class__.__name__})"

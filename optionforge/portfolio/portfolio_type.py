@@ -91,6 +91,7 @@ class PortfolioType(Enum):
         """
 
         return self is PortfolioType.VOLATILITY
+
     @property
     def is_hedging(self) -> bool:
         """
@@ -123,13 +124,9 @@ class PortfolioType(Enum):
         """
 
         return self in (
-
             PortfolioType.DIRECTIONAL,
-
             PortfolioType.VOLATILITY,
-
             PortfolioType.HEDGING,
-
         )
 
     @property
@@ -139,11 +136,8 @@ class PortfolioType(Enum):
         """
 
         return self in (
-
             PortfolioType.DIRECTIONAL,
-
             PortfolioType.VOLATILITY,
-
         )
 
     @property
@@ -153,13 +147,9 @@ class PortfolioType(Enum):
         """
 
         return self in (
-
             PortfolioType.INCOME,
-
             PortfolioType.HEDGING,
-
             PortfolioType.CASH,
-
         )
 
     def __str__(self) -> str:
@@ -168,10 +158,6 @@ class PortfolioType(Enum):
         """
 
         return self.name.replace(
-
             "_",
-
             " ",
-
         ).title()
-    

@@ -8,19 +8,12 @@ from optionforge.analytics.iv_percentile.iv_percentile_result import (
 def sample():
 
     return IVPercentileResult(
-
         symbol="NIFTY",
-
         trade_date=20260714,
-
         expiry=20260716,
-
         current_iv=30.0,
-
         historical_observations=252,
-
         iv_percentile=60.0,
-
     )
 
 

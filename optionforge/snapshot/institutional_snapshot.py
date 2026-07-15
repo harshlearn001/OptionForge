@@ -92,12 +92,7 @@ class InstitutionalSnapshot:
         if self.option_chain.empty:
             return 0
 
-        return int(
-            self.option_chain[
-                "STRIKE_PRICE"
-            ]
-            .nunique()
-        )
+        return int(self.option_chain["STRIKE_PRICE"].nunique())
 
     # =====================================================
 

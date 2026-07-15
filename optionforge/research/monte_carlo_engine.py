@@ -47,9 +47,7 @@ class MonteCarloEngine:
         """
 
         if not trades:
-            raise ValueError(
-                "trades cannot be empty."
-            )
+            raise ValueError("trades cannot be empty.")
 
         simulations = len(trades)
 
@@ -62,15 +60,9 @@ class MonteCarloEngine:
 
         worst_return = min(trades)
 
-        profitable = sum(
-            trade > 0
-            for trade in trades
-        )
+        profitable = sum(trade > 0 for trade in trades)
 
-        losing = sum(
-            trade < 0
-            for trade in trades
-        )
+        losing = sum(trade < 0 for trade in trades)
 
         probability_of_profit = round(
             (profitable / simulations) * 100.0,
@@ -87,41 +79,22 @@ class MonteCarloEngine:
 
         max_drawdown = 0.0
 
-        passed = (
-            probability_of_profit
-            >= self.PASS_THRESHOLD
-        )
+        passed = probability_of_profit >= self.PASS_THRESHOLD
 
         return MonteCarloSimulation(
-
             simulations=simulations,
-
             average_return=average_return,
-
             best_return=best_return,
-
             worst_return=worst_return,
-
             probability_of_profit=probability_of_profit,
-
             probability_of_loss=probability_of_loss,
-
             probability_of_ruin=probability_of_ruin,
-
             max_drawdown=max_drawdown,
-
             passed=passed,
-
         )
 
     def __repr__(self) -> str:
 
-        return (
-
-            "MonteCarloEngine("
-
-            f"pass_threshold={self.PASS_THRESHOLD})"
-
-        )
+        return "MonteCarloEngine(" f"pass_threshold={self.PASS_THRESHOLD})"
 
     __str__ = __repr__

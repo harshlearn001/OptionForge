@@ -14,61 +14,40 @@ class Snapshot:
     expiry = 20260716
 
     option_chain = pd.DataFrame(
-
         {
-
             "STRIKE_PRICE": [
-
                 100,
                 110,
                 120,
-
                 100,
                 110,
                 120,
-
             ],
-
             "OPT_TYPE": [
-
                 "CE",
                 "CE",
                 "CE",
-
                 "PE",
                 "PE",
                 "PE",
-
             ],
-
             "OPEN_INT": [
-
                 100,
                 250,
                 150,
-
                 200,
                 300,
                 250,
-
             ],
-
         }
-
     )
 
     spot = pd.DataFrame(
-
         {
-
             "CLOSE": [
-
                 112.5,
-
             ]
-
         }
-
     )
 
 
@@ -77,9 +56,7 @@ def test_engine():
     engine = DealerEngine()
 
     result = engine.calculate(
-
         Snapshot(),
-
     )
 
     assert result.symbol == "NIFTY"

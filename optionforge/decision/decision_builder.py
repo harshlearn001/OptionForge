@@ -73,17 +73,11 @@ class DecisionBuilder:
             decision,
         )
 
-        confidence_level = (
-            ConfidenceLevel.from_score(
-                market_dna.confidence,
-            )
+        confidence_level = ConfidenceLevel.from_score(
+            market_dna.confidence,
         )
 
-        recommendation = (
-            strategy.name
-            .replace("_", " ")
-            .title()
-        )
+        recommendation = strategy.name.replace("_", " ").title()
 
         rationale = self._rationale(
             market_dna,
@@ -96,23 +90,14 @@ class DecisionBuilder:
         )
 
         return Decision(
-
             decision=decision,
-
             strategy=strategy,
-
             confidence_level=confidence_level,
-
             confidence=market_dna.confidence,
-
             market_dna=market_dna,
-
             recommendation=recommendation,
-
             rationale=rationale,
-
             metadata=metadata,
-
         )
 
     # =====================================================
@@ -186,23 +171,14 @@ class DecisionBuilder:
     ) -> tuple[str, ...]:
 
         return (
-
             f"Decision: {decision.name}",
-
             f"Strategy: {strategy.name}",
-
             f"Market Regime: {dna.regime}",
-
             f"Trend: {dna.trend}",
-
             f"Volatility: {dna.volatility}",
-
             f"Liquidity: {dna.liquidity}",
-
             f"Dealer Position: {dna.dealer_position}",
-
             f"Confidence: {dna.confidence:.1f}%",
-
         )
 
     # =====================================================
@@ -215,35 +191,13 @@ class DecisionBuilder:
     ) -> dict:
 
         return {
-
             "builder": "DecisionBuilder",
-
             "decision_version": 1,
-
-            "generated_at": (
-                datetime.now(UTC).isoformat()
-            ),
-
-            "market_regime": str(
-                dna.regime
-            ),
-
-            "trend": str(
-                dna.trend
-            ),
-
-            "volatility": str(
-                dna.volatility
-            ),
-
-            "liquidity": str(
-                dna.liquidity
-            ),
-
-            "dealer_position": str(
-                dna.dealer_position
-            ),
-
+            "generated_at": (datetime.now(UTC).isoformat()),
+            "market_regime": str(dna.regime),
+            "trend": str(dna.trend),
+            "volatility": str(dna.volatility),
+            "liquidity": str(dna.liquidity),
+            "dealer_position": str(dna.dealer_position),
             "confidence": dna.confidence,
-
         }

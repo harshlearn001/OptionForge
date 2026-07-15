@@ -26,27 +26,16 @@ print()
 # ----------------------------------------------------------
 
 dashboard = DashboardResult(
-
     dealer_bias="SHORT GAMMA",
-
     dealer_direction="SHORT DELTA",
-
     gamma_status="BELOW GAMMA FLIP",
-
     zero_gamma_status="BELOW ZERO GAMMA",
-
     hedging_flow="SELL FUTURES",
-
     institutional_score=15.0,
-
     confidence="★☆☆☆☆",
-
     market_bias="TREND FOLLOWING",
-
     risk_level="EXTREME",
-
     summary="Demo",
-
 )
 
 # ----------------------------------------------------------
@@ -54,9 +43,7 @@ dashboard = DashboardResult(
 # ----------------------------------------------------------
 
 result = InstitutionalSignal.calculate(
-
     dashboard=dashboard,
-
 )
 
 # ----------------------------------------------------------

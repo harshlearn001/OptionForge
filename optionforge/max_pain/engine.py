@@ -15,6 +15,7 @@ from optionforge.market.option_chain import OptionChain
 from optionforge.models.max_pain_result import MaxPainResult
 from optionforge.optionchain.filters import ChainFilters
 
+
 class MaxPainEngine:
     """
     Professional Max Pain Engine.
@@ -31,12 +32,7 @@ class MaxPainEngine:
         calls = ChainFilters.calls(chain)
         puts = ChainFilters.puts(chain)
 
-        strikes = sorted(
-            {
-                snapshot.contract.strike_price
-                for snapshot in chain
-            }
-        )
+        strikes = sorted({snapshot.contract.strike_price for snapshot in chain})
 
         pain_rows: list[
             tuple[
@@ -63,9 +59,7 @@ class MaxPainEngine:
 
                 if settlement > strike:
 
-                    call_pain += (
-                        settlement - strike
-                    ) * oi
+                    call_pain += (settlement - strike) * oi
 
             # ----------------------------------
             # Put Pain
@@ -78,18 +72,13 @@ class MaxPainEngine:
 
                 if settlement < strike:
 
-                    put_pain += (
-                        strike - settlement
-                    ) * oi
+                    put_pain += (strike - settlement) * oi
 
             # ----------------------------------
             # Total Pain
             # ----------------------------------
 
-            total_pain = (
-                call_pain +
-                put_pain
-            )
+            total_pain = call_pain + put_pain
 
             pain_rows.append(
                 (
@@ -123,15 +112,9 @@ class MaxPainEngine:
             key=lambda snapshot: snapshot.open_interest,
         )
 
-        total_call_oi = sum(
-            snapshot.open_interest
-            for snapshot in calls
-        )
+        total_call_oi = sum(snapshot.open_interest for snapshot in calls)
 
-        total_put_oi = sum(
-            snapshot.open_interest
-            for snapshot in puts
-        )
+        total_put_oi = sum(snapshot.open_interest for snapshot in puts)
 
         pain_table = pd.DataFrame(
             pain_rows,
@@ -143,54 +126,30 @@ class MaxPainEngine:
             ],
         )
 
-        total_put_oi = sum(
-            snapshot.open_interest
-            for snapshot in puts
-        )
+        total_put_oi = sum(snapshot.open_interest for snapshot in puts)
 
         pain_table = pd.DataFrame(
-    pain_rows,
-    columns=[
-        "STRIKE",
-        "CALL_PAIN",
-        "PUT_PAIN",
-        "TOTAL_PAIN",
-    ],
-)
+            pain_rows,
+            columns=[
+                "STRIKE",
+                "CALL_PAIN",
+                "PUT_PAIN",
+                "TOTAL_PAIN",
+            ],
+        )
         return MaxPainResult(
-
             max_pain=float(max_pain),
-
             total_pain=float(total_pain),
-
             call_pain=float(call_pain),
-
             put_pain=float(put_pain),
-
             evaluated_strikes=len(strikes),
-
-            support=float(
-                highest_put.contract.strike_price
-            ),
-
-            resistance=float(
-                highest_call.contract.strike_price
-            ),
-
-            highest_call_oi=float(
-                highest_call.contract.strike_price
-            ),
-
-            highest_put_oi=float(
-                highest_put.contract.strike_price
-            ),
-
+            support=float(highest_put.contract.strike_price),
+            resistance=float(highest_call.contract.strike_price),
+            highest_call_oi=float(highest_call.contract.strike_price),
+            highest_put_oi=float(highest_put.contract.strike_price),
             total_call_oi=int(total_call_oi),
-
             total_put_oi=int(total_put_oi),
-
             pain_table=pain_table,
-
             interpretation=(
                 "Maximum Pain is the strike where "
                 "combined option writer payout is minimized."

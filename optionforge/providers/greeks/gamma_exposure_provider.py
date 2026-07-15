@@ -49,53 +49,29 @@ class GammaExposureProvider(BaseProvider):
     ) -> Iterable[Feature]:
 
         result = GammaExposure.calculate(
-
             option_chain=context.snapshot.option_chain,
-
             spot=context.snapshot.spot,
-
         )
 
         return [
-
             Feature(
-
                 id=FeatureId.GAMMA_EXPOSURE,
-
                 group=self.GROUP,
-
                 value=result.gamma_exposure,
-
                 metadata={
-
                     "dealer_gamma": result.dealer_gamma,
-
                     "call_gamma": result.call_gamma,
-
                     "put_gamma": result.put_gamma,
-
                 },
-
             ),
-
             Feature(
-
                 id=FeatureId.ZERO_GAMMA,
-
                 group=self.GROUP,
-
                 value=result.zero_gamma,
-
             ),
-
             Feature(
-
                 id=FeatureId.GAMMA_FLIP,
-
                 group=self.GROUP,
-
                 value=result.gamma_flip,
-
             ),
-
         ]

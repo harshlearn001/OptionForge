@@ -62,17 +62,9 @@ class BacktestEngine:
         builder = self._registry.get_builder()
 
         return builder.build(
-
             backtests=backtests,
-
         )
 
     def __repr__(self) -> str:
 
-        return (
-
-            f"BacktestEngine("
-
-            f"registry={self._registry.__class__.__name__})"
-
-        )
+        return f"BacktestEngine(" f"registry={self._registry.__class__.__name__})"

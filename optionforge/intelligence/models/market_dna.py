@@ -37,10 +37,10 @@ from typing import Any, Mapping
 from optionforge.evidence.evidence_registry import EvidenceRegistry
 from optionforge.features.registry import FeatureRegistry
 
-
 # ==========================================================
 # ENUMS
 # ==========================================================
+
 
 class MarketState(str, Enum):
     UNKNOWN = "Unknown"
@@ -96,6 +96,7 @@ class RiskState(str, Enum):
 # ==========================================================
 # MARKET DNA
 # ==========================================================
+
 
 @dataclass(frozen=True, slots=True)
 class MarketDNA:
@@ -194,23 +195,18 @@ class MarketDNA:
             "expiry": self.expiry,
             "timestamp": self.timestamp.isoformat(),
             "spot_price": self.spot_price,
-
             "market_state": self.market_state.value,
             "trend": self.trend.value,
             "dealer_state": self.dealer_state.value,
             "institutional_state": self.institutional_state.value,
             "volatility_state": self.volatility_state.value,
             "risk_state": self.risk_state.value,
-
             "confidence": self.confidence,
             "expected_move": self.expected_move,
             "strategy": self.strategy,
-
             "summary": self.summary,
-
             "reasons": list(self.reasons),
             "warnings": list(self.warnings),
-
             "metadata": dict(self.metadata),
         }
 

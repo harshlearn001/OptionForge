@@ -50,15 +50,10 @@ class DealerResult:
     def __repr__(self) -> str:
 
         return (
-
             f"DealerResult("
-
             f"symbol={self.symbol}, "
-
             f"bias='{self.dealer_bias}', "
-
             f"confidence={self.confidence:.1f}%)"
-
         )
 
     __str__ = __repr__

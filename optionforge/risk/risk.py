@@ -57,15 +57,11 @@ class Risk:
     # =====================================================
 
     warnings: tuple[str, ...] = field(
-
         default_factory=tuple,
-
     )
 
     reasons: tuple[str, ...] = field(
-
         default_factory=tuple,
-
     )
 
     # =====================================================
@@ -76,7 +72,7 @@ class Risk:
 
     max_capital_allocation: float = 0.0
 
-        # =====================================================
+    # =====================================================
     # Validation
     # =====================================================
 
@@ -87,53 +83,17 @@ class Risk:
         Validate immutable Risk object.
         """
 
-        if not (
+        if not (0.0 <= self.risk_score <= 100.0):
 
-            0.0
+            raise ValueError("risk_score must be between 0 and 100.")
 
-            <= self.risk_score
+        if not (0.0 <= self.recommended_position_size <= 100.0):
 
-            <= 100.0
+            raise ValueError("recommended_position_size must be between 0 and 100.")
 
-        ):
+        if not (0.0 <= self.max_capital_allocation <= 100.0):
 
-            raise ValueError(
-
-                "risk_score must be between 0 and 100."
-
-            )
-
-        if not (
-
-            0.0
-
-            <= self.recommended_position_size
-
-            <= 100.0
-
-        ):
-
-            raise ValueError(
-
-                "recommended_position_size must be between 0 and 100."
-
-            )
-
-        if not (
-
-            0.0
-
-            <= self.max_capital_allocation
-
-            <= 100.0
-
-        ):
-
-            raise ValueError(
-
-                "max_capital_allocation must be between 0 and 100."
-
-            )
+            raise ValueError("max_capital_allocation must be between 0 and 100.")
 
     # =====================================================
     # Convenience
@@ -166,9 +126,7 @@ class Risk:
     ) -> int:
 
         return len(
-
             self.warnings,
-
         )
 
     @property
@@ -177,12 +135,11 @@ class Risk:
     ) -> int:
 
         return len(
-
             self.reasons,
-
         )
-    
+
         # =====================================================
+
     # Serialization
     # =====================================================
 
@@ -194,39 +151,18 @@ class Risk:
         """
 
         return {
-
             "risk_score": self.risk_score,
-
             "risk_level": self.risk_level.name,
-
             "risk_type": self.risk_type.name,
-
             "approved": self.approved,
-
             "warnings": list(
-
                 self.warnings,
-
             ),
-
             "reasons": list(
-
                 self.reasons,
-
             ),
-
-            "recommended_position_size": (
-
-                self.recommended_position_size
-
-            ),
-
-            "max_capital_allocation": (
-
-                self.max_capital_allocation
-
-            ),
-
+            "recommended_position_size": (self.recommended_position_size),
+            "max_capital_allocation": (self.max_capital_allocation),
         }
 
     # =====================================================
@@ -241,15 +177,10 @@ class Risk:
         """
 
         return (
-
             f"Risk("
-
             f"{self.risk_type.name}, "
-
             f"{self.risk_level.name}, "
-
             f"score={self.risk_score:.1f})"
-
         )
 
     def __repr__(
@@ -257,15 +188,9 @@ class Risk:
     ) -> str:
 
         return (
-
             f"Risk("
-
             f"risk_score={self.risk_score}, "
-
             f"risk_level={self.risk_level.name}, "
-
             f"risk_type={self.risk_type.name}, "
-
             f"approved={self.approved})"
-
         )

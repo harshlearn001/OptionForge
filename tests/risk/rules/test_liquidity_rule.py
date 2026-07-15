@@ -16,47 +16,32 @@ def portfolio(
 ):
 
     return SimpleNamespace(
-
         capital_utilization=utilization,
-
     )
 
 
 def test_returns_rule_result():
 
     result = LiquidityRule().evaluate(
-
         portfolio=portfolio(
-
             40.0,
-
         ),
-
     )
 
     assert isinstance(
-
         result,
-
         RuleResult,
-
     )
 
 
 def test_within_limit():
 
     result = LiquidityRule(
-
         min_liquidity=25.0,
-
     ).evaluate(
-
         portfolio=portfolio(
-
             40.0,
-
         ),
-
     )
 
     assert result.passed
@@ -67,17 +52,11 @@ def test_within_limit():
 def test_below_limit():
 
     result = LiquidityRule(
-
         min_liquidity=25.0,
-
     ).evaluate(
-
         portfolio=portfolio(
-
             90.0,
-
         ),
-
     )
 
     assert not result.passed
@@ -88,17 +67,11 @@ def test_below_limit():
 def test_exact_boundary():
 
     result = LiquidityRule(
-
         min_liquidity=25.0,
-
     ).evaluate(
-
         portfolio=portfolio(
-
             75.0,
-
         ),
-
     )
 
     assert result.passed
@@ -107,9 +80,7 @@ def test_exact_boundary():
 def test_property():
 
     rule = LiquidityRule(
-
         min_liquidity=20.0,
-
     )
 
     assert rule.min_liquidity == 20.0
@@ -118,13 +89,9 @@ def test_property():
 def test_rule_name():
 
     result = LiquidityRule().evaluate(
-
         portfolio=portfolio(
-
             40.0,
-
         ),
-
     )
 
     assert result.rule_name == "LiquidityRule"
@@ -132,14 +99,6 @@ def test_rule_name():
 
 def test_repr():
 
-    assert (
-
-        "LiquidityRule"
-
-        in repr(
-
-            LiquidityRule(),
-
-        )
-
+    assert "LiquidityRule" in repr(
+        LiquidityRule(),
     )

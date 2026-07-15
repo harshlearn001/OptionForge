@@ -36,8 +36,6 @@ class LiveData:
         csv_file = Path(csv_file)
 
         if not csv_file.exists():
-            raise FileNotFoundError(
-                f"Live data file not found: {csv_file}"
-            )
+            raise FileNotFoundError(f"Live data file not found: {csv_file}")
 
         return pd.read_csv(csv_file)

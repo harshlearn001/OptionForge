@@ -12,23 +12,14 @@ from optionforge.knowledge.knowledge_type import KnowledgeType
 def make_knowledge() -> Knowledge:
 
     return Knowledge(
-
         id="volatility",
-
         name="Volatility Suppression",
-
         type=KnowledgeType.VOLATILITY,
-
         level=KnowledgeLevel.STRONG,
-
         score=92.5,
-
         confidence=95.0,
-
         description="Dealer hedging suppresses volatility.",
-
         evidence_ids=("dealer_long_gamma",),
-
     )
 
 
@@ -68,21 +59,12 @@ def test_invalid_confidence():
     with pytest.raises(ValueError):
 
         Knowledge(
-
             id="bad",
-
             name="Bad",
-
             type=KnowledgeType.RISK,
-
             level=KnowledgeLevel.WEAK,
-
             score=1,
-
             confidence=150,
-
             description="",
-
             evidence_ids=(),
-
         )

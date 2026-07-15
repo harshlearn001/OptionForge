@@ -42,53 +42,28 @@ class CapitalRule(RiskRule):
         if utilization <= self._max_utilization:
 
             return RuleResult(
-
                 rule_name=self.__class__.__name__,
-
                 score=5.0,
-
                 passed=True,
-
                 warnings=(),
-
-                reasons=(
-
-                    "Capital allocation within limits",
-
-                ),
-
+                reasons=("Capital allocation within limits",),
             )
 
         return RuleResult(
-
             rule_name=self.__class__.__name__,
-
             score=min(
                 100.0,
                 utilization,
             ),
-
             passed=False,
-
             warnings=(
-
                 f"Capital utilization "
                 f"{utilization:.1f}% exceeds "
                 f"{self._max_utilization:.1f}%",
-
             ),
-
-            reasons=(
-
-                "Capital allocation exceeds policy.",
-
-            ),
-
+            reasons=("Capital allocation exceeds policy.",),
         )
 
     def __repr__(self) -> str:
 
-        return (
-            f"CapitalRule("
-            f"max_utilization={self._max_utilization})"
-        )
+        return f"CapitalRule(" f"max_utilization={self._max_utilization})"

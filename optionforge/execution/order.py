@@ -83,27 +83,15 @@ class Order:
 
         if not self.symbol.strip():
 
-            raise ValueError(
-
-                "symbol cannot be empty."
-
-            )
+            raise ValueError("symbol cannot be empty.")
 
         if self.quantity <= 0:
 
-            raise ValueError(
-
-                "quantity must be positive."
-
-            )
+            raise ValueError("quantity must be positive.")
 
         if self.price < 0:
 
-            raise ValueError(
-
-                "price cannot be negative."
-
-            )
+            raise ValueError("price cannot be negative.")
 
     # -----------------------------------------------------
     # Convenience
@@ -156,25 +144,15 @@ class Order:
     ) -> dict[str, Any]:
 
         return {
-
             "symbol": self.symbol,
-
             "side": self.side.name,
-
             "order_type": self.order_type.name,
-
             "status": self.status.name,
-
             "quantity": self.quantity,
-
             "price": self.price,
-
             "notional_value": self.notional_value,
-
             "created_at": self.created_at.isoformat(),
-
             "metadata": dict(self.metadata),
-
         }
 
     # -----------------------------------------------------
@@ -185,32 +163,16 @@ class Order:
         self,
     ) -> str:
 
-        return (
-
-            f"Order("
-
-            f"{self.side.name} "
-
-            f"{self.quantity} "
-
-            f"{self.symbol})"
-
-        )
+        return f"Order(" f"{self.side.name} " f"{self.quantity} " f"{self.symbol})"
 
     def __repr__(
         self,
     ) -> str:
 
         return (
-
             f"Order("
-
             f"symbol={self.symbol!r}, "
-
             f"side={self.side.name}, "
-
             f"type={self.order_type.name}, "
-
             f"status={self.status.name})"
-
         )

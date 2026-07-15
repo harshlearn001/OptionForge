@@ -25,7 +25,7 @@ class OptionContract:
 
     strike: float
 
-    option_type: str        # "CE" or "PE"
+    option_type: str  # "CE" or "PE"
 
     market_price: float
 

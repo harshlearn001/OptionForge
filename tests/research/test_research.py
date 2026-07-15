@@ -6,32 +6,21 @@ from optionforge.research.research import Research
 def research():
 
     return Research(
-
         name="Walk Forward Study",
-
         strategy_name="Modified PCR",
-
         description="Institutional validation",
-
         start_date="2024-01-01",
-
         end_date="2024-12-31",
-
         symbol="NIFTY",
-
         timeframe="1D",
-
     )
 
 
 def test_create():
 
     assert isinstance(
-
         research(),
-
         Research,
-
     )
 
 
@@ -56,19 +45,12 @@ def test_timeframe():
 
 
 @pytest.mark.parametrize(
-
     "field",
-
     [
-
         "name",
-
         "strategy_name",
-
     ],
-
 )
-
 def test_empty(field):
 
     kwargs = research().to_dict()

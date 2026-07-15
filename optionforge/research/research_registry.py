@@ -49,10 +49,4 @@ class ResearchRegistry:
 
     def __repr__(self) -> str:
 
-        return (
-
-            f"ResearchRegistry("
-
-            f"builder={self._builder.__class__.__name__})"
-
-        )
+        return f"ResearchRegistry(" f"builder={self._builder.__class__.__name__})"

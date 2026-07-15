@@ -15,29 +15,21 @@ from optionforge.models import (
     DealerPositionResult,
 )
 
-
 # ==========================================================
 # Fixtures
 # ==========================================================
 
+
 def make_gamma(net_gex: float):
 
     return GammaExposureResult(
-
         total_call_gex=100.0,
-
         total_put_gex=-150.0,
-
         net_gex=net_gex,
-
         largest_positive_strike=25000,
-
         largest_negative_strike=25100,
-
         gamma_flip=25050,
-
         market_regime="DEMO",
-
         interpretation="Demo",
     )
 
@@ -45,19 +37,12 @@ def make_gamma(net_gex: float):
 def make_delta(net_dex: float):
 
     return DeltaExposureResult(
-
         total_call_dex=120.0,
-
         total_put_dex=-180.0,
-
         net_dex=net_dex,
-
         largest_positive_strike=25000,
-
         largest_negative_strike=25100,
-
         dealer_position="DEMO",
-
         interpretation="Demo",
     )
 
@@ -65,19 +50,12 @@ def make_delta(net_dex: float):
 def make_vanna(net_vanna: float):
 
     return VannaExposureResult(
-
         total_call_vanna=50.0,
-
         total_put_vanna=-80.0,
-
         net_vanna=net_vanna,
-
         largest_positive_strike=25000,
-
         largest_negative_strike=25100,
-
         vanna_regime="DEMO",
-
         interpretation="Demo",
     )
 
@@ -85,19 +63,12 @@ def make_vanna(net_vanna: float):
 def make_charm(net_charm: float):
 
     return CharmExposureResult(
-
         total_call_charm=40.0,
-
         total_put_charm=-70.0,
-
         net_charm=net_charm,
-
         largest_positive_strike=25000,
-
         largest_negative_strike=25100,
-
         charm_regime="DEMO",
-
         interpretation="Demo",
     )
 
@@ -105,21 +76,17 @@ def make_charm(net_charm: float):
 def result():
 
     return DealerPosition.calculate(
-
         gamma=make_gamma(-50),
-
         delta=make_delta(-60),
-
         vanna=make_vanna(-30),
-
         charm=make_charm(-30),
-
     )
 
 
 # ==========================================================
 # Result
 # ==========================================================
+
 
 def test_returns_result():
 
@@ -132,6 +99,7 @@ def test_returns_result():
 # ==========================================================
 # Quantitative Fields
 # ==========================================================
+
 
 def test_quantitative_fields():
 
@@ -148,6 +116,7 @@ def test_quantitative_fields():
 # Dealer Classification
 # ==========================================================
 
+
 def test_dealer_bias():
 
     assert result().dealer_bias == "SHORT GAMMA"
@@ -161,6 +130,7 @@ def test_dealer_direction():
 # ==========================================================
 # Market
 # ==========================================================
+
 
 def test_market_condition():
 
@@ -181,6 +151,7 @@ def test_directional_risk():
 # Institutional Score
 # ==========================================================
 
+
 def test_score_limits():
 
     score = result().institutional_score
@@ -200,6 +171,7 @@ def test_score_type():
 # Confidence
 # ==========================================================
 
+
 def test_confidence():
 
     assert isinstance(
@@ -216,6 +188,7 @@ def test_confidence_limits():
 # ==========================================================
 # Recommendation
 # ==========================================================
+
 
 def test_recommendation():
 
@@ -237,6 +210,7 @@ def test_interpretation():
 # Result Integrity
 # ==========================================================
 
+
 def test_result_fields():
 
     r = result()
@@ -254,18 +228,14 @@ def test_result_fields():
 # Alternate Scenario
 # ==========================================================
 
+
 def test_long_gamma():
 
     r = DealerPosition.calculate(
-
         gamma=make_gamma(100),
-
         delta=make_delta(-60),
-
         vanna=make_vanna(-30),
-
         charm=make_charm(-30),
-
     )
 
     assert r.dealer_bias == "LONG GAMMA"
@@ -274,15 +244,10 @@ def test_long_gamma():
 def test_long_delta():
 
     r = DealerPosition.calculate(
-
         gamma=make_gamma(-50),
-
         delta=make_delta(100),
-
         vanna=make_vanna(-30),
-
         charm=make_charm(-30),
-
     )
 
     assert r.dealer_direction == "LONG DELTA"
@@ -292,18 +257,14 @@ def test_long_delta():
 # High Stability
 # ==========================================================
 
+
 def test_high_stability():
 
     r = DealerPosition.calculate(
-
         gamma=make_gamma(10),
-
         delta=make_delta(-10),
-
         vanna=make_vanna(10),
-
         charm=make_charm(10),
-
     )
 
     assert r.market_stability == "HIGH"
@@ -312,6 +273,7 @@ def test_high_stability():
 # ==========================================================
 # Deterministic
 # ==========================================================
+
 
 def test_engine_is_deterministic():
 

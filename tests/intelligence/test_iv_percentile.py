@@ -1,4 +1,3 @@
-
 import pytest
 
 from optionforge.intelligence import IVPercentile

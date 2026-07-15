@@ -28,9 +28,7 @@ class MarketData:
         file_path = Path(file_path)
 
         if not file_path.exists():
-            raise FileNotFoundError(
-                f"CSV file not found: {file_path}"
-            )
+            raise FileNotFoundError(f"CSV file not found: {file_path}")
 
         # Read CSV
         df = pd.read_csv(
@@ -40,12 +38,7 @@ class MarketData:
 
         # Normalize column names
         df.columns = (
-            df.columns
-            .str.replace("\ufeff", "", regex=False)
-            .str.strip()
-            .str.upper()
+            df.columns.str.replace("\ufeff", "", regex=False).str.strip().str.upper()
         )
-
-        
 
         return df

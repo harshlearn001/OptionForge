@@ -40,17 +40,10 @@ class RiskRegistry:
         """
 
         return (
-
             CapitalRule(),
-
             MarginRule(),
-
             ExposureRule(),
-
             LiquidityRule(),
-
             GreekRule(),
-
             DrawdownRule(),
-
         )

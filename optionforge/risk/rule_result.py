@@ -46,15 +46,11 @@ class RuleResult:
     # =====================================================
 
     warnings: tuple[str, ...] = field(
-
         default_factory=tuple,
-
     )
 
     reasons: tuple[str, ...] = field(
-
         default_factory=tuple,
-
     )
     # =====================================================
     # Validation
@@ -67,21 +63,9 @@ class RuleResult:
         Validate RuleResult.
         """
 
-        if not (
+        if not (0.0 <= self.score <= 100.0):
 
-            0.0
-
-            <= self.score
-
-            <= 100.0
-
-        ):
-
-            raise ValueError(
-
-                "score must be between 0 and 100."
-
-            )
+            raise ValueError("score must be between 0 and 100.")
 
     # =====================================================
     # Convenience
@@ -93,9 +77,7 @@ class RuleResult:
     ) -> int:
 
         return len(
-
             self.warnings,
-
         )
 
     @property
@@ -104,9 +86,7 @@ class RuleResult:
     ) -> int:
 
         return len(
-
             self.reasons,
-
         )
 
     # =====================================================
@@ -118,25 +98,15 @@ class RuleResult:
     ) -> dict:
 
         return {
-
             "rule_name": self.rule_name,
-
             "score": self.score,
-
             "passed": self.passed,
-
             "warnings": list(
-
                 self.warnings,
-
             ),
-
             "reasons": list(
-
                 self.reasons,
-
             ),
-
         }
 
     # =====================================================
@@ -147,28 +117,15 @@ class RuleResult:
         self,
     ) -> str:
 
-        return (
-
-            f"{self.rule_name}("
-
-            f"passed={self.passed}, "
-
-            f"score={self.score:.1f})"
-
-        )
+        return f"{self.rule_name}(" f"passed={self.passed}, " f"score={self.score:.1f})"
 
     def __repr__(
         self,
     ) -> str:
 
         return (
-
             f"RuleResult("
-
             f"rule_name={self.rule_name!r}, "
-
             f"score={self.score}, "
-
             f"passed={self.passed})"
-
         )

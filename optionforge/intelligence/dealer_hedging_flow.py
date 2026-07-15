@@ -156,15 +156,11 @@ class DealerHedgingFlow:
 
         if hedging_bias == "PRO-CYCLICAL":
 
-            recommendation = (
-                "Expect dealer hedging to reinforce market moves."
-            )
+            recommendation = "Expect dealer hedging to reinforce market moves."
 
         else:
 
-            recommendation = (
-                "Dealer hedging may dampen market volatility."
-            )
+            recommendation = "Dealer hedging may dampen market volatility."
 
         # --------------------------------------------------
         # Interpretation
@@ -177,25 +173,14 @@ class DealerHedgingFlow:
         )
 
         return DealerHedgingFlowResult(
-
             hedging_bias=hedging_bias,
-
             flow_direction=flow_direction,
-
             flow_strength=flow_strength,
-
             volatility_effect=volatility_effect,
-
             market_support=market_support,
-
             trend_effect=trend_effect,
-
             institutional_score=score,
-
             confidence=confidence,
-
             recommendation=recommendation,
-
             interpretation=interpretation,
-
         )

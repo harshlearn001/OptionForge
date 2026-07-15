@@ -93,11 +93,7 @@ class MarketDNA:
 
         if not (0.0 <= self.confidence <= 100.0):
 
-            raise ValueError(
-
-                "Confidence must be between 0 and 100."
-
-            )
+            raise ValueError("Confidence must be between 0 and 100.")
 
     # -----------------------------------------------------
     # Convenience
@@ -155,25 +151,15 @@ class MarketDNA:
     def to_dict(self) -> dict[str, Any]:
 
         return {
-
             "regime": self.regime.name,
-
             "trend": self.trend.name,
-
             "volatility": self.volatility.name,
-
             "liquidity": self.liquidity.name,
-
             "dealer_position": self.dealer_position,
-
             "evidence_score": self.evidence_score,
-
             "confidence": self.confidence,
-
             "timestamp": self.timestamp.isoformat(),
-
             "metadata": dict(self.metadata),
-
         }
 
     # -----------------------------------------------------
@@ -183,31 +169,19 @@ class MarketDNA:
     def __str__(self) -> str:
 
         return (
-
             f"MarketDNA("
-
             f"{self.regime.name}, "
-
             f"{self.trend.name}, "
-
             f"{self.volatility.name}, "
-
             f"confidence={self.confidence:.1f}%)"
-
         )
 
     def __repr__(self) -> str:
 
         return (
-
             f"MarketDNA("
-
             f"regime={self.regime.name}, "
-
             f"trend={self.trend.name}, "
-
             f"volatility={self.volatility.name}, "
-
             f"liquidity={self.liquidity.name})"
-
         )

@@ -19,31 +19,23 @@ from optionforge.repository.repository_exception import (
     RepositoryValidationError,
 )
 
-
 # ==========================================================
 # CSV
 # ==========================================================
+
 
 def test_load_csv(tmp_path):
 
     file = tmp_path / "demo.csv"
 
     pd.DataFrame(
-
         {
-
             "A": [1, 2],
-
             "B": [3, 4],
-
         }
-
     ).to_csv(
-
         file,
-
         index=False,
-
     )
 
     df = FileLoader.load(file)
@@ -57,20 +49,16 @@ def test_load_csv(tmp_path):
 # Parquet
 # ==========================================================
 
+
 def test_load_parquet(tmp_path):
 
     file = tmp_path / "demo.parquet"
 
     pd.DataFrame(
-
         {
-
             "A": [10],
-
             "B": [20],
-
         }
-
     ).to_parquet(file)
 
     df = FileLoader.load(file)
@@ -84,6 +72,7 @@ def test_load_parquet(tmp_path):
 # Unsupported
 # ==========================================================
 
+
 def test_invalid_extension(tmp_path):
 
     file = tmp_path / "demo.xyz"
@@ -91,9 +80,7 @@ def test_invalid_extension(tmp_path):
     file.write_text("test")
 
     with pytest.raises(
-
         RepositoryValidationError,
-
     ):
 
         FileLoader.load(file)
@@ -102,6 +89,7 @@ def test_invalid_extension(tmp_path):
 # ==========================================================
 # Supported Formats
 # ==========================================================
+
 
 def test_supported_formats():
 
@@ -116,24 +104,18 @@ def test_supported_formats():
 # Path Object
 # ==========================================================
 
+
 def test_accepts_path_object(tmp_path):
 
     file = Path(tmp_path / "sample.csv")
 
     pd.DataFrame(
-
         {
-
             "X": [5],
-
         }
-
     ).to_csv(
-
         file,
-
         index=False,
-
     )
 
     df = FileLoader.load(file)

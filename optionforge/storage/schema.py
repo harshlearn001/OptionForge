@@ -24,27 +24,16 @@ class OptionChainSchema:
     # ==========================================================
 
     REQUIRED_COLUMNS = [
-
         "SYMBOL",
-
         "EXPIRY",
-
         "STRIKE",
-
         "OPTION_TYPE",
-
         "LTP",
-
         "IV",
-
         "OI",
-
         "CHANGE_IN_OI",
-
         "VOLUME",
-
         "SPOT",
-
     ]
 
     # ==========================================================
@@ -52,21 +41,13 @@ class OptionChainSchema:
     # ==========================================================
 
     OPTIONAL_COLUMNS = [
-
         "OPEN",
-
         "HIGH",
-
         "LOW",
-
         "CLOSE",
-
         "BID",
-
         "ASK",
-
         "TIMESTAMP",
-
     ]
 
     # ==========================================================
@@ -89,14 +70,6 @@ class OptionChainSchema:
         (is_valid, missing_columns)
         """
 
-        missing = [
-
-            column
-
-            for column in cls.REQUIRED_COLUMNS
-
-            if column not in columns
-
-        ]
+        missing = [column for column in cls.REQUIRED_COLUMNS if column not in columns]
 
         return len(missing) == 0, missing

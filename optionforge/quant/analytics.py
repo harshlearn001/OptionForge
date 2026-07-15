@@ -30,7 +30,6 @@ from optionforge.quant.implied_volatility import (
     ImpliedVolatility,
 )
 
-
 # ==============================================================
 # Result Object
 # ==============================================================
@@ -85,97 +84,57 @@ class OptionAnalytics:
         if option_type == "CE":
 
             price = BlackScholes.call_price(
-
                 spot,
-
                 strike,
-
                 time,
-
                 rate,
-
                 volatility,
-
             )
 
         else:
 
             price = BlackScholes.put_price(
-
                 spot,
-
                 strike,
-
                 time,
-
                 rate,
-
                 volatility,
-
             )
 
         delta = Greeks.delta(
-
             spot,
-
             strike,
-
             time,
-
             rate,
-
             volatility,
-
             option_type,
-
         )
 
         gamma = Greeks.gamma(
-
             spot,
-
             strike,
-
             time,
-
             rate,
-
             volatility,
-
             option_type,
-
         )
 
         theta = Greeks.theta(
-
             spot,
-
             strike,
-
             time,
-
             rate,
-
             volatility,
-
             option_type,
-
         )
 
         vega = Greeks.vega(
-
             spot,
-
             strike,
-
             time,
-
             rate,
-
             volatility,
-
             option_type,
-
         )
 
         iv = None
@@ -185,49 +144,30 @@ class OptionAnalytics:
             if option_type == "CE":
 
                 iv = ImpliedVolatility.call_iv(
-
                     market_price,
-
                     spot,
-
                     strike,
-
                     time,
-
                     rate,
-
                 )
 
             else:
 
                 iv = ImpliedVolatility.put_iv(
-
                     market_price,
-
                     spot,
-
                     strike,
-
                     time,
-
                     rate,
-
                 )
 
         return AnalyticsResult(
-
             price=price,
-
             delta=delta,
-
             gamma=gamma,
-
             theta=theta,
-
             vega=vega,
-
             implied_volatility=iv,
-
         )
 
     def __repr__(self):

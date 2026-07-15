@@ -11,10 +11,10 @@ from __future__ import annotations
 
 import pandas as pd
 
-
 # ==========================================================
 # Basic Validation
 # ==========================================================
+
 
 def validate_dataframe(df: pd.DataFrame) -> None:
     """
@@ -28,6 +28,7 @@ def validate_dataframe(df: pd.DataFrame) -> None:
 # ==========================================================
 # Strike Increment
 # ==========================================================
+
 
 def strike_step(df: pd.DataFrame) -> int:
     """
@@ -63,6 +64,7 @@ def strike_step(df: pd.DataFrame) -> int:
 # Round Strike
 # ==========================================================
 
+
 def round_strike(price: float, step: int) -> int:
     """
     Round price to nearest strike.
@@ -75,6 +77,7 @@ def round_strike(price: float, step: int) -> int:
 # Nearest Strike
 # ==========================================================
 
+
 def nearest_strike(df: pd.DataFrame, spot: float) -> int:
     """
     Return nearest available strike.
@@ -84,17 +87,13 @@ def nearest_strike(df: pd.DataFrame, spot: float) -> int:
 
     strikes = df["STRIKE"].unique()
 
-    return int(
-        min(
-            strikes,
-            key=lambda x: abs(x - spot)
-        )
-    )
+    return int(min(strikes, key=lambda x: abs(x - spot)))
 
 
 # ==========================================================
 # ATM Strike
 # ==========================================================
+
 
 def atm_strike(df: pd.DataFrame, spot: float) -> int:
     """
@@ -107,6 +106,7 @@ def atm_strike(df: pd.DataFrame, spot: float) -> int:
 # ==========================================================
 # Previous Strike
 # ==========================================================
+
 
 def previous_strike(df: pd.DataFrame, strike: int) -> int | None:
 
@@ -126,6 +126,7 @@ def previous_strike(df: pd.DataFrame, strike: int) -> int | None:
 # Next Strike
 # ==========================================================
 
+
 def next_strike(df: pd.DataFrame, strike: int) -> int | None:
 
     validate_dataframe(df)
@@ -144,6 +145,7 @@ def next_strike(df: pd.DataFrame, strike: int) -> int | None:
 # Strike Exists
 # ==========================================================
 
+
 def strike_exists(df: pd.DataFrame, strike: int) -> bool:
 
     validate_dataframe(df)
@@ -154,6 +156,7 @@ def strike_exists(df: pd.DataFrame, strike: int) -> bool:
 # ==========================================================
 # All Strikes
 # ==========================================================
+
 
 def available_strikes(df: pd.DataFrame):
 

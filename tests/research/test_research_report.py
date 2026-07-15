@@ -15,17 +15,11 @@ from optionforge.research.research_report import (
 def report():
 
     return ResearchReport(
-
         strategy_name="Momentum Strategy",
-
         overall_score=91.5,
-
         overall_grade="A",
-
         approved=True,
-
         recommendation="Deploy",
-
     )
 
 
@@ -33,20 +27,19 @@ def report():
 # Construction
 # ==========================================================
 
+
 def test_create():
 
     assert isinstance(
-
         report(),
-
         ResearchReport,
-
     )
 
 
 # ==========================================================
 # Values
 # ==========================================================
+
 
 def test_strategy():
 
@@ -77,6 +70,7 @@ def test_recommendation():
 # Property
 # ==========================================================
 
+
 def test_passed():
 
     assert report().passed
@@ -86,55 +80,37 @@ def test_passed():
 # Validation
 # ==========================================================
 
+
 def test_empty_strategy():
 
     with pytest.raises(ValueError):
 
         ResearchReport(
-
             strategy_name="",
-
             overall_score=90,
-
             overall_grade="A",
-
             approved=True,
-
             recommendation="Deploy",
-
         )
 
 
 @pytest.mark.parametrize(
-
     "score",
-
     [
-
         -1,
-
         101,
-
     ],
-
 )
-
 def test_invalid_score(score):
 
     with pytest.raises(ValueError):
 
         ResearchReport(
-
             strategy_name="Test",
-
             overall_score=score,
-
             overall_grade="A",
-
             approved=True,
-
             recommendation="Deploy",
-
         )
 
 
@@ -143,17 +119,11 @@ def test_empty_grade():
     with pytest.raises(ValueError):
 
         ResearchReport(
-
             strategy_name="Test",
-
             overall_score=90,
-
             overall_grade="",
-
             approved=True,
-
             recommendation="Deploy",
-
         )
 
 
@@ -162,23 +132,18 @@ def test_empty_recommendation():
     with pytest.raises(ValueError):
 
         ResearchReport(
-
             strategy_name="Test",
-
             overall_score=90,
-
             overall_grade="A",
-
             approved=True,
-
             recommendation="",
-
         )
 
 
 # ==========================================================
 # Serialization
 # ==========================================================
+
 
 def test_to_dict():
 
@@ -195,19 +160,16 @@ def test_to_dict():
 # Representation
 # ==========================================================
 
+
 def test_str():
 
     assert "ResearchReport" in str(
-
         report(),
-
     )
 
 
 def test_repr():
 
     assert "ResearchReport" in repr(
-
         report(),
-
     )

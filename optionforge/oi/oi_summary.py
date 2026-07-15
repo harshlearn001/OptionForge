@@ -89,23 +89,14 @@ class OISummary:
     def to_dict(self) -> dict:
 
         return {
-
             "CALL_OI": self.call_oi,
-
             "PUT_OI": self.put_oi,
-
             "TOTAL_OI": self.total_oi,
-
             "CALL_VOLUME": self.call_volume,
-
             "PUT_VOLUME": self.put_volume,
-
             "TOTAL_VOLUME": self.total_volume,
-
             "CONTRACTS": self.contracts,
-
             "TRADES": self.trades,
-
             "PCR": self.pcr,
         }
 

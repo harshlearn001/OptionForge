@@ -73,27 +73,15 @@ class Fill:
 
         if self.quantity <= 0:
 
-            raise ValueError(
-
-                "quantity must be positive."
-
-            )
+            raise ValueError("quantity must be positive.")
 
         if self.price < 0:
 
-            raise ValueError(
-
-                "price cannot be negative."
-
-            )
+            raise ValueError("price cannot be negative.")
 
         if self.quantity > self.order.quantity:
 
-            raise ValueError(
-
-                "fill quantity cannot exceed order quantity."
-
-            )
+            raise ValueError("fill quantity cannot exceed order quantity.")
 
     # -----------------------------------------------------
     # Convenience
@@ -126,23 +114,14 @@ class Fill:
     def to_dict(self) -> dict[str, Any]:
 
         return {
-
             "order": self.order.to_dict(),
-
             "quantity": self.quantity,
-
             "price": self.price,
-
             "status": self.status.name,
-
             "notional_value": self.notional_value,
-
             "remaining_quantity": self.remaining_quantity,
-
             "filled_at": self.filled_at.isoformat(),
-
             "metadata": dict(self.metadata),
-
         }
 
     # -----------------------------------------------------
@@ -151,24 +130,13 @@ class Fill:
 
     def __str__(self) -> str:
 
-        return (
-
-            f"Fill("
-
-            f"{self.quantity}@{self.price})"
-
-        )
+        return f"Fill(" f"{self.quantity}@{self.price})"
 
     def __repr__(self) -> str:
 
         return (
-
             f"Fill("
-
             f"quantity={self.quantity}, "
-
             f"price={self.price}, "
-
             f"status={self.status.name})"
-
         )

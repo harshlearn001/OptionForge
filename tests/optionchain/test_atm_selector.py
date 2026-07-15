@@ -25,10 +25,10 @@ from optionforge.market.option_chain import OptionChain
 
 from optionforge.optionchain.atm_selector import ATMSelector
 
-
 # ==========================================================
 # Builders
 # ==========================================================
+
 
 def build_session() -> TradingSession:
     return TradingSession(
@@ -103,6 +103,7 @@ def build_chain() -> OptionChain:
 # Exact ATM
 # ==========================================================
 
+
 def test_exact_atm():
 
     result = ATMSelector.select(
@@ -112,15 +113,13 @@ def test_exact_atm():
 
     assert len(result) == 2
 
-    assert all(
-        s.contract.strike_price == 25050
-        for s in result
-    )
+    assert all(s.contract.strike_price == 25050 for s in result)
 
 
 # ==========================================================
 # Nearest Lower
 # ==========================================================
+
 
 def test_nearest_lower():
 
@@ -131,15 +130,13 @@ def test_nearest_lower():
 
     assert len(result) == 2
 
-    assert all(
-        s.contract.strike_price == 25050
-        for s in result
-    )
+    assert all(s.contract.strike_price == 25050 for s in result)
 
 
 # ==========================================================
 # Nearest Higher
 # ==========================================================
+
 
 def test_nearest_higher():
 
@@ -150,15 +147,13 @@ def test_nearest_higher():
 
     assert len(result) == 2
 
-    assert all(
-        s.contract.strike_price == 25100
-        for s in result
-    )
+    assert all(s.contract.strike_price == 25100 for s in result)
 
 
 # ==========================================================
 # Below Lowest Strike
 # ==========================================================
+
 
 def test_below_lowest():
 
@@ -169,15 +164,13 @@ def test_below_lowest():
 
     assert len(result) == 2
 
-    assert all(
-        s.contract.strike_price == 25000
-        for s in result
-    )
+    assert all(s.contract.strike_price == 25000 for s in result)
 
 
 # ==========================================================
 # Above Highest Strike
 # ==========================================================
+
 
 def test_above_highest():
 
@@ -188,15 +181,13 @@ def test_above_highest():
 
     assert len(result) == 2
 
-    assert all(
-        s.contract.strike_price == 25100
-        for s in result
-    )
+    assert all(s.contract.strike_price == 25100 for s in result)
 
 
 # ==========================================================
 # Empty Chain
 # ==========================================================
+
 
 def test_empty_chain():
 

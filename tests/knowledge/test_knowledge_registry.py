@@ -13,23 +13,14 @@ from optionforge.knowledge.knowledge_type import KnowledgeType
 def make_knowledge():
 
     return Knowledge(
-
         id="dealer",
-
         name="Dealer",
-
         type=KnowledgeType.DEALER,
-
         level=KnowledgeLevel.STRONG,
-
         score=90,
-
         confidence=95,
-
         description="",
-
         evidence_ids=(),
-
     )
 
 

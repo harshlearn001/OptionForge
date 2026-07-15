@@ -19,12 +19,10 @@ class SupportStrength:
 
     @staticmethod
     def calculate(
-
         support: float,
         support_oi: int,
         max_put_oi: int,
         spot_price: float,
-
     ) -> SupportStrengthResult:
 
         # --------------------------------------------------
@@ -62,14 +60,7 @@ class SupportStrength:
         # Final Score
         # --------------------------------------------------
 
-        score = (
-
-            oi_score
-            + dominance_score
-            + distance_score
-            + strike_score
-
-        )
+        score = oi_score + dominance_score + distance_score + strike_score
 
         score = min(score, 100)
 
@@ -102,25 +93,13 @@ class SupportStrength:
             rating = "VERY WEAK"
             stars = 1
 
-        interpretation = (
-
-            f"Support at {support:.0f} "
-            f"is classified as {rating}."
-
-        )
+        interpretation = f"Support at {support:.0f} " f"is classified as {rating}."
 
         return SupportStrengthResult(
-
             support=float(support),
-
             support_oi=int(support_oi),
-
             score=round(score, 2),
-
             stars=stars,
-
             rating=rating,
-
             interpretation=interpretation,
-
         )

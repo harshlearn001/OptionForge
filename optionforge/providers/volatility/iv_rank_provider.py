@@ -29,9 +29,7 @@ class IVRankProvider(BaseProvider):
 
     GROUP = FeatureGroup.IMPLIED_VOLATILITY
 
-    PRODUCES = (
-        FeatureId.IV_RANK,
-    )
+    PRODUCES = (FeatureId.IV_RANK,)
 
     REQUIRES = (
         "current_iv",
@@ -44,35 +42,20 @@ class IVRankProvider(BaseProvider):
     ) -> Iterable[Feature]:
 
         result = IVRank.calculate(
-
             current_iv=context.snapshot.current_iv,
-
             historical_iv=context.snapshot.historical_iv,
-
         )
 
         return [
-
             Feature(
-
                 id=FeatureId.IV_RANK,
-
                 group=self.GROUP,
-
                 value=result.iv_rank,
-
                 metadata={
-
                     "current_iv": result.current_iv,
-
                     "lowest_iv": result.low_iv,
-
                     "highest_iv": result.high_iv,
-
                     "lookback": result.lookback,
-
                 },
-
             )
-
         ]

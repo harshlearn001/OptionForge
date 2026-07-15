@@ -29,7 +29,7 @@ print()
 print(df.dtypes)
 
 print()
-print(df.columns.tolist())
+
 
 print()
 print("Rows :", len(df))

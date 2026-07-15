@@ -26,7 +26,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from optionforge.common.enums import OptionType
+
 from optionforge.kernel.expiry import Expiry
 from optionforge.kernel.option_contract import OptionContract
 from optionforge.kernel.strike import Strike
@@ -70,33 +70,19 @@ class MarketSnapshot:
             raise ValueError("Close price must be positive.")
 
         if self.volume < 0:
-            raise ValueError(
-                "Volume cannot be negative."
-            )
+            raise ValueError("Volume cannot be negative.")
 
         if self.open_interest < 0:
-            raise ValueError(
-                "Open interest cannot be negative."
-            )
+            raise ValueError("Open interest cannot be negative.")
 
         if self.high < self.low:
-            raise ValueError(
-                "High price cannot be less than low price."
-            )
+            raise ValueError("High price cannot be less than low price.")
 
-        if not (
-            self.low <= self.open <= self.high
-        ):
-            raise ValueError(
-                "Open price must lie within High-Low range."
-            )
+        if not (self.low <= self.open <= self.high):
+            raise ValueError("Open price must lie within High-Low range.")
 
-        if not (
-            self.low <= self.close <= self.high
-        ):
-            raise ValueError(
-                "Close price must lie within High-Low range."
-            )
+        if not (self.low <= self.close <= self.high):
+            raise ValueError("Close price must lie within High-Low range.")
 
     # =====================================================
     # Identity
@@ -150,6 +136,7 @@ class MarketSnapshot:
         Returns trading date.
         """
         return self.symbol.trading_session.trading_date
+
     # =====================================================
     # Price Statistics
     # =====================================================

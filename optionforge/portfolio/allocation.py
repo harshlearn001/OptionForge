@@ -75,42 +75,21 @@ class Allocation:
 
         if self.allocated_capital < 0:
 
-            raise ValueError(
-
-                "allocated_capital cannot be negative."
-
-            )
+            raise ValueError("allocated_capital cannot be negative.")
 
         if self.available_capital < 0:
 
-            raise ValueError(
-
-                "available_capital cannot be negative."
-
-            )
+            raise ValueError("available_capital cannot be negative.")
 
         if self.portfolio_value <= 0:
 
-            raise ValueError(
+            raise ValueError("portfolio_value must be positive.")
 
-                "portfolio_value must be positive."
+        if self.allocated_capital > self.portfolio_value:
 
-            )
-
-        if (
-
-            self.allocated_capital
-
-            > self.portfolio_value
-
-        ):
-
-            raise ValueError(
-
-                "allocated_capital cannot exceed portfolio_value."
-
-            )
+            raise ValueError("allocated_capital cannot exceed portfolio_value.")
         # -----------------------------------------------------
+
     # Convenience
     # -----------------------------------------------------
 
@@ -121,13 +100,7 @@ class Allocation:
         to this position.
         """
 
-        return (
-
-            self.allocated_capital
-
-            / self.portfolio_value
-
-        ) * 100.0
+        return (self.allocated_capital / self.portfolio_value) * 100.0
 
     @property
     def remaining_percentage(self) -> float:
@@ -135,13 +108,7 @@ class Allocation:
         Remaining portfolio percentage.
         """
 
-        return (
-
-            self.available_capital
-
-            / self.portfolio_value
-
-        ) * 100.0
+        return (self.available_capital / self.portfolio_value) * 100.0
 
     @property
     def utilization_percentage(self) -> float:
@@ -176,45 +143,17 @@ class Allocation:
     ) -> dict[str, Any]:
 
         return {
-
             "position": self.position.to_dict(),
-
             "allocated_capital": self.allocated_capital,
-
             "available_capital": self.available_capital,
-
             "portfolio_value": self.portfolio_value,
-
-            "allocation_percentage": (
-
-                self.allocation_percentage
-
-            ),
-
-            "remaining_percentage": (
-
-                self.remaining_percentage
-
-            ),
-
-            "utilization_percentage": (
-
-                self.utilization_percentage
-
-            ),
-
-            "timestamp": (
-
-                self.timestamp.isoformat()
-
-            ),
-
+            "allocation_percentage": (self.allocation_percentage),
+            "remaining_percentage": (self.remaining_percentage),
+            "utilization_percentage": (self.utilization_percentage),
+            "timestamp": (self.timestamp.isoformat()),
             "metadata": dict(
-
                 self.metadata,
-
             ),
-
         }
 
     # -----------------------------------------------------
@@ -225,24 +164,14 @@ class Allocation:
         self,
     ) -> str:
 
-        return (
-
-            f"Allocation("
-
-            f"{self.allocation_percentage:.2f}%)"
-
-        )
+        return f"Allocation(" f"{self.allocation_percentage:.2f}%)"
 
     def __repr__(
         self,
     ) -> str:
 
         return (
-
             f"Allocation("
-
             f"allocated={self.allocated_capital:.2f}, "
-
             f"available={self.available_capital:.2f})"
-
         )

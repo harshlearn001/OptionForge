@@ -24,20 +24,19 @@ def runner():
 # Construction
 # ==========================================================
 
+
 def test_create():
 
     assert isinstance(
-
         runner(),
-
         WalkForwardRunner,
-
     )
 
 
 # ==========================================================
 # Empty Input
 # ==========================================================
+
 
 def test_empty():
 
@@ -50,12 +49,11 @@ def test_empty():
 # Single Success
 # ==========================================================
 
+
 def test_single_success():
 
     result = runner().run(
-
         [True],
-
     )
 
     assert result.windows == 1
@@ -73,12 +71,11 @@ def test_single_success():
 # Single Failure
 # ==========================================================
 
+
 def test_single_failure():
 
     result = runner().run(
-
         [False],
-
     )
 
     assert result.windows == 1
@@ -96,22 +93,16 @@ def test_single_failure():
 # Mixed Results
 # ==========================================================
 
+
 def test_mixed():
 
     result = runner().run(
-
         [
-
             True,
-
             True,
-
             False,
-
             True,
-
         ]
-
     )
 
     assert result.windows == 4
@@ -131,22 +122,16 @@ def test_mixed():
 # Multiple Failures
 # ==========================================================
 
+
 def test_multiple_failures():
 
     result = runner().run(
-
         [
-
             False,
-
             False,
-
             True,
-
             False,
-
         ]
-
     )
 
     assert result.successful_windows == 1
@@ -162,26 +147,19 @@ def test_multiple_failures():
 # Return Type
 # ==========================================================
 
+
 def test_result_type():
 
     result = runner().run(
-
         [
-
             True,
-
             False,
-
         ]
-
     )
 
     assert isinstance(
-
         result,
-
         WalkForwardAnalysis,
-
     )
 
 
@@ -189,24 +167,17 @@ def test_result_type():
 # Stability
 # ==========================================================
 
+
 def test_stability():
 
     result = runner().run(
-
         [
-
             True,
-
             True,
-
             True,
-
             False,
-
             True,
-
         ]
-
     )
 
     assert result.stability_score == 80.0
@@ -216,35 +187,16 @@ def test_stability():
 # Representation
 # ==========================================================
 
+
 def test_repr():
 
-    assert (
-
-        "WalkForwardRunner"
-
-        in
-
-        repr(
-
-            runner(),
-
-        )
-
+    assert "WalkForwardRunner" in repr(
+        runner(),
     )
 
 
 def test_str():
 
-    assert (
-
-        "WalkForwardRunner"
-
-        in
-
-        str(
-
-            runner(),
-
-        )
-
+    assert "WalkForwardRunner" in str(
+        runner(),
     )

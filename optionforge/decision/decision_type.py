@@ -111,27 +111,16 @@ class DecisionType(Enum):
         """
 
         return {
-
             DecisionType.STRONG_SELL: -3,
-
             DecisionType.SELL: -2,
-
             DecisionType.REDUCE: -1,
-
             DecisionType.NO_ACTION: 0,
-
             DecisionType.HOLD: 0,
-
             DecisionType.ACCUMULATE: 1,
-
             DecisionType.BUY: 2,
-
             DecisionType.STRONG_BUY: 3,
-
             DecisionType.HEDGE: -4,
-
             DecisionType.EXIT: -5,
-
         }[self]
 
     def __str__(self) -> str:

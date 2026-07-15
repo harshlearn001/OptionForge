@@ -22,8 +22,8 @@ OptionForge Engineering Team
 from __future__ import annotations
 
 from optionforge.common.enums import OptionType
-from optionforge.market.option_chain import OptionChain
 from optionforge.market.market_snapshot import MarketSnapshot
+from optionforge.market.option_chain import OptionChain
 
 
 class ChainFilters:
@@ -35,14 +35,18 @@ class ChainFilters:
     def calls(
         chain: OptionChain,
     ) -> tuple[MarketSnapshot, ...]:
-        """
-        Return all Call snapshots.
-        """
 
         return tuple(
-            snapshot
-            for snapshot in chain
-            if snapshot.option_type is OptionType.CALL
+            snapshot for snapshot in chain if snapshot.option_type is OptionType.CALL
+        )
+
+    @staticmethod
+    def puts(
+        chain: OptionChain,
+    ) -> tuple[MarketSnapshot, ...]:
+
+        return tuple(
+            snapshot for snapshot in chain if snapshot.option_type is OptionType.PUT
         )
 
     @staticmethod
@@ -54,9 +58,7 @@ class ChainFilters:
         """
 
         return tuple(
-            snapshot
-            for snapshot in chain
-            if snapshot.option_type is OptionType.PUT
+            snapshot for snapshot in chain if snapshot.option_type is OptionType.PUT
         )
 
     @staticmethod
@@ -84,9 +86,7 @@ class ChainFilters:
         """
 
         return tuple(
-            snapshot
-            for snapshot in chain
-            if snapshot.option_type is option_type
+            snapshot for snapshot in chain if snapshot.option_type is option_type
         )
 
     @staticmethod
@@ -99,9 +99,7 @@ class ChainFilters:
         """
 
         return tuple(
-            snapshot
-            for snapshot in chain
-            if snapshot.open_interest >= minimum
+            snapshot for snapshot in chain if snapshot.open_interest >= minimum
         )
 
     @staticmethod
@@ -113,8 +111,4 @@ class ChainFilters:
         Return contracts with Volume >= minimum.
         """
 
-        return tuple(
-            snapshot
-            for snapshot in chain
-            if snapshot.volume >= minimum
-        )
+        return tuple(snapshot for snapshot in chain if snapshot.volume >= minimum)

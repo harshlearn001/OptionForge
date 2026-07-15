@@ -41,6 +41,7 @@ from optionforge.repository.repository_exception import (
 )
 from optionforge.repository.file_loader import FileLoader
 
+
 class OptionRepository(MarketRepository):
     """
     Repository for option chain data.
@@ -54,9 +55,7 @@ class OptionRepository(MarketRepository):
         self._context = context
 
         self._paths = PathManager(
-
             context.marketforge_root,
-
         )
 
     # ======================================================
@@ -73,35 +72,19 @@ class OptionRepository(MarketRepository):
 
         symbol = symbol.upper()
 
-        index_file = (
-
-            self._paths.option_indices
-
-            / f"{symbol}.parquet"
-
-        )
+        index_file = self._paths.option_indices / f"{symbol}.parquet"
 
         if index_file.exists():
 
             return index_file
 
-        stock_file = (
-
-            self._paths.option_stocks
-
-            / f"{symbol}.parquet"
-
-        )
+        stock_file = self._paths.option_stocks / f"{symbol}.parquet"
 
         if stock_file.exists():
 
             return stock_file
 
-        raise RepositoryNotFoundError(
-
-            f"Option data not found for '{symbol}'."
-
-        )
+        raise RepositoryNotFoundError(f"Option data not found for '{symbol}'.")
 
     # ======================================================
     # Public API
@@ -116,12 +99,8 @@ class OptionRepository(MarketRepository):
         Load option chain.
         """
 
-
-
         return FileLoader.load(
-
-        self._resolve(symbol),
-
+            self._resolve(symbol),
         )
 
     def exists(
@@ -156,7 +135,5 @@ class OptionRepository(MarketRepository):
         """
 
         return self.load(
-
             symbol,
-
         )

@@ -69,21 +69,9 @@ class ResearchResult:
 
     def __post_init__(self) -> None:
 
-        if not (
+        if not (0.0 <= self.research_score <= 100.0):
 
-            0.0
-
-            <= self.research_score
-
-            <= 100.0
-
-        ):
-
-            raise ValueError(
-
-                "research_score must be between 0 and 100."
-
-            )
+            raise ValueError("research_score must be between 0 and 100.")
 
     # =====================================================
     # Convenience
@@ -111,29 +99,12 @@ class ResearchResult:
     def to_dict(self) -> dict[str, Any]:
 
         return {
-
             "research": self.research.to_dict(),
-
-            "performance_report":
-
-                self.performance_report.to_dict(),
-
-            "research_score":
-
-                self.research_score,
-
-            "approved":
-
-                self.approved,
-
-            "recommendation":
-
-                self.recommendation,
-
-            "metadata":
-
-                dict(self.metadata),
-
+            "performance_report": self.performance_report.to_dict(),
+            "research_score": self.research_score,
+            "approved": self.approved,
+            "recommendation": self.recommendation,
+            "metadata": dict(self.metadata),
         }
 
     # =====================================================
@@ -142,22 +113,12 @@ class ResearchResult:
 
     def __str__(self) -> str:
 
-        return (
-
-            f"ResearchResult("
-
-            f"score={self.research_score:.1f})"
-
-        )
+        return f"ResearchResult(" f"score={self.research_score:.1f})"
 
     def __repr__(self) -> str:
 
         return (
-
             f"ResearchResult("
-
             f"approved={self.approved}, "
-
             f"score={self.research_score:.1f})"
-
         )

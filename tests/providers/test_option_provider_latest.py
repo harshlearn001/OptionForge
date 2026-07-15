@@ -23,7 +23,6 @@ from optionforge.providers.option_provider import (
     OptionProvider,
 )
 
-
 # ============================================================
 # Test Setup
 # ============================================================
@@ -31,15 +30,10 @@ from optionforge.providers.option_provider import (
 MARKETFORGE_ROOT = Path(r"H:\MarketForge")
 
 context = RepositoryContext(
-
     marketforge_root=MARKETFORGE_ROOT,
-
     use_parquet=True,
-
     use_cache=True,
-
     validate_schema=True,
-
 )
 
 repository = OptionRepository(context)
@@ -50,6 +44,7 @@ provider = OptionProvider(repository)
 # ============================================================
 # Tests
 # ============================================================
+
 
 def test_trade_dates():
     """
@@ -69,6 +64,7 @@ def test_trade_dates():
 
 # ------------------------------------------------------------
 
+
 def test_latest_trade_date():
     """
     Latest trade date should equal the maximum trade date.
@@ -83,6 +79,7 @@ def test_latest_trade_date():
 
 # ------------------------------------------------------------
 
+
 def test_expiries():
     """
     Expiry list should be sorted.
@@ -91,11 +88,8 @@ def test_expiries():
     latest = provider.latest_trade_date("NIFTY")
 
     expiries = provider.expiries(
-
         "NIFTY",
-
         latest,
-
     )
 
     assert len(expiries) > 0
@@ -109,6 +103,7 @@ def test_expiries():
 
 # ------------------------------------------------------------
 
+
 def test_latest_expiry():
     """
     latest_expiry() should return the nearest expiry
@@ -118,25 +113,20 @@ def test_latest_expiry():
     latest = provider.latest_trade_date("NIFTY")
 
     expiries = provider.expiries(
-
         "NIFTY",
-
         latest,
-
     )
 
     expiry = provider.latest_expiry(
-
         "NIFTY",
-
         latest,
-
     )
 
     assert expiry == expiries[0]
 
 
 # ------------------------------------------------------------
+
 
 def test_option_chain_latest():
     """
@@ -146,21 +136,14 @@ def test_option_chain_latest():
     trade_date = provider.latest_trade_date("NIFTY")
 
     expiry = provider.latest_expiry(
-
         "NIFTY",
-
         trade_date,
-
     )
 
     chain = provider.option_chain(
-
         "NIFTY",
-
         trade_date,
-
         expiry,
-
     )
 
     assert len(chain) > 0
@@ -176,6 +159,7 @@ def test_option_chain_latest():
 
 # ------------------------------------------------------------
 
+
 def test_invalid_symbol():
 
     try:
@@ -190,6 +174,7 @@ def test_invalid_symbol():
 
 
 # ------------------------------------------------------------
+
 
 def test_repr():
 

@@ -16,10 +16,10 @@ from optionforge.providers.volatility.expected_move_provider import (
     ExpectedMoveProvider,
 )
 
-
 # ---------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------
+
 
 @pytest.fixture
 def context():
@@ -60,6 +60,7 @@ def expected_move_result():
 # ---------------------------------------------------------
 # Tests
 # ---------------------------------------------------------
+
 
 def test_provider_returns_expected_features(
     monkeypatch,

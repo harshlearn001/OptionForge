@@ -89,31 +89,18 @@ class Recommendation:
     def to_dict(self) -> dict[str, Any]:
 
         return {
-
             "strategy": self.strategy.name,
-
             "title": self.title,
-
             "summary": self.summary,
-
             "entry": self.entry,
-
             "exit": self.exit,
-
             "stop_loss": self.stop_loss,
-
             "position_size": self.position_size,
-
             "risk_reward": self.risk_reward,
-
             "risk_notes": list(self.risk_notes),
-
             "rationale": list(self.rationale),
-
             "timestamp": self.timestamp.isoformat(),
-
             "metadata": dict(self.metadata),
-
         }
 
     # -----------------------------------------------------
@@ -122,24 +109,12 @@ class Recommendation:
 
     def __str__(self) -> str:
 
-        return (
-
-            f"Recommendation("
-
-            f"{self.strategy.name}: "
-
-            f"{self.title})"
-
-        )
+        return f"Recommendation(" f"{self.strategy.name}: " f"{self.title})"
 
     def __repr__(self) -> str:
 
         return (
-
             f"Recommendation("
-
             f"strategy={self.strategy.name}, "
-
             f"title={self.title!r})"
-
         )

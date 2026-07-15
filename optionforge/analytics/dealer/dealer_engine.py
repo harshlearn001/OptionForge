@@ -31,9 +31,7 @@ class DealerEngine:
     ) -> DealerResult:
 
         calc = DealerCalculator(
-
             snapshot.option_chain,
-
         )
 
         total_call = calc.total_call_oi()
@@ -46,11 +44,7 @@ class DealerEngine:
 
         net = calc.call_put_difference()
 
-        spot = float(
-
-            snapshot.spot["CLOSE"].iloc[-1]
-
-        )
+        spot = float(snapshot.spot["CLOSE"].iloc[-1])
 
         if net > 0:
 
@@ -65,47 +59,28 @@ class DealerEngine:
             bias = "Neutral"
 
         total = max(
-
             total_call + total_put,
-
             1,
-
         )
 
         confidence = round(
-
             abs(net) / total * 100,
-
             2,
-
         )
 
         return DealerResult(
-
             symbol=snapshot.symbol,
-
             trade_date=snapshot.trade_date,
-
             expiry=snapshot.expiry,
-
             spot=spot,
-
             major_call_strike=major_call,
-
             major_put_strike=major_put,
-
             total_call_oi=total_call,
-
             total_put_oi=total_put,
-
             net_oi=net,
-
             dealer_bias=bias,
-
             confidence=confidence,
-
             contracts=len(snapshot.option_chain),
-
         )
 
     def __repr__(self):

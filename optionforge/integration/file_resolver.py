@@ -22,7 +22,6 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Iterator
 
-
 # ============================================================================
 # Exceptions
 # ============================================================================
@@ -82,17 +81,9 @@ class FileResolver:
         self.index_spot_root = Path(index_spot_root)
         self.equity_spot_root = Path(equity_spot_root)
 
-        self.future_root = (
-            Path(future_root)
-            if future_root is not None
-            else None
-        )
+        self.future_root = Path(future_root) if future_root is not None else None
 
-        self.delivery_root = (
-            Path(delivery_root)
-            if delivery_root is not None
-            else None
-        )
+        self.delivery_root = Path(delivery_root) if delivery_root is not None else None
 
     # ------------------------------------------------------------------
     # Option Repository
@@ -129,9 +120,7 @@ class FileResolver:
         """
 
         if self.future_root is None:
-            raise RepositoryNotConfiguredError(
-                "Future repository is not configured."
-            )
+            raise RepositoryNotConfiguredError("Future repository is not configured.")
 
         return self._resolve_symbol_file(
             root=self.future_root,
@@ -148,9 +137,7 @@ class FileResolver:
         """
 
         if self.delivery_root is None:
-            raise RepositoryNotConfiguredError(
-                "Delivery repository is not configured."
-            )
+            raise RepositoryNotConfiguredError("Delivery repository is not configured.")
 
         return self._resolve_symbol_file(
             root=self.delivery_root,
@@ -220,6 +207,7 @@ class FileResolver:
         except FileResolverError:
             return False
         # ------------------------------------------------------------------
+
     # Internal Helpers
     # ------------------------------------------------------------------
 
@@ -284,9 +272,7 @@ class FileResolver:
             if candidate.exists():
                 return candidate
 
-        raise FileNotFoundInRepository(
-            f"Unable to locate '{symbol}' in:\n{root}"
-        )
+        raise FileNotFoundInRepository(f"Unable to locate '{symbol}' in:\n{root}")
 
     def _resolve_symbol_file(
         self,
@@ -318,9 +304,7 @@ class FileResolver:
             except FileNotFoundInRepository:
                 pass
 
-        raise FileNotFoundInRepository(
-            f"Unable to locate '{symbol}' under:\n{root}"
-        )
+        raise FileNotFoundInRepository(f"Unable to locate '{symbol}' under:\n{root}")
 
     # ------------------------------------------------------------------
     # Repository Validation
@@ -334,15 +318,11 @@ class FileResolver:
 
         if not path.exists():
 
-            raise RepositoryNotFoundError(
-                f"Repository not found:\n{path}"
-            )
+            raise RepositoryNotFoundError(f"Repository not found:\n{path}")
 
         if not path.is_dir():
 
-            raise RepositoryNotFoundError(
-                f"Repository is not a directory:\n{path}"
-            )
+            raise RepositoryNotFoundError(f"Repository is not a directory:\n{path}")
 
     def validate(self) -> None:
         """
@@ -372,16 +352,8 @@ class FileResolver:
             "option_root": str(self.option_root),
             "index_spot_root": str(self.index_spot_root),
             "equity_spot_root": str(self.equity_spot_root),
-            "future_root": (
-                str(self.future_root)
-                if self.future_root
-                else None
-            ),
-            "delivery_root": (
-                str(self.delivery_root)
-                if self.delivery_root
-                else None
-            ),
+            "future_root": (str(self.future_root) if self.future_root else None),
+            "delivery_root": (str(self.delivery_root) if self.delivery_root else None),
         }
 
     def print_summary(self) -> None:

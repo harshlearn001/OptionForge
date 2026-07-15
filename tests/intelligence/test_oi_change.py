@@ -15,58 +15,41 @@ sys.path.append(str(BASE_DIR))
 
 from optionforge.intelligence import OIChange
 
-
 print("=" * 60)
 print("OPTIONFORGE")
 print("OI CHANGE INTELLIGENCE TEST")
 print("=" * 60)
 
 tests = [
-
     # -------------------------------------------------
     # Long Build-up
     # -------------------------------------------------
-
     ("25000", "CE", 15.40, 18000),
-
     # -------------------------------------------------
     # Short Build-up
     # -------------------------------------------------
-
     ("25100", "CE", -12.60, 14500),
-
     # -------------------------------------------------
     # Short Covering
     # -------------------------------------------------
-
     ("24900", "PE", 8.25, -9200),
-
     # -------------------------------------------------
     # Long Unwinding
     # -------------------------------------------------
-
     ("24800", "PE", -10.80, -13200),
-
     # -------------------------------------------------
     # Neutral
     # -------------------------------------------------
-
     ("25050", "CE", 0.00, 0),
-
 ]
 
 for strike, option_type, price_change, oi_change in tests:
 
     result = OIChange.analyze(
-
         strike=float(strike),
-
         option_type=option_type,
-
         price_change=price_change,
-
         oi_change=oi_change,
-
     )
 
     print("-" * 60)

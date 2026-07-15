@@ -22,14 +22,12 @@ def engine():
 # Construction
 # ==========================================================
 
+
 def test_create():
 
     assert isinstance(
-
         engine(),
-
         BenchmarkEngine,
-
     )
 
 
@@ -37,24 +35,18 @@ def test_create():
 # Return Type
 # ==========================================================
 
+
 def test_result_type():
 
     result = engine().run(
-
         strategy_return=18.5,
-
         benchmark_name="NIFTY 50",
-
         benchmark_return=12.2,
-
     )
 
     assert isinstance(
-
         result,
-
         BenchmarkComparison,
-
     )
 
 
@@ -62,16 +54,13 @@ def test_result_type():
 # Pass / Fail
 # ==========================================================
 
+
 def test_pass():
 
     result = engine().run(
-
         18.5,
-
         "NIFTY 50",
-
         12.2,
-
     )
 
     assert result.passed
@@ -82,13 +71,9 @@ def test_pass():
 def test_fail():
 
     result = engine().run(
-
         5.0,
-
         "NIFTY 50",
-
         12.2,
-
     )
 
     assert not result.passed
@@ -100,16 +85,13 @@ def test_fail():
 # Calculated Values
 # ==========================================================
 
+
 def test_alpha():
 
     result = engine().run(
-
         18.5,
-
         "NIFTY 50",
-
         12.2,
-
     )
 
     assert result.alpha == 6.3
@@ -118,13 +100,9 @@ def test_alpha():
 def test_excess_return():
 
     result = engine().run(
-
         18.5,
-
         "NIFTY 50",
-
         12.2,
-
     )
 
     assert result.excess_return == 6.3
@@ -133,13 +111,9 @@ def test_excess_return():
 def test_tracking_error():
 
     result = engine().run(
-
         18.5,
-
         "NIFTY 50",
-
         12.2,
-
     )
 
     assert result.tracking_error == 0.0
@@ -148,13 +122,9 @@ def test_tracking_error():
 def test_information_ratio():
 
     result = engine().run(
-
         18.5,
-
         "NIFTY 50",
-
         12.2,
-
     )
 
     assert result.information_ratio == 0.0
@@ -164,16 +134,13 @@ def test_information_ratio():
 # Stored Values
 # ==========================================================
 
+
 def test_benchmark_name():
 
     result = engine().run(
-
         18.5,
-
         "NIFTY 50",
-
         12.2,
-
     )
 
     assert result.benchmark_name == "NIFTY 50"
@@ -182,13 +149,9 @@ def test_benchmark_name():
 def test_strategy_return():
 
     result = engine().run(
-
         18.5,
-
         "NIFTY 50",
-
         12.2,
-
     )
 
     assert result.strategy_return == 18.5
@@ -197,13 +160,9 @@ def test_strategy_return():
 def test_benchmark_return():
 
     result = engine().run(
-
         18.5,
-
         "NIFTY 50",
-
         12.2,
-
     )
 
     assert result.benchmark_return == 12.2
@@ -213,19 +172,16 @@ def test_benchmark_return():
 # Representation
 # ==========================================================
 
+
 def test_repr():
 
     assert "BenchmarkEngine" in repr(
-
         engine(),
-
     )
 
 
 def test_str():
 
     assert "BenchmarkEngine" in str(
-
         engine(),
-
     )

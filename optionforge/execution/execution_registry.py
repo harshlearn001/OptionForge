@@ -47,10 +47,4 @@ class ExecutionRegistry:
 
     def __repr__(self) -> str:
 
-        return (
-
-            f"ExecutionRegistry("
-
-            f"builder={self._builder.__class__.__name__})"
-
-        )
+        return f"ExecutionRegistry(" f"builder={self._builder.__class__.__name__})"

@@ -25,7 +25,6 @@ print("=" * 60)
 # ---------------------------------------------------------
 
 columns = [
-
     "SYMBOL",
     "EXPIRY",
     "STRIKE",
@@ -36,7 +35,6 @@ columns = [
     "CHANGE_IN_OI",
     "VOLUME",
     "SPOT",
-
 ]
 
 valid, missing = OptionChainSchema.validate(columns)
@@ -54,11 +52,9 @@ print(f"Missing : {missing}")
 # ---------------------------------------------------------
 
 bad_columns = [
-
     "SYMBOL",
     "STRIKE",
     "LTP",
-
 ]
 
 valid, missing = OptionChainSchema.validate(bad_columns)

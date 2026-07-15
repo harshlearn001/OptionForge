@@ -112,6 +112,7 @@ class EvidenceEngine:
             source=FeatureId.DEALER_POSITION,
             metadata=feature.metadata,
         )
+
     # -----------------------------------------------------
     # Volatility Evidence
     # -----------------------------------------------------
@@ -134,6 +135,7 @@ class EvidenceEngine:
             source=feature.id,
             metadata=feature.metadata,
         )
+
     # -----------------------------------------------------
     # Strength
     # -----------------------------------------------------

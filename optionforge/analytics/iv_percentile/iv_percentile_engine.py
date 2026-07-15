@@ -45,32 +45,20 @@ class IVPercentileEngine:
     ) -> IVPercentileResult:
 
         if not historical_iv:
-            raise ValueError(
-                "historical_iv cannot be empty."
-            )
+            raise ValueError("historical_iv cannot be empty.")
 
         percentile = self.calculator.calculate(
-
             current_iv=current_iv,
-
             historical_iv=historical_iv,
-
         )
 
         return IVPercentileResult(
-
             symbol=symbol,
-
             trade_date=trade_date,
-
             expiry=expiry,
-
             current_iv=current_iv,
-
             historical_observations=len(historical_iv),
-
             iv_percentile=percentile,
-
         )
 
     def __repr__(self):

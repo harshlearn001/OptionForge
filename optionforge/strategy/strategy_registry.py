@@ -116,15 +116,10 @@ class StrategyRegistry:
         """
 
         return StrategyRegistry(
-
             strategies=(
-
                 *self.strategies,
-
                 strategy,
-
             )
-
         )
 
     def extend(
@@ -136,15 +131,10 @@ class StrategyRegistry:
         """
 
         return StrategyRegistry(
-
             strategies=(
-
                 *self.strategies,
-
                 *strategies,
-
             )
-
         )
 
     # =====================================================
@@ -156,17 +146,8 @@ class StrategyRegistry:
     ) -> dict:
 
         return {
-
             "count": self.count,
-
-            "strategies": [
-
-                strategy.to_dict()
-
-                for strategy in self.strategies
-
-            ],
-
+            "strategies": [strategy.to_dict() for strategy in self.strategies],
         }
 
     # =====================================================
@@ -177,22 +158,10 @@ class StrategyRegistry:
         self,
     ) -> str:
 
-        return (
-
-            f"StrategyRegistry("
-
-            f"{self.count} strategies)"
-
-        )
+        return f"StrategyRegistry(" f"{self.count} strategies)"
 
     def __repr__(
         self,
     ) -> str:
 
-        return (
-
-            f"StrategyRegistry("
-
-            f"count={self.count})"
-
-        )
+        return f"StrategyRegistry(" f"count={self.count})"

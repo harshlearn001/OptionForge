@@ -28,25 +28,15 @@ print("=" * 60)
 # ---------------------------------------------------------
 
 market = MarketStructure.calculate(
-
     support_strength=96,
-
     resistance_strength=91,
-
     expected_move=82,
-
     iv_rank=42,
-
     iv_percentile=51,
-
     max_pain=88,
-
     oi_wall_score=90,
-
     oi_shift_score=84,
-
     oi_change_score=80,
-
 )
 
 # ---------------------------------------------------------

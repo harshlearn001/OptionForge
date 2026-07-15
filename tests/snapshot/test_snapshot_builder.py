@@ -21,11 +21,7 @@ def option_df():
 
 def spot_df():
 
-    return pd.DataFrame(
-        {
-            "CLOSE": [25050]
-        }
-    )
+    return pd.DataFrame({"CLOSE": [25050]})
 
 
 def builder():
@@ -50,13 +46,9 @@ def builder():
 def test_build():
 
     snapshot = builder().build(
-
         symbol="NIFTY",
-
         trade_date=20260101,
-
         expiry=20260129,
-
     )
 
     assert snapshot.symbol == "NIFTY"
@@ -65,13 +57,9 @@ def test_build():
 def test_option_chain_loaded():
 
     snapshot = builder().build(
-
         "NIFTY",
-
         20260101,
-
         20260129,
-
     )
 
     assert len(snapshot.option_chain) == 2
@@ -80,13 +68,9 @@ def test_option_chain_loaded():
 def test_spot_loaded():
 
     snapshot = builder().build(
-
         "NIFTY",
-
         20260101,
-
         20260129,
-
     )
 
     assert snapshot.spot.iloc[0]["CLOSE"] == 25050

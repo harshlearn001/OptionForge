@@ -18,11 +18,7 @@ print("OPTIONFORGE")
 print("INDEX ADAPTER TEST")
 print("=" * 70)
 
-csv_file = (
-    r"H:\MarketForge\data\master"
-    r"\Indices_master"
-    r"\NIFTY.csv"
-)
+csv_file = r"H:\MarketForge\data\master" r"\Indices_master" r"\NIFTY.csv"
 
 df = IndexAdapter.convert(csv_file)
 

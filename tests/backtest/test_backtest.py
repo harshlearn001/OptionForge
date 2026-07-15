@@ -13,25 +13,15 @@ from optionforge.backtest.backtest import Backtest
 def backtest():
 
     return Backtest(
-
         total_return=25.0,
-
         annual_return=18.5,
-
         max_drawdown=8.2,
-
         sharpe_ratio=1.75,
-
         sortino_ratio=2.30,
-
         win_rate=62.5,
-
         total_trades=100,
-
         profitable_trades=63,
-
         losing_trades=37,
-
     )
 
 
@@ -39,20 +29,19 @@ def backtest():
 # Construction
 # ==========================================================
 
+
 def test_create():
 
     assert isinstance(
-
         backtest(),
-
         Backtest,
-
     )
 
 
 # ==========================================================
 # Values
 # ==========================================================
+
 
 def test_total_return():
 
@@ -99,6 +88,7 @@ def test_trade_counts():
 # Convenience
 # ==========================================================
 
+
 def test_expectancy():
 
     assert backtest().expectancy == 0.25
@@ -118,48 +108,29 @@ def test_has_drawdown():
 # Validation
 # ==========================================================
 
+
 @pytest.mark.parametrize(
-
     "field,value",
-
     [
-
         ("win_rate", -1),
-
         ("win_rate", 101),
-
         ("total_trades", -1),
-
         ("profitable_trades", -1),
-
         ("losing_trades", -1),
-
     ],
-
 )
-
 def test_validation(field, value):
 
     kwargs = dict(
-
         total_return=25.0,
-
         annual_return=18.5,
-
         max_drawdown=8.2,
-
         sharpe_ratio=1.75,
-
         sortino_ratio=2.30,
-
         win_rate=62.5,
-
         total_trades=100,
-
         profitable_trades=63,
-
         losing_trades=37,
-
     )
 
     kwargs[field] = value
@@ -172,6 +143,7 @@ def test_validation(field, value):
 # ==========================================================
 # Serialization
 # ==========================================================
+
 
 def test_to_dict():
 
@@ -189,6 +161,7 @@ def test_to_dict():
 # ==========================================================
 # Representation
 # ==========================================================
+
 
 def test_str():
 

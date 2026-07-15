@@ -19,13 +19,10 @@ class OIShift:
 
     @staticmethod
     def analyze(
-
         previous_support: float,
         current_support: float,
-
         previous_resistance: float,
         current_resistance: float,
-
     ) -> OIShiftResult:
 
         # -----------------------------------------
@@ -34,9 +31,7 @@ class OIShift:
 
         support_shift = current_support - previous_support
 
-        resistance_shift = (
-            current_resistance - previous_resistance
-        )
+        resistance_shift = current_resistance - previous_resistance
 
         # -----------------------------------------
         # Support Direction
@@ -74,17 +69,11 @@ class OIShift:
         # Market Bias
         # -----------------------------------------
 
-        if (
-            support_direction == "UP"
-            and resistance_direction == "DOWN"
-        ):
+        if support_direction == "UP" and resistance_direction == "DOWN":
 
             bias = "STRONGLY BULLISH"
 
-        elif (
-            support_direction == "DOWN"
-            and resistance_direction == "UP"
-        ):
+        elif support_direction == "DOWN" and resistance_direction == "UP":
 
             bias = "STRONGLY BEARISH"
 
@@ -113,35 +102,20 @@ class OIShift:
         # -----------------------------------------
 
         interpretation = (
-
             f"Support shifted {support_direction}. "
-
             f"Resistance shifted {resistance_direction}. "
-
             f"Overall market bias is {bias}."
-
         )
 
         return OIShiftResult(
-
             previous_support=float(previous_support),
-
             current_support=float(current_support),
-
             previous_resistance=float(previous_resistance),
-
             current_resistance=float(current_resistance),
-
             support_shift=float(support_shift),
-
             resistance_shift=float(resistance_shift),
-
             support_direction=support_direction,
-
             resistance_direction=resistance_direction,
-
             market_bias=bias,
-
             interpretation=interpretation,
-
         )

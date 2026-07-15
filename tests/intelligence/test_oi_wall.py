@@ -17,7 +17,6 @@ import pandas as pd
 
 from optionforge.intelligence import OIWall
 
-
 print("=" * 60)
 print("OPTIONFORGE")
 print("OPEN INTEREST WALL TEST")
@@ -28,47 +27,38 @@ print("=" * 60)
 # ---------------------------------------------------------
 
 df = pd.DataFrame(
-
     [
-
         {
-            "STRIKE_PRICE":24800,
-            "OPTION_TYPE":"CE",
-            "OPEN_INTEREST":120000,
+            "STRIKE_PRICE": 24800,
+            "OPTION_TYPE": "CE",
+            "OPEN_INTEREST": 120000,
         },
-
         {
-            "STRIKE_PRICE":24900,
-            "OPTION_TYPE":"CE",
-            "OPEN_INTEREST":200000,
+            "STRIKE_PRICE": 24900,
+            "OPTION_TYPE": "CE",
+            "OPEN_INTEREST": 200000,
         },
-
         {
-            "STRIKE_PRICE":25000,
-            "OPTION_TYPE":"CE",
-            "OPEN_INTEREST":170000,
+            "STRIKE_PRICE": 25000,
+            "OPTION_TYPE": "CE",
+            "OPEN_INTEREST": 170000,
         },
-
         {
-            "STRIKE_PRICE":24800,
-            "OPTION_TYPE":"PE",
-            "OPEN_INTEREST":260000,
+            "STRIKE_PRICE": 24800,
+            "OPTION_TYPE": "PE",
+            "OPEN_INTEREST": 260000,
         },
-
         {
-            "STRIKE_PRICE":24900,
-            "OPTION_TYPE":"PE",
-            "OPEN_INTEREST":150000,
+            "STRIKE_PRICE": 24900,
+            "OPTION_TYPE": "PE",
+            "OPEN_INTEREST": 150000,
         },
-
         {
-            "STRIKE_PRICE":25000,
-            "OPTION_TYPE":"PE",
-            "OPEN_INTEREST":90000,
+            "STRIKE_PRICE": 25000,
+            "OPTION_TYPE": "PE",
+            "OPEN_INTEREST": 90000,
         },
-
     ]
-
 )
 
 result = OIWall.calculate(df)

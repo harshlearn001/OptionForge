@@ -8,31 +8,18 @@ from optionforge.analytics.dealer.dealer_result import (
 def sample():
 
     return DealerResult(
-
         symbol="NIFTY",
-
         trade_date=20260714,
-
         expiry=20260716,
-
         spot=25510.40,
-
         major_call_strike=25600,
-
         major_put_strike=25400,
-
         total_call_oi=43200000,
-
         total_put_oi=46800000,
-
         net_oi=3600000,
-
         dealer_bias="Bullish",
-
         confidence=82.5,
-
         contracts=194,
-
     )
 
 

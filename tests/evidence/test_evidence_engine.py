@@ -15,52 +15,39 @@ from optionforge.features.feature_group import FeatureGroup
 from optionforge.features.feature_id import FeatureId
 from optionforge.features.registry import FeatureRegistry
 
-
 # ==========================================================
 # Helpers
 # ==========================================================
 
+
 def dealer_feature():
 
     return Feature(
-
         id=FeatureId.DEALER_POSITION,
-
         group=FeatureGroup.DEALER,
-
         value=-170.0,
-
         metadata={
-
             "dealer_bias": "LONG GAMMA",
-
             "confidence": 95.0,
-
             "institutional_score": 90.0,
-
         },
-
     )
 
 
 def volatility_feature():
 
     return Feature(
-
         id=FeatureId.IV_RANK,
-
         group=FeatureGroup.VOLATILITY,
-
         value=82.0,
-
         confidence=88.0,
-
     )
 
 
 # ==========================================================
 # Tests
 # ==========================================================
+
 
 def test_build_returns_registry():
 
@@ -107,11 +94,7 @@ def test_volatility_evidence():
 
 def test_empty_registry():
 
-    evidence = EvidenceEngine().build(
-
-        FeatureRegistry()
-
-    )
+    evidence = EvidenceEngine().build(FeatureRegistry())
 
     assert len(evidence) == 0
 

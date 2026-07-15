@@ -93,6 +93,7 @@ class PortfolioResult:
         """
 
         return self.portfolio.position_count
+
     @property
     def allocation_count(self) -> int:
         """
@@ -127,25 +128,11 @@ class PortfolioResult:
     ) -> dict[str, Any]:
 
         return {
-
-            "portfolio": (
-
-                self.portfolio.to_dict()
-
-            ),
-
-            "timestamp": (
-
-                self.timestamp.isoformat()
-
-            ),
-
+            "portfolio": (self.portfolio.to_dict()),
+            "timestamp": (self.timestamp.isoformat()),
             "metadata": dict(
-
                 self.metadata,
-
             ),
-
         }
 
     # -----------------------------------------------------
@@ -157,23 +144,13 @@ class PortfolioResult:
     ) -> str:
 
         return (
-
             f"PortfolioResult("
-
             f"{self.portfolio.name}, "
-
             f"{self.return_percentage:.2f}%)"
-
         )
 
     def __repr__(
         self,
     ) -> str:
 
-        return (
-
-            f"PortfolioResult("
-
-            f"portfolio={self.portfolio.name!r})"
-
-        )
+        return f"PortfolioResult(" f"portfolio={self.portfolio.name!r})"

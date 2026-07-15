@@ -32,8 +32,4 @@ def test_rejected():
 
 def test_str():
 
-    assert str(
-
-        OrderStatus.PARTIALLY_FILLED
-
-    ) == "Partially Filled"
+    assert str(OrderStatus.PARTIALLY_FILLED) == "Partially Filled"

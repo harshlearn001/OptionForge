@@ -15,21 +15,13 @@ from optionforge.analytics.equity_curve import (
 def curve():
 
     return EquityCurve(
-
         values=(
-
             100000,
-
             102000,
-
             101500,
-
             104000,
-
             108000,
-
         ),
-
     )
 
 
@@ -37,20 +29,19 @@ def curve():
 # Construction
 # ==========================================================
 
+
 def test_create():
 
     assert isinstance(
-
         curve(),
-
         EquityCurve,
-
     )
 
 
 # ==========================================================
 # Values
 # ==========================================================
+
 
 def test_length():
 
@@ -86,45 +77,36 @@ def test_return():
 # Validation
 # ==========================================================
 
+
 def test_empty():
 
     with pytest.raises(
-
         ValueError,
-
     ):
 
         EquityCurve(
-
             values=(),
-
         )
 
 
 def test_negative():
 
     with pytest.raises(
-
         ValueError,
-
     ):
 
         EquityCurve(
-
             values=(
-
                 100,
-
                 -50,
-
             ),
-
         )
 
 
 # ==========================================================
 # Serialization
 # ==========================================================
+
 
 def test_to_dict():
 
@@ -141,19 +123,16 @@ def test_to_dict():
 # Representation
 # ==========================================================
 
+
 def test_str():
 
     assert "EquityCurve" in str(
-
         curve(),
-
     )
 
 
 def test_repr():
 
     assert "EquityCurve" in repr(
-
         curve(),
-
     )

@@ -9,9 +9,7 @@ from __future__ import annotations
 from optionforge.common.enums import OptionType
 from optionforge.market.market_snapshot import MarketSnapshot
 
-from tests.fixtures.contract_fixture import (
-    build_contract,
-)
+from tests.fixtures.contract_fixture import build_contract
 
 
 def build_snapshot(

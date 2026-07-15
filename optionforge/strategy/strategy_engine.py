@@ -71,47 +71,29 @@ class StrategyEngine:
         risk_profile: RiskProfile = RiskProfile.MODERATE,
         selector: StrategySelector | None = None,
         strategy_builder: StrategyBuilder | None = None,
-        execution_plan_builder: (
-            ExecutionPlanBuilder | None
-        ) = None,
+        execution_plan_builder: ExecutionPlanBuilder | None = None,
     ) -> None:
 
         self._selector = (
-
             selector
-
             if selector is not None
-
             else StrategySelector(
-
                 risk_profile=risk_profile,
-
             )
-
         )
 
         self._strategy_builder = (
-
             strategy_builder
-
             if strategy_builder is not None
-
             else StrategyBuilder(
-
                 selector=self._selector,
-
             )
-
         )
 
         self._execution_plan_builder = (
-
             execution_plan_builder
-
             if execution_plan_builder is not None
-
             else ExecutionPlanBuilder()
-
         )
 
     # =====================================================
@@ -128,33 +110,19 @@ class StrategyEngine:
         """
 
         strategy = self._strategy_builder.build(
-
             decision,
-
         )
 
-        execution_plan = (
-
-            self._execution_plan_builder.build(
-
-                strategy,
-
-            )
-
+        execution_plan = self._execution_plan_builder.build(
+            strategy,
         )
 
         return StrategyResult(
-
             strategy=strategy,
-
             execution_plan=execution_plan,
-
             metadata={
-
                 "engine": "StrategyEngine",
-
             },
-
         )
 
     # =====================================================
@@ -167,9 +135,7 @@ class StrategyEngine:
     ) -> StrategyResult:
 
         return self.build(
-
             decision,
-
         )
 
     # =====================================================
@@ -206,11 +172,7 @@ class StrategyEngine:
     ) -> str:
 
         return (
-
             f"{self.__class__.__name__}("
-
             f"risk_profile="
-
             f"{self.selector.risk_profile.name})"
-
         )

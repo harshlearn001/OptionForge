@@ -28,38 +28,26 @@ class OICalculator:
     @property
     def calls(self) -> pd.DataFrame:
 
-        return self.df[
-            self.df["OPT_TYPE"] == "CE"
-        ]
+        return self.df[self.df["OPT_TYPE"] == "CE"]
 
     # -----------------------------------------------------
 
     @property
     def puts(self) -> pd.DataFrame:
 
-        return self.df[
-            self.df["OPT_TYPE"] == "PE"
-        ]
+        return self.df[self.df["OPT_TYPE"] == "PE"]
 
     # -----------------------------------------------------
 
     def total_call_oi(self) -> int:
 
-        return int(
-
-            self.calls["OPEN_INT"].sum()
-
-        )
+        return int(self.calls["OPEN_INT"].sum())
 
     # -----------------------------------------------------
 
     def total_put_oi(self) -> int:
 
-        return int(
-
-            self.puts["OPEN_INT"].sum()
-
-        )
+        return int(self.puts["OPEN_INT"].sum())
 
     # -----------------------------------------------------
 
@@ -71,12 +59,10 @@ class OICalculator:
         df = self.calls
 
         return int(
-
             df.loc[
                 df["STRIKE_PRICE"] == strike,
                 "OPEN_INT",
             ].sum()
-
         )
 
     # -----------------------------------------------------
@@ -89,33 +75,23 @@ class OICalculator:
         df = self.puts
 
         return int(
-
             df.loc[
                 df["STRIKE_PRICE"] == strike,
                 "OPEN_INT",
             ].sum()
-
         )
 
     # -----------------------------------------------------
 
     def max_call_oi(self) -> int:
 
-        return int(
-
-            self.calls["OPEN_INT"].max()
-
-        )
+        return int(self.calls["OPEN_INT"].max())
 
     # -----------------------------------------------------
 
     def max_put_oi(self) -> int:
 
-        return int(
-
-            self.puts["OPEN_INT"].max()
-
-        )
+        return int(self.puts["OPEN_INT"].max())
 
     # -----------------------------------------------------
 
@@ -130,23 +106,14 @@ class OICalculator:
             return 0.0
 
         return round(
-
             put / call,
-
             4,
-
         )
 
     # -----------------------------------------------------
 
     def __repr__(self):
 
-        return (
-
-            f"OICalculator("
-
-            f"{len(self.df):,} contracts)"
-
-        )
+        return f"OICalculator(" f"{len(self.df):,} contracts)"
 
     __str__ = __repr__

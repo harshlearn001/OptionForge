@@ -73,35 +73,19 @@ class FutureRepository(MarketRepository):
 
         symbol = symbol.upper()
 
-        index_file = (
-
-            self._paths.futidx
-
-            / f"{symbol}.csv"
-
-        )
+        index_file = self._paths.futidx / f"{symbol}.csv"
 
         if index_file.exists():
 
             return index_file
 
-        stock_file = (
-
-            self._paths.futstk
-
-            / f"{symbol}.csv"
-
-        )
+        stock_file = self._paths.futstk / f"{symbol}.csv"
 
         if stock_file.exists():
 
             return stock_file
 
-        raise RepositoryNotFoundError(
-
-            f"Future data not found for '{symbol}'."
-
-        )
+        raise RepositoryNotFoundError(f"Future data not found for '{symbol}'.")
 
     # ======================================================
     # Public API
@@ -117,10 +101,9 @@ class FutureRepository(MarketRepository):
         """
 
         return FileLoader.load(
-
             self._resolve(symbol),
-
         )
+
     def exists(
         self,
         symbol: str,
@@ -150,7 +133,5 @@ class FutureRepository(MarketRepository):
         """
 
         return self.load(
-
             symbol,
-
         )

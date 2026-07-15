@@ -20,7 +20,6 @@ from optionforge.models import (
 def dealer():
 
     return DealerPositionResult(
-
         # Quantitative Metrics
         dealer_position=-250000.0,
         dealer_delta=-18500.0,
@@ -28,42 +27,31 @@ def dealer():
         net_exposure=-268700.0,
         position_strength=92.0,
         institutional_score=15.0,
-
         # Classification
         dealer_bias="SHORT GAMMA",
         dealer_direction="SHORT DELTA",
         market_condition="TRENDING",
         market_stability="LOW",
         directional_risk="VERY HIGH",
-
         # Decision Support
         confidence=0.15,
         recommendation="Demo",
         interpretation="Demo",
     )
 
+
 def hedging():
 
     return DealerHedgingFlowResult(
-
         hedging_bias="PRO-CYCLICAL",
-
         flow_direction="SELL FUTURES",
-
         flow_strength="WEAK",
-
         volatility_effect="VOLATILITY EXPANSION",
-
         market_support="UNSUPPORTED",
-
         trend_effect="TREND ACCELERATION",
-
         institutional_score=15.0,
-
         confidence="★☆☆☆☆",
-
         recommendation="Demo",
-
         interpretation="Demo",
     )
 
@@ -71,23 +59,14 @@ def hedging():
 def signal():
 
     return InstitutionalSignalResult(
-
         overall_signal="STRONG BEARISH",
-
         signal_strength=15.0,
-
         market_regime="TREND FOLLOWING",
-
         volatility_outlook="EXPANDING",
-
         dealer_regime="SHORT GAMMA",
-
         risk_level="EXTREME",
-
         confidence="★☆☆☆☆",
-
         action="SELL RALLIES",
-
         summary="Demo",
     )
 
@@ -95,11 +74,8 @@ def signal():
 def result():
 
     return DealerPressure.calculate(
-
         dealer=dealer(),
-
         hedging=hedging(),
-
         signal=signal(),
     )
 
@@ -107,6 +83,7 @@ def result():
 # ==========================================================
 # Result
 # ==========================================================
+
 
 def test_returns_result():
 
@@ -116,6 +93,7 @@ def test_returns_result():
 # ==========================================================
 # Pressure
 # ==========================================================
+
 
 def test_pressure_score():
 
@@ -131,6 +109,7 @@ def test_pressure_level():
 # Direction
 # ==========================================================
 
+
 def test_direction():
 
     assert result().pressure_direction == "DOWNSIDE"
@@ -139,6 +118,7 @@ def test_direction():
 # ==========================================================
 # Volatility
 # ==========================================================
+
 
 def test_volatility():
 
@@ -149,6 +129,7 @@ def test_volatility():
 # Confidence
 # ==========================================================
 
+
 def test_confidence():
 
     assert result().confidence == "★☆☆☆☆"
@@ -157,6 +138,7 @@ def test_confidence():
 # ==========================================================
 # Interpretation
 # ==========================================================
+
 
 def test_interpretation():
 
@@ -172,8 +154,9 @@ def test_interpretation_not_empty():
 # Low Pressure Scenario
 # ==========================================================
 
+
 def test_low_pressure():
- 
+
     d = replace(
         dealer(),
         dealer_bias="LONG GAMMA",
@@ -192,11 +175,8 @@ def test_low_pressure():
     )
 
     r = DealerPressure.calculate(
-
         dealer=d,
-
         hedging=h,
-
         signal=s,
     )
 
@@ -210,6 +190,7 @@ def test_low_pressure():
 # ==========================================================
 # Integrity
 # ==========================================================
+
 
 def test_fields():
 
@@ -227,6 +208,7 @@ def test_fields():
 # Types
 # ==========================================================
 
+
 def test_types():
 
     r = result()
@@ -243,7 +225,7 @@ def test_types():
 # Bounds
 # ==========================================================
 
+
 def test_score_bounds():
 
     assert 0.0 <= result().pressure_score <= 100.0
-    

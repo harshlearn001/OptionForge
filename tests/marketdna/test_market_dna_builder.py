@@ -19,17 +19,16 @@ from optionforge.marketdna.trend_regime import TrendRegime
 from optionforge.marketdna.volatility_regime import VolatilityRegime
 from optionforge.marketdna.liquidity_regime import LiquidityRegime
 
-
 # ==========================================================
 # Helpers
 # ==========================================================
+
 
 def registry() -> EvidenceRegistry:
 
     r = EvidenceRegistry()
 
     r.add(
-
         Evidence(
             id="dealer_long_gamma",
             name="Dealer Long Gamma",
@@ -43,11 +42,9 @@ def registry() -> EvidenceRegistry:
             ),
             source=FeatureId.DEALER_POSITION,
         )
-
     )
 
     r.add(
-
         Evidence(
             id="iv_rank",
             name="IV Rank",
@@ -60,7 +57,6 @@ def registry() -> EvidenceRegistry:
             ),
             source=FeatureId.IV_RANK,
         )
-
     )
 
     return r
@@ -70,20 +66,14 @@ def registry() -> EvidenceRegistry:
 # Result
 # ==========================================================
 
+
 def test_returns_market_dna():
 
-    dna = MarketDNABuilder().build(
-
-        registry()
-
-    )
+    dna = MarketDNABuilder().build(registry())
 
     assert isinstance(
-
         dna,
-
         MarketDNA,
-
     )
 
 
@@ -91,13 +81,10 @@ def test_returns_market_dna():
 # Dealer
 # ==========================================================
 
+
 def test_dealer_position():
 
-    dna = MarketDNABuilder().build(
-
-        registry()
-
-    )
+    dna = MarketDNABuilder().build(registry())
 
     assert dna.dealer_position == "Dealer Long Gamma"
 
@@ -106,13 +93,10 @@ def test_dealer_position():
 # Market Regime
 # ==========================================================
 
+
 def test_market_regime():
 
-    dna = MarketDNABuilder().build(
-
-        registry()
-
-    )
+    dna = MarketDNABuilder().build(registry())
 
     assert dna.regime == MarketRegime.STRONGLY_BULLISH
 
@@ -121,13 +105,10 @@ def test_market_regime():
 # Trend
 # ==========================================================
 
+
 def test_trend():
 
-    dna = MarketDNABuilder().build(
-
-        registry()
-
-    )
+    dna = MarketDNABuilder().build(registry())
 
     assert dna.trend == TrendRegime.STRONG_UPTREND
 
@@ -136,13 +117,10 @@ def test_trend():
 # Volatility
 # ==========================================================
 
+
 def test_volatility():
 
-    dna = MarketDNABuilder().build(
-
-        registry()
-
-    )
+    dna = MarketDNABuilder().build(registry())
 
     assert dna.volatility == VolatilityRegime.EXPANDING
 
@@ -151,13 +129,10 @@ def test_volatility():
 # Liquidity
 # ==========================================================
 
+
 def test_liquidity():
 
-    dna = MarketDNABuilder().build(
-
-        registry()
-
-    )
+    dna = MarketDNABuilder().build(registry())
 
     assert dna.liquidity == LiquidityRegime.HIGH
 
@@ -166,13 +141,10 @@ def test_liquidity():
 # Score
 # ==========================================================
 
+
 def test_evidence_score():
 
-    dna = MarketDNABuilder().build(
-
-        registry()
-
-    )
+    dna = MarketDNABuilder().build(registry())
 
     assert dna.evidence_score == 172.0
 
@@ -181,13 +153,10 @@ def test_evidence_score():
 # Confidence
 # ==========================================================
 
+
 def test_confidence():
 
-    dna = MarketDNABuilder().build(
-
-        registry()
-
-    )
+    dna = MarketDNABuilder().build(registry())
 
     assert dna.confidence == 91.5
 
@@ -196,13 +165,10 @@ def test_confidence():
 # Empty Registry
 # ==========================================================
 
+
 def test_empty_registry():
 
-    dna = MarketDNABuilder().build(
-
-        EvidenceRegistry()
-
-    )
+    dna = MarketDNABuilder().build(EvidenceRegistry())
 
     assert dna.regime == MarketRegime.NEUTRAL
 
@@ -213,18 +179,11 @@ def test_empty_registry():
 # Deterministic
 # ==========================================================
 
+
 def test_builder_is_deterministic():
 
-    first = MarketDNABuilder().build(
+    first = MarketDNABuilder().build(registry())
 
-        registry()
-
-    )
-
-    second = MarketDNABuilder().build(
-
-        registry()
-
-    )
+    second = MarketDNABuilder().build(registry())
 
     assert first == second

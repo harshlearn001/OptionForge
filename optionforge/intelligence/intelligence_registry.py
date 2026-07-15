@@ -85,15 +85,7 @@ class IntelligenceRegistry:
         intelligence_type: IntelligenceType,
     ) -> list[Intelligence]:
 
-        return [
-
-            item
-
-            for item in self._items.values()
-
-            if item.type == intelligence_type
-
-        ]
+        return [item for item in self._items.values() if item.type == intelligence_type]
 
     # -----------------------------------------------------
     # Aggregates
@@ -108,19 +100,7 @@ class IntelligenceRegistry:
 
             return 0.0
 
-        return (
-
-            sum(
-
-                item.score
-
-                for item in self._items.values()
-
-            )
-
-            / len(self._items)
-
-        )
+        return sum(item.score for item in self._items.values()) / len(self._items)
 
     @property
     def confidence(
@@ -131,19 +111,7 @@ class IntelligenceRegistry:
 
             return 0.0
 
-        return (
-
-            sum(
-
-                item.confidence
-
-                for item in self._items.values()
-
-            )
-
-            / len(self._items)
-
-        )
+        return sum(item.confidence for item in self._items.values()) / len(self._items)
 
     # -----------------------------------------------------
     # Collection
@@ -176,10 +144,4 @@ class IntelligenceRegistry:
         self,
     ) -> str:
 
-        return (
-
-            f"IntelligenceRegistry("
-
-            f"count={len(self)})"
-
-        )
+        return f"IntelligenceRegistry(" f"count={len(self)})"

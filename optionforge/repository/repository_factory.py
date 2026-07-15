@@ -63,9 +63,7 @@ class RepositoryFactory:
         """
 
         return OptionRepository(
-
             self._context,
-
         )
 
     # =====================================================
@@ -78,9 +76,7 @@ class RepositoryFactory:
         """
 
         return FutureRepository(
-
             self._context,
-
         )
 
     # =====================================================
@@ -93,7 +89,5 @@ class RepositoryFactory:
         """
 
         return SpotRepository(
-
             self._context,
-
         )

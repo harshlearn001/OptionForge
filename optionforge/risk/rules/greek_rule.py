@@ -42,56 +42,28 @@ class GreekRule(RiskRule):
         if greek_exposure <= self._max_exposure:
 
             return RuleResult(
-
                 rule_name=self.__class__.__name__,
-
                 score=5.0,
-
                 passed=True,
-
                 warnings=(),
-
-                reasons=(
-
-                    "Greek exposure within limits.",
-
-                ),
-
+                reasons=("Greek exposure within limits.",),
             )
 
         return RuleResult(
-
             rule_name=self.__class__.__name__,
-
             score=min(
                 100.0,
                 greek_exposure,
             ),
-
             passed=False,
-
             warnings=(
-
                 f"Greek exposure "
                 f"{greek_exposure:.1f}% exceeds "
                 f"{self._max_exposure:.1f}%",
-
             ),
-
-            reasons=(
-
-                "Greek exposure exceeds policy.",
-
-            ),
-
+            reasons=("Greek exposure exceeds policy.",),
         )
 
     def __repr__(self) -> str:
 
-        return (
-
-            f"GreekRule("
-
-            f"max_exposure={self._max_exposure})"
-
-        )
+        return f"GreekRule(" f"max_exposure={self._max_exposure})"

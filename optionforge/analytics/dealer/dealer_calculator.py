@@ -41,12 +41,10 @@ class DealerCalculator:
         """
 
         return int(
-
             self.option_chain.loc[
                 self.option_chain["OPT_TYPE"] == "CE",
                 "OPEN_INT",
             ].sum()
-
         )
 
     # -----------------------------------------------------
@@ -57,12 +55,10 @@ class DealerCalculator:
         """
 
         return int(
-
             self.option_chain.loc[
                 self.option_chain["OPT_TYPE"] == "PE",
                 "OPEN_INT",
             ].sum()
-
         )
 
     # -----------------------------------------------------
@@ -72,13 +68,9 @@ class DealerCalculator:
         Strike with maximum Call OI.
         """
 
-        calls = self.option_chain.loc[
-            self.option_chain["OPT_TYPE"] == "CE"
-        ]
+        calls = self.option_chain.loc[self.option_chain["OPT_TYPE"] == "CE"]
 
-        row = calls.loc[
-            calls["OPEN_INT"].idxmax()
-        ]
+        row = calls.loc[calls["OPEN_INT"].idxmax()]
 
         return int(row["STRIKE_PRICE"])
 
@@ -89,13 +81,9 @@ class DealerCalculator:
         Strike with maximum Put OI.
         """
 
-        puts = self.option_chain.loc[
-            self.option_chain["OPT_TYPE"] == "PE"
-        ]
+        puts = self.option_chain.loc[self.option_chain["OPT_TYPE"] == "PE"]
 
-        row = puts.loc[
-            puts["OPEN_INT"].idxmax()
-        ]
+        row = puts.loc[puts["OPEN_INT"].idxmax()]
 
         return int(row["STRIKE_PRICE"])
 
@@ -106,15 +94,7 @@ class DealerCalculator:
         Net Put OI minus Call OI.
         """
 
-        return (
-
-            self.total_put_oi()
-
-            -
-
-            self.total_call_oi()
-
-        )
+        return self.total_put_oi() - self.total_call_oi()
 
     # -----------------------------------------------------
 

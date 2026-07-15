@@ -11,10 +11,10 @@ from optionforge.snapshot.snapshot_builder import (
     SnapshotBuilder,
 )
 
-
 # ============================================================
 # Dummy Providers
 # ============================================================
+
 
 class DummyOptionProvider:
 
@@ -34,7 +34,6 @@ class DummyOptionProvider:
     ):
 
         return pd.DataFrame(
-
             {
                 "TRADE_DATE": [trade_date],
                 "EXP_DATE": [expiry],
@@ -42,7 +41,6 @@ class DummyOptionProvider:
                 "OPT_TYPE": ["CE"],
                 "OPEN_INT": [1000],
             }
-
         )
 
 
@@ -51,13 +49,11 @@ class DummySpotProvider:
     def latest(self, symbol):
 
         return pd.DataFrame(
-
             {
                 "TRADE_DATE": [20201228],
                 "SYMBOL": [symbol],
                 "CLOSE": [19520.0],
             }
-
         )
 
 
@@ -65,20 +61,16 @@ class DummySpotProvider:
 # Tests
 # ============================================================
 
+
 def test_build_latest():
 
     builder = SnapshotBuilder(
-
         DummyOptionProvider(),
-
         DummySpotProvider(),
-
     )
 
     snapshot = builder.build_latest(
-
         "NIFTY",
-
     )
 
     assert snapshot.symbol == "NIFTY"
@@ -95,11 +87,8 @@ def test_build_latest():
 def test_repr():
 
     builder = SnapshotBuilder(
-
         DummyOptionProvider(),
-
         DummySpotProvider(),
-
     )
 
     assert "SnapshotBuilder" in repr(builder)

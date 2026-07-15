@@ -104,90 +104,60 @@ class StrategyType(Enum):
     def is_bullish(self) -> bool:
 
         return self in (
-
             StrategyType.LONG_CALL,
-
             StrategyType.BULL_CALL_SPREAD,
-
             StrategyType.BULL_PUT_SPREAD,
-
             StrategyType.SYNTHETIC_LONG,
-
         )
 
     @property
     def is_bearish(self) -> bool:
 
         return self in (
-
             StrategyType.LONG_PUT,
-
             StrategyType.BEAR_PUT_SPREAD,
-
             StrategyType.BEAR_CALL_SPREAD,
-
             StrategyType.SYNTHETIC_SHORT,
-
         )
 
     @property
     def is_neutral(self) -> bool:
 
         return self in (
-
             StrategyType.IRON_CONDOR,
-
             StrategyType.IRON_BUTTERFLY,
-
             StrategyType.SHORT_STRANGLE,
-
             StrategyType.SHORT_STRADDLE,
-
             StrategyType.CALENDAR_SPREAD,
-
             StrategyType.DIAGONAL_SPREAD,
-
         )
 
     @property
     def is_volatility(self) -> bool:
 
         return self in (
-
             StrategyType.LONG_STRADDLE,
-
             StrategyType.LONG_STRANGLE,
-
             StrategyType.RATIO_SPREAD,
-
             StrategyType.BACKSPREAD,
-
         )
 
     @property
     def is_hedge(self) -> bool:
 
         return self in (
-
             StrategyType.PROTECTIVE_PUT,
-
             StrategyType.COVERED_CALL,
-
             StrategyType.COLLAR,
-
             StrategyType.DELTA_HEDGE,
-
         )
 
     @property
     def is_cash(self) -> bool:
 
         return self in (
-
             StrategyType.CASH,
-
             StrategyType.NO_POSITION,
-
         )
 
     def __str__(self) -> str:

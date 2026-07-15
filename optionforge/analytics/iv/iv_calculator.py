@@ -43,21 +43,13 @@ class IVCalculator:
     ) -> AnalyticsResult:
 
         return self.analytics.calculate(
-
             spot=spot,
-
             strike=strike,
-
             time=time,
-
             rate=rate,
-
             volatility=0.20,
-
             option_type=option_type,
-
             market_price=market_price,
-
         )
 
     def __repr__(self):

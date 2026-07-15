@@ -49,19 +49,13 @@ class StrategyRisk(Enum):
         """
 
         return {
-
             StrategyRisk.VERY_LOW: 1,
-
             StrategyRisk.LOW: 2,
-
             StrategyRisk.MODERATE: 3,
-
             StrategyRisk.HIGH: 4,
-
             StrategyRisk.VERY_HIGH: 5,
-
         }[self]
-    
+
     @property
     def is_very_low(self) -> bool:
         """
@@ -109,11 +103,8 @@ class StrategyRisk(Enum):
         """
 
         return self in (
-
             StrategyRisk.VERY_LOW,
-
             StrategyRisk.LOW,
-
         )
 
     @property
@@ -123,11 +114,8 @@ class StrategyRisk(Enum):
         """
 
         return self in (
-
             StrategyRisk.HIGH,
-
             StrategyRisk.VERY_HIGH,
-
         )
 
     @property
@@ -137,11 +125,8 @@ class StrategyRisk(Enum):
         """
 
         return self in (
-
             StrategyRisk.HIGH,
-
             StrategyRisk.VERY_HIGH,
-
         )
 
     @property
@@ -151,11 +136,8 @@ class StrategyRisk(Enum):
         """
 
         return self in (
-
             StrategyRisk.VERY_LOW,
-
             StrategyRisk.LOW,
-
         )
 
     @classmethod

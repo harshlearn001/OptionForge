@@ -77,9 +77,7 @@ class DecisionRegistry:
         decision_type: DecisionType,
     ) -> Decision | None:
 
-        return self._items.get(
-            decision_type.name
-        )
+        return self._items.get(decision_type.name)
 
     @property
     def best(self) -> Decision | None:
@@ -89,11 +87,8 @@ class DecisionRegistry:
             return None
 
         return max(
-
             self._items.values(),
-
             key=lambda x: x.confidence,
-
         )
 
     @property
@@ -103,13 +98,7 @@ class DecisionRegistry:
 
             return 0.0
 
-        return max(
-
-            x.confidence
-
-            for x in self._items.values()
-
-        )
+        return max(x.confidence for x in self._items.values())
 
     @property
     def average_confidence(self) -> float:
@@ -118,19 +107,7 @@ class DecisionRegistry:
 
             return 0.0
 
-        return (
-
-            sum(
-
-                x.confidence
-
-                for x in self._items.values()
-
-            )
-
-            / len(self._items)
-
-        )
+        return sum(x.confidence for x in self._items.values()) / len(self._items)
 
     # -----------------------------------------------------
     # Python Protocol
@@ -144,11 +121,7 @@ class DecisionRegistry:
         self,
     ) -> Iterator[Decision]:
 
-        return iter(
-
-            self._items.values()
-
-        )
+        return iter(self._items.values())
 
     def __contains__(
         self,
@@ -163,22 +136,10 @@ class DecisionRegistry:
 
     def to_dict(self) -> list[dict]:
 
-        return [
-
-            d.to_dict()
-
-            for d in self
-
-        ]
+        return [d.to_dict() for d in self]
 
     # -----------------------------------------------------
 
     def __repr__(self) -> str:
 
-        return (
-
-            f"DecisionRegistry("
-
-            f"{len(self)} decisions)"
-
-        )
+        return f"DecisionRegistry(" f"{len(self)} decisions)"

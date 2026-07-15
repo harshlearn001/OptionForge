@@ -9,21 +9,17 @@ import pandas as pd
 class Validator:
 
     REQUIRED_COLUMNS = [
-
         "TRADE_DATE",
         "SYMBOL",
         "EXPIRY_DATE",
         "STRIKE_PRICE",
         "OPTION_TYPE",
-
         "SPOT_CLOSE",
         "FUTURE_CLOSE",
         "OPTION_CLOSE",
-
         "OPEN_INTEREST",
         "CHANGE_IN_OI",
-        "OPTION_VOLUME"
-
+        "OPTION_VOLUME",
     ]
 
     @classmethod
@@ -37,13 +33,9 @@ class Validator:
                 missing.append(col)
 
         if missing:
-            raise ValueError(
-                f"Missing Columns : {missing}"
-            )
+            raise ValueError(f"Missing Columns : {missing}")
 
         if df.empty:
-            raise ValueError(
-                "Empty DataFrame."
-            )
+            raise ValueError("Empty DataFrame.")
 
         return True

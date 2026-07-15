@@ -98,31 +98,18 @@ class ExecutionPlan:
     def to_dict(self) -> dict[str, Any]:
 
         return {
-
             "strategy": self.strategy.to_dict(),
-
             "entry_rule": self.entry_rule,
-
             "entry_price": self.entry_price,
-
             "target_rule": self.target_rule,
-
             "stop_loss_rule": self.stop_loss_rule,
-
             "position_size": self.position_size,
-
             "max_capital": self.max_capital,
-
             "max_risk": self.max_risk,
-
             "expected_reward": self.expected_reward,
-
             "notes": list(self.notes),
-
             "timestamp": self.timestamp.isoformat(),
-
             "metadata": dict(self.metadata),
-
         }
 
     # -----------------------------------------------------
@@ -131,20 +118,8 @@ class ExecutionPlan:
 
     def __str__(self) -> str:
 
-        return (
-
-            f"ExecutionPlan("
-
-            f"{self.strategy.title})"
-
-        )
+        return f"ExecutionPlan(" f"{self.strategy.title})"
 
     def __repr__(self) -> str:
 
-        return (
-
-            f"ExecutionPlan("
-
-            f"strategy={self.strategy.type.name})"
-
-        )
+        return f"ExecutionPlan(" f"strategy={self.strategy.type.name})"

@@ -88,24 +88,14 @@ class OIChange:
 
         else:
 
-            interpretation = (
-                "No significant build-up or unwinding detected."
-            )
+            interpretation = "No significant build-up or unwinding detected."
 
         return OIChangeResult(
-
             strike=float(strike),
-
             option_type=option_type,
-
             price_change=float(price_change),
-
             oi_change=int(oi_change),
-
             classification=classification,
-
             sentiment=sentiment,
-
             interpretation=interpretation,
-
         )

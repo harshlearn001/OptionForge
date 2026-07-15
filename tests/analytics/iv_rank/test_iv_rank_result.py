@@ -8,21 +8,13 @@ from optionforge.analytics.iv_rank.iv_rank_result import (
 def sample():
 
     return IVRankResult(
-
         symbol="NIFTY",
-
         trade_date=20260714,
-
         expiry=20260716,
-
         current_iv=22.5,
-
         lowest_iv=12.0,
-
         highest_iv=35.0,
-
         iv_rank=45.65,
-
     )
 
 

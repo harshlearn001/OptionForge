@@ -29,25 +29,15 @@ print()
 # ----------------------------------------------------------
 
 dealer = DealerPositionResult(
-
     dealer_bias="SHORT GAMMA",
-
     dealer_direction="SHORT DELTA",
-
     market_condition="TRENDING",
-
     market_stability="LOW",
-
     directional_risk="VERY HIGH",
-
     institutional_score=15.0,
-
     confidence="★☆☆☆☆",
-
     recommendation="Demo",
-
     interpretation="Demo",
-
 )
 
 # ----------------------------------------------------------
@@ -55,19 +45,12 @@ dealer = DealerPositionResult(
 # ----------------------------------------------------------
 
 gamma_flip = GammaFlipResult(
-
     gamma_flip=25050.0,
-
     current_spot=24980.0,
-
     distance=-70.0,
-
     flip_status="BELOW GAMMA FLIP",
-
     dealer_regime="NEGATIVE GAMMA",
-
     interpretation="Demo",
-
 )
 
 # ----------------------------------------------------------
@@ -75,19 +58,12 @@ gamma_flip = GammaFlipResult(
 # ----------------------------------------------------------
 
 zero_gamma = ZeroGammaResult(
-
     zero_gamma=25050.0,
-
     current_spot=24980.0,
-
     distance=-70.0,
-
     status="BELOW ZERO GAMMA",
-
     dealer_regime="UNSTABLE",
-
     interpretation="Demo",
-
 )
 
 # ----------------------------------------------------------
@@ -95,13 +71,9 @@ zero_gamma = ZeroGammaResult(
 # ----------------------------------------------------------
 
 result = DealerHedgingFlow.calculate(
-
     dealer=dealer,
-
     gamma_flip=gamma_flip,
-
     zero_gamma=zero_gamma,
-
 )
 
 # ----------------------------------------------------------

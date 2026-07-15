@@ -35,13 +35,13 @@ def test_distance():
 
     w = WeightEngine()
 
-    assert w.distance(
-
-        19650,
-
-        19500,
-
-    ) == 150
+    assert (
+        w.distance(
+            19650,
+            19500,
+        )
+        == 150
+    )
 
 
 def test_repr():

@@ -48,37 +48,22 @@ class GammaExposureEngine:
     ) -> GammaExposureResult:
 
         exposure = self.calculator.calculate(
-
             gamma=gamma,
-
             open_interest=open_interest,
-
             contract_size=contract_size,
-
             spot=spot,
-
         )
 
         return GammaExposureResult(
-
             symbol=symbol,
-
             trade_date=trade_date,
-
             expiry=expiry,
-
             strike=strike,
-
             gamma=gamma,
-
             open_interest=open_interest,
-
             contract_size=contract_size,
-
             spot=spot,
-
             gamma_exposure=exposure,
-
         )
 
     def __repr__(self):

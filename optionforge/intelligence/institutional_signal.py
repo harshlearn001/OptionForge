@@ -108,22 +108,13 @@ class InstitutionalSignal:
         )
 
         return InstitutionalSignalResult(
-
             overall_signal=overall_signal,
-
             signal_strength=score,
-
             market_regime=dashboard.market_bias,
-
             volatility_outlook=volatility_outlook,
-
             dealer_regime=dealer_regime,
-
             risk_level=dashboard.risk_level,
-
             confidence=confidence,
-
             action=action,
-
             summary=summary,
         )

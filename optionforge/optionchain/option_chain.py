@@ -59,9 +59,74 @@ class OptionChain:
     # Data
     # ==========================================================
 
-    def dataframe(self) -> pd.DataFrame:
+    def to_dataframe(self) -> pd.DataFrame:
+        """
+        Return the option chain using the canonical
+        OptionForge column names.
 
-        return self.df.copy()
+        This provides a stable schema for every
+        analytics engine regardless of the original
+        MarketForge parquet column names.
+        """
+
+        df = self.df.copy()
+
+        rename_map = {
+            # Dates
+            "TRADE_DATE": "trading_date",
+            "EXPIRY": "expiry_date",
+            # Identity
+            "SYMBOL": "symbol",
+            "INSTRUMENT": "instrument",
+            # Strike
+            "STRIKE": "strike_price",
+            "STRIKE_PRICE": "strike_price",
+            # Option Type
+            "OPTION_TYPE": "option_type",
+            "OPT_TYPE": "option_type",
+            # OI
+            "OI": "open_interest",
+            "OPEN_INT": "open_interest",
+            # Change OI
+            "CHANGE_IN_OI": "change_in_open_interest",
+            "CHG_IN_OI": "change_in_open_interest",
+            # Volume
+            "VOLUME": "volume",
+            "TRD_QTY": "volume",
+            # Contracts
+            "CONTRACTS": "contracts",
+            "NO_OF_CONT": "contracts",
+            # Trades
+            "TRADES": "trades",
+            "NO_OF_TRADE": "trades",
+            # Prices
+            "OPEN": "open",
+            "OPEN_PRICE": "open",
+            "HIGH": "high",
+            "HI_PRICE": "high",
+            "LOW": "low",
+            "LO_PRICE": "low",
+            "CLOSE": "close",
+            "CLOSE_PRICE": "close",
+            # Values
+            "NOTIONAL_VALUE": "notional_value",
+            "NOTION_VAL": "notional_value",
+            "PREMIUM_VALUE": "premium_value",
+            "PR_VAL": "premium_value",
+        }
+
+        available = {old: new for old, new in rename_map.items() if old in df.columns}
+
+        df = df.rename(columns=available)
+        print("\nDEBUG COLUMNS")
+
+        return df
+
+    def dataframe(self) -> pd.DataFrame:
+        """
+        Backward-compatible alias.
+        """
+        return self.to_dataframe()
 
     # ==========================================================
     # Latest Trading Day
@@ -72,9 +137,7 @@ class OptionChain:
         latest_date = self.df["TRADE_DATE"].max()
 
         dataframe = (
-            self.df[self.df["TRADE_DATE"] == latest_date]
-            .copy()
-            .reset_index(drop=True)
+            self.df[self.df["TRADE_DATE"] == latest_date].copy().reset_index(drop=True)
         )
 
         return OptionChain(dataframe)
@@ -89,12 +152,8 @@ class OptionChain:
 
     def expiries(self):
 
-        return (
-            self.df["EXPIRY"]
-            .drop_duplicates()
-            .sort_values()
-            .reset_index(drop=True)
-        )
+        return self.df["EXPIRY"].drop_duplicates().sort_values().reset_index(drop=True)
+
     # ---------------------------------------------------------
     # Metadata
     # ---------------------------------------------------------
@@ -105,13 +164,11 @@ class OptionChain:
         """
         return self.df["TRADE_DATE"].iloc[0]
 
-
     def expiry(self):
         """
         Returns the expiry date of the current chain.
         """
         return self.df["EXPIRY"].iloc[0]
-
 
     def symbol(self):
         """
@@ -119,12 +176,12 @@ class OptionChain:
         """
         return self.df["SYMBOL"].iloc[0]
 
-
     def instrument(self):
         """
         Returns the instrument type.
         """
         return self.df["INSTRUMENT"].iloc[0]
+
     # ==========================================================
     # Magic Methods
     # ==========================================================
@@ -136,10 +193,9 @@ class OptionChain:
     def __repr__(self):
 
         return (
-            f"OptionChain("
-            f"rows={len(self.df)}, "
-            f"columns={len(self.df.columns)})"
+            f"OptionChain(" f"rows={len(self.df)}, " f"columns={len(self.df.columns)})"
         )
+
     # ==========================================================
     # Current Weekly
     # ==========================================================
@@ -151,11 +207,7 @@ class OptionChain:
 
         expiry = self.expiries().iloc[0]
 
-        dataframe = (
-            self.df[self.df["EXPIRY"] == expiry]
-            .copy()
-            .reset_index(drop=True)
-        )
+        dataframe = self.df[self.df["EXPIRY"] == expiry].copy().reset_index(drop=True)
 
         return OptionChain(dataframe)
 
@@ -175,11 +227,7 @@ class OptionChain:
 
         expiry = expiries.iloc[1]
 
-        dataframe = (
-            self.df[self.df["EXPIRY"] == expiry]
-            .copy()
-            .reset_index(drop=True)
-        )
+        dataframe = self.df[self.df["EXPIRY"] == expiry].copy().reset_index(drop=True)
 
         return OptionChain(dataframe)
 
@@ -197,17 +245,12 @@ class OptionChain:
         first = expiries.iloc[0]
 
         current_month = expiries[
-            (expiries.dt.year == first.year) &
-            (expiries.dt.month == first.month)
+            (expiries.dt.year == first.year) & (expiries.dt.month == first.month)
         ]
 
         expiry = current_month.iloc[-1]
 
-        dataframe = (
-            self.df[self.df["EXPIRY"] == expiry]
-            .copy()
-            .reset_index(drop=True)
-        )
+        dataframe = self.df[self.df["EXPIRY"] == expiry].copy().reset_index(drop=True)
 
         return OptionChain(dataframe)
 
@@ -225,8 +268,7 @@ class OptionChain:
         first = expiries.iloc[0]
 
         current_month = expiries[
-            (expiries.dt.year == first.year) &
-            (expiries.dt.month == first.month)
+            (expiries.dt.year == first.year) & (expiries.dt.month == first.month)
         ]
 
         last_current = current_month.iloc[-1]
@@ -240,19 +282,15 @@ class OptionChain:
         next_month = future.iloc[0].month
 
         next_month_expiries = future[
-            (future.dt.year == next_year) &
-            (future.dt.month == next_month)
+            (future.dt.year == next_year) & (future.dt.month == next_month)
         ]
 
         expiry = next_month_expiries.iloc[-1]
 
-        dataframe = (
-            self.df[self.df["EXPIRY"] == expiry]
-            .copy()
-            .reset_index(drop=True)
-        )
+        dataframe = self.df[self.df["EXPIRY"] == expiry].copy().reset_index(drop=True)
 
         return OptionChain(dataframe)
+
     # ==========================================================
     # LEAPS
     # ==========================================================
@@ -266,9 +304,7 @@ class OptionChain:
 
         first = expiries.iloc[0]
 
-        return expiries[
-            expiries.dt.year > first.year
-        ]
+        return expiries[expiries.dt.year > first.year]
 
     # ==========================================================
     # Far Month
@@ -281,11 +317,7 @@ class OptionChain:
 
         expiry = self.expiries().iloc[-1]
 
-        dataframe = (
-            self.df[self.df["EXPIRY"] == expiry]
-            .copy()
-            .reset_index(drop=True)
-        )
+        dataframe = self.df[self.df["EXPIRY"] == expiry].copy().reset_index(drop=True)
 
         return OptionChain(dataframe)
 
@@ -300,11 +332,7 @@ class OptionChain:
 
         expiry = pd.Timestamp(expiry_date)
 
-        dataframe = (
-            self.df[self.df["EXPIRY"] == expiry]
-            .copy()
-            .reset_index(drop=True)
-        )
+        dataframe = self.df[self.df["EXPIRY"] == expiry].copy().reset_index(drop=True)
 
         return OptionChain(dataframe)
 
@@ -318,9 +346,7 @@ class OptionChain:
         """
 
         dataframe = (
-            self.df[self.df["OPTION_TYPE"] == "CE"]
-            .copy()
-            .reset_index(drop=True)
+            self.df[self.df["OPTION_TYPE"] == "CE"].copy().reset_index(drop=True)
         )
 
         return OptionChain(dataframe)
@@ -335,12 +361,11 @@ class OptionChain:
         """
 
         dataframe = (
-            self.df[self.df["OPTION_TYPE"] == "PE"]
-            .copy()
-            .reset_index(drop=True)
+            self.df[self.df["OPTION_TYPE"] == "PE"].copy().reset_index(drop=True)
         )
 
         return OptionChain(dataframe)
+
     # ==========================================================
     # Available Strikes
     # ==========================================================
@@ -350,12 +375,7 @@ class OptionChain:
         Returns all available strikes.
         """
 
-        return (
-            self.df["STRIKE"]
-            .drop_duplicates()
-            .sort_values()
-            .reset_index(drop=True)
-        )
+        return self.df["STRIKE"].drop_duplicates().sort_values().reset_index(drop=True)
 
     # ==========================================================
     # ATM Strike
@@ -396,9 +416,7 @@ class OptionChain:
         selected = strikes.iloc[start:end]
 
         dataframe = (
-            self.df[self.df["STRIKE"].isin(selected)]
-            .copy()
-            .reset_index(drop=True)
+            self.df[self.df["STRIKE"].isin(selected)].copy().reset_index(drop=True)
         )
 
         return OptionChain(dataframe)
@@ -416,6 +434,7 @@ class OptionChain:
             "calls": len(self.calls()),
             "puts": len(self.puts()),
         }
+
     # ==========================================================
     # Copy
     # ==========================================================
@@ -436,10 +455,8 @@ class OptionChain:
         Sort by one or more columns.
         """
 
-        dataframe = (
-            self.df
-            .sort_values(by=by, ascending=ascending)
-            .reset_index(drop=True)
+        dataframe = self.df.sort_values(by=by, ascending=ascending).reset_index(
+            drop=True
         )
 
         return OptionChain(dataframe)
@@ -453,11 +470,7 @@ class OptionChain:
         Generic dataframe filter.
         """
 
-        dataframe = (
-            self.df[mask]
-            .copy()
-            .reset_index(drop=True)
-        )
+        dataframe = self.df[mask].copy().reset_index(drop=True)
 
         return OptionChain(dataframe)
 

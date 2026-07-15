@@ -58,10 +58,6 @@ class ChainBuilder:
             Validation failed.
         """
 
-        validated = ChainValidator.validate(
-            snapshots
-        )
+        validated = ChainValidator.validate(snapshots)
 
-        return OptionChain(
-            snapshots=validated
-        )
+        return OptionChain(snapshots=validated)

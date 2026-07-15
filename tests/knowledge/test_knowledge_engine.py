@@ -12,11 +12,7 @@ def test_empty_engine():
 
     engine = KnowledgeEngine()
 
-    registry = engine.build(
-
-        EvidenceRegistry()
-
-    )
+    registry = engine.build(EvidenceRegistry())
 
     assert len(registry) == 0
 

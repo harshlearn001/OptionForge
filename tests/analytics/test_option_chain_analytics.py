@@ -37,9 +37,7 @@ def build_chain() -> pd.DataFrame:
 
 def test_returns_dataframe():
 
-    result = OptionChainAnalytics.calculate(
-        build_chain()
-    )
+    result = OptionChainAnalytics.calculate(build_chain())
 
     assert isinstance(result, pd.DataFrame)
 
@@ -78,59 +76,42 @@ def test_original_dataframe_unchanged():
 )
 def test_output_contains_column(column):
 
-    result = OptionChainAnalytics.calculate(
-        build_chain()
-    )
+    result = OptionChainAnalytics.calculate(build_chain())
 
     assert column in result.columns
 
 
 def test_iv_positive():
 
-    result = OptionChainAnalytics.calculate(
-        build_chain()
-    )
+    result = OptionChainAnalytics.calculate(build_chain())
 
     assert (result["IV"] > 0).all()
 
 
 def test_gamma_positive():
 
-    result = OptionChainAnalytics.calculate(
-        build_chain()
-    )
+    result = OptionChainAnalytics.calculate(build_chain())
 
     assert (result["GAMMA"] > 0).all()
 
 
 def test_vega_positive():
 
-    result = OptionChainAnalytics.calculate(
-        build_chain()
-    )
+    result = OptionChainAnalytics.calculate(build_chain())
 
     assert (result["VEGA"] > 0).all()
 
 
 def test_delta_in_valid_range():
 
-    result = OptionChainAnalytics.calculate(
-        build_chain()
-    )
+    result = OptionChainAnalytics.calculate(build_chain())
 
-    assert (
-        result["DELTA"]
-        .abs()
-        .le(1)
-        .all()
-    )
+    assert result["DELTA"].abs().le(1).all()
 
 
 def test_missing_column_validation():
 
-    df = build_chain().drop(
-        columns=["SPOT_CLOSE"]
-    )
+    df = build_chain().drop(columns=["SPOT_CLOSE"])
 
     with pytest.raises(ValueError):
 

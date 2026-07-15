@@ -38,47 +38,29 @@ results = []
 for symbol, support in symbols:
 
     market = MarketStructure.calculate(
-
         support_strength=support,
-
         resistance_strength=91,
-
         expected_move=82,
-
         iv_rank=42,
-
         iv_percentile=51,
-
         max_pain=88,
-
         oi_wall_score=90,
-
         oi_shift_score=84,
-
         oi_change_score=80,
-
     )
 
     probability = Probability.calculate(market)
 
     strategy = Strategy.calculate(
-
         probability=probability,
-
         spot_price=25000,
-
         expected_move=692,
-
     )
 
     result = Scanner.calculate(
-
         symbol=symbol,
-
         probability=probability,
-
         strategy=strategy,
-
     )
 
     results.append(result)
@@ -105,15 +87,10 @@ print("-" * 45)
 for result in results:
 
     print(
-
         f"{result.rank:<6}"
-
         f"{result.symbol:<15}"
-
         f"{result.market_score:<10.2f}"
-
         f"{result.action:<12}"
-
     )
 
 print()

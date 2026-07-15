@@ -54,14 +54,12 @@ def dataframe():
 # Construction
 # ==========================================================
 
+
 def test_create():
 
     assert isinstance(
-
         validator(),
-
         CSVValidator,
-
     )
 
 
@@ -69,51 +67,34 @@ def test_create():
 # Valid
 # ==========================================================
 
+
 def test_valid():
 
-    assert validator().validate(
-
-        dataframe()
-
-    )
+    assert validator().validate(dataframe())
 
 
 # ==========================================================
 # Empty
 # ==========================================================
 
+
 def test_empty():
 
-    with pytest.raises(
+    with pytest.raises(EmptyCSVError):
 
-        EmptyCSVError
-
-    ):
-
-        validator().validate(
-
-            pd.DataFrame()
-
-        )
+        validator().validate(pd.DataFrame())
 
 
 # ==========================================================
 # Missing Column
 # ==========================================================
 
+
 def test_missing_column():
 
-    df = dataframe().drop(
+    df = dataframe().drop(columns=["PCR"])
 
-        columns=["PCR"]
-
-    )
-
-    with pytest.raises(
-
-        MissingColumnError
-
-    ):
+    with pytest.raises(MissingColumnError):
 
         validator().validate(df)
 
@@ -122,27 +103,18 @@ def test_missing_column():
 # Duplicate Row
 # ==========================================================
 
+
 def test_duplicate():
 
     df = pd.concat(
-
         [
-
             dataframe(),
-
             dataframe(),
-
         ],
-
         ignore_index=True,
-
     )
 
-    with pytest.raises(
-
-        DuplicateRowError
-
-    ):
+    with pytest.raises(DuplicateRowError):
 
         validator().validate(df)
 
@@ -151,17 +123,14 @@ def test_duplicate():
 # Invalid Numeric
 # ==========================================================
 
+
 def test_invalid_numeric():
 
     df = dataframe()
 
     df["Spot"] = ["ABC"]
 
-    with pytest.raises(
-
-        InvalidDataTypeError
-
-    ):
+    with pytest.raises(InvalidDataTypeError):
 
         validator().validate(df)
 
@@ -170,19 +139,16 @@ def test_invalid_numeric():
 # Representation
 # ==========================================================
 
+
 def test_repr():
 
     assert "CSVValidator" in repr(
-
         validator(),
-
     )
 
 
 def test_str():
 
     assert "CSVValidator" in str(
-
         validator(),
-
     )

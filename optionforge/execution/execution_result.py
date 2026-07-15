@@ -67,13 +67,7 @@ class ExecutionResult:
         Total executed quantity.
         """
 
-        return sum(
-
-            trade.total_quantity
-
-            for trade in self.trades
-
-        )
+        return sum(trade.total_quantity for trade in self.trades)
 
     @property
     def total_notional(self) -> float:
@@ -81,13 +75,7 @@ class ExecutionResult:
         Total traded value.
         """
 
-        return sum(
-
-            trade.notional_value
-
-            for trade in self.trades
-
-        )
+        return sum(trade.notional_value for trade in self.trades)
 
     @property
     def average_execution_price(self) -> float:
@@ -99,46 +87,22 @@ class ExecutionResult:
 
             return 0.0
 
-        return (
-
-            self.total_notional
-
-            / self.total_quantity
-
-        )
+        return self.total_notional / self.total_quantity
 
     @property
     def complete_trade_count(self) -> int:
 
-        return sum(
-
-            trade.is_complete
-
-            for trade in self.trades
-
-        )
+        return sum(trade.is_complete for trade in self.trades)
 
     @property
     def partial_trade_count(self) -> int:
 
-        return sum(
-
-            trade.is_partial
-
-            for trade in self.trades
-
-        )
+        return sum(trade.is_partial for trade in self.trades)
 
     @property
     def unfilled_trade_count(self) -> int:
 
-        return sum(
-
-            trade.is_unfilled
-
-            for trade in self.trades
-
-        )
+        return sum(trade.is_unfilled for trade in self.trades)
 
     # -----------------------------------------------------
     # Serialization
@@ -149,36 +113,15 @@ class ExecutionResult:
     ) -> dict[str, Any]:
 
         return {
-
-            "trades": [
-
-                trade.to_dict()
-
-                for trade in self.trades
-
-            ],
-
+            "trades": [trade.to_dict() for trade in self.trades],
             "trade_count": self.trade_count,
-
             "total_quantity": self.total_quantity,
-
             "total_notional": self.total_notional,
-
-            "average_execution_price":
-                self.average_execution_price,
-
-            "complete_trade_count":
-                self.complete_trade_count,
-
-            "partial_trade_count":
-                self.partial_trade_count,
-
-            "unfilled_trade_count":
-                self.unfilled_trade_count,
-
-            "metadata":
-                dict(self.metadata),
-
+            "average_execution_price": self.average_execution_price,
+            "complete_trade_count": self.complete_trade_count,
+            "partial_trade_count": self.partial_trade_count,
+            "unfilled_trade_count": self.unfilled_trade_count,
+            "metadata": dict(self.metadata),
         }
 
     # -----------------------------------------------------
@@ -189,24 +132,14 @@ class ExecutionResult:
         self,
     ) -> str:
 
-        return (
-
-            f"ExecutionResult("
-
-            f"{self.trade_count} trades)"
-
-        )
+        return f"ExecutionResult(" f"{self.trade_count} trades)"
 
     def __repr__(
         self,
     ) -> str:
 
         return (
-
             f"ExecutionResult("
-
             f"trades={self.trade_count}, "
-
             f"quantity={self.total_quantity})"
-
         )

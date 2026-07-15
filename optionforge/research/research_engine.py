@@ -45,15 +45,7 @@ class ResearchEngine:
         registry: ResearchRegistry | None = None,
     ) -> None:
 
-        self._registry = (
-
-            registry
-
-            if registry is not None
-
-            else ResearchRegistry()
-
-        )
+        self._registry = registry if registry is not None else ResearchRegistry()
 
     @property
     def registry(
@@ -78,27 +70,15 @@ class ResearchEngine:
         builder = self._registry.get_builder()
 
         return builder.build(
-
             research=research,
-
             performance_report=performance_report,
-
             research_score=research_score,
-
             approved=approved,
-
             recommendation=recommendation,
-
         )
 
     def __repr__(
         self,
     ) -> str:
 
-        return (
-
-            f"ResearchEngine("
-
-            f"registry={self._registry.__class__.__name__})"
-
-        )
+        return f"ResearchEngine(" f"registry={self._registry.__class__.__name__})"

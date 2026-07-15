@@ -48,11 +48,8 @@ class DecisionEngine:
     """
 
     def __init__(
-
         self,
-
         rules: Iterable[DecisionRule],
-
     ) -> None:
 
         self._rules = tuple(rules)
@@ -62,11 +59,8 @@ class DecisionEngine:
     # -----------------------------------------------------
 
     def build(
-
         self,
-
         market_dna: MarketDNA,
-
     ) -> DecisionRegistry:
 
         registry = DecisionRegistry()
@@ -74,22 +68,15 @@ class DecisionEngine:
         for rule in self._rules:
 
             decision = rule.evaluate(
-
                 market_dna=market_dna,
-
                 builder=self._builder,
-
             )
 
             if decision is None:
 
                 continue
 
-            registry.add(
-
-                decision
-
-            )
+            registry.add(decision)
 
         return registry
 
@@ -98,30 +85,16 @@ class DecisionEngine:
     @property
     def rule_count(self) -> int:
 
-        return len(
-
-            self._rules
-
-        )
+        return len(self._rules)
 
     # -----------------------------------------------------
 
     def __len__(self) -> int:
 
-        return len(
-
-            self._rules
-
-        )
+        return len(self._rules)
 
     # -----------------------------------------------------
 
     def __repr__(self) -> str:
 
-        return (
-
-            f"DecisionEngine("
-
-            f"{len(self)} rules)"
-
-        )
+        return f"DecisionEngine(" f"{len(self)} rules)"

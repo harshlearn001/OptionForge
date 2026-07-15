@@ -41,9 +41,7 @@ class RiskBuilder:
         # -------------------------------------------------
 
         risk_level = RiskLevel.from_score(
-
             round(score),
-
         )
 
         # -------------------------------------------------
@@ -73,41 +71,22 @@ class RiskBuilder:
         # -------------------------------------------------
 
         recommended_position_size = max(
-
             0.0,
-
             100.0 - score,
-
         )
 
         max_capital_allocation = max(
-
             0.0,
-
             100.0 - score,
-
         )
 
         return Risk(
-
             risk_score=score,
-
             risk_level=risk_level,
-
             risk_type=risk_type,
-
             approved=approved,
-
             warnings=result.warnings,
-
             reasons=result.reasons,
-
-            recommended_position_size=(
-                recommended_position_size
-            ),
-
-            max_capital_allocation=(
-                max_capital_allocation
-            ),
-
+            recommended_position_size=(recommended_position_size),
+            max_capital_allocation=(max_capital_allocation),
         )

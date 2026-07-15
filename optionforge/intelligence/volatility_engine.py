@@ -50,74 +50,49 @@ class VolatilityEngine:
     ) -> VolatilityIntelligence:
 
         evidence = (
-
             f"IV Rank = {iv_rank.iv_rank:.2f}",
-
             f"IV Percentile = {iv_percentile.iv_percentile:.2f}",
-
             f"Expected Move = {expected_move.expected_move:.2f}",
-
         )
 
-        avg = (
-            iv_rank.iv_rank +
-            iv_percentile.iv_percentile
-        ) / 2
+        avg = (iv_rank.iv_rank + iv_percentile.iv_percentile) / 2
 
         if avg <= 20:
 
             state = VolatilityState.VERY_CHEAP
             confidence = 95.0
-            summary = (
-                "Options appear exceptionally inexpensive."
-            )
+            summary = "Options appear exceptionally inexpensive."
 
         elif avg <= 40:
 
             state = VolatilityState.CHEAP
             confidence = 88.0
-            summary = (
-                "Options appear relatively inexpensive."
-            )
+            summary = "Options appear relatively inexpensive."
 
         elif avg <= 60:
 
             state = VolatilityState.FAIR
             confidence = 80.0
-            summary = (
-                "Volatility appears fairly priced."
-            )
+            summary = "Volatility appears fairly priced."
 
         elif avg <= 80:
 
             state = VolatilityState.EXPENSIVE
             confidence = 88.0
-            summary = (
-                "Options appear relatively expensive."
-            )
+            summary = "Options appear relatively expensive."
 
         else:
 
             state = VolatilityState.VERY_EXPENSIVE
             confidence = 95.0
-            summary = (
-                "Options appear exceptionally expensive."
-            )
+            summary = "Options appear exceptionally expensive."
 
-        risks = (
-            "Volatility regime may change rapidly.",
-        )
+        risks = ("Volatility regime may change rapidly.",)
 
         return VolatilityIntelligence(
-
             state=state,
-
             confidence=confidence,
-
             evidence=evidence,
-
             risks=risks,
-
             summary=summary,
-
         )

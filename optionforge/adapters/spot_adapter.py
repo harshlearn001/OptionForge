@@ -36,15 +36,10 @@ class SpotAdapter:
     # ------------------------------------------
 
     COLUMN_MAP = {
-
         "DATE": "TRADE_DATE",
-
         "TOTTRDQTY": "VOLUME",
-
         "TOTTRDVAL": "VALUE",
-
         "TOTALTRADES": "TRADES",
-
     }
 
     @staticmethod
@@ -66,19 +61,13 @@ class SpotAdapter:
         # Normalize Columns
         # ------------------------------------------
 
-        df.columns = (
-            df.columns
-            .str.strip()
-            .str.upper()
-        )
+        df.columns = df.columns.str.strip().str.upper()
 
         # ------------------------------------------
         # Rename
         # ------------------------------------------
 
-        df = df.rename(
-            columns=SpotAdapter.COLUMN_MAP
-        )
+        df = df.rename(columns=SpotAdapter.COLUMN_MAP)
 
         # ------------------------------------------
         # Convert Date
@@ -89,20 +78,12 @@ class SpotAdapter:
             if pd.api.types.is_integer_dtype(df["TRADE_DATE"]):
 
                 df["TRADE_DATE"] = pd.to_datetime(
-
-                    df["TRADE_DATE"].astype(str),
-
-                    format="%Y%m%d"
-
+                    df["TRADE_DATE"].astype(str), format="%Y%m%d"
                 )
 
             else:
 
-                df["TRADE_DATE"] = pd.to_datetime(
-
-                    df["TRADE_DATE"]
-
-                )
+                df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"])
 
         # ------------------------------------------
         # Sort
@@ -110,10 +91,6 @@ class SpotAdapter:
 
         if "TRADE_DATE" in df.columns:
 
-            df = df.sort_values(
-
-                "TRADE_DATE"
-
-            ).reset_index(drop=True)
+            df = df.sort_values("TRADE_DATE").reset_index(drop=True)
 
         return df

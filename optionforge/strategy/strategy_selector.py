@@ -82,11 +82,8 @@ class StrategySelector:
         """
 
         return StrategyRules.select(
-
             decision=decision,
-
             risk=self._risk_profile,
-
         )
 
     # =====================================================
@@ -123,9 +120,7 @@ class StrategySelector:
         """
 
         return StrategySelector(
-
             risk_profile=risk_profile,
-
         )
 
     # =====================================================
@@ -137,11 +132,5 @@ class StrategySelector:
     ) -> str:
 
         return (
-
-            f"{self.__class__.__name__}("
-
-            f"risk_profile="
-
-            f"{self._risk_profile.name})"
-
+            f"{self.__class__.__name__}(" f"risk_profile=" f"{self._risk_profile.name})"
         )

@@ -32,6 +32,7 @@ class RepositoryError(Exception):
 # Repository Configuration
 # ==========================================================
 
+
 class RepositoryConfigurationError(RepositoryError):
     """
     Repository configuration is invalid.
@@ -43,6 +44,7 @@ class RepositoryConfigurationError(RepositoryError):
 # ==========================================================
 # File Errors
 # ==========================================================
+
 
 class RepositoryFileNotFoundError(RepositoryError):
     """
@@ -64,6 +66,7 @@ class UnsupportedFileFormatError(RepositoryError):
 # Data Errors
 # ==========================================================
 
+
 class RepositoryValidationError(RepositoryError):
     """
     Repository validation failed.
@@ -84,6 +87,7 @@ class EmptyRepositoryDataError(RepositoryError):
 # Cache Errors
 # ==========================================================
 
+
 class RepositoryNotFoundError(RepositoryError):
     """
     Repository file or symbol could not be located.
@@ -95,6 +99,7 @@ class RepositoryNotFoundError(RepositoryError):
 # ==========================================================
 # Symbol Errors
 # ==========================================================
+
 
 class UnknownSymbolError(RepositoryError):
     """
@@ -108,12 +113,15 @@ class UnknownSymbolError(RepositoryError):
 # Data Type Errors
 # ==========================================================
 
+
 class UnsupportedRepositoryTypeError(RepositoryError):
     """
     Unknown repository data type.
     """
 
     pass
+
+
 class RepositoryCacheError(RepositoryError):
     """
     Repository cache failure.

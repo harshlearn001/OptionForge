@@ -23,10 +23,10 @@ from optionforge.kernel.trading_session import TradingSession
 from optionforge.market.market_snapshot import MarketSnapshot
 from optionforge.optionchain.chain_validator import ChainValidator
 
-
 # ==========================================================
 # Builders
 # ==========================================================
+
 
 def build_session() -> TradingSession:
     return TradingSession(
@@ -112,6 +112,7 @@ def build_snapshot(
 # Success
 # ==========================================================
 
+
 def test_validate_success():
 
     snapshots = [
@@ -130,6 +131,7 @@ def test_validate_success():
 # Empty
 # ==========================================================
 
+
 def test_empty():
 
     with pytest.raises(ValueError):
@@ -139,6 +141,7 @@ def test_empty():
 # ==========================================================
 # Invalid Type
 # ==========================================================
+
 
 def test_invalid_object():
 
@@ -157,6 +160,7 @@ def test_invalid_object():
 # ==========================================================
 # Duplicate
 # ==========================================================
+
 
 def test_duplicate_contract():
 
@@ -177,6 +181,7 @@ def test_duplicate_contract():
 # ==========================================================
 # Different Symbol
 # ==========================================================
+
 
 def test_different_symbol():
 
@@ -202,6 +207,7 @@ def test_different_symbol():
 # Different Expiry
 # ==========================================================
 
+
 def test_different_expiry():
 
     with pytest.raises(ValueError):
@@ -225,6 +231,7 @@ def test_different_expiry():
 # ==========================================================
 # Returns Tuple
 # ==========================================================
+
 
 def test_returns_tuple():
 

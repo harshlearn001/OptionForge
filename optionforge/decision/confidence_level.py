@@ -49,17 +49,11 @@ class ConfidenceLevel(Enum):
         """
 
         return {
-
             ConfidenceLevel.VERY_HIGH: 90.0,
-
             ConfidenceLevel.HIGH: 75.0,
-
             ConfidenceLevel.MODERATE: 60.0,
-
             ConfidenceLevel.LOW: 40.0,
-
             ConfidenceLevel.VERY_LOW: 0.0,
-
         }[self]
 
     @property
@@ -70,11 +64,8 @@ class ConfidenceLevel(Enum):
         """
 
         return self in (
-
             ConfidenceLevel.VERY_HIGH,
-
             ConfidenceLevel.HIGH,
-
         )
 
     @property
@@ -94,11 +85,8 @@ class ConfidenceLevel(Enum):
         """
 
         return self in (
-
             ConfidenceLevel.LOW,
-
             ConfidenceLevel.VERY_LOW,
-
         )
 
     def __str__(self) -> str:

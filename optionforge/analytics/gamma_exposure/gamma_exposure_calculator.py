@@ -38,13 +38,7 @@ class GammaExposureCalculator:
         if spot <= 0:
             raise ValueError("spot must be positive.")
 
-        return (
-            gamma
-            * open_interest
-            * contract_size
-            * (spot ** 2)
-            * 0.01
-        )
+        return gamma * open_interest * contract_size * (spot**2) * 0.01
 
     def __repr__(self):
 

@@ -19,64 +19,40 @@ from optionforge.models import (
 def dealer():
 
     return DealerPositionResult(
-
         # --------------------------------------------------
         # Quantitative Metrics
         # --------------------------------------------------
-
         dealer_position=-250000.0,
-
         dealer_delta=-18500.0,
-
         dealer_gamma=-4200.0,
-
         net_exposure=-268700.0,
-
         position_strength=82.0,
-
         institutional_score=15.0,
-
         # --------------------------------------------------
         # Classification
         # --------------------------------------------------
-
         dealer_bias="SHORT GAMMA",
-
         dealer_direction="SHORT DELTA",
-
         market_condition="TRENDING",
-
         market_stability="LOW",
-
         directional_risk="VERY HIGH",
-
         # --------------------------------------------------
         # Decision Support
         # --------------------------------------------------
-
         confidence=0.15,
-
         recommendation="Demo",
-
         interpretation="Demo",
-
     )
 
 
 def gamma_flip():
 
     return GammaFlipResult(
-
         gamma_flip=25050.0,
-
         current_spot=24980.0,
-
         distance=-70.0,
-
         flip_status="BELOW GAMMA FLIP",
-
         dealer_regime="NEGATIVE GAMMA",
-
         interpretation="Demo",
     )
 
@@ -84,17 +60,11 @@ def gamma_flip():
 def zero_gamma():
 
     return ZeroGammaResult(
-
         zero_gamma=25050.0,
-
         current_spot=24980.0,
-
         distance=-70.0,
-
         status="BELOW ZERO GAMMA",
-
         dealer_regime="UNSTABLE",
-
         interpretation="Demo",
     )
 
@@ -102,25 +72,15 @@ def zero_gamma():
 def hedging():
 
     return DealerHedgingFlowResult(
-
         hedging_bias="PRO-CYCLICAL",
-
         flow_direction="SELL FUTURES",
-
         flow_strength="WEAK",
-
         volatility_effect="VOLATILITY EXPANSION",
-
         market_support="UNSUPPORTED",
-
         trend_effect="TREND ACCELERATION",
-
         institutional_score=15.0,
-
         confidence="★☆☆☆☆",
-
         recommendation="Demo",
-
         interpretation="Demo",
     )
 
@@ -128,13 +88,9 @@ def hedging():
 def result():
 
     return Dashboard.calculate(
-
         dealer=dealer(),
-
         gamma_flip=gamma_flip(),
-
         zero_gamma=zero_gamma(),
-
         hedging=hedging(),
     )
 
@@ -142,6 +98,7 @@ def result():
 # ==========================================================
 # Result
 # ==========================================================
+
 
 def test_returns_result():
 
@@ -151,6 +108,7 @@ def test_returns_result():
 # ==========================================================
 # Dealer
 # ==========================================================
+
 
 def test_dealer_bias():
 
@@ -166,6 +124,7 @@ def test_dealer_direction():
 # Status
 # ==========================================================
 
+
 def test_gamma_status():
 
     assert result().gamma_status == "BELOW GAMMA FLIP"
@@ -180,6 +139,7 @@ def test_zero_gamma_status():
 # Flow
 # ==========================================================
 
+
 def test_hedging_flow():
 
     assert result().hedging_flow == "SELL FUTURES"
@@ -188,6 +148,7 @@ def test_hedging_flow():
 # ==========================================================
 # Score
 # ==========================================================
+
 
 def test_score():
 
@@ -203,6 +164,7 @@ def test_score_type():
 # Confidence
 # ==========================================================
 
+
 def test_confidence():
 
     assert result().confidence == 0.15
@@ -211,6 +173,7 @@ def test_confidence():
 # ==========================================================
 # Market
 # ==========================================================
+
 
 def test_market_bias():
 
@@ -226,6 +189,7 @@ def test_risk():
 # Summary
 # ==========================================================
 
+
 def test_summary():
 
     assert isinstance(result().summary, str)
@@ -240,38 +204,26 @@ def test_summary_not_empty():
 # Alternate Scenario
 # ==========================================================
 
+
 def test_mean_reversion():
 
     d = replace(
-
         dealer(),
-
         dealer_bias="LONG GAMMA",
-
         dealer_direction="LONG DELTA",
-
         institutional_score=95.0,
-
     )
 
     h = replace(
-
         hedging(),
-
         flow_direction="BUY WEAKNESS",
-
     )
 
     r = Dashboard.calculate(
-
         dealer=d,
-
         gamma_flip=gamma_flip(),
-
         zero_gamma=zero_gamma(),
-
         hedging=h,
-
     )
 
     assert r.market_bias == "MEAN REVERTING"
@@ -282,6 +234,7 @@ def test_mean_reversion():
 # ==========================================================
 # Integrity
 # ==========================================================
+
 
 def test_fields():
 
@@ -301,6 +254,7 @@ def test_fields():
 # ==========================================================
 # Types
 # ==========================================================
+
 
 def test_string_types():
 

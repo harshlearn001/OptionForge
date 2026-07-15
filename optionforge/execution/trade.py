@@ -68,21 +68,11 @@ class Trade:
 
     def __post_init__(self) -> None:
 
-        total = sum(
-
-            fill.quantity
-
-            for fill in self.fills
-
-        )
+        total = sum(fill.quantity for fill in self.fills)
 
         if total > self.order.quantity:
 
-            raise ValueError(
-
-                "total fill quantity exceeds order quantity."
-
-            )
+            raise ValueError("total fill quantity exceeds order quantity.")
 
     # -----------------------------------------------------
     # Convenience
@@ -96,24 +86,12 @@ class Trade:
     @property
     def total_quantity(self) -> int:
 
-        return sum(
-
-            fill.quantity
-
-            for fill in self.fills
-
-        )
+        return sum(fill.quantity for fill in self.fills)
 
     @property
     def remaining_quantity(self) -> int:
 
-        return (
-
-            self.order.quantity
-
-            - self.total_quantity
-
-        )
+        return self.order.quantity - self.total_quantity
 
     @property
     def average_price(self) -> float:
@@ -122,56 +100,24 @@ class Trade:
 
             return 0.0
 
-        total_value = sum(
+        total_value = sum(fill.price * fill.quantity for fill in self.fills)
 
-            fill.price * fill.quantity
-
-            for fill in self.fills
-
-        )
-
-        return (
-
-            total_value
-
-            / self.total_quantity
-
-        )
+        return total_value / self.total_quantity
 
     @property
     def notional_value(self) -> float:
 
-        return sum(
-
-            fill.notional_value
-
-            for fill in self.fills
-
-        )
+        return sum(fill.notional_value for fill in self.fills)
 
     @property
     def is_complete(self) -> bool:
 
-        return (
-
-            self.total_quantity
-
-            == self.order.quantity
-
-        )
+        return self.total_quantity == self.order.quantity
 
     @property
     def is_partial(self) -> bool:
 
-        return (
-
-            0
-
-            < self.total_quantity
-
-            < self.order.quantity
-
-        )
+        return 0 < self.total_quantity < self.order.quantity
 
     @property
     def is_unfilled(self) -> bool:
@@ -185,33 +131,16 @@ class Trade:
     def to_dict(self) -> dict[str, Any]:
 
         return {
-
             "order": self.order.to_dict(),
-
-            "fills": [
-
-                fill.to_dict()
-
-                for fill in self.fills
-
-            ],
-
+            "fills": [fill.to_dict() for fill in self.fills],
             "fill_count": self.fill_count,
-
             "total_quantity": self.total_quantity,
-
             "remaining_quantity": self.remaining_quantity,
-
             "average_price": self.average_price,
-
             "notional_value": self.notional_value,
-
             "is_complete": self.is_complete,
-
             "executed_at": self.executed_at.isoformat(),
-
             "metadata": dict(self.metadata),
-
         }
 
     # -----------------------------------------------------
@@ -220,24 +149,12 @@ class Trade:
 
     def __str__(self) -> str:
 
-        return (
-
-            f"Trade("
-
-            f"{self.order.symbol}, "
-
-            f"{self.total_quantity})"
-
-        )
+        return f"Trade(" f"{self.order.symbol}, " f"{self.total_quantity})"
 
     def __repr__(self) -> str:
 
         return (
-
             f"Trade("
-
             f"fills={self.fill_count}, "
-
             f"average_price={self.average_price:.2f})"
-
         )

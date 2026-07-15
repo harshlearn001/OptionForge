@@ -32,51 +32,33 @@ class FutureAdapter:
     """
 
     COLUMN_MAP = {
-
         "EXP_DATE": "EXPIRY",
-
         "OPEN_PRICE": "OPEN",
         "HI_PRICE": "HIGH",
         "LO_PRICE": "LOW",
         "CLOSE_PRICE": "CLOSE",
-
         "OPEN_INT": "OI",
-
         "TRD_QTY": "VOLUME",
         "TRD_VAL": "VALUE",
-
         "NO_OF_CONT": "CONTRACTS",
         "NO_OF_TRADE": "TRADES",
-
     }
 
     FINAL_COLUMNS = [
-
         "TRADE_DATE",
-
         "SYMBOL",
-
         "INSTRUMENT",
-
         "EXPIRY",
-
         "EXPIRY_TYPE",
-
         "OPEN",
         "HIGH",
         "LOW",
         "CLOSE",
-
         "OI",
-
         "VOLUME",
-
         "VALUE",
-
         "CONTRACTS",
-
         "TRADES",
-
     ]
 
     @staticmethod
@@ -98,25 +80,13 @@ class FutureAdapter:
         # Normalize Columns
         # ---------------------------------------------
 
-        df.columns = (
-
-            df.columns
-
-            .str.strip()
-
-            .str.upper()
-
-        )
+        df.columns = df.columns.str.strip().str.upper()
 
         # ---------------------------------------------
         # Rename
         # ---------------------------------------------
 
-        df = df.rename(
-
-            columns=FutureAdapter.COLUMN_MAP
-
-        )
+        df = df.rename(columns=FutureAdapter.COLUMN_MAP)
 
         # ---------------------------------------------
         # Convert Dates
@@ -125,36 +95,18 @@ class FutureAdapter:
         if "TRADE_DATE" in df.columns:
 
             df["TRADE_DATE"] = pd.to_datetime(
-
-                df["TRADE_DATE"].astype(str),
-
-                format="%Y%m%d"
-
+                df["TRADE_DATE"].astype(str), format="%Y%m%d"
             )
 
         if "EXPIRY" in df.columns:
 
-            df["EXPIRY"] = pd.to_datetime(
-
-                df["EXPIRY"].astype(str),
-
-                format="%Y%m%d"
-
-            )
+            df["EXPIRY"] = pd.to_datetime(df["EXPIRY"].astype(str), format="%Y%m%d")
 
         # ---------------------------------------------
         # Sort
         # ---------------------------------------------
 
-        df = df.sort_values(
-
-            "TRADE_DATE"
-
-        ).reset_index(
-
-            drop=True
-
-        )
+        df = df.sort_values("TRADE_DATE").reset_index(drop=True)
 
         # ---------------------------------------------
         # Column Order

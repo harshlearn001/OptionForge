@@ -68,13 +68,9 @@ class InstitutionalBiasRule(IntelligenceRule):
 
         confidence = knowledge.confidence
 
-        dealer = knowledge.by_type(
-            KnowledgeType.DEALER
-        )
+        dealer = knowledge.by_type(KnowledgeType.DEALER)
 
-        volatility = knowledge.by_type(
-            KnowledgeType.VOLATILITY
-        )
+        volatility = knowledge.by_type(KnowledgeType.VOLATILITY)
 
         # ---------------------------------------------
         # Bias
@@ -83,30 +79,20 @@ class InstitutionalBiasRule(IntelligenceRule):
         if dealer and volatility:
 
             bias = (
-                "Institutional positioning supports "
-                "the current market environment."
+                "Institutional positioning supports " "the current market environment."
             )
 
         elif dealer:
 
-            bias = (
-                "Dealer positioning is the dominant "
-                "institutional signal."
-            )
+            bias = "Dealer positioning is the dominant " "institutional signal."
 
         elif volatility:
 
-            bias = (
-                "Volatility conditions are the dominant "
-                "institutional signal."
-            )
+            bias = "Volatility conditions are the dominant " "institutional signal."
 
         else:
 
-            bias = (
-                "Institutional market bias remains "
-                "neutral."
-            )
+            bias = "Institutional market bias remains " "neutral."
 
         # ---------------------------------------------
         # Strength
@@ -133,37 +119,17 @@ class InstitutionalBiasRule(IntelligenceRule):
             level = IntelligenceLevel.VERY_WEAK
 
         return builder.build(
-
             id="institutional_bias",
-
             name="Institutional Market Bias",
-
             type=IntelligenceType.INSTITUTIONAL,
-
             level=level,
-
             score=score,
-
             confidence=confidence,
-
             description=bias,
-
-            knowledge_ids=tuple(
-
-                item.id
-
-                for item in knowledge
-
-            ),
-
+            knowledge_ids=tuple(item.id for item in knowledge),
             metadata={
-
                 "knowledge_count": len(knowledge),
-
                 "dealer_present": bool(dealer),
-
                 "volatility_present": bool(volatility),
-
             },
-
         )

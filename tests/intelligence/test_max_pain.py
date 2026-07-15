@@ -17,7 +17,6 @@ import pandas as pd
 
 from optionforge.intelligence.max_pain import MaxPain
 
-
 print("=" * 60)
 print("OPTIONFORGE")
 print("PROFESSIONAL MAX PAIN TEST")
@@ -28,7 +27,6 @@ print("=" * 60)
 # ---------------------------------------------------------
 
 df = pd.DataFrame(
-
     [
         {
             "STRIKE_PRICE": 24800,

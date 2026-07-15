@@ -18,79 +18,50 @@ from optionforge.execution.trade import Trade
 def order():
 
     return Order(
-
         symbol="NIFTY",
-
         side=OrderSide.BUY,
-
         order_type=OrderType.MARKET,
-
         status=OrderStatus.PENDING,
-
         quantity=100,
-
         price=250.0,
-
     )
 
 
 def fill1():
 
     return Fill(
-
         order=order(),
-
         quantity=40,
-
         price=250.0,
-
         status=FillStatus.PARTIAL,
-
     )
 
 
 def fill2():
 
     return Fill(
-
         order=order(),
-
         quantity=60,
-
         price=251.0,
-
         status=FillStatus.COMPLETE,
-
     )
 
 
 def trade():
 
     return Trade(
-
         order=order(),
-
         fills=(
-
             fill1(),
-
             fill2(),
-
         ),
-
     )
 
 
 def execution_result():
 
     return ExecutionResult(
-
-        trades=(
-
-            trade(),
-
-        ),
-
+        trades=(trade(),),
     )
 
 
@@ -106,55 +77,27 @@ def test_total_quantity():
 
 def test_total_notional():
 
-    assert execution_result().total_notional == (
-
-        trade().notional_value
-
-    )
+    assert execution_result().total_notional == (trade().notional_value)
 
 
 def test_average_execution_price():
 
-    assert (
-
-        execution_result().average_execution_price
-
-        == trade().average_price
-
-    )
+    assert execution_result().average_execution_price == trade().average_price
 
 
 def test_complete_trade_count():
 
-    assert (
-
-        execution_result().complete_trade_count
-
-        == 1
-
-    )
+    assert execution_result().complete_trade_count == 1
 
 
 def test_partial_trade_count():
 
-    assert (
-
-        execution_result().partial_trade_count
-
-        == 0
-
-    )
+    assert execution_result().partial_trade_count == 0
 
 
 def test_unfilled_trade_count():
 
-    assert (
-
-        execution_result().unfilled_trade_count
-
-        == 0
-
-    )
+    assert execution_result().unfilled_trade_count == 0
 
 
 def test_empty_result():
@@ -183,17 +126,9 @@ def test_to_dict():
 
 def test_str():
 
-    assert "ExecutionResult" in str(
-
-        execution_result()
-
-    )
+    assert "ExecutionResult" in str(execution_result())
 
 
 def test_repr():
 
-    assert "ExecutionResult" in repr(
-
-        execution_result()
-
-    )
+    assert "ExecutionResult" in repr(execution_result())

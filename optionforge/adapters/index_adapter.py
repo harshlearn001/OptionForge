@@ -53,10 +53,7 @@ class IndexAdapter:
         # Date
         # -----------------------------
 
-        df["TRADE_DATE"] = pd.to_datetime(
-            df["TRADE_DATE"].astype(str),
-            format="%Y%m%d"
-        )
+        df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"].astype(str), format="%Y%m%d")
 
         # -----------------------------
         # String columns

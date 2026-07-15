@@ -23,13 +23,9 @@ class ReportEngine:
 
     @staticmethod
     def generate(
-
         market: MarketStructureResult,
-
         probability: ProbabilityResult,
-
         strategy: StrategyResult,
-
     ) -> str:
 
         report = f"""

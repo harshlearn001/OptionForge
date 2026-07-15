@@ -98,26 +98,16 @@ class Strategy:
     def __post_init__(self) -> None:
 
         if not (0.0 <= self.confidence <= 100.0):
-            raise ValueError(
-                "Confidence must be between 0 and 100."
-            )
+            raise ValueError("Confidence must be between 0 and 100.")
 
-        if not (
-            0.0 <= self.probability_of_profit <= 100.0
-        ):
-            raise ValueError(
-                "Probability of profit must be between 0 and 100."
-            )
+        if not (0.0 <= self.probability_of_profit <= 100.0):
+            raise ValueError("Probability of profit must be between 0 and 100.")
 
         if self.capital_required < 0:
-            raise ValueError(
-                "Capital required cannot be negative."
-            )
+            raise ValueError("Capital required cannot be negative.")
 
         if not self.risk_reward.strip():
-            raise ValueError(
-                "risk_reward cannot be empty."
-            )
+            raise ValueError("risk_reward cannot be empty.")
 
     # -----------------------------------------------------
     # Convenience
@@ -154,43 +144,22 @@ class Strategy:
     def to_dict(self) -> dict[str, Any]:
 
         return {
-
             "type": self.type.name,
-
             "title": self.title,
-
             "summary": self.summary,
-
             "direction": self.direction,
-
             "volatility_view": self.volatility_view,
-
             "market_environment": self.market_environment,
-
             "risk": self.risk.name,
-
             "capital_required": self.capital_required,
-
             "max_profit": self.max_profit,
-
             "max_loss": self.max_loss,
-
-            "probability_of_profit":
-                self.probability_of_profit,
-
+            "probability_of_profit": self.probability_of_profit,
             "risk_reward": self.risk_reward,
-
             "confidence": self.confidence,
-
-            "rationale":
-                list(self.rationale),
-
-            "timestamp":
-                self.timestamp.isoformat(),
-
-            "metadata":
-                dict(self.metadata),
-
+            "rationale": list(self.rationale),
+            "timestamp": self.timestamp.isoformat(),
+            "metadata": dict(self.metadata),
         }
 
     # -----------------------------------------------------
@@ -199,26 +168,13 @@ class Strategy:
 
     def __str__(self) -> str:
 
-        return (
-
-            f"Strategy("
-
-            f"{self.type.name}, "
-
-            f"{self.confidence:.1f}%)"
-
-        )
+        return f"Strategy(" f"{self.type.name}, " f"{self.confidence:.1f}%)"
 
     def __repr__(self) -> str:
 
         return (
-
             f"Strategy("
-
             f"type={self.type.name}, "
-
             f"risk={self.risk.name}, "
-
             f"confidence={self.confidence:.1f})"
-
         )

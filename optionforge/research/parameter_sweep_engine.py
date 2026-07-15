@@ -39,9 +39,7 @@ class ParameterSweepEngine:
         """
 
         if not scores:
-            raise ValueError(
-                "scores cannot be empty."
-            )
+            raise ValueError("scores cannot be empty.")
 
         tested_values = len(scores)
 
@@ -52,44 +50,24 @@ class ParameterSweepEngine:
             10,
         )
 
-        best_value = (
-            scores.index(best_score)
-            + 1
-        )
+        best_value = scores.index(best_score) + 1
 
         stability_score = average_score
 
-        passed = (
-            stability_score
-            >= self.PASS_THRESHOLD
-        )
+        passed = stability_score >= self.PASS_THRESHOLD
 
         return ParameterSweep(
-
             parameter_name=parameter_name,
-
             tested_values=tested_values,
-
             best_value=best_value,
-
             best_score=best_score,
-
             average_score=average_score,
-
             stability_score=stability_score,
-
             passed=passed,
-
         )
 
     def __repr__(self) -> str:
 
-        return (
-
-            "ParameterSweepEngine("
-
-            f"pass_threshold={self.PASS_THRESHOLD})"
-
-        )
+        return "ParameterSweepEngine(" f"pass_threshold={self.PASS_THRESHOLD})"
 
     __str__ = __repr__

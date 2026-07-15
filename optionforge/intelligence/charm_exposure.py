@@ -25,14 +25,10 @@ class CharmExposure:
     ) -> CharmExposureResult:
 
         if spot_price <= 0:
-            raise ValueError(
-                "Spot price must be positive."
-            )
+            raise ValueError("Spot price must be positive.")
 
         if len(option_chain) == 0:
-            raise ValueError(
-                "Option chain cannot be empty."
-            )
+            raise ValueError("Option chain cannot be empty.")
 
         call_charm = 0.0
         put_charm = 0.0
@@ -47,36 +43,23 @@ class CharmExposure:
             lot = int(option["lot_size"])
             option_type = option["option_type"]
 
-            exposure = (
-                charm
-                * oi
-                * lot
-                * spot_price
-            )
+            exposure = charm * oi * lot * spot_price
 
             if option_type == "CE":
 
                 call_charm += exposure
 
-                strike_charm[strike] = (
-                    strike_charm.get(strike, 0.0)
-                    + exposure
-                )
+                strike_charm[strike] = strike_charm.get(strike, 0.0) + exposure
 
             elif option_type == "PE":
 
                 put_charm += exposure
 
-                strike_charm[strike] = (
-                    strike_charm.get(strike, 0.0)
-                    - exposure
-                )
+                strike_charm[strike] = strike_charm.get(strike, 0.0) - exposure
 
             else:
 
-                raise ValueError(
-                    f"Unknown option type: {option_type}"
-                )
+                raise ValueError(f"Unknown option type: {option_type}")
 
         net_charm = call_charm + put_charm
 
@@ -109,18 +92,11 @@ class CharmExposure:
             )
 
         return CharmExposureResult(
-
             total_call_charm=call_charm,
-
             total_put_charm=put_charm,
-
             net_charm=net_charm,
-
             largest_positive_strike=largest_positive,
-
             largest_negative_strike=largest_negative,
-
             charm_regime=regime,
-
             interpretation=interpretation,
         )

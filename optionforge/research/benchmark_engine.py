@@ -46,30 +46,19 @@ class BenchmarkEngine:
 
         information_ratio = 0.0
 
-        outperformed = (
-            strategy_return >= benchmark_return
-        )
+        outperformed = strategy_return >= benchmark_return
 
         passed = outperformed
 
         return BenchmarkComparison(
-
             benchmark_name=benchmark_name,
-
             strategy_return=strategy_return,
-
             benchmark_return=benchmark_return,
-
             alpha=alpha,
-
             tracking_error=tracking_error,
-
             information_ratio=information_ratio,
-
             outperformed=outperformed,
-
             passed=passed,
-
         )
 
     def __repr__(self) -> str:

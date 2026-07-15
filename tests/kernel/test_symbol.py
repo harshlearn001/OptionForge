@@ -45,6 +45,7 @@ def build_symbol() -> Symbol:
 # Creation
 # -------------------------------------------------------
 
+
 def test_symbol_creation():
     symbol = build_symbol()
 
@@ -56,6 +57,7 @@ def test_symbol_creation():
 # -------------------------------------------------------
 # Validation
 # -------------------------------------------------------
+
 
 def test_empty_ticker():
     with pytest.raises(
@@ -141,6 +143,7 @@ def test_invalid_strike_interval():
 # Properties
 # -------------------------------------------------------
 
+
 def test_symbol_id():
     assert build_symbol().symbol_id == "NSE:NIFTY"
 
@@ -195,6 +198,7 @@ def test_is_option():
 # Serialization
 # -------------------------------------------------------
 
+
 def test_to_dict():
     data = build_symbol().to_dict()
 
@@ -206,6 +210,7 @@ def test_to_dict():
 # -------------------------------------------------------
 # Immutability
 # -------------------------------------------------------
+
 
 def test_frozen_dataclass():
     symbol = build_symbol()

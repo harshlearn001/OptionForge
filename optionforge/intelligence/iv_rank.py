@@ -21,15 +21,9 @@ class IVRank:
     ) -> IVRankResult:
 
         if high_iv <= low_iv:
-            raise ValueError(
-                "High IV must be greater than Low IV."
-            )
+            raise ValueError("High IV must be greater than Low IV.")
 
-        iv_rank = (
-            (current_iv - low_iv)
-            /
-            (high_iv - low_iv)
-        ) * 100
+        iv_rank = ((current_iv - low_iv) / (high_iv - low_iv)) * 100
 
         iv_rank = max(
             0.0,
@@ -49,25 +43,19 @@ class IVRank:
 
             status = "LOW"
 
-            interpretation = (
-                "Volatility is below average."
-            )
+            interpretation = "Volatility is below average."
 
         elif iv_rank < 60:
 
             status = "NORMAL"
 
-            interpretation = (
-                "Volatility is near its historical average."
-            )
+            interpretation = "Volatility is near its historical average."
 
         elif iv_rank < 80:
 
             status = "HIGH"
 
-            interpretation = (
-                "Volatility is elevated."
-            )
+            interpretation = "Volatility is elevated."
 
         else:
 
@@ -79,16 +67,10 @@ class IVRank:
             )
 
         return IVRankResult(
-
             current_iv=current_iv,
-
             low_iv=low_iv,
-
             high_iv=high_iv,
-
             iv_rank=iv_rank,
-
             status=status,
-
             interpretation=interpretation,
         )

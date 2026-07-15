@@ -19,17 +19,11 @@ def show(results):
         status = "PASS" if r.passed else "FAIL"
 
         table.add_row(
-
             r.metric,
-
             f"{r.broker:.6f}",
-
             f"{r.optionforge:.6f}",
-
             f"{r.difference:.6f}",
-
             status,
-
         )
 
     console.print(table)

@@ -50,49 +50,28 @@ class GreeksEngine:
     ) -> GreeksResult:
 
         analytics = self.calculator.calculate(
-
             spot=spot,
-
             strike=strike,
-
             time=time,
-
             rate=rate,
-
             volatility=volatility,
-
             option_type=option_type,
-
             market_price=market_price,
-
         )
 
         return GreeksResult(
-
             symbol=symbol,
-
             trade_date=trade_date,
-
             expiry=expiry,
-
             strike=strike,
-
             spot=spot,
-
             option_type=option_type,
-
             option_price=analytics.price,
-
             implied_volatility=analytics.implied_volatility,
-
             delta=analytics.delta,
-
             gamma=analytics.gamma,
-
             theta=analytics.theta,
-
             vega=analytics.vega,
-
         )
 
     def __repr__(self):

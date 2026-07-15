@@ -45,23 +45,15 @@ class VolatilitySurfaceEngine:
     ) -> VolatilitySurfaceResult:
 
         points = self.calculator.calculate(
-
             strikes=strikes,
-
             expiries=expiries,
-
             ivs=ivs,
-
         )
 
         return VolatilitySurfaceResult(
-
             symbol=symbol,
-
             trade_date=trade_date,
-
             points=points,
-
         )
 
     def __repr__(self):

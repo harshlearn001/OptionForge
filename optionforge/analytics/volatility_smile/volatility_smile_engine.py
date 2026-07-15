@@ -45,23 +45,15 @@ class VolatilitySmileEngine:
     ) -> VolatilitySmileResult:
 
         points = self.calculator.calculate(
-
             strikes=strikes,
-
             ivs=ivs,
-
         )
 
         return VolatilitySmileResult(
-
             symbol=symbol,
-
             trade_date=trade_date,
-
             expiry=expiry,
-
             points=points,
-
         )
 
     def __repr__(self):

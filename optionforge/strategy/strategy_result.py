@@ -98,19 +98,10 @@ class StrategyResult:
     def to_dict(self) -> dict[str, Any]:
 
         return {
-
             "strategy": self.strategy.to_dict(),
-
-            "execution_plan": (
-                self.execution_plan.to_dict()
-            ),
-
-            "timestamp": (
-                self.timestamp.isoformat()
-            ),
-
+            "execution_plan": (self.execution_plan.to_dict()),
+            "timestamp": (self.timestamp.isoformat()),
             "metadata": dict(self.metadata),
-
         }
 
     # -----------------------------------------------------
@@ -120,21 +111,11 @@ class StrategyResult:
     def __str__(self) -> str:
 
         return (
-
             f"StrategyResult("
-
             f"{self.strategy.title}, "
-
             f"{self.strategy.confidence:.1f}%)"
-
         )
 
     def __repr__(self) -> str:
 
-        return (
-
-            f"StrategyResult("
-
-            f"strategy={self.strategy.type.name})"
-
-        )
+        return f"StrategyResult(" f"strategy={self.strategy.type.name})"

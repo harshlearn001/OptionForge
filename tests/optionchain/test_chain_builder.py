@@ -25,10 +25,10 @@ from optionforge.market.option_chain import OptionChain
 
 from optionforge.optionchain.chain_builder import ChainBuilder
 
-
 # ==========================================================
 # Builders
 # ==========================================================
+
 
 def build_session() -> TradingSession:
     return TradingSession(
@@ -114,6 +114,7 @@ def build_snapshot(
 # Success
 # ==========================================================
 
+
 def test_build_success():
 
     chain = ChainBuilder.build(
@@ -133,6 +134,7 @@ def test_build_success():
 # Empty
 # ==========================================================
 
+
 def test_build_empty():
 
     with pytest.raises(ValueError):
@@ -142,6 +144,7 @@ def test_build_empty():
 # ==========================================================
 # Duplicate
 # ==========================================================
+
 
 def test_build_duplicate():
 
@@ -162,6 +165,7 @@ def test_build_duplicate():
 # ==========================================================
 # Different Symbol
 # ==========================================================
+
 
 def test_build_different_symbol():
 
@@ -187,6 +191,7 @@ def test_build_different_symbol():
 # Different Expiry
 # ==========================================================
 
+
 def test_build_different_expiry():
 
     with pytest.raises(ValueError):
@@ -210,6 +215,7 @@ def test_build_different_expiry():
 # ==========================================================
 # Iterable Input
 # ==========================================================
+
 
 def test_build_from_tuple():
 

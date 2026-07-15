@@ -31,9 +31,7 @@ class OIWall:
         missing = required - set(df.columns)
 
         if missing:
-            raise ValueError(
-                f"Missing columns: {missing}"
-            )
+            raise ValueError(f"Missing columns: {missing}")
 
         # ----------------------------------------
         # Separate Calls and Puts
@@ -47,9 +45,7 @@ class OIWall:
         # Highest Call OI
         # ----------------------------------------
 
-        call_row = calls.loc[
-            calls["OPEN_INTEREST"].idxmax()
-        ]
+        call_row = calls.loc[calls["OPEN_INTEREST"].idxmax()]
 
         resistance = float(call_row["STRIKE_PRICE"])
 
@@ -59,9 +55,7 @@ class OIWall:
         # Highest Put OI
         # ----------------------------------------
 
-        put_row = puts.loc[
-            puts["OPEN_INTEREST"].idxmax()
-        ]
+        put_row = puts.loc[puts["OPEN_INTEREST"].idxmax()]
 
         support = float(put_row["STRIKE_PRICE"])
 
@@ -71,13 +65,9 @@ class OIWall:
         # Totals
         # ----------------------------------------
 
-        total_call_oi = int(
-            calls["OPEN_INTEREST"].sum()
-        )
+        total_call_oi = int(calls["OPEN_INTEREST"].sum())
 
-        total_put_oi = int(
-            puts["OPEN_INTEREST"].sum()
-        )
+        total_put_oi = int(puts["OPEN_INTEREST"].sum())
 
         if total_call_oi == 0:
             pcr = 0.0
@@ -109,23 +99,13 @@ class OIWall:
         )
 
         return OIWallResult(
-
             strongest_support=support,
-
             strongest_resistance=resistance,
-
             support_oi=support_oi,
-
             resistance_oi=resistance_oi,
-
             total_put_oi=total_put_oi,
-
             total_call_oi=total_call_oi,
-
             put_call_ratio=round(pcr, 3),
-
             market_bias=bias,
-
             interpretation=interpretation,
-
         )

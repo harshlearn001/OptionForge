@@ -15,58 +15,41 @@ sys.path.append(str(BASE_DIR))
 
 from optionforge.intelligence import OIShift
 
-
 print("=" * 60)
 print("OPTIONFORGE")
 print("OI SHIFT INTELLIGENCE TEST")
 print("=" * 60)
 
 tests = [
-
     # ---------------------------------------------------------
     # Strongly Bullish
     # ---------------------------------------------------------
-
     (24800, 24900, 25200, 25100),
-
     # ---------------------------------------------------------
     # Strongly Bearish
     # ---------------------------------------------------------
-
     (24900, 24800, 25100, 25200),
-
     # ---------------------------------------------------------
     # Bullish (Support Higher)
     # ---------------------------------------------------------
-
     (24800, 24900, 25200, 25200),
-
     # ---------------------------------------------------------
     # Bearish (Resistance Higher)
     # ---------------------------------------------------------
-
     (24800, 24800, 25100, 25200),
-
     # ---------------------------------------------------------
     # Neutral
     # ---------------------------------------------------------
-
     (24800, 24800, 25200, 25200),
-
 ]
 
 for previous_support, current_support, previous_resistance, current_resistance in tests:
 
     result = OIShift.analyze(
-
         previous_support=previous_support,
-
         current_support=current_support,
-
         previous_resistance=previous_resistance,
-
         current_resistance=current_resistance,
-
     )
 
     print("-" * 60)

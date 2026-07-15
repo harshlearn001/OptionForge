@@ -63,8 +63,7 @@ class EvidenceRegistry:
 
         if evidence.feature_id in self._evidence:
             raise ValueError(
-                f"Evidence already registered: "
-                f"{evidence.feature_id.name}"
+                f"Evidence already registered: " f"{evidence.feature_id.name}"
             )
 
         self._evidence[evidence.feature_id] = evidence
@@ -155,37 +154,22 @@ class EvidenceRegistry:
 
     def bullish_strength(self) -> float:
 
-        return sum(
-            e.strength
-            for e in self.bullish()
-        )
+        return sum(e.strength for e in self.bullish())
 
     def bearish_strength(self) -> float:
 
-        return sum(
-            e.strength
-            for e in self.bearish()
-        )
+        return sum(e.strength for e in self.bearish())
 
     def net_strength(self) -> float:
 
-        return (
-            self.bullish_strength()
-            - self.bearish_strength()
-        )
+        return self.bullish_strength() - self.bearish_strength()
 
     def average_confidence(self) -> float:
 
         if not self._evidence:
             return 0.0
 
-        return (
-            sum(
-                e.confidence
-                for e in self._evidence.values()
-            )
-            / len(self._evidence)
-        )
+        return sum(e.confidence for e in self._evidence.values()) / len(self._evidence)
 
     # ---------------------------------------------------------
     # Export
@@ -233,7 +217,4 @@ class EvidenceRegistry:
 
     def __repr__(self) -> str:
 
-        return (
-            f"EvidenceRegistry("
-            f"{len(self._evidence)} evidence)"
-        )
+        return f"EvidenceRegistry(" f"{len(self._evidence)} evidence)"

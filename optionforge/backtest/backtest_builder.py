@@ -38,7 +38,5 @@ class BacktestBuilder:
         """
 
         return BacktestResult(
-
             backtests=backtests,
-
         )

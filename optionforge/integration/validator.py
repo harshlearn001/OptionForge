@@ -155,18 +155,11 @@ class MarketValidator:
         required_columns: Iterable[str],
     ) -> None:
 
-        missing = [
-            column
-            for column in required_columns
-            if column not in df.columns
-        ]
+        missing = [column for column in required_columns if column not in df.columns]
 
         if missing:
 
-            raise MissingColumnError(
-                "Missing required columns:\n"
-                + "\n".join(missing)
-            )
+            raise MissingColumnError("Missing required columns:\n" + "\n".join(missing))
         # ------------------------------------------------------
 
     @staticmethod
@@ -178,9 +171,7 @@ class MarketValidator:
         """
 
         if df.empty:
-            raise EmptyDataFrameError(
-                "The DataFrame contains no rows."
-            )
+            raise EmptyDataFrameError("The DataFrame contains no rows.")
 
     # ------------------------------------------------------
 
@@ -196,13 +187,10 @@ class MarketValidator:
 
         if len(duplicates):
 
-            duplicate_names = "\n".join(
-                duplicates.astype(str)
-            )
+            duplicate_names = "\n".join(duplicates.astype(str))
 
             raise DuplicateColumnError(
-                "Duplicate columns detected:\n"
-                f"{duplicate_names}"
+                "Duplicate columns detected:\n" f"{duplicate_names}"
             )
 
     # ------------------------------------------------------
@@ -226,10 +214,7 @@ class MarketValidator:
 
         if invalid:
 
-            raise MissingValueError(
-                "Missing values detected:\n"
-                + "\n".join(invalid)
-            )
+            raise MissingValueError("Missing values detected:\n" + "\n".join(invalid))
 
     # ------------------------------------------------------
 
@@ -253,8 +238,7 @@ class MarketValidator:
         if invalid:
 
             raise InvalidColumnTypeError(
-                "Expected numeric columns:\n"
-                + "\n".join(invalid)
+                "Expected numeric columns:\n" + "\n".join(invalid)
             )
 
     # ------------------------------------------------------
@@ -293,8 +277,7 @@ class MarketValidator:
         if invalid:
 
             raise InvalidColumnTypeError(
-                "Invalid datetime columns:\n"
-                + "\n".join(invalid)
+                "Invalid datetime columns:\n" + "\n".join(invalid)
             )
 
     # ------------------------------------------------------
@@ -308,34 +291,17 @@ class MarketValidator:
         """
 
         return {
-
             "rows": len(df),
-
             "columns": len(df.columns),
-
             "memory_mb": round(
-
                 df.memory_usage(
                     deep=True,
                 ).sum()
                 / 1024**2,
-
                 2,
-
             ),
-
-            "missing_values": int(
-
-                df.isna().sum().sum()
-
-            ),
-
-            "duplicate_rows": int(
-
-                df.duplicated().sum()
-
-            ),
-
+            "missing_values": int(df.isna().sum().sum()),
+            "duplicate_rows": int(df.duplicated().sum()),
         }
 
     # ------------------------------------------------------
@@ -365,6 +331,4 @@ class MarketValidator:
 
     def __repr__(self) -> str:
 
-        return (
-            f"{self.__class__.__name__}()"
-        )
+        return f"{self.__class__.__name__}()"

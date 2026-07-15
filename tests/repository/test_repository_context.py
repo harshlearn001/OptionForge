@@ -11,17 +11,15 @@ import pytest
 
 from optionforge.repository import RepositoryContext
 
-
 # ==========================================================
 # Construction
 # ==========================================================
 
+
 def test_create_context(tmp_path):
 
     ctx = RepositoryContext(
-
         marketforge_root=tmp_path,
-
     )
 
     assert isinstance(
@@ -34,12 +32,11 @@ def test_create_context(tmp_path):
 # Root Path
 # ==========================================================
 
+
 def test_root_path(tmp_path):
 
     ctx = RepositoryContext(
-
         marketforge_root=tmp_path,
-
     )
 
     assert ctx.marketforge_root == tmp_path
@@ -49,12 +46,11 @@ def test_root_path(tmp_path):
 # Defaults
 # ==========================================================
 
+
 def test_defaults(tmp_path):
 
     ctx = RepositoryContext(
-
         marketforge_root=tmp_path,
-
     )
 
     assert ctx.use_parquet is True
@@ -68,6 +64,7 @@ def test_defaults(tmp_path):
 # Missing Root
 # ==========================================================
 
+
 def test_invalid_root():
 
     with pytest.raises(
@@ -75,11 +72,7 @@ def test_invalid_root():
     ):
 
         RepositoryContext(
-
-            marketforge_root=Path(
-                r"X:\THIS_PATH_DOES_NOT_EXIST"
-            ),
-
+            marketforge_root=Path(r"X:\THIS_PATH_DOES_NOT_EXIST"),
         )
 
 
@@ -87,12 +80,11 @@ def test_invalid_root():
 # Frozen
 # ==========================================================
 
+
 def test_context_is_frozen(tmp_path):
 
     ctx = RepositoryContext(
-
         marketforge_root=tmp_path,
-
     )
 
     with pytest.raises(

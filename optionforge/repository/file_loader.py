@@ -37,11 +37,8 @@ class FileLoader:
     """
 
     _SUPPORTED = {
-
         ".csv": pd.read_csv,
-
         ".parquet": pd.read_parquet,
-
     }
 
     @classmethod
@@ -61,11 +58,7 @@ class FileLoader:
 
         if reader is None:
 
-            raise RepositoryValidationError(
-
-                f"Unsupported file format: {suffix}"
-
-            )
+            raise RepositoryValidationError(f"Unsupported file format: {suffix}")
 
         return reader(path)
 

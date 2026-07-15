@@ -20,7 +20,6 @@ print("=" * 60)
 print()
 
 option_chain = [
-
     {
         "strike": 25000,
         "option_type": "CE",
@@ -28,7 +27,6 @@ option_chain = [
         "open_interest": 150000,
         "lot_size": 75,
     },
-
     {
         "strike": 25000,
         "option_type": "PE",
@@ -36,7 +34,6 @@ option_chain = [
         "open_interest": 120000,
         "lot_size": 75,
     },
-
     {
         "strike": 25100,
         "option_type": "CE",
@@ -44,7 +41,6 @@ option_chain = [
         "open_interest": 90000,
         "lot_size": 75,
     },
-
     {
         "strike": 24900,
         "option_type": "PE",
@@ -52,15 +48,11 @@ option_chain = [
         "open_interest": 140000,
         "lot_size": 75,
     },
-
 ]
 
 result = CharmExposure.calculate(
-
     spot_price=25000,
-
     option_chain=option_chain,
-
 )
 
 print(f"Call Charm : {result.total_call_charm:,.2f}")

@@ -25,10 +25,10 @@ from optionforge.market.option_chain import OptionChain
 
 from optionforge.optionchain.strike_selector import StrikeSelector
 
-
 # ==========================================================
 # Builders
 # ==========================================================
+
 
 def build_session() -> TradingSession:
     return TradingSession(
@@ -105,6 +105,7 @@ def build_chain() -> OptionChain:
 # Exact Strike
 # ==========================================================
 
+
 def test_exact():
 
     result = StrikeSelector.exact(
@@ -114,15 +115,13 @@ def test_exact():
 
     assert len(result) == 2
 
-    assert all(
-        s.contract.strike_price == 25050
-        for s in result
-    )
+    assert all(s.contract.strike_price == 25050 for s in result)
 
 
 # ==========================================================
 # Between
 # ==========================================================
+
 
 def test_between():
 
@@ -134,15 +133,13 @@ def test_between():
 
     assert len(result) == 4
 
-    assert all(
-        25050 <= s.contract.strike_price <= 25100
-        for s in result
-    )
+    assert all(25050 <= s.contract.strike_price <= 25100 for s in result)
 
 
 # ==========================================================
 # Around
 # ==========================================================
+
 
 def test_around():
 
@@ -152,21 +149,19 @@ def test_around():
         width=1,
     )
 
-    strikes = {
-        s.contract.strike_price
-        for s in result
-    }
+    strikes = {s.contract.strike_price for s in result}
 
     assert strikes == {
         25000,
         25050,
         25100,
-            }
+    }
 
 
 # ==========================================================
 # Exact Not Found
 # ==========================================================
+
 
 def test_exact_not_found():
 
@@ -181,6 +176,7 @@ def test_exact_not_found():
 # ==========================================================
 # Invalid Range
 # ==========================================================
+
 
 def test_invalid_range():
 
@@ -197,6 +193,7 @@ def test_invalid_range():
 # Negative Width
 # ==========================================================
 
+
 def test_negative_width():
 
     with pytest.raises(ValueError):
@@ -212,6 +209,7 @@ def test_negative_width():
 # Width Zero
 # ==========================================================
 
+
 def test_zero_width():
 
     result = StrikeSelector.around(
@@ -222,7 +220,4 @@ def test_zero_width():
 
     assert len(result) == 2
 
-    assert all(
-        s.contract.strike_price == 25050
-        for s in result
-    )
+    assert all(s.contract.strike_price == 25050 for s in result)

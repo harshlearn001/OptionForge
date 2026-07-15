@@ -62,13 +62,9 @@ class RiskIntelligenceRule(IntelligenceRule):
 
             return None
 
-        dealer = knowledge.by_type(
-            KnowledgeType.DEALER
-        )
+        dealer = knowledge.by_type(KnowledgeType.DEALER)
 
-        volatility = knowledge.by_type(
-            KnowledgeType.VOLATILITY
-        )
+        volatility = knowledge.by_type(KnowledgeType.VOLATILITY)
 
         score = knowledge.score
 
@@ -81,38 +77,25 @@ class RiskIntelligenceRule(IntelligenceRule):
         if dealer and volatility:
 
             description = (
-
                 "Dealer positioning and volatility both "
                 "contribute to institutional market risk."
-
             )
 
         elif volatility:
 
             description = (
-
-                "Volatility is the primary source of "
-                "institutional market risk."
-
+                "Volatility is the primary source of " "institutional market risk."
             )
 
         elif dealer:
 
             description = (
-
-                "Dealer positioning is the dominant "
-                "institutional risk factor."
-
+                "Dealer positioning is the dominant " "institutional risk factor."
             )
 
         else:
 
-            description = (
-
-                "No significant institutional risk "
-                "drivers detected."
-
-            )
+            description = "No significant institutional risk " "drivers detected."
 
         # --------------------------------------------------
         # Risk Level
@@ -139,39 +122,18 @@ class RiskIntelligenceRule(IntelligenceRule):
             level = IntelligenceLevel.VERY_WEAK
 
         return builder.build(
-
             id="institutional_risk",
-
             name="Institutional Market Risk",
-
             type=IntelligenceType.RISK,
-
             level=level,
-
             score=score,
-
             confidence=confidence,
-
             description=description,
-
-            knowledge_ids=tuple(
-
-                item.id
-
-                for item in knowledge
-
-            ),
-
+            knowledge_ids=tuple(item.id for item in knowledge),
             metadata={
-
                 "knowledge_count": len(knowledge),
-
                 "dealer_present": bool(dealer),
-
                 "volatility_present": bool(volatility),
-
                 "risk_version": 1,
-
             },
-
         )

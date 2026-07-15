@@ -42,12 +42,7 @@ class DealerPosition:
         dealer_gamma = gamma.net_gex
         dealer_delta = delta.net_dex
 
-        net_exposure = (
-            dealer_gamma
-            + dealer_delta
-            + vanna.net_vanna
-            + charm.net_charm
-        )
+        net_exposure = dealer_gamma + dealer_delta + vanna.net_vanna + charm.net_charm
 
         position_strength = abs(net_exposure)
 
@@ -55,27 +50,21 @@ class DealerPosition:
         # Dealer Bias
         # ==================================================
 
-        dealer_bias = (
-            "LONG GAMMA"
-            if dealer_gamma >= 0
-            else "SHORT GAMMA"
-        )
+        dealer_bias = "LONG GAMMA" if dealer_gamma >= 0 else "SHORT GAMMA"
 
-        dealer_direction = (
-            "LONG DELTA"
-            if dealer_delta >= 0
-            else "SHORT DELTA"
-        )
+        dealer_direction = "LONG DELTA" if dealer_delta >= 0 else "SHORT DELTA"
 
         # ==================================================
         # Market Stability
         # ==================================================
 
-        stability_score = sum([
-            dealer_gamma >= 0,
-            vanna.net_vanna >= 0,
-            charm.net_charm >= 0,
-        ])
+        stability_score = sum(
+            [
+                dealer_gamma >= 0,
+                vanna.net_vanna >= 0,
+                charm.net_charm >= 0,
+            ]
+        )
 
         if stability_score == 3:
             market_stability = "HIGH"
@@ -90,11 +79,7 @@ class DealerPosition:
         # Market Condition
         # ==================================================
 
-        market_condition = (
-            "RANGE-BOUND"
-            if dealer_gamma >= 0
-            else "TRENDING"
-        )
+        market_condition = "RANGE-BOUND" if dealer_gamma >= 0 else "TRENDING"
 
         # ==================================================
         # Directional Risk
@@ -145,27 +130,20 @@ class DealerPosition:
         if directional_risk == "VERY HIGH":
 
             recommendation = (
-                "Expect strong directional moves. "
-                "Maintain strict risk management."
+                "Expect strong directional moves. " "Maintain strict risk management."
             )
 
         elif directional_risk == "HIGH":
 
-            recommendation = (
-                "Directional volatility is elevated."
-            )
+            recommendation = "Directional volatility is elevated."
 
         elif directional_risk == "MEDIUM":
 
-            recommendation = (
-                "Balanced environment with moderate risk."
-            )
+            recommendation = "Balanced environment with moderate risk."
 
         else:
 
-            recommendation = (
-                "Dealer positioning favors market stability."
-            )
+            recommendation = "Dealer positioning favors market stability."
 
         # ==================================================
         # Interpretation
@@ -183,32 +161,18 @@ class DealerPosition:
         # ==================================================
 
         return DealerPositionResult(
-
             dealer_position=float(net_exposure),
-
             dealer_delta=float(dealer_delta),
-
             dealer_gamma=float(dealer_gamma),
-
             net_exposure=float(net_exposure),
-
             position_strength=float(position_strength),
-
             institutional_score=float(score),
-
             dealer_bias=dealer_bias,
-
             dealer_direction=dealer_direction,
-
             market_condition=market_condition,
-
             market_stability=market_stability,
-
             directional_risk=directional_risk,
-
             confidence=float(confidence),
-
             recommendation=recommendation,
-
             interpretation=interpretation,
         )

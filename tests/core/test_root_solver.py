@@ -17,11 +17,7 @@ def equation(x):
     return x * x - 4
 
 
-root = RootSolver.bisection(
-    equation,
-    lower=0,
-    upper=5
-)
+root = RootSolver.bisection(equation, lower=0, upper=5)
 
 print()
 

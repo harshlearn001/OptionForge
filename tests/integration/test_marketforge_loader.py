@@ -55,20 +55,19 @@ def create_csv(tmp_path):
 # Construction
 # ==========================================================
 
+
 def test_create():
 
     assert isinstance(
-
         loader(),
-
         MarketForgeLoader,
-
     )
 
 
 # ==========================================================
 # Load
 # ==========================================================
+
 
 def test_load(tmp_path):
 
@@ -90,36 +89,25 @@ def test_columns(tmp_path):
 
 def test_missing_file():
 
-    with pytest.raises(
+    with pytest.raises(FileNotFoundError):
 
-        FileNotFoundError
-
-    ):
-
-        loader().load(
-
-            "does_not_exist.csv"
-
-        )
+        loader().load("does_not_exist.csv")
 
 
 # ==========================================================
 # Representation
 # ==========================================================
 
+
 def test_repr():
 
     assert "MarketForgeLoader" in repr(
-
         loader(),
-
     )
 
 
 def test_str():
 
     assert "MarketForgeLoader" in str(
-
         loader(),
-
     )

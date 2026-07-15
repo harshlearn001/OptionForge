@@ -92,20 +92,13 @@ class Portfolio:
 
         if not self.name.strip():
 
-            raise ValueError(
-
-                "name cannot be empty."
-
-            )
+            raise ValueError("name cannot be empty.")
 
         if self.total_capital < 0:
 
-            raise ValueError(
-
-                "total_capital cannot be negative."
-
-            )
+            raise ValueError("total_capital cannot be negative.")
         # -----------------------------------------------------
+
     # Holdings
     # -----------------------------------------------------
 
@@ -116,9 +109,7 @@ class Portfolio:
         """
 
         return len(
-
             self.positions,
-
         )
 
     @property
@@ -128,9 +119,7 @@ class Portfolio:
         """
 
         return len(
-
             self.allocations,
-
         )
 
     # -----------------------------------------------------
@@ -143,13 +132,7 @@ class Portfolio:
         Total allocated capital.
         """
 
-        return sum(
-
-            allocation.allocated_capital
-
-            for allocation in self.allocations
-
-        )
+        return sum(allocation.allocated_capital for allocation in self.allocations)
 
     @property
     def available_capital(self) -> float:
@@ -158,13 +141,8 @@ class Portfolio:
         """
 
         return max(
-
-            self.total_capital
-
-            - self.allocated_capital,
-
+            self.total_capital - self.allocated_capital,
             0.0,
-
         )
 
     @property
@@ -177,13 +155,7 @@ class Portfolio:
 
             return 0.0
 
-        return (
-
-            self.allocated_capital
-
-            / self.total_capital
-
-        ) * 100.0
+        return (self.allocated_capital / self.total_capital) * 100.0
 
     # -----------------------------------------------------
     # Market Value
@@ -195,13 +167,7 @@ class Portfolio:
         Current market value.
         """
 
-        return sum(
-
-            position.market_value
-
-            for position in self.positions
-
-        )
+        return sum(position.market_value for position in self.positions)
 
     # -----------------------------------------------------
     # Profit & Loss
@@ -213,13 +179,7 @@ class Portfolio:
         Portfolio unrealized P/L.
         """
 
-        return sum(
-
-            position.unrealized_pnl
-
-            for position in self.positions
-
-        )
+        return sum(position.unrealized_pnl for position in self.positions)
 
     @property
     def realized_pnl(self) -> float:
@@ -227,13 +187,7 @@ class Portfolio:
         Portfolio realized P/L.
         """
 
-        return sum(
-
-            position.realized_pnl
-
-            for position in self.positions
-
-        )
+        return sum(position.realized_pnl for position in self.positions)
 
     @property
     def total_pnl(self) -> float:
@@ -241,13 +195,7 @@ class Portfolio:
         Portfolio total P/L.
         """
 
-        return (
-
-            self.unrealized_pnl
-
-            + self.realized_pnl
-
-        )
+        return self.unrealized_pnl + self.realized_pnl
 
     @property
     def return_percentage(self) -> float:
@@ -259,13 +207,7 @@ class Portfolio:
 
             return 0.0
 
-        return (
-
-            self.total_pnl
-
-            / self.total_capital
-
-        ) * 100.0
+        return (self.total_pnl / self.total_capital) * 100.0
 
     @property
     def is_profitable(self) -> bool:
@@ -274,6 +216,7 @@ class Portfolio:
         """
 
         return self.total_pnl > 0
+
     @property
     def is_loss(self) -> bool:
         """
@@ -316,70 +259,24 @@ class Portfolio:
     ) -> dict[str, Any]:
 
         return {
-
             "name": self.name,
-
-            "portfolio_type":
-                self.portfolio_type.name,
-
-            "portfolio_risk":
-                self.portfolio_risk.name,
-
-            "positions": [
-
-                position.to_dict()
-
-                for position in self.positions
-
-            ],
-
-            "allocations": [
-
-                allocation.to_dict()
-
-                for allocation in self.allocations
-
-            ],
-
-            "position_count":
-                self.position_count,
-
-            "allocation_count":
-                self.allocation_count,
-
-            "total_capital":
-                self.total_capital,
-
-            "allocated_capital":
-                self.allocated_capital,
-
-            "available_capital":
-                self.available_capital,
-
-            "capital_utilization":
-                self.capital_utilization,
-
-            "market_value":
-                self.market_value,
-
-            "unrealized_pnl":
-                self.unrealized_pnl,
-
-            "realized_pnl":
-                self.realized_pnl,
-
-            "total_pnl":
-                self.total_pnl,
-
-            "return_percentage":
-                self.return_percentage,
-
-            "timestamp":
-                self.timestamp.isoformat(),
-
-            "metadata":
-                dict(self.metadata),
-
+            "portfolio_type": self.portfolio_type.name,
+            "portfolio_risk": self.portfolio_risk.name,
+            "positions": [position.to_dict() for position in self.positions],
+            "allocations": [allocation.to_dict() for allocation in self.allocations],
+            "position_count": self.position_count,
+            "allocation_count": self.allocation_count,
+            "total_capital": self.total_capital,
+            "allocated_capital": self.allocated_capital,
+            "available_capital": self.available_capital,
+            "capital_utilization": self.capital_utilization,
+            "market_value": self.market_value,
+            "unrealized_pnl": self.unrealized_pnl,
+            "realized_pnl": self.realized_pnl,
+            "total_pnl": self.total_pnl,
+            "return_percentage": self.return_percentage,
+            "timestamp": self.timestamp.isoformat(),
+            "metadata": dict(self.metadata),
         }
 
     # -----------------------------------------------------
@@ -390,30 +287,16 @@ class Portfolio:
         self,
     ) -> str:
 
-        return (
-
-            f"Portfolio("
-
-            f"{self.name}, "
-
-            f"{self.position_count} positions)"
-
-        )
+        return f"Portfolio(" f"{self.name}, " f"{self.position_count} positions)"
 
     def __repr__(
         self,
     ) -> str:
 
         return (
-
             f"Portfolio("
-
             f"name={self.name!r}, "
-
             f"type={self.portfolio_type.name}, "
-
             f"risk={self.portfolio_risk.name}, "
-
             f"positions={self.position_count})"
-
         )

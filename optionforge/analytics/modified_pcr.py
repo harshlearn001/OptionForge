@@ -84,19 +84,11 @@ class ModifiedPCREngine(AnalyticsEngine):
             )
 
         return ModifiedPCRResult(
-
             symbol=snapshot.symbol,
-
             trade_date=snapshot.trade_date,
-
             expiry=snapshot.expiry,
-
             call_oi=call_oi,
-
             put_oi=put_oi,
-
             pcr=pcr,
-
             contracts=len(df),
-
         )

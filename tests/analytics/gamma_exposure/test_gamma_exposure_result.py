@@ -8,25 +8,15 @@ from optionforge.analytics.gamma_exposure.gamma_exposure_result import (
 def sample():
 
     return GammaExposureResult(
-
         symbol="NIFTY",
-
         trade_date=20260715,
-
         expiry=20260723,
-
         strike=25000,
-
         gamma=0.00025,
-
         open_interest=100000,
-
         contract_size=75,
-
         spot=25000,
-
         gamma_exposure=11718750000.0,
-
     )
 
 

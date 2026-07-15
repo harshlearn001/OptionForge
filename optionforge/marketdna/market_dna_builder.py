@@ -51,21 +51,13 @@ class MarketDNABuilder:
         liquidity = self._liquidity(registry)
 
         return MarketDNA(
-
             regime=regime,
-
             trend=trend,
-
             volatility=volatility,
-
             liquidity=liquidity,
-
             dealer_position=dealer,
-
             evidence_score=registry.score,
-
             confidence=registry.confidence,
-
         )
 
     # --------------------------------------------------
@@ -75,9 +67,7 @@ class MarketDNABuilder:
         registry: EvidenceRegistry,
     ) -> str:
 
-        dealer = registry.by_type(
-            EvidenceType.DEALER
-        )
+        dealer = registry.by_type(EvidenceType.DEALER)
 
         if not dealer:
 
@@ -154,9 +144,7 @@ class MarketDNABuilder:
         registry: EvidenceRegistry,
     ) -> VolatilityRegime:
 
-        volatility = registry.by_type(
-            EvidenceType.VOLATILITY
-        )
+        volatility = registry.by_type(EvidenceType.VOLATILITY)
 
         if not volatility:
 

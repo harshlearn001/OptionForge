@@ -154,9 +154,7 @@ class InstitutionalSnapshot:
             ("data_quality", self.data_quality),
         ):
             if not (0.0 <= value <= 100.0):
-                raise ValueError(
-                    f"{name} must be between 0 and 100"
-                )
+                raise ValueError(f"{name} must be between 0 and 100")
 
     def __str__(self) -> str:
         return (

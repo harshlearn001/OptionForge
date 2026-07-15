@@ -119,16 +119,10 @@ class DealerPressure:
         )
 
         return DealerPressureResult(
-
             pressure_score=score,
-
             pressure_level=pressure_level,
-
             pressure_direction=pressure_direction,
-
             volatility_bias=volatility_bias,
-
             confidence=confidence,
-
             interpretation=interpretation,
         )

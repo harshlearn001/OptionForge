@@ -17,10 +17,10 @@ from optionforge.providers.dealer.dealer_position_provider import (
     DealerPositionProvider,
 )
 
-
 # ==========================================================
 # Fixtures
 # ==========================================================
+
 
 @pytest.fixture
 def context():
@@ -42,7 +42,6 @@ def context():
 def dealer_result():
 
     return DealerPositionResult(
-
         # Quantitative
         dealer_position=-170.0,
         dealer_delta=-60.0,
@@ -50,14 +49,12 @@ def dealer_result():
         net_exposure=-170.0,
         position_strength=170.0,
         institutional_score=15.0,
-
         # Classification
         dealer_bias="SHORT GAMMA",
         dealer_direction="SHORT DELTA",
         market_condition="TRENDING",
         market_stability="LOW",
         directional_risk="VERY HIGH",
-
         # Decision
         confidence=15.0,
         recommendation="Expect strong directional moves.",
@@ -68,6 +65,7 @@ def dealer_result():
 # ==========================================================
 # Provider
 # ==========================================================
+
 
 def test_provider_returns_expected_features(
     monkeypatch,

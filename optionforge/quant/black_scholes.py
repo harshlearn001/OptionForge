@@ -26,10 +26,9 @@ class BlackScholes:
         volatility: float,
     ) -> float:
 
-        return (
-            math.log(spot / strike)
-            + (rate + 0.5 * volatility ** 2) * time
-        ) / (volatility * math.sqrt(time))
+        return (math.log(spot / strike) + (rate + 0.5 * volatility**2) * time) / (
+            volatility * math.sqrt(time)
+        )
 
     @staticmethod
     def d2(
@@ -40,16 +39,13 @@ class BlackScholes:
         volatility: float,
     ) -> float:
 
-        return (
-            BlackScholes.d1(
-                spot,
-                strike,
-                time,
-                rate,
-                volatility,
-            )
-            - volatility * math.sqrt(time)
-        )
+        return BlackScholes.d1(
+            spot,
+            strike,
+            time,
+            rate,
+            volatility,
+        ) - volatility * math.sqrt(time)
 
     @staticmethod
     def call_price(
@@ -76,12 +72,9 @@ class BlackScholes:
             volatility,
         )
 
-        return (
-            spot * NormalDistribution.cdf(d1)
-            - strike
-            * math.exp(-rate * time)
-            * NormalDistribution.cdf(d2)
-        )
+        return spot * NormalDistribution.cdf(d1) - strike * math.exp(
+            -rate * time
+        ) * NormalDistribution.cdf(d2)
 
     @staticmethod
     def put_price(
@@ -108,10 +101,6 @@ class BlackScholes:
             volatility,
         )
 
-        return (
-            strike
-            * math.exp(-rate * time)
-            * NormalDistribution.cdf(-d2)
-            - spot
-            * NormalDistribution.cdf(-d1)
-        )
+        return strike * math.exp(-rate * time) * NormalDistribution.cdf(
+            -d2
+        ) - spot * NormalDistribution.cdf(-d1)

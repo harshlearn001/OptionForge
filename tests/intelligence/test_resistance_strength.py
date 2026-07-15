@@ -15,7 +15,6 @@ sys.path.append(str(BASE_DIR))
 
 from optionforge.intelligence import ResistanceStrength
 
-
 print("=" * 60)
 print("OPTIONFORGE")
 print("RESISTANCE STRENGTH TEST")
@@ -26,15 +25,10 @@ print("=" * 60)
 # ---------------------------------------------------------
 
 result = ResistanceStrength.calculate(
-
     resistance=25100,
-
     resistance_oi=510000,
-
     max_call_oi=510000,
-
     spot_price=24980,
-
 )
 
 print()

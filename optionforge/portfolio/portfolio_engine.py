@@ -71,29 +71,16 @@ class PortfolioEngine:
     ) -> None:
 
         self._allocator = (
-
             allocator
-
             if allocator is not None
-
             else CapitalAllocator(
-
                 portfolio_risk,
-
             )
-
         )
 
-        self._builder = (
-
-            builder
-
-            if builder is not None
-
-            else PortfolioBuilder()
-
-        )
+        self._builder = builder if builder is not None else PortfolioBuilder()
         # =====================================================
+
     # Public API
     # =====================================================
 
@@ -110,41 +97,24 @@ class PortfolioEngine:
         """
 
         allocations = tuple(
-
             self._allocator.allocate(
-
                 position=position,
-
                 portfolio_value=total_capital,
-
             )
-
             for position in positions
-
         )
 
         portfolio = self._builder.build(
-
             name=name,
-
             portfolio_type=portfolio_type,
-
-            portfolio_risk=(
-                self._allocator.portfolio_risk
-            ),
-
+            portfolio_risk=(self._allocator.portfolio_risk),
             positions=positions,
-
             allocations=allocations,
-
             total_capital=total_capital,
-
         )
 
         return PortfolioResult(
-
             portfolio=portfolio,
-
         )
 
     # =====================================================
@@ -164,17 +134,13 @@ class PortfolioEngine:
         """
 
         return self.build(
-
             name=name,
-
             portfolio_type=portfolio_type,
-
             positions=positions,
-
             total_capital=total_capital,
-
         )
         # =====================================================
+
     # Convenience
     # =====================================================
 
@@ -207,11 +173,7 @@ class PortfolioEngine:
     ) -> str:
 
         return (
-
             f"{self.__class__.__name__}("
-
             f"portfolio_risk="
-
             f"{self.allocator.portfolio_risk.name})"
-
         )

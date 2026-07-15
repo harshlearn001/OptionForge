@@ -109,24 +109,17 @@ class Symbol:
         )
 
         if not self.ticker:
-            raise InvalidSymbolError(
-                "Ticker cannot be empty."
-            )
+            raise InvalidSymbolError("Ticker cannot be empty.")
 
         if self.lot_size <= 0:
-            raise InvalidSymbolError(
-                "Lot size must be positive."
-            )
+            raise InvalidSymbolError("Lot size must be positive.")
 
         if self.tick_size <= 0:
-            raise InvalidSymbolError(
-                "Tick size must be positive."
-            )
+            raise InvalidSymbolError("Tick size must be positive.")
 
         if self.strike_interval <= 0:
-            raise InvalidSymbolError(
-                "Strike interval must be positive."
-            )
+            raise InvalidSymbolError("Strike interval must be positive.")
+
     @property
     def symbol_id(self) -> str:
         """
@@ -137,13 +130,14 @@ class Symbol:
         NSE:NIFTY
         """
         return f"{self.exchange}:{self.ticker}"
+
     @property
     def is_index(self) -> bool:
         """
         Returns True if this symbol represents an index.
         """
         return self.instrument_type is InstrumentType.INDEX
-    
+
     @property
     def is_equity(self) -> bool:
         """

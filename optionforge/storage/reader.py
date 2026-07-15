@@ -17,6 +17,4 @@ class StorageReader:
     @staticmethod
     def load(path: str) -> pd.DataFrame:
 
-        return pd.read_parquet(
-            Path(path)
-        )
+        return pd.read_parquet(Path(path))

@@ -9,23 +9,25 @@ from optionforge.portfolio.portfolio_risk import (
     PortfolioRisk,
 )
 
-
 # ==========================================================
 # Enum
 # ==========================================================
 
+
 def test_enum_members():
 
-    assert len(
-
-        PortfolioRisk,
-
-    ) == 4
+    assert (
+        len(
+            PortfolioRisk,
+        )
+        == 4
+    )
 
 
 # ==========================================================
 # Conservative
 # ==========================================================
+
 
 def test_conservative():
 
@@ -48,6 +50,7 @@ def test_conservative():
 # Balanced
 # ==========================================================
 
+
 def test_balanced():
 
     risk = PortfolioRisk.BALANCED
@@ -67,6 +70,7 @@ def test_balanced():
 # Aggressive
 # ==========================================================
 
+
 def test_aggressive():
 
     risk = PortfolioRisk.AGGRESSIVE
@@ -85,6 +89,7 @@ def test_aggressive():
 # ==========================================================
 # Institutional
 # ==========================================================
+
 
 def test_institutional():
 
@@ -107,77 +112,39 @@ def test_institutional():
 # Factory
 # ==========================================================
 
+
 def test_from_score():
 
-    assert (
+    assert PortfolioRisk.from_score(1) is PortfolioRisk.CONSERVATIVE
 
-        PortfolioRisk.from_score(1)
+    assert PortfolioRisk.from_score(2) is PortfolioRisk.BALANCED
 
-        is PortfolioRisk.CONSERVATIVE
+    assert PortfolioRisk.from_score(3) is PortfolioRisk.AGGRESSIVE
 
-    )
+    assert PortfolioRisk.from_score(4) is PortfolioRisk.INSTITUTIONAL
 
-    assert (
-
-        PortfolioRisk.from_score(2)
-
-        is PortfolioRisk.BALANCED
-
-    )
-
-    assert (
-
-        PortfolioRisk.from_score(3)
-
-        is PortfolioRisk.AGGRESSIVE
-
-    )
-
-    assert (
-
-        PortfolioRisk.from_score(4)
-
-        is PortfolioRisk.INSTITUTIONAL
-
-    )
-
-    assert (
-
-        PortfolioRisk.from_score(99)
-
-        is PortfolioRisk.INSTITUTIONAL
-
-    )
+    assert PortfolioRisk.from_score(99) is PortfolioRisk.INSTITUTIONAL
 
 
 # ==========================================================
 # String
 # ==========================================================
 
+
 def test_str():
 
     assert (
-
         str(
-
             PortfolioRisk.CONSERVATIVE,
-
         )
-
         == "Conservative"
-
     )
 
     assert (
-
         str(
-
             PortfolioRisk.INSTITUTIONAL,
-
         )
-
         == "Institutional"
-
     )
 
 
@@ -185,12 +152,7 @@ def test_str():
 # Deterministic
 # ==========================================================
 
+
 def test_deterministic():
 
-    assert (
-
-        PortfolioRisk.BALANCED
-
-        is PortfolioRisk.BALANCED
-
-    )
+    assert PortfolioRisk.BALANCED is PortfolioRisk.BALANCED

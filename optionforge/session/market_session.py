@@ -45,11 +45,8 @@ class MarketSession:
     ) -> None:
 
         self._workflow = WorkflowEngine(
-
             marketforge_root=marketforge_root,
-
             analytics=analytics,
-
         )
 
     # ======================================================
@@ -74,7 +71,5 @@ class MarketSession:
         """
 
         return self._workflow.run(
-
             symbol,
-
         )

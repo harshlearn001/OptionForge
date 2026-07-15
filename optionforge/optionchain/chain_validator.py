@@ -50,9 +50,7 @@ class ChainValidator:
         snapshots = tuple(snapshots)
 
         if not snapshots:
-            raise ValueError(
-                "OptionChain cannot be empty."
-            )
+            raise ValueError("OptionChain cannot be empty.")
 
         first = snapshots[0]
 
@@ -65,29 +63,19 @@ class ChainValidator:
         for snapshot in snapshots:
 
             if not isinstance(snapshot, MarketSnapshot):
-                raise TypeError(
-                    "All elements must be MarketSnapshot objects."
-                )
+                raise TypeError("All elements must be MarketSnapshot objects.")
 
             if snapshot.symbol != symbol:
-                raise ValueError(
-                    "All snapshots must belong to the same symbol."
-                )
+                raise ValueError("All snapshots must belong to the same symbol.")
 
             if snapshot.expiry != expiry:
-                raise ValueError(
-                    "All snapshots must belong to the same expiry."
-                )
+                raise ValueError("All snapshots must belong to the same expiry.")
 
             if snapshot.trading_date != trading_date:
-                raise ValueError(
-                    "All snapshots must belong to the same trading date."
-                )
+                raise ValueError("All snapshots must belong to the same trading date.")
 
             if snapshot.contract in seen:
-                raise ValueError(
-                    "Duplicate option contract found."
-                )
+                raise ValueError("Duplicate option contract found.")
 
             seen.add(snapshot.contract)
 

@@ -15,25 +15,15 @@ from optionforge.research.monte_carlo import (
 def simulation():
 
     return MonteCarloSimulation(
-
         simulations=10000,
-
         average_return=18.5,
-
         best_return=52.3,
-
         worst_return=-21.7,
-
         probability_of_profit=78.5,
-
         probability_of_loss=21.5,
-
         probability_of_ruin=1.2,
-
         max_drawdown=18.6,
-
         passed=True,
-
     )
 
 
@@ -41,20 +31,19 @@ def simulation():
 # Construction
 # ==========================================================
 
+
 def test_create():
 
     assert isinstance(
-
         simulation(),
-
         MonteCarloSimulation,
-
     )
 
 
 # ==========================================================
 # Values
 # ==========================================================
+
 
 def test_simulations():
 
@@ -80,6 +69,7 @@ def test_worst_return():
 # Probabilities
 # ==========================================================
 
+
 def test_profit_probability():
 
     assert simulation().probability_of_profit == 78.5
@@ -104,62 +94,36 @@ def test_survival_rate():
 # Validation
 # ==========================================================
 
+
 @pytest.mark.parametrize(
-
     "field,value",
-
     [
-
         ("simulations", 0),
-
         ("probability_of_profit", -1),
-
         ("probability_of_profit", 101),
-
         ("probability_of_loss", -1),
-
         ("probability_of_loss", 101),
-
         ("probability_of_ruin", -1),
-
         ("probability_of_ruin", 101),
-
         ("max_drawdown", -1),
-
         ("max_drawdown", 101),
-
     ],
-
 )
-
 def test_validation(
-
     field,
-
     value,
-
 ):
 
     kwargs = dict(
-
         simulations=10000,
-
         average_return=18.5,
-
         best_return=52.3,
-
         worst_return=-21.7,
-
         probability_of_profit=78.5,
-
         probability_of_loss=21.5,
-
         probability_of_ruin=1.2,
-
         max_drawdown=18.6,
-
         passed=True,
-
     )
 
     kwargs[field] = value
@@ -167,15 +131,14 @@ def test_validation(
     with pytest.raises(ValueError):
 
         MonteCarloSimulation(
-
             **kwargs,
-
         )
 
 
 # ==========================================================
 # Serialization
 # ==========================================================
+
 
 def test_to_dict():
 
@@ -192,19 +155,16 @@ def test_to_dict():
 # Representation
 # ==========================================================
 
+
 def test_str():
 
     assert "MonteCarloSimulation" in str(
-
         simulation(),
-
     )
 
 
 def test_repr():
 
     assert "MonteCarloSimulation" in repr(
-
         simulation(),
-
     )

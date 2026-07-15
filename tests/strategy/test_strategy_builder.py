@@ -50,77 +50,56 @@ from optionforge.strategy.strategy_type import (
     StrategyType,
 )
 
-
 # ==========================================================
 # Helpers
 # ==========================================================
 
+
 def dna() -> MarketDNA:
 
     return MarketDNA(
-
         regime=MarketRegime.STRONGLY_BULLISH,
-
         trend=TrendRegime.STRONG_UPTREND,
-
         volatility=VolatilityRegime.COMPRESSED,
-
         liquidity=LiquidityRegime.HIGH,
-
         dealer_position="LONG GAMMA",
-
         evidence_score=92.0,
-
         confidence=94.0,
-
     )
 
 
 def decision() -> Decision:
 
     return Decision(
-
         decision=DecisionType.STRONG_BUY,
-
         strategy=StrategyType.LONG_CALL,
-
         confidence_level=ConfidenceLevel.VERY_HIGH,
-
         confidence=94.0,
-
         market_dna=dna(),
-
         recommendation="Long Call",
-
         rationale=(
-
             "Bullish Trend",
-
             "Dealer Long Gamma",
-
         ),
-
     )
+
+
 # ==========================================================
 # Result
 # ==========================================================
+
 
 def test_returns_strategy():
 
     builder = StrategyBuilder()
 
     result = builder.build(
-
         decision(),
-
     )
 
     assert isinstance(
-
         result,
-
         Strategy,
-
     )
 
 
@@ -128,29 +107,23 @@ def test_returns_strategy():
 # Strategy
 # ==========================================================
 
+
 def test_strategy_type():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
     assert isinstance(
-
         result.type,
-
         StrategyType,
-
     )
 
 
 def test_strategy_is_bullish():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
     assert result.type.is_bullish
@@ -159,43 +132,40 @@ def test_strategy_is_bullish():
 def test_strategy_title():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
-    assert len(
-
-        result.title,
-
-    ) > 0
+    assert (
+        len(
+            result.title,
+        )
+        > 0
+    )
 
 
 def test_strategy_summary():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
-    assert len(
-
-        result.summary,
-
-    ) > 0
+    assert (
+        len(
+            result.summary,
+        )
+        > 0
+    )
 
 
 # ==========================================================
 # Classification
 # ==========================================================
 
+
 def test_direction():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
     assert result.direction == "Bullish"
@@ -204,51 +174,36 @@ def test_direction():
 def test_market_environment():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
     assert isinstance(
-
         result.market_environment,
-
         str,
-
     )
 
 
 def test_volatility_view():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
     assert isinstance(
-
         result.volatility_view,
-
         str,
-
     )
 
 
 def test_risk():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
     assert isinstance(
-
         result.risk,
-
         StrategyRisk,
-
     )
 
 
@@ -256,12 +211,11 @@ def test_risk():
 # Trading Metrics
 # ==========================================================
 
+
 def test_confidence():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
     assert result.confidence == 94.0
@@ -270,28 +224,16 @@ def test_confidence():
 def test_probability():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
-    assert (
-
-        0.0
-
-        <= result.probability_of_profit
-
-        <= 100.0
-
-    )
+    assert 0.0 <= result.probability_of_profit <= 100.0
 
 
 def test_capital_required():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
     assert result.capital_required >= 0
@@ -300,89 +242,72 @@ def test_capital_required():
 def test_risk_reward():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
     assert isinstance(
-
         result.risk_reward,
-
         str,
-
     )
 
 
 def test_max_profit():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
     assert isinstance(
-
         result.max_profit,
-
         str,
-
     )
 
 
 def test_max_loss():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
     assert isinstance(
-
         result.max_loss,
-
         str,
-
     )
+
+
 # ==========================================================
 # Rationale
 # ==========================================================
 
+
 def test_rationale():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
-    assert len(
-
-        result.rationale,
-
-    ) > 0
+    assert (
+        len(
+            result.rationale,
+        )
+        > 0
+    )
 
 
 # ==========================================================
 # Metadata
 # ==========================================================
 
+
 def test_metadata():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
     assert isinstance(
-
         result.metadata,
-
         dict,
-
     )
 
     assert "builder" in result.metadata
@@ -394,22 +319,18 @@ def test_metadata():
 # Serialization
 # ==========================================================
 
+
 def test_to_dict():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
     data = result.to_dict()
 
     assert isinstance(
-
         data,
-
         dict,
-
     )
 
     assert data["type"] == result.type.name
@@ -425,22 +346,17 @@ def test_to_dict():
 # Risk Profile
 # ==========================================================
 
+
 def test_conservative_profile():
 
     builder = StrategyBuilder(
-
         StrategySelector(
-
             RiskProfile.CONSERVATIVE,
-
         )
-
     )
 
     result = builder.build(
-
         decision(),
-
     )
 
     assert result.type == StrategyType.BULL_CALL_SPREAD
@@ -449,19 +365,13 @@ def test_conservative_profile():
 def test_moderate_profile():
 
     builder = StrategyBuilder(
-
         StrategySelector(
-
             RiskProfile.MODERATE,
-
         )
-
     )
 
     result = builder.build(
-
         decision(),
-
     )
 
     assert result.type == StrategyType.BULL_CALL_SPREAD
@@ -470,19 +380,13 @@ def test_moderate_profile():
 def test_aggressive_profile():
 
     builder = StrategyBuilder(
-
         StrategySelector(
-
             RiskProfile.AGGRESSIVE,
-
         )
-
     )
 
     result = builder.build(
-
         decision(),
-
     )
 
     assert result.type == StrategyType.LONG_CALL
@@ -491,19 +395,13 @@ def test_aggressive_profile():
 def test_institutional_profile():
 
     builder = StrategyBuilder(
-
         StrategySelector(
-
             RiskProfile.INSTITUTIONAL,
-
         )
-
     )
 
     result = builder.build(
-
         decision(),
-
     )
 
     assert result.type == StrategyType.SYNTHETIC_LONG
@@ -513,20 +411,17 @@ def test_institutional_profile():
 # Deterministic
 # ==========================================================
 
+
 def test_builder_is_deterministic():
 
     builder = StrategyBuilder()
 
     first = builder.build(
-
         decision(),
-
     )
 
     second = builder.build(
-
         decision(),
-
     )
 
     assert first == second
@@ -536,20 +431,16 @@ def test_builder_is_deterministic():
 # Strategy Risk
 # ==========================================================
 
+
 def test_strategy_risk():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
     assert isinstance(
-
         result.risk,
-
         StrategyRisk,
-
     )
 
 
@@ -557,12 +448,11 @@ def test_strategy_risk():
 # Capital
 # ==========================================================
 
+
 def test_capital_required_is_positive():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
     assert result.capital_required > 0
@@ -572,12 +462,11 @@ def test_capital_required_is_positive():
 # Confidence
 # ==========================================================
 
+
 def test_confidence_matches_decision():
 
     result = StrategyBuilder().build(
-
         decision(),
-
     )
 
     assert result.confidence == decision().confidence

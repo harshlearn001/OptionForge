@@ -4,6 +4,7 @@ OptionForge
 Demo - Signal
 ==============================================================
 """
+
 import sys
 from pathlib import Path
 

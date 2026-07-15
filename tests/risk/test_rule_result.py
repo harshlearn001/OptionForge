@@ -11,33 +11,19 @@ from optionforge.risk.rule_result import (
     RuleResult,
 )
 
-
 # ==========================================================
 # Helper
 # ==========================================================
 
+
 def result() -> RuleResult:
 
     return RuleResult(
-
         rule_name="CapitalRule",
-
         score=15.0,
-
         passed=True,
-
-        warnings=(
-
-            "Capital approaching limit",
-
-        ),
-
-        reasons=(
-
-            "Capital utilization acceptable",
-
-        ),
-
+        warnings=("Capital approaching limit",),
+        reasons=("Capital utilization acceptable",),
     )
 
 
@@ -45,14 +31,12 @@ def result() -> RuleResult:
 # Construction
 # ==========================================================
 
+
 def test_returns_rule_result():
 
     assert isinstance(
-
         result(),
-
         RuleResult,
-
     )
 
 
@@ -71,28 +55,24 @@ def test_values():
 # Validation
 # ==========================================================
 
+
 def test_invalid_score():
 
     with pytest.raises(
-
         ValueError,
-
     ):
 
         RuleResult(
-
             rule_name="CapitalRule",
-
             score=150.0,
-
             passed=False,
-
         )
 
 
 # ==========================================================
 # Counts
 # ==========================================================
+
 
 def test_warning_count():
 
@@ -102,20 +82,20 @@ def test_warning_count():
 def test_reason_count():
 
     assert result().reason_count == 1
+
+
 # ==========================================================
 # Serialization
 # ==========================================================
+
 
 def test_to_dict():
 
     data = result().to_dict()
 
     assert isinstance(
-
         data,
-
         dict,
-
     )
 
     assert data["rule_name"] == "CapitalRule"
@@ -125,15 +105,11 @@ def test_to_dict():
     assert data["passed"] is True
 
     assert data["warnings"] == [
-
         "Capital approaching limit",
-
     ]
 
     assert data["reasons"] == [
-
         "Capital utilization acceptable",
-
     ]
 
 
@@ -141,39 +117,25 @@ def test_to_dict():
 # Representation
 # ==========================================================
 
+
 def test_str():
 
-    assert (
-
-        "CapitalRule"
-
-        in str(
-
-            result(),
-
-        )
-
+    assert "CapitalRule" in str(
+        result(),
     )
 
 
 def test_repr():
 
-    assert (
-
-        "RuleResult"
-
-        in repr(
-
-            result(),
-
-        )
-
+    assert "RuleResult" in repr(
+        result(),
     )
 
 
 # ==========================================================
 # Equality
 # ==========================================================
+
 
 def test_equality():
 
@@ -184,14 +146,13 @@ def test_equality():
 # Immutability
 # ==========================================================
 
+
 def test_immutable():
 
     import dataclasses
 
     with pytest.raises(
-
         dataclasses.FrozenInstanceError,
-
     ):
 
         result().score = 25.0

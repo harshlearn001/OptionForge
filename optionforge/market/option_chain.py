@@ -33,6 +33,7 @@ from optionforge.kernel.option_contract import OptionContract
 from optionforge.kernel.strike import Strike
 from optionforge.kernel.symbol import Symbol
 from optionforge.market.market_snapshot import MarketSnapshot
+import pandas as pd
 
 
 @dataclass(frozen=True, slots=True)
@@ -62,9 +63,7 @@ class OptionChain:
         )
 
         if not self.snapshots:
-            raise ValueError(
-                "OptionChain cannot be empty."
-            )
+            raise ValueError("OptionChain cannot be empty.")
 
         first = self.snapshots[0]
 
@@ -77,27 +76,18 @@ class OptionChain:
         for snapshot in self.snapshots:
 
             if snapshot.symbol != symbol:
-                raise ValueError(
-                    "All snapshots must belong "
-                    "to the same symbol."
-                )
+                raise ValueError("All snapshots must belong " "to the same symbol.")
 
             if snapshot.expiry != expiry:
-                raise ValueError(
-                    "All snapshots must belong "
-                    "to the same expiry."
-                )
+                raise ValueError("All snapshots must belong " "to the same expiry.")
 
             if snapshot.trading_date != trading_date:
                 raise ValueError(
-                    "All snapshots must belong "
-                    "to the same trading date."
+                    "All snapshots must belong " "to the same trading date."
                 )
 
             if snapshot.contract in seen:
-                raise ValueError(
-                    "Duplicate option contract found."
-                )
+                raise ValueError("Duplicate option contract found.")
 
             seen.add(snapshot.contract)
 
@@ -149,20 +139,14 @@ class OptionChain:
         """
         Option contracts.
         """
-        return tuple(
-            snapshot.contract
-            for snapshot in self.snapshots
-        )
+        return tuple(snapshot.contract for snapshot in self.snapshots)
 
     @property
     def strikes(self) -> tuple[Strike, ...]:
         """
         Strike objects.
         """
-        return tuple(
-            snapshot.strike
-            for snapshot in self.snapshots
-        )
+        return tuple(snapshot.strike for snapshot in self.snapshots)
 
     @property
     def option_types(self) -> tuple[OptionType, ...]:
@@ -171,10 +155,7 @@ class OptionChain:
         """
         return tuple(
             sorted(
-                {
-                    snapshot.option_type
-                    for snapshot in self.snapshots
-                },
+                {snapshot.option_type for snapshot in self.snapshots},
                 key=lambda x: x.value,
             )
         )
@@ -228,14 +209,36 @@ class OptionChain:
         Convert chain to list.
         """
 
-        return [
-            snapshot.to_dict()
-            for snapshot in self.snapshots
-        ]
+        return [snapshot.to_dict() for snapshot in self.snapshots]
+
+        # =====================================================
+
+    # DataFrame
+    # =====================================================
+
+    def to_dataframe(self) -> pd.DataFrame:
+        """
+        Convert the immutable OptionChain into the
+        canonical OptionForge DataFrame.
+        """
+
+        return pd.DataFrame(self.to_list())
+
+    def dataframe(self) -> pd.DataFrame:
+        """
+        Backward-compatible alias.
+        """
+
+        return self.to_dataframe()
+
+        # =====================================================
+
+    # Dictionary
+    # =====================================================
 
     def to_dict(self) -> dict[str, object]:
         """
-        Convert chain to dictionary.
+        Convert OptionChain to dictionary.
         """
 
         return {
@@ -246,30 +249,3 @@ class OptionChain:
             "snapshot_count": self.snapshot_count,
             "snapshots": self.to_list(),
         }
-
-    # =====================================================
-    # Representation
-    # =====================================================
-
-    def __str__(self) -> str:
-        """
-        Human-readable representation.
-        """
-
-        return (
-            f"{self.symbol.ticker} | "
-            f"{self.expiry.expiry_date} | "
-            f"{self.snapshot_count} Contracts"
-        )
-
-    def __repr__(self) -> str:
-        """
-        Developer representation.
-        """
-
-        return (
-            "OptionChain("
-            f"symbol='{self.symbol.ticker}', "
-            f"expiry='{self.expiry.expiry_date}', "
-            f"contracts={self.snapshot_count})"
-        )

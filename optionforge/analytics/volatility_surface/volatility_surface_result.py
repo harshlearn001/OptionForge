@@ -32,13 +32,9 @@ class VolatilitySurfaceResult:
     def __repr__(self):
 
         return (
-
             f"VolatilitySurfaceResult("
-
             f"symbol={self.symbol}, "
-
             f"points={len(self.points)})"
-
         )
 
     __str__ = __repr__

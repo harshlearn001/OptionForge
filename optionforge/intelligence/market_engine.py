@@ -55,18 +55,13 @@ class MarketEngine:
         # Evidence
         # -----------------------------------------------------
 
-        evidence.append(
-            f"Market Structure Score = {market_structure.score:.2f}"
-        )
+        evidence.append(f"Market Structure Score = {market_structure.score:.2f}")
 
         evidence.append(
-            f"Bullish Probability = "
-            f"{probability.bullish_probability:.2f}%"
+            f"Bullish Probability = " f"{probability.bullish_probability:.2f}%"
         )
 
-        evidence.append(
-            f"Trade Quality = {probability.trade_quality}"
-        )
+        evidence.append(f"Trade Quality = {probability.trade_quality}")
 
         score = market_structure.score
 
@@ -80,13 +75,9 @@ class MarketEngine:
 
             confidence = cls.HIGH_CONFIDENCE
 
-            summary = (
-                "Market analytics strongly support a bullish trend."
-            )
+            summary = "Market analytics strongly support a bullish trend."
 
-            risks.append(
-                "Watch for resistance rejection."
-            )
+            risks.append("Watch for resistance rejection.")
 
         elif score >= 70:
 
@@ -94,13 +85,9 @@ class MarketEngine:
 
             confidence = cls.MEDIUM_CONFIDENCE
 
-            summary = (
-                "Market is attempting a bullish breakout."
-            )
+            summary = "Market is attempting a bullish breakout."
 
-            risks.append(
-                "Breakout requires confirmation."
-            )
+            risks.append("Breakout requires confirmation.")
 
         elif score >= 55:
 
@@ -108,13 +95,9 @@ class MarketEngine:
 
             confidence = cls.LOW_CONFIDENCE
 
-            summary = (
-                "Market remains range-bound with no dominant trend."
-            )
+            summary = "Market remains range-bound with no dominant trend."
 
-            risks.append(
-                "False breakouts are possible."
-            )
+            risks.append("False breakouts are possible.")
 
         elif score >= 40:
 
@@ -122,13 +105,9 @@ class MarketEngine:
 
             confidence = cls.LOW_CONFIDENCE
 
-            summary = (
-                "Market is transitioning toward a bearish regime."
-            )
+            summary = "Market is transitioning toward a bearish regime."
 
-            risks.append(
-                "Trend direction remains uncertain."
-            )
+            risks.append("Trend direction remains uncertain.")
 
         else:
 
@@ -136,13 +115,9 @@ class MarketEngine:
 
             confidence = cls.HIGH_CONFIDENCE
 
-            summary = (
-                "Market analytics strongly support a bearish trend."
-            )
+            summary = "Market analytics strongly support a bearish trend."
 
-            risks.append(
-                "Short covering rallies may occur."
-            )
+            risks.append("Short covering rallies may occur.")
 
         return MarketIntelligence(
             state=state,

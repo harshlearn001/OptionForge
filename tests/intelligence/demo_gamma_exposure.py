@@ -13,7 +13,6 @@ sys.path.append(str(BASE_DIR))
 
 from optionforge.intelligence import GammaExposure
 
-
 print("=" * 60)
 print("OPTIONFORGE")
 print("GAMMA EXPOSURE DEMO")
@@ -21,7 +20,6 @@ print("=" * 60)
 print()
 
 option_chain = [
-
     {
         "strike": 25000,
         "option_type": "CE",
@@ -29,7 +27,6 @@ option_chain = [
         "open_interest": 150000,
         "lot_size": 75,
     },
-
     {
         "strike": 25000,
         "option_type": "PE",
@@ -37,7 +34,6 @@ option_chain = [
         "open_interest": 120000,
         "lot_size": 75,
     },
-
     {
         "strike": 25100,
         "option_type": "CE",
@@ -45,7 +41,6 @@ option_chain = [
         "open_interest": 80000,
         "lot_size": 75,
     },
-
     {
         "strike": 24900,
         "option_type": "PE",
@@ -53,15 +48,11 @@ option_chain = [
         "open_interest": 140000,
         "lot_size": 75,
     },
-
 ]
 
 result = GammaExposure.calculate(
-
     spot_price=25000,
-
     option_chain=option_chain,
-
 )
 
 print(f"Call GEX : {result.total_call_gex:,.2f}")

@@ -25,19 +25,14 @@ class VolatilitySmileCalculator:
     ) -> list[tuple[float, float]]:
 
         if len(strikes) != len(ivs):
-            raise ValueError(
-                "strikes and ivs must have the same length."
-            )
+            raise ValueError("strikes and ivs must have the same length.")
 
         if not strikes:
             return []
 
         return sorted(
-
             zip(strikes, ivs),
-
             key=lambda x: x[0],
-
         )
 
     def __repr__(self):

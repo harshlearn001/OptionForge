@@ -35,53 +35,28 @@ class MaxPainEngine:
     ) -> MaxPainResult:
 
         calculator = PainCalculator(
-
             snapshot.option_chain,
-
         )
 
         pain_table = calculator.calculate()
 
-        row = pain_table.loc[
-            pain_table["TOTAL_PAIN"].idxmin()
-        ]
+        row = pain_table.loc[pain_table["TOTAL_PAIN"].idxmin()]
 
-        spot = float(
+        spot = float(snapshot.spot["CLOSE"].iloc[-1])
 
-            snapshot.spot["CLOSE"].iloc[-1]
-
-        )
-
-        strike = int(
-
-            row["STRIKE_PRICE"]
-
-        )
+        strike = int(row["STRIKE_PRICE"])
 
         return MaxPainResult(
-
             symbol=snapshot.symbol,
-
             trade_date=snapshot.trade_date,
-
             expiry=snapshot.expiry,
-
             spot=spot,
-
             max_pain_strike=strike,
-
             total_pain=float(row["TOTAL_PAIN"]),
-
             call_pain=float(row["CALL_PAIN"]),
-
             put_pain=float(row["PUT_PAIN"]),
-
-            distance_from_spot=abs(
-                spot - strike
-            ),
-
+            distance_from_spot=abs(spot - strike),
             contracts=len(snapshot.option_chain),
-
         )
 
     # -----------------------------------------------------

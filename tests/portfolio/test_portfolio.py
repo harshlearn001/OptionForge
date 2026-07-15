@@ -54,103 +54,63 @@ from optionforge.strategy.strategy_type import (
     StrategyType,
 )
 
-
 # ==========================================================
 # Helpers
 # ==========================================================
 
+
 def portfolio():
 
     dna = MarketDNA(
-
         regime=MarketRegime.STRONGLY_BULLISH,
-
         trend=TrendRegime.STRONG_UPTREND,
-
         volatility=VolatilityRegime.COMPRESSED,
-
         liquidity=LiquidityRegime.HIGH,
-
         dealer_position="LONG GAMMA",
-
         evidence_score=95.0,
-
         confidence=95.0,
-
     )
 
     decision = Decision(
-
         decision=DecisionType.STRONG_BUY,
-
         strategy=StrategyType.LONG_CALL,
-
         confidence_level=ConfidenceLevel.VERY_HIGH,
-
         confidence=95.0,
-
         market_dna=dna,
-
         recommendation="Long Call",
-
         rationale=("Bullish",),
-
     )
 
     strategy_result = StrategyEngine().build(
-
         decision,
-
     )
 
     position = Position(
-
         symbol="NIFTY",
-
         strategy_result=strategy_result,
-
         lots=2,
-
         quantity=100,
-
         entry_price=250.0,
-
         current_price=275.0,
-
         capital_used=25000.0,
-
         unrealized_pnl=2500.0,
-
         realized_pnl=500.0,
-
     )
 
     allocation = Allocation(
-
         position=position,
-
         allocated_capital=25000.0,
-
         available_capital=75000.0,
-
         portfolio_value=100000.0,
-
     )
 
     return Portfolio(
-
         name="Demo Portfolio",
-
         portfolio_type=PortfolioType.DIRECTIONAL,
-
         portfolio_risk=PortfolioRisk.BALANCED,
-
         positions=(position,),
-
         allocations=(allocation,),
-
         total_capital=100000.0,
-
     )
 
 
@@ -158,14 +118,12 @@ def portfolio():
 # Result
 # ==========================================================
 
+
 def test_returns_portfolio():
 
     assert isinstance(
-
         portfolio(),
-
         Portfolio,
-
     )
 
 
@@ -173,175 +131,101 @@ def test_returns_portfolio():
 # Identity
 # ==========================================================
 
+
 def test_name():
 
-    assert (
-
-        portfolio().name
-
-        == "Demo Portfolio"
-
-    )
+    assert portfolio().name == "Demo Portfolio"
 
 
 def test_portfolio_type():
 
-    assert (
-
-        portfolio().portfolio_type
-
-        is PortfolioType.DIRECTIONAL
-
-    )
+    assert portfolio().portfolio_type is PortfolioType.DIRECTIONAL
 
 
 def test_portfolio_risk():
 
-    assert (
-
-        portfolio().portfolio_risk
-
-        is PortfolioRisk.BALANCED
-
-    )
+    assert portfolio().portfolio_risk is PortfolioRisk.BALANCED
 
 
 # ==========================================================
 # Holdings
 # ==========================================================
 
+
 def test_position_count():
 
-    assert (
-
-        portfolio().position_count
-
-        == 1
-
-    )
+    assert portfolio().position_count == 1
 
 
 def test_allocation_count():
 
-    assert (
+    assert portfolio().allocation_count == 1
 
-        portfolio().allocation_count
 
-        == 1
-
-    )
 # ==========================================================
 # Capital
 # ==========================================================
 
+
 def test_total_capital():
 
-    assert (
-
-        portfolio().total_capital
-
-        == 100000.0
-
-    )
+    assert portfolio().total_capital == 100000.0
 
 
 def test_allocated_capital():
 
-    assert (
-
-        portfolio().allocated_capital
-
-        == 25000.0
-
-    )
+    assert portfolio().allocated_capital == 25000.0
 
 
 def test_available_capital():
 
-    assert (
-
-        portfolio().available_capital
-
-        == 75000.0
-
-    )
+    assert portfolio().available_capital == 75000.0
 
 
 def test_capital_utilization():
 
-    assert (
-
-        portfolio().capital_utilization
-
-        == 25.0
-
-    )
+    assert portfolio().capital_utilization == 25.0
 
 
 # ==========================================================
 # Market Value
 # ==========================================================
 
+
 def test_market_value():
 
-    assert (
-
-        portfolio().market_value
-
-        == 27500.0
-
-    )
+    assert portfolio().market_value == 27500.0
 
 
 # ==========================================================
 # Profit & Loss
 # ==========================================================
 
+
 def test_unrealized_pnl():
 
-    assert (
-
-        portfolio().unrealized_pnl
-
-        == 2500.0
-
-    )
+    assert portfolio().unrealized_pnl == 2500.0
 
 
 def test_realized_pnl():
 
-    assert (
-
-        portfolio().realized_pnl
-
-        == 500.0
-
-    )
+    assert portfolio().realized_pnl == 500.0
 
 
 def test_total_pnl():
 
-    assert (
-
-        portfolio().total_pnl
-
-        == 3000.0
-
-    )
+    assert portfolio().total_pnl == 3000.0
 
 
 def test_return_percentage():
 
-    assert (
+    assert portfolio().return_percentage == 3.0
 
-        portfolio().return_percentage
 
-        == 3.0
-
-    )
 # ==========================================================
 # Convenience
 # ==========================================================
+
 
 def test_is_profitable():
 
@@ -372,112 +256,54 @@ def test_not_fully_invested():
 # Serialization
 # ==========================================================
 
+
 def test_to_dict():
 
     data = portfolio().to_dict()
 
     assert isinstance(
-
         data,
-
         dict,
-
     )
 
-    assert (
+    assert data["name"] == "Demo Portfolio"
 
-        data["name"]
+    assert data["position_count"] == 1
 
-        == "Demo Portfolio"
+    assert data["allocation_count"] == 1
 
-    )
+    assert data["allocated_capital"] == 25000.0
 
-    assert (
+    assert data["available_capital"] == 75000.0
 
-        data["position_count"]
+    assert data["market_value"] == 27500.0
 
-        == 1
-
-    )
-
-    assert (
-
-        data["allocation_count"]
-
-        == 1
-
-    )
-
-    assert (
-
-        data["allocated_capital"]
-
-        == 25000.0
-
-    )
-
-    assert (
-
-        data["available_capital"]
-
-        == 75000.0
-
-    )
-
-    assert (
-
-        data["market_value"]
-
-        == 27500.0
-
-    )
-
-    assert (
-
-        data["total_pnl"]
-
-        == 3000.0
-
-    )
+    assert data["total_pnl"] == 3000.0
 
 
 # ==========================================================
 # Representation
 # ==========================================================
 
+
 def test_str():
 
-    assert (
-
-        "Portfolio"
-
-        in str(
-
-            portfolio(),
-
-        )
-
+    assert "Portfolio" in str(
+        portfolio(),
     )
 
 
 def test_repr():
 
-    assert (
-
-        "Portfolio"
-
-        in repr(
-
-            portfolio(),
-
-        )
-
+    assert "Portfolio" in repr(
+        portfolio(),
     )
 
 
 # ==========================================================
 # Validation
 # ==========================================================
+
 
 def test_invalid_name():
 
@@ -486,15 +312,10 @@ def test_invalid_name():
     with pytest.raises(ValueError):
 
         Portfolio(
-
             name="",
-
             portfolio_type=PortfolioType.DIRECTIONAL,
-
             portfolio_risk=PortfolioRisk.BALANCED,
-
             total_capital=100000.0,
-
         )
 
 
@@ -505,21 +326,17 @@ def test_invalid_total_capital():
     with pytest.raises(ValueError):
 
         Portfolio(
-
             name="Demo",
-
             portfolio_type=PortfolioType.DIRECTIONAL,
-
             portfolio_risk=PortfolioRisk.BALANCED,
-
             total_capital=-1.0,
-
         )
 
 
 # ==========================================================
 # Deterministic
 # ==========================================================
+
 
 def test_portfolio_is_deterministic():
 

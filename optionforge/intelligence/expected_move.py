@@ -38,11 +38,7 @@ class ExpectedMove:
         # Expected Move
         # --------------------------------------------------
 
-        expected_move = (
-            spot
-            * atm_iv
-            * sqrt(days / 365)
-        )
+        expected_move = spot * atm_iv * sqrt(days / 365)
 
         # --------------------------------------------------
         # Standard Deviation Ranges
@@ -58,37 +54,19 @@ class ExpectedMove:
         # Daily / Weekly / Monthly Expected Move
         # --------------------------------------------------
 
-        one_day_move = (
-            spot
-            * atm_iv
-            * sqrt(1 / 365)
-        )
+        one_day_move = spot * atm_iv * sqrt(1 / 365)
 
-        weekly_move = (
-            spot
-            * atm_iv
-            * sqrt(7 / 365)
-        )
+        weekly_move = spot * atm_iv * sqrt(7 / 365)
 
-        monthly_move = (
-            spot
-            * atm_iv
-            * sqrt(30 / 365)
-        )
+        monthly_move = spot * atm_iv * sqrt(30 / 365)
 
         return ExpectedMoveResult(
-
             expected_move=expected_move,
-
             upper_68=upper_68,
             lower_68=lower_68,
-
             upper_95=upper_95,
             lower_95=lower_95,
-
             one_day_move=one_day_move,
-
             weekly_move=weekly_move,
-
             monthly_move=monthly_move,
         )

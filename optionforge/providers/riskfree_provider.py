@@ -34,12 +34,6 @@ class RiskFreeRateProvider:
 
     def __repr__(self):
 
-        return (
-
-            f"RiskFreeRateProvider("
-
-            f"default_rate={self.DEFAULT_RATE})"
-
-        )
+        return f"RiskFreeRateProvider(" f"default_rate={self.DEFAULT_RATE})"
 
     __str__ = __repr__

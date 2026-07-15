@@ -39,19 +39,11 @@ class RepositoryContext:
         root = Path(self.marketforge_root)
 
         object.__setattr__(
-
             self,
-
             "marketforge_root",
-
             root,
-
         )
 
         if not root.exists():
 
-            raise FileNotFoundError(
-
-                f"MarketForge root not found: {root}"
-
-            )
+            raise FileNotFoundError(f"MarketForge root not found: {root}")

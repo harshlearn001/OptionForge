@@ -40,13 +40,9 @@ class ExpectedMoveResult:
     def __repr__(self):
 
         return (
-
             f"ExpectedMoveResult("
-
             f"symbol={self.symbol}, "
-
             f"expected_move={self.expected_move:.2f})"
-
         )
 
     __str__ = __repr__

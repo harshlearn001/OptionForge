@@ -15,13 +15,8 @@ from optionforge.institutional.institutional_stage import (
 )
 
 __all__ = [
-
     "InstitutionalSnapshot",
-
     "InstitutionalSnapshotBuilder",
-
     "InstitutionalMetadata",
-
     "InstitutionalStage",
-
 ]

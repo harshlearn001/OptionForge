@@ -28,11 +28,8 @@ class DummyInstitutionalSnapshotBuilder:
 def test_pipeline_analytics():
 
     pipeline = OptionForgePipeline(
-
         snapshot_builder=DummySnapshotBuilder(),
-
         institutional_snapshot_builder=DummyInstitutionalSnapshotBuilder(),
-
         analytics={
             "dummy": DummyEngine(),
         },

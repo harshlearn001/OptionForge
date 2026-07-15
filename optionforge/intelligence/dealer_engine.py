@@ -63,25 +63,17 @@ class DealerEngine:
         # Evidence
         # ---------------------------------------------------------
 
-        evidence.append(
-            f"Gamma Exposure = {gamma_exposure:.2f}"
-        )
+        evidence.append(f"Gamma Exposure = {gamma_exposure:.2f}")
 
-        evidence.append(
-            f"Dealer Pressure = {dealer_pressure:.2f}"
-        )
+        evidence.append(f"Dealer Pressure = {dealer_pressure:.2f}")
 
         if spot >= gamma_flip:
 
-            evidence.append(
-                f"Spot ({spot:.2f}) above Gamma Flip ({gamma_flip:.2f})"
-            )
+            evidence.append(f"Spot ({spot:.2f}) above Gamma Flip ({gamma_flip:.2f})")
 
         else:
 
-            evidence.append(
-                f"Spot ({spot:.2f}) below Gamma Flip ({gamma_flip:.2f})"
-            )
+            evidence.append(f"Spot ({spot:.2f}) below Gamma Flip ({gamma_flip:.2f})")
 
         # ---------------------------------------------------------
         # Signal Agreement
@@ -114,13 +106,9 @@ class DealerEngine:
 
             confidence = cls.LONG_CONFIDENCE
 
-            summary = (
-                "All dealer signals align toward a LONG GAMMA regime."
-            )
+            summary = "All dealer signals align toward a LONG GAMMA regime."
 
-            risks = (
-                "A sustained move below Gamma Flip may invalidate this view.",
-            )
+            risks = ("A sustained move below Gamma Flip may invalidate this view.",)
 
         elif agreement == -3:
 
@@ -128,13 +116,9 @@ class DealerEngine:
 
             confidence = cls.SHORT_CONFIDENCE
 
-            summary = (
-                "All dealer signals align toward a SHORT GAMMA regime."
-            )
+            summary = "All dealer signals align toward a SHORT GAMMA regime."
 
-            risks = (
-                "Recovery above Gamma Flip may invalidate this view.",
-            )
+            risks = ("Recovery above Gamma Flip may invalidate this view.",)
 
         else:
 
@@ -147,9 +131,7 @@ class DealerEngine:
                 "transitioning between regimes."
             )
 
-            risks = (
-                "Conflicting dealer signals reduce confidence.",
-            )
+            risks = ("Conflicting dealer signals reduce confidence.",)
 
         return DealerIntelligence(
             state=state,

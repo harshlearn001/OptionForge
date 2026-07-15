@@ -47,13 +47,8 @@ class SnapshotBuilder:
         market = self._loader.load(symbol)
 
         return MarketSnapshot(
-
             symbol=symbol,
-
             option=market.option,
-
             future=market.future,
-
             spot=market.spot,
-
         )

@@ -44,11 +44,7 @@ class PainCalculator:
 
         df = self.option_chain
 
-        strikes = sorted(
-            df["STRIKE_PRICE"]
-            .drop_duplicates()
-            .tolist()
-        )
+        strikes = sorted(df["STRIKE_PRICE"].drop_duplicates().tolist())
 
         rows = []
 
@@ -67,10 +63,7 @@ class PainCalculator:
                     0,
                 )
 
-                call_pain += (
-                    intrinsic *
-                    row["OPEN_INT"]
-                )
+                call_pain += intrinsic * row["OPEN_INT"]
 
             # Puts
             puts = df[df["OPT_TYPE"] == "PE"]
@@ -82,25 +75,15 @@ class PainCalculator:
                     0,
                 )
 
-                put_pain += (
-                    intrinsic *
-                    row["OPEN_INT"]
-                )
+                put_pain += intrinsic * row["OPEN_INT"]
 
             rows.append(
-
                 {
-
                     "STRIKE_PRICE": settlement,
-
                     "CALL_PAIN": call_pain,
-
                     "PUT_PAIN": put_pain,
-
                     "TOTAL_PAIN": call_pain + put_pain,
-
                 }
-
             )
 
         return pd.DataFrame(rows)

@@ -34,29 +34,21 @@ from optionforge.marketdna.liquidity_regime import (
     LiquidityRegime,
 )
 
-
 # ==========================================================
 # Helper
 # ==========================================================
 
+
 def market_dna() -> MarketDNA:
 
     return MarketDNA(
-
         regime=MarketRegime.STRONGLY_BULLISH,
-
         trend=TrendRegime.STRONG_UPTREND,
-
         volatility=VolatilityRegime.COMPRESSED,
-
         liquidity=LiquidityRegime.HIGH,
-
         dealer_position="LONG GAMMA",
-
         evidence_score=91.0,
-
         confidence=92.0,
-
     )
 
 
@@ -64,24 +56,17 @@ def market_dna() -> MarketDNA:
 # Tests
 # ==========================================================
 
+
 def test_decision_creation():
 
     decision = Decision(
-
         decision=DecisionType.STRONG_BUY,
-
         strategy=StrategyType.LONG_CALL,
-
         confidence_level=ConfidenceLevel.VERY_HIGH,
-
         confidence=92.0,
-
         market_dna=market_dna(),
-
         recommendation="Long Call",
-
         rationale=("Bullish",),
-
     )
 
     assert decision.confidence == 92.0
@@ -94,21 +79,13 @@ def test_decision_creation():
 def test_tradeable():
 
     decision = Decision(
-
         decision=DecisionType.STRONG_BUY,
-
         strategy=StrategyType.LONG_CALL,
-
         confidence_level=ConfidenceLevel.VERY_HIGH,
-
         confidence=95.0,
-
         market_dna=market_dna(),
-
         recommendation="Long Call",
-
         rationale=(),
-
     )
 
     assert decision.is_tradeable
@@ -117,21 +94,13 @@ def test_tradeable():
 def test_buy():
 
     decision = Decision(
-
         decision=DecisionType.BUY,
-
         strategy=StrategyType.BULL_CALL_SPREAD,
-
         confidence_level=ConfidenceLevel.HIGH,
-
         confidence=80.0,
-
         market_dna=market_dna(),
-
         recommendation="Bull Call Spread",
-
         rationale=(),
-
     )
 
     assert decision.is_buy
@@ -142,21 +111,13 @@ def test_buy():
 def test_dict():
 
     decision = Decision(
-
         decision=DecisionType.HOLD,
-
         strategy=StrategyType.CASH,
-
         confidence_level=ConfidenceLevel.MODERATE,
-
         confidence=60.0,
-
         market_dna=market_dna(),
-
         recommendation="Cash",
-
         rationale=("Neutral",),
-
     )
 
     data = decision.to_dict()
@@ -177,19 +138,11 @@ def test_invalid_confidence():
     with pytest.raises(ValueError):
 
         Decision(
-
             decision=DecisionType.BUY,
-
             strategy=StrategyType.LONG_CALL,
-
             confidence_level=ConfidenceLevel.HIGH,
-
             confidence=120.0,
-
             market_dna=market_dna(),
-
             recommendation="Long Call",
-
             rationale=(),
-
         )

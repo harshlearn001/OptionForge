@@ -33,7 +33,7 @@ class OptionAdapter:
         "SYMBOL": "SYMBOL",
         "INSTRUMENT": "INSTRUMENT",
         "STRIKE_PRICE": "STRIKE",
-        "OPT_TYPE": "OPTION_TYPE",
+        "OPT_TYPE": "OPT_TYPE",
         "OPEN_PRICE": "OPEN",
         "HI_PRICE": "HIGH",
         "LO_PRICE": "LOW",
@@ -52,7 +52,7 @@ class OptionAdapter:
         "SYMBOL",
         "INSTRUMENT",
         "STRIKE",
-        "OPTION_TYPE",
+        "OPT_TYPE",
         "OPEN",
         "HIGH",
         "LOW",
@@ -80,15 +80,9 @@ class OptionAdapter:
         # Date columns
         # ----------------------------------
 
-        df["TRADE_DATE"] = pd.to_datetime(
-            df["TRADE_DATE"].astype(str),
-            format="%Y%m%d"
-        )
+        df["TRADE_DATE"] = pd.to_datetime(df["TRADE_DATE"].astype(str), format="%Y%m%d")
 
-        df["EXPIRY"] = pd.to_datetime(
-            df["EXPIRY"].astype(str),
-            format="%Y%m%d"
-        )
+        df["EXPIRY"] = pd.to_datetime(df["EXPIRY"].astype(str), format="%Y%m%d")
 
         # ----------------------------------
         # String columns
@@ -97,7 +91,7 @@ class OptionAdapter:
         string_cols = [
             "SYMBOL",
             "INSTRUMENT",
-            "OPTION_TYPE",
+            "OPT_TYPE",
         ]
 
         for col in string_cols:
@@ -132,11 +126,7 @@ class OptionAdapter:
         ]
 
         for col in int_cols:
-            df[col] = (
-                pd.to_numeric(df[col], errors="coerce")
-                .fillna(0)
-                .astype("int64")
-            )
+            df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0).astype("int64")
 
         # ----------------------------------
         # Final order
@@ -153,7 +143,7 @@ class OptionAdapter:
                 "TRADE_DATE",
                 "EXPIRY",
                 "STRIKE",
-                "OPTION_TYPE",
+                "OPT_TYPE",
             ]
         ).reset_index(drop=True)
 

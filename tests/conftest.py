@@ -45,6 +45,7 @@ if str(ROOT) not in sys.path:
 # Session Constants
 # ==========================================================
 
+
 @pytest.fixture(scope="session")
 def total_capital() -> float:
     """
@@ -72,6 +73,7 @@ def available_capital() -> float:
 # ==========================================================
 # Pytest Configuration
 # ==========================================================
+
 
 def pytest_configure(config):
 

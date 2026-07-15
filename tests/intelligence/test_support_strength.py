@@ -15,7 +15,6 @@ sys.path.append(str(BASE_DIR))
 
 from optionforge.intelligence import SupportStrength
 
-
 print("=" * 60)
 print("OPTIONFORGE")
 print("SUPPORT STRENGTH TEST")
@@ -26,15 +25,10 @@ print("=" * 60)
 # ---------------------------------------------------------
 
 result = SupportStrength.calculate(
-
     support=24800,
-
     support_oi=520000,
-
     max_put_oi=520000,
-
     spot_price=24875,
-
 )
 
 print()

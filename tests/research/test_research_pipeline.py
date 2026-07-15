@@ -39,14 +39,12 @@ def pipeline():
 # Construction
 # ==========================================================
 
+
 def test_create():
 
     assert isinstance(
-
         pipeline(),
-
         ResearchPipeline,
-
     )
 
 
@@ -54,58 +52,44 @@ def test_create():
 # Components
 # ==========================================================
 
+
 def test_walk_forward():
 
     assert isinstance(
-
         pipeline().walk_forward,
-
         WalkForwardRunner,
-
     )
 
 
 def test_monte_carlo():
 
     assert isinstance(
-
         pipeline().monte_carlo,
-
         MonteCarloEngine,
-
     )
 
 
 def test_benchmark():
 
     assert isinstance(
-
         pipeline().benchmark,
-
         BenchmarkEngine,
-
     )
 
 
 def test_scenario():
 
     assert isinstance(
-
         pipeline().scenario,
-
         ScenarioEngine,
-
     )
 
 
 def test_parameter_sweep():
 
     assert isinstance(
-
         pipeline().parameter_sweep,
-
         ParameterSweepEngine,
-
     )
 
 
@@ -113,35 +97,16 @@ def test_parameter_sweep():
 # Representation
 # ==========================================================
 
+
 def test_repr():
 
-    assert (
-
-        "ResearchPipeline"
-
-        in
-
-        repr(
-
-            pipeline(),
-
-        )
-
+    assert "ResearchPipeline" in repr(
+        pipeline(),
     )
 
 
 def test_str():
 
-    assert (
-
-        "ResearchPipeline"
-
-        in
-
-        str(
-
-            pipeline(),
-
-        )
-
+    assert "ResearchPipeline" in str(
+        pipeline(),
     )

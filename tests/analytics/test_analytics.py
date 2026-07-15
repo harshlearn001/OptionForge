@@ -39,9 +39,7 @@ def build_contract() -> OptionContract:
 
 def test_returns_result():
 
-    result = OptionAnalytics.calculate(
-        build_contract()
-    )
+    result = OptionAnalytics.calculate(build_contract())
 
     assert isinstance(
         result,
@@ -51,53 +49,41 @@ def test_returns_result():
 
 def test_iv_positive():
 
-    result = OptionAnalytics.calculate(
-        build_contract()
-    )
+    result = OptionAnalytics.calculate(build_contract())
 
     assert result.implied_volatility > 0
 
 
 def test_delta_range():
 
-    result = OptionAnalytics.calculate(
-        build_contract()
-    )
+    result = OptionAnalytics.calculate(build_contract())
 
     assert 0 <= result.delta <= 1
 
 
 def test_gamma_positive():
 
-    result = OptionAnalytics.calculate(
-        build_contract()
-    )
+    result = OptionAnalytics.calculate(build_contract())
 
     assert result.gamma > 0
 
 
 def test_vega_positive():
 
-    result = OptionAnalytics.calculate(
-        build_contract()
-    )
+    result = OptionAnalytics.calculate(build_contract())
 
     assert result.vega > 0
 
 
 def test_intrinsic_value():
 
-    result = OptionAnalytics.calculate(
-        build_contract()
-    )
+    result = OptionAnalytics.calculate(build_contract())
 
     assert result.intrinsic_value == 0
 
 
 def test_time_value_positive():
 
-    result = OptionAnalytics.calculate(
-        build_contract()
-    )
+    result = OptionAnalytics.calculate(build_contract())
 
     assert result.time_value > 0

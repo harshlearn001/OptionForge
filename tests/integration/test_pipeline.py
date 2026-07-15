@@ -26,24 +26,21 @@ def main():
     # Create Sample Data
     # ---------------------------------------------------
 
-    sample = pd.DataFrame({
-
-        "TRADE_DATE": ["20260627"],
-        "SYMBOL": ["NIFTY"],
-        "EXPIRY_DATE": ["20260702"],
-        "STRIKE_PRICE": [25000],
-
-        "OPTION_TYPE": ["CE"],
-
-        "SPOT_CLOSE": [24980.50],
-        "FUTURE_CLOSE": [25005.20],
-        "OPTION_CLOSE": [185.35],
-
-        "OPEN_INTEREST": [254000],
-        "CHANGE_IN_OI": [8200],
-        "OPTION_VOLUME": [98000]
-
-    })
+    sample = pd.DataFrame(
+        {
+            "TRADE_DATE": ["20260627"],
+            "SYMBOL": ["NIFTY"],
+            "EXPIRY_DATE": ["20260702"],
+            "STRIKE_PRICE": [25000],
+            "OPTION_TYPE": ["CE"],
+            "SPOT_CLOSE": [24980.50],
+            "FUTURE_CLOSE": [25005.20],
+            "OPTION_CLOSE": [185.35],
+            "OPEN_INTEREST": [254000],
+            "CHANGE_IN_OI": [8200],
+            "OPTION_VOLUME": [98000],
+        }
+    )
 
     Path("sample.csv").write_text(sample.to_csv(index=False))
 

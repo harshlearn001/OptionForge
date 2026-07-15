@@ -22,13 +22,9 @@ class Strategy:
 
     @staticmethod
     def calculate(
-
         probability: ProbabilityResult,
-
         spot_price: float,
-
         expected_move: float,
-
     ) -> StrategyResult:
 
         bull = probability.bullish_probability
@@ -61,22 +57,15 @@ class Strategy:
 
         upper_entry = spot_price
 
-        entry_zone = (
-            f"{lower_entry:.2f}"
-            f" - "
-            f"{upper_entry:.2f}"
-        )
+        entry_zone = f"{lower_entry:.2f}" f" - " f"{upper_entry:.2f}"
 
         # =====================================================
         # Stop Loss
         # =====================================================
 
         stop_loss = round(
-
             lower_entry - expected_move * 0.25,
-
             2,
-
         )
 
         # =====================================================
@@ -84,19 +73,13 @@ class Strategy:
         # =====================================================
 
         target_1 = round(
-
             spot_price + expected_move * 0.50,
-
             2,
-
         )
 
         target_2 = round(
-
             spot_price + expected_move,
-
             2,
-
         )
 
         # =====================================================
@@ -108,11 +91,8 @@ class Strategy:
         reward = target_2 - upper_entry
 
         risk_reward = round(
-
             reward / risk,
-
             2,
-
         )
 
         # =====================================================
@@ -121,62 +101,34 @@ class Strategy:
 
         if action == "BUY":
 
-            recommendation = (
-                "Momentum favors buyers. "
-                "Buying dips is preferred."
-            )
+            recommendation = "Momentum favors buyers. " "Buying dips is preferred."
 
         elif action == "BUY ON DIP":
 
-            recommendation = (
-                "Wait for a pullback before entering."
-            )
+            recommendation = "Wait for a pullback before entering."
 
         elif action == "WAIT":
 
-            recommendation = (
-                "No high-quality setup currently."
-            )
+            recommendation = "No high-quality setup currently."
 
         else:
 
-            recommendation = (
-                "Avoid longs. "
-                "Selling rallies is preferred."
-            )
+            recommendation = "Avoid longs. " "Selling rallies is preferred."
 
         interpretation = (
-
-            f"Strategy generated using "
-
-            f"{bull:.2f}% "
-
-            f"bullish probability."
-
+            f"Strategy generated using " f"{bull:.2f}% " f"bullish probability."
         )
 
         return StrategyResult(
-
             action=action,
-
             entry_zone=entry_zone,
-
             stop_loss=stop_loss,
-
             target_1=target_1,
-
             target_2=target_2,
-
             risk_reward=risk_reward,
-
             trade_quality=probability.trade_quality,
-
             confidence=probability.confidence,
-
             stars=probability.stars,
-
             recommendation=recommendation,
-
             interpretation=interpretation,
-
         )

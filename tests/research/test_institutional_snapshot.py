@@ -67,6 +67,7 @@ def make_snapshot():
 # Creation
 # ==========================================================
 
+
 def test_snapshot_creation():
     snapshot = make_snapshot()
 
@@ -80,6 +81,7 @@ def test_snapshot_creation():
 # Frozen Dataclass
 # ==========================================================
 
+
 def test_snapshot_is_frozen():
     snapshot = make_snapshot()
 
@@ -90,6 +92,7 @@ def test_snapshot_is_frozen():
 # ==========================================================
 # Validation
 # ==========================================================
+
 
 def test_negative_days():
     snapshot = make_snapshot()

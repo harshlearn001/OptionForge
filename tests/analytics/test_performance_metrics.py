@@ -15,31 +15,18 @@ from optionforge.analytics.performance_metrics import (
 def metrics():
 
     return PerformanceMetrics(
-
         total_return=25.0,
-
         annual_return=18.0,
-
         cagr=17.5,
-
         volatility=12.0,
-
         max_drawdown=8.0,
-
         sharpe_ratio=1.80,
-
         sortino_ratio=2.30,
-
         calmar_ratio=2.20,
-
         win_rate=62.0,
-
         profit_factor=1.85,
-
         expectancy=0.42,
-
         recovery_factor=3.10,
-
     )
 
 
@@ -47,20 +34,19 @@ def metrics():
 # Construction
 # ==========================================================
 
+
 def test_create():
 
     assert isinstance(
-
         metrics(),
-
         PerformanceMetrics,
-
     )
 
 
 # ==========================================================
 # Values
 # ==========================================================
+
 
 def test_total_return():
 
@@ -86,6 +72,7 @@ def test_expectancy():
 # Convenience
 # ==========================================================
 
+
 def test_profitable():
 
     assert metrics().is_profitable
@@ -105,56 +92,33 @@ def test_low_risk():
 # Validation
 # ==========================================================
 
+
 @pytest.mark.parametrize(
-
     "field,value",
-
     [
-
         ("win_rate", -1),
-
         ("win_rate", 101),
-
         ("max_drawdown", -1),
-
         ("max_drawdown", 101),
-
         ("volatility", -1),
-
         ("profit_factor", -1),
-
     ],
-
 )
-
 def test_validation(field, value):
 
     kwargs = dict(
-
         total_return=25.0,
-
         annual_return=18.0,
-
         cagr=17.5,
-
         volatility=12.0,
-
         max_drawdown=8.0,
-
         sharpe_ratio=1.80,
-
         sortino_ratio=2.30,
-
         calmar_ratio=2.20,
-
         win_rate=62.0,
-
         profit_factor=1.85,
-
         expectancy=0.42,
-
         recovery_factor=3.10,
-
     )
 
     kwargs[field] = value
@@ -167,6 +131,7 @@ def test_validation(field, value):
 # ==========================================================
 # Serialization
 # ==========================================================
+
 
 def test_to_dict():
 
@@ -182,6 +147,7 @@ def test_to_dict():
 # ==========================================================
 # Representation
 # ==========================================================
+
 
 def test_str():
 

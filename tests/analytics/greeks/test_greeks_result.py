@@ -8,31 +8,18 @@ from optionforge.analytics.greeks.greeks_result import (
 def sample():
 
     return GreeksResult(
-
         symbol="NIFTY",
-
         trade_date=20260714,
-
         expiry=20260716,
-
         strike=25000,
-
         spot=25010.50,
-
         option_type="CE",
-
         option_price=633.98,
-
         implied_volatility=0.20,
-
         delta=0.5456,
-
         gamma=0.000276,
-
         theta=-4236.48,
-
         vega=2840.59,
-
     )
 
 

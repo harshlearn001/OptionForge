@@ -65,51 +65,24 @@ class CapitalRule(RiskRule):
         if utilization <= self._max_utilization:
 
             return (
-
                 5.0,
-
                 (),
-
-                (
-
-                    "Capital allocation within limits",
-
-                ),
-
+                ("Capital allocation within limits",),
             )
         warnings = (
-                        f"Capital utilization "
-
+            f"Capital utilization "
             f"{utilization:.1f}% "
-
             f"exceeds "
-
             f"{self._max_utilization:.1f}%."
-
         )
 
         return (
-
             min(
-
                 100.0,
-
                 utilization,
-
             ),
-
-            (
-
-                warning,
-
-            ),
-
-            (
-
-                "Capital allocation exceeds policy.",
-
-            ),
-
+            (warning,),
+            ("Capital allocation exceeds policy.",),
         )
 
     # =====================================================
@@ -135,12 +108,7 @@ class CapitalRule(RiskRule):
     ) -> str:
 
         return (
-
             f"{self.__class__.__name__}("
-
             f"max_utilization="
-
             f"{self._max_utilization})"
-
         )
-        

@@ -56,21 +56,16 @@ class OptionForgePipeline:
         # --------------------------------------------------
 
         dataframe = MarketData.from_csv(csv_file)
-        
 
         # --------------------------------------------------
         # Validate Schema
         # --------------------------------------------------
 
-        valid, missing = OptionChainSchema.validate(
-            list(dataframe.columns)
-        )
+        valid, missing = OptionChainSchema.validate(list(dataframe.columns))
 
         if not valid:
 
-            raise ValueError(
-                f"Missing required columns: {missing}"
-            )
+            raise ValueError(f"Missing required columns: {missing}")
 
         # --------------------------------------------------
         # Future Pipeline Stages

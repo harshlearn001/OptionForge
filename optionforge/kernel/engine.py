@@ -29,5 +29,4 @@ class Engine(ABC):
     def execute(
         self,
         snapshot: Any,
-    ) -> Any:
-        ...
+    ) -> Any: ...

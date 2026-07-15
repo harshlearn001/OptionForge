@@ -29,10 +29,10 @@ from optionforge.features.feature import Feature
 from optionforge.features.registry import FeatureRegistry
 from optionforge.models.institutional_snapshot import InstitutionalSnapshot
 
-
 # ==========================================================
 # Feature Provider Interface
 # ==========================================================
+
 
 class FeatureProvider(Protocol):
     """
@@ -42,13 +42,13 @@ class FeatureProvider(Protocol):
     def calculate(
         self,
         snapshot: InstitutionalSnapshot,
-    ) -> Iterable[Feature]:
-        ...
+    ) -> Iterable[Feature]: ...
 
 
 # ==========================================================
 # Feature Registry Builder
 # ==========================================================
+
 
 class FeatureRegistryBuilder:
     """

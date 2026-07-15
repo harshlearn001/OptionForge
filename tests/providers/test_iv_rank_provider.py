@@ -16,10 +16,10 @@ from optionforge.providers.volatility.iv_rank_provider import (
     IVRankProvider,
 )
 
-
 # ---------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------
+
 
 @pytest.fixture
 def context():
@@ -62,6 +62,7 @@ def iv_rank_result():
 # ---------------------------------------------------------
 # Tests
 # ---------------------------------------------------------
+
 
 def test_provider_returns_expected_features(
     monkeypatch,

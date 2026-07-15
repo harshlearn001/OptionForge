@@ -39,14 +39,11 @@ class OptionChainAnalytics:
         df = option_chain.copy()
 
         missing = [
-            c for c in OptionChainAnalytics.REQUIRED_COLUMNS
-            if c not in df.columns
+            c for c in OptionChainAnalytics.REQUIRED_COLUMNS if c not in df.columns
         ]
 
         if missing:
-            raise ValueError(
-                f"Missing required columns: {missing}"
-            )
+            raise ValueError(f"Missing required columns: {missing}")
 
         iv = []
         delta = []

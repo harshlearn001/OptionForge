@@ -14,23 +14,14 @@ def test_builder():
     builder = KnowledgeBuilder()
 
     knowledge = builder.build(
-
         id="dealer",
-
         name="Dealer",
-
         type=KnowledgeType.DEALER,
-
         level=KnowledgeLevel.STRONG,
-
         score=88,
-
         confidence=91,
-
         description="Dealer Long Gamma",
-
         evidence_ids=("dealer",),
-
     )
 
     assert knowledge.id == "dealer"

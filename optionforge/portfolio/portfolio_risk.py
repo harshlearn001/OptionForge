@@ -51,15 +51,10 @@ class PortfolioRisk(Enum):
         """
 
         return {
-
             PortfolioRisk.CONSERVATIVE: 1,
-
             PortfolioRisk.BALANCED: 2,
-
             PortfolioRisk.AGGRESSIVE: 3,
-
             PortfolioRisk.INSTITUTIONAL: 4,
-
         }[self]
 
     # -----------------------------------------------------
@@ -89,6 +84,7 @@ class PortfolioRisk(Enum):
         """
 
         return self is PortfolioRisk.AGGRESSIVE
+
     @property
     def is_institutional(self) -> bool:
         """
@@ -109,15 +105,10 @@ class PortfolioRisk(Enum):
         """
 
         return {
-
             PortfolioRisk.CONSERVATIVE: 2.0,
-
             PortfolioRisk.BALANCED: 5.0,
-
             PortfolioRisk.AGGRESSIVE: 10.0,
-
             PortfolioRisk.INSTITUTIONAL: 20.0,
-
         }[self]
 
     @property
@@ -128,15 +119,10 @@ class PortfolioRisk(Enum):
         """
 
         return {
-
             PortfolioRisk.CONSERVATIVE: 40.0,
-
             PortfolioRisk.BALANCED: 70.0,
-
             PortfolioRisk.AGGRESSIVE: 90.0,
-
             PortfolioRisk.INSTITUTIONAL: 100.0,
-
         }[self]
 
     @property
@@ -155,11 +141,8 @@ class PortfolioRisk(Enum):
         """
 
         return self in (
-
             PortfolioRisk.CONSERVATIVE,
-
             PortfolioRisk.BALANCED,
-
         )
 
     # -----------------------------------------------------
@@ -196,9 +179,6 @@ class PortfolioRisk(Enum):
         """
 
         return self.name.replace(
-
             "_",
-
             " ",
-
         ).title()

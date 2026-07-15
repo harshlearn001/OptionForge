@@ -45,40 +45,26 @@ class IVRankEngine:
     ) -> IVRankResult:
 
         if not historical_iv:
-            raise ValueError(
-                "historical_iv cannot be empty."
-            )
+            raise ValueError("historical_iv cannot be empty.")
 
         lowest_iv = min(historical_iv)
 
         highest_iv = max(historical_iv)
 
         iv_rank = self.calculator.calculate(
-
             current_iv=current_iv,
-
             lowest_iv=lowest_iv,
-
             highest_iv=highest_iv,
-
         )
 
         return IVRankResult(
-
             symbol=symbol,
-
             trade_date=trade_date,
-
             expiry=expiry,
-
             current_iv=current_iv,
-
             lowest_iv=lowest_iv,
-
             highest_iv=highest_iv,
-
             iv_rank=iv_rank,
-
         )
 
     def __repr__(self):

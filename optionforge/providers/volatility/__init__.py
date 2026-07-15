@@ -18,11 +18,7 @@ from optionforge.providers.volatility.iv_percentile_provider import (
 )
 
 __all__ = [
-
     "ExpectedMoveProvider",
-
     "IVRankProvider",
-
     "IVPercentileProvider",
-
 ]

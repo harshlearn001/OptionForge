@@ -59,19 +59,13 @@ class TradingSession:
             raise ValueError("Exchange cannot be empty.")
 
         if self.market_open >= self.market_close:
-            raise ValueError(
-                "Market open time must be before market close."
-            )
+            raise ValueError("Market open time must be before market close.")
 
         if self.is_holiday and not self.holiday_name:
-            raise ValueError(
-                "Holiday name must be provided when is_holiday=True."
-            )
+            raise ValueError("Holiday name must be provided when is_holiday=True.")
 
         if not self.is_holiday and self.holiday_name:
-            raise ValueError(
-                "holiday_name should be None when is_holiday=False."
-            )
+            raise ValueError("holiday_name should be None when is_holiday=False.")
 
     @property
     def session_id(self) -> str:
@@ -122,7 +116,5 @@ class TradingSession:
 
     def __str__(self) -> str:
         return (
-            f"{self.exchange} "
-            f"{self.trading_date.isoformat()} "
-            f"({self.weekday})"
+            f"{self.exchange} " f"{self.trading_date.isoformat()} " f"({self.weekday})"
         )

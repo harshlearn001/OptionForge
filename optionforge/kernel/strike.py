@@ -50,9 +50,7 @@ class Strike:
         """
 
         if self.strike_price <= 0:
-            raise InvalidStrikeError(
-                "Strike price must be positive."
-            )
+            raise InvalidStrikeError("Strike price must be positive.")
 
     @property
     def symbol(self) -> Symbol:
@@ -77,6 +75,7 @@ class Strike:
             f"{self.expiry.expiry_date:%Y%m%d}_"
             f"{self.strike_price}"
         )
+
     def to_dict(self) -> dict:
         """
         Convert Strike to a serializable dictionary.

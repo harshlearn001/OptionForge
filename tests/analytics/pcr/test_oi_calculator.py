@@ -8,44 +8,32 @@ from optionforge.analytics.pcr.oi_calculator import (
 def sample_df():
 
     return pd.DataFrame(
-
         {
-
             "STRIKE_PRICE": [
-
                 19400,
                 19500,
                 19600,
                 19400,
                 19500,
                 19600,
-
             ],
-
             "OPT_TYPE": [
-
                 "CE",
                 "CE",
                 "CE",
                 "PE",
                 "PE",
                 "PE",
-
             ],
-
             "OPEN_INT": [
-
                 100,
                 500,
                 300,
                 200,
                 700,
                 400,
-
             ],
-
         }
-
     )
 
 

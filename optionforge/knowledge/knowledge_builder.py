@@ -55,23 +55,13 @@ class KnowledgeBuilder:
         """
 
         return Knowledge(
-
             id=id,
-
             name=name,
-
             type=type,
-
             level=level,
-
             score=score,
-
             confidence=confidence,
-
             description=description,
-
             evidence_ids=evidence_ids,
-
             metadata=metadata or {},
-
         )

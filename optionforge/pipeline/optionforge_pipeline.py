@@ -50,9 +50,7 @@ class OptionForgePipeline:
 
         self._snapshot_builder = snapshot_builder
 
-        self._institutional_snapshot_builder = (
-            institutional_snapshot_builder
-        )
+        self._institutional_snapshot_builder = institutional_snapshot_builder
 
         self._analytics_engines = analytics or {}
 
@@ -69,17 +67,13 @@ class OptionForgePipeline:
 
         market_snapshot = self._snapshot_builder.build(symbol)
 
-        institutional_snapshot = (
-            self._institutional_snapshot_builder.build(
-                market_snapshot=market_snapshot,
-            )
+        institutional_snapshot = self._institutional_snapshot_builder.build(
+            market_snapshot=market_snapshot,
         )
 
         self._context.market_snapshot = market_snapshot
 
-        self._context.institutional_snapshot = (
-            institutional_snapshot
-        )
+        self._context.institutional_snapshot = institutional_snapshot
 
         return institutional_snapshot
 
@@ -90,17 +84,11 @@ class OptionForgePipeline:
     def analytics(self) -> None:
 
         self._context.analytics = {
-
             "volatility": {},
-
             "greeks": {},
-
             "oi": {},
-
             "market": {},
-
             "registry": self._analytics_engines,
-
         }
 
     # ==========================================================

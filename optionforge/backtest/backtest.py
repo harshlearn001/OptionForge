@@ -79,43 +79,19 @@ class Backtest:
 
         if self.total_trades < 0:
 
-            raise ValueError(
-
-                "total_trades cannot be negative."
-
-            )
+            raise ValueError("total_trades cannot be negative.")
 
         if self.profitable_trades < 0:
 
-            raise ValueError(
-
-                "profitable_trades cannot be negative."
-
-            )
+            raise ValueError("profitable_trades cannot be negative.")
 
         if self.losing_trades < 0:
 
-            raise ValueError(
+            raise ValueError("losing_trades cannot be negative.")
 
-                "losing_trades cannot be negative."
+        if not (0.0 <= self.win_rate <= 100.0):
 
-            )
-
-        if not (
-
-            0.0
-
-            <= self.win_rate
-
-            <= 100.0
-
-        ):
-
-            raise ValueError(
-
-                "win_rate must be between 0 and 100."
-
-            )
+            raise ValueError("win_rate must be between 0 and 100.")
 
     # -----------------------------------------------------
     # Convenience
@@ -128,13 +104,7 @@ class Backtest:
 
             return 0.0
 
-        return (
-
-            self.total_return
-
-            / self.total_trades
-
-        )
+        return self.total_return / self.total_trades
 
     @property
     def is_profitable(self) -> bool:
@@ -153,31 +123,18 @@ class Backtest:
     def to_dict(self) -> dict[str, Any]:
 
         return {
-
             "total_return": self.total_return,
-
             "annual_return": self.annual_return,
-
             "max_drawdown": self.max_drawdown,
-
             "sharpe_ratio": self.sharpe_ratio,
-
             "sortino_ratio": self.sortino_ratio,
-
             "win_rate": self.win_rate,
-
             "total_trades": self.total_trades,
-
             "profitable_trades": self.profitable_trades,
-
             "losing_trades": self.losing_trades,
-
             "expectancy": self.expectancy,
-
             "timestamp": self.timestamp.isoformat(),
-
             "metadata": dict(self.metadata),
-
         }
 
     # -----------------------------------------------------
@@ -187,23 +144,15 @@ class Backtest:
     def __str__(self) -> str:
 
         return (
-
             f"Backtest("
-
             f"return={self.total_return:.2f}%, "
-
             f"trades={self.total_trades})"
-
         )
 
     def __repr__(self) -> str:
 
         return (
-
             f"Backtest("
-
             f"return={self.total_return:.2f}, "
-
             f"sharpe={self.sharpe_ratio:.2f})"
-
         )

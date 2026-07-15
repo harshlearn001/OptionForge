@@ -8,25 +8,15 @@ from optionforge.analytics.expected_move.expected_move_result import (
 def sample():
 
     return ExpectedMoveResult(
-
         symbol="NIFTY",
-
         trade_date=20260714,
-
         expiry=20260721,
-
         spot=25000,
-
         volatility=0.20,
-
         time=7 / 365,
-
         expected_move=692.42,
-
         upper_bound=25692.42,
-
         lower_bound=24307.58,
-
     )
 
 

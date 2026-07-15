@@ -73,35 +73,19 @@ class SpotRepository(MarketRepository):
 
         symbol = symbol.upper()
 
-        index_file = (
-
-            self._paths.indices_master
-
-            / f"{symbol}.csv"
-
-        )
+        index_file = self._paths.indices_master / f"{symbol}.csv"
 
         if index_file.exists():
 
             return index_file
 
-        stock_file = (
-
-            self._paths.equity_master
-
-            / f"{symbol}.csv"
-
-        )
+        stock_file = self._paths.equity_master / f"{symbol}.csv"
 
         if stock_file.exists():
 
             return stock_file
 
-        raise RepositoryNotFoundError(
-
-            f"Spot data not found for '{symbol}'."
-
-        )
+        raise RepositoryNotFoundError(f"Spot data not found for '{symbol}'.")
 
     # ======================================================
     # Public API
@@ -117,9 +101,7 @@ class SpotRepository(MarketRepository):
         """
 
         return pd.read_csv(
-
             self._resolve(symbol),
-
         )
 
     def exists(
@@ -151,7 +133,5 @@ class SpotRepository(MarketRepository):
         """
 
         return self.load(
-
             symbol,
-
         )

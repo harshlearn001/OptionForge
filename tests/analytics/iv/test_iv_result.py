@@ -8,25 +8,15 @@ from optionforge.analytics.iv.iv_result import (
 def sample():
 
     return IVResult(
-
         symbol="NIFTY",
-
         trade_date=20260714,
-
         expiry=20260716,
-
         strike=25000,
-
         spot=25010.50,
-
         option_type="CE",
-
         market_price=633.98,
-
         implied_volatility=0.2015,
-
         contracts=192,
-
     )
 
 

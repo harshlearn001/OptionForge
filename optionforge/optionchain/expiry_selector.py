@@ -48,9 +48,7 @@ class ExpirySelector:
             if chain.expiry == expiry:
                 return chain
 
-        raise LookupError(
-            f"Expiry '{expiry.expiry_date}' not found."
-        )
+        raise LookupError(f"Expiry '{expiry.expiry_date}' not found.")
 
     @staticmethod
     def nearest(
@@ -66,9 +64,7 @@ class ExpirySelector:
         """
 
         if not chains:
-            raise ValueError(
-                "No OptionChains supplied."
-            )
+            raise ValueError("No OptionChains supplied.")
 
         return min(
             chains,
@@ -83,11 +79,7 @@ class ExpirySelector:
         Return all weekly expiry chains.
         """
 
-        return tuple(
-            chain
-            for chain in chains
-            if chain.expiry.is_weekly
-        )
+        return tuple(chain for chain in chains if chain.expiry.is_weekly)
 
     @staticmethod
     def monthly(
@@ -97,8 +89,4 @@ class ExpirySelector:
         Return all monthly expiry chains.
         """
 
-        return tuple(
-            chain
-            for chain in chains
-            if chain.expiry.is_monthly
-        )
+        return tuple(chain for chain in chains if chain.expiry.is_monthly)

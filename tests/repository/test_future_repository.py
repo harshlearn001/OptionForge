@@ -17,23 +17,17 @@ from optionforge.repository.repository_exception import (
     RepositoryNotFoundError,
 )
 
-
 # ==========================================================
 # Fixture
 # ==========================================================
+
 
 @pytest.fixture
 def repository(tmp_path):
 
     root = tmp_path / "MarketForge"
 
-    folder = (
-        root
-        / "data"
-        / "master"
-        / "Futures_master_three_expiries"
-        / "FUTIDX"
-    )
+    folder = root / "data" / "master" / "Futures_master_three_expiries" / "FUTIDX"
 
     folder.mkdir(parents=True)
 
@@ -58,6 +52,7 @@ def repository(tmp_path):
 # Load
 # ==========================================================
 
+
 def test_load(repository):
 
     df = repository.load("NIFTY")
@@ -71,6 +66,7 @@ def test_load(repository):
 # Exists
 # ==========================================================
 
+
 def test_exists(repository):
 
     assert repository.exists("NIFTY")
@@ -79,6 +75,7 @@ def test_exists(repository):
 # ==========================================================
 # Missing
 # ==========================================================
+
 
 def test_missing_symbol(repository):
 
@@ -92,6 +89,7 @@ def test_missing_symbol(repository):
 # Latest
 # ==========================================================
 
+
 def test_latest(repository):
 
     df = repository.latest("NIFTY")
@@ -102,6 +100,7 @@ def test_latest(repository):
 # ==========================================================
 # Deterministic
 # ==========================================================
+
 
 def test_deterministic(repository):
 

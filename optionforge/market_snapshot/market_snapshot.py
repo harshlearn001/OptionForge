@@ -56,30 +56,15 @@ class MarketSnapshot:
     @property
     def total_rows(self) -> int:
 
-        return (
-
-            self.option_rows
-
-            + self.future_rows
-
-            + self.spot_rows
-
-        )
+        return self.option_rows + self.future_rows + self.spot_rows
 
     def to_dict(self):
 
         return {
-
             "symbol": self.symbol,
-
             "option_rows": self.option_rows,
-
             "future_rows": self.future_rows,
-
             "spot_rows": self.spot_rows,
-
             "total_rows": self.total_rows,
-
             "timestamp": self.timestamp.isoformat(),
-
         }

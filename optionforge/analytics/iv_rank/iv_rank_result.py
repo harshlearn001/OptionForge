@@ -39,14 +39,6 @@ class IVRankResult:
 
     def __repr__(self) -> str:
 
-        return (
-
-            f"IVRankResult("
-
-            f"symbol={self.symbol}, "
-
-            f"iv_rank={self.iv_rank:.2f})"
-
-        )
+        return f"IVRankResult(" f"symbol={self.symbol}, " f"iv_rank={self.iv_rank:.2f})"
 
     __str__ = __repr__

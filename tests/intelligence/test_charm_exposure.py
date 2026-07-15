@@ -14,7 +14,6 @@ from optionforge.models import CharmExposureResult
 def sample_chain():
 
     return [
-
         {
             "strike": 25000,
             "option_type": "CE",
@@ -22,7 +21,6 @@ def sample_chain():
             "open_interest": 150000,
             "lot_size": 75,
         },
-
         {
             "strike": 25000,
             "option_type": "PE",
@@ -30,7 +28,6 @@ def sample_chain():
             "open_interest": 120000,
             "lot_size": 75,
         },
-
         {
             "strike": 25100,
             "option_type": "CE",
@@ -38,7 +35,6 @@ def sample_chain():
             "open_interest": 90000,
             "lot_size": 75,
         },
-
         {
             "strike": 24900,
             "option_type": "PE",
@@ -46,18 +42,14 @@ def sample_chain():
             "open_interest": 140000,
             "lot_size": 75,
         },
-
     ]
 
 
 def result():
 
     return CharmExposure.calculate(
-
         spot_price=25000,
-
         option_chain=sample_chain(),
-
     )
 
 
@@ -91,13 +83,7 @@ def test_net_identity():
 
     r = result()
 
-    assert r.net_charm == pytest.approx(
-
-        r.total_call_charm +
-
-        r.total_put_charm
-
-    )
+    assert r.net_charm == pytest.approx(r.total_call_charm + r.total_put_charm)
 
 
 def test_positive_strike():
@@ -113,22 +99,16 @@ def test_negative_strike():
 def test_regime():
 
     assert result().charm_regime in (
-
         "POSITIVE CHARM",
-
         "NEGATIVE CHARM",
-
     )
 
 
 def test_interpretation():
 
     assert isinstance(
-
         result().interpretation,
-
         str,
-
     )
 
 
@@ -137,11 +117,8 @@ def test_invalid_spot():
     with pytest.raises(ValueError):
 
         CharmExposure.calculate(
-
             spot_price=0,
-
             option_chain=sample_chain(),
-
         )
 
 
@@ -150,11 +127,8 @@ def test_negative_spot():
     with pytest.raises(ValueError):
 
         CharmExposure.calculate(
-
             spot_price=-1,
-
             option_chain=sample_chain(),
-
         )
 
 
@@ -163,11 +137,8 @@ def test_empty_chain():
     with pytest.raises(ValueError):
 
         CharmExposure.calculate(
-
             spot_price=25000,
-
             option_chain=[],
-
         )
 
 
@@ -180,64 +151,45 @@ def test_unknown_option_type():
     with pytest.raises(ValueError):
 
         CharmExposure.calculate(
-
             spot_price=25000,
-
             option_chain=bad,
-
         )
 
 
 def test_positive_strike_type():
 
     assert isinstance(
-
         result().largest_positive_strike,
-
         float,
-
     )
 
 
 def test_negative_strike_type():
 
     assert isinstance(
-
         result().largest_negative_strike,
-
         float,
-
     )
 
 
 def test_regime_type():
 
     assert isinstance(
-
         result().charm_regime,
-
         str,
-
     )
 
 
 def test_interpretation_not_empty():
 
-    assert len(
-
-        result().interpretation
-
-    ) > 10
+    assert len(result().interpretation) > 10
 
 
 def test_large_spot():
 
     r = CharmExposure.calculate(
-
         spot_price=50000,
-
         option_chain=sample_chain(),
-
     )
 
     assert r.total_call_charm > 0

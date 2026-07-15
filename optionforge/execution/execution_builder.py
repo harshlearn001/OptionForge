@@ -39,7 +39,5 @@ class ExecutionBuilder:
         """
 
         return ExecutionResult(
-
             trades=trades,
-
         )

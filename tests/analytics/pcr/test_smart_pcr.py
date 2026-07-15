@@ -14,61 +14,40 @@ class Snapshot:
     expiry = 20201231
 
     option_chain = pd.DataFrame(
-
         {
-
             "STRIKE_PRICE": [
-
                 19400,
                 19500,
                 19600,
-
                 19400,
                 19500,
                 19600,
-
             ],
-
             "OPT_TYPE": [
-
                 "CE",
                 "CE",
                 "CE",
-
                 "PE",
                 "PE",
                 "PE",
-
             ],
-
             "OPEN_INT": [
-
                 100,
                 500,
                 300,
-
                 200,
                 700,
                 400,
-
             ],
-
         }
-
     )
 
     spot = pd.DataFrame(
-
         {
-
             "CLOSE": [
-
                 19520,
-
             ]
-
         }
-
     )
 
 
@@ -77,9 +56,7 @@ def test_engine():
     engine = SmartPCR()
 
     result = engine.calculate(
-
         Snapshot(),
-
     )
 
     assert result.symbol == "NIFTY"

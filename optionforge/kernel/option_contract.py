@@ -54,7 +54,7 @@ class OptionContract:
         Returns underlying symbol.
         """
         return self.strike.symbol
-    
+
     @property
     def exchange(self):
         """
@@ -76,7 +76,6 @@ class OptionContract:
         """
         return self.strike.strike_price
 
-    
     @property
     def contract_id(self) -> str:
         """

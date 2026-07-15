@@ -55,23 +55,13 @@ class IntelligenceBuilder:
     ) -> Intelligence:
 
         return Intelligence(
-
             id=id,
-
             name=name,
-
             type=type,
-
             level=level,
-
             score=score,
-
             confidence=confidence,
-
             description=description,
-
             knowledge_ids=knowledge_ids,
-
             metadata=metadata or {},
-
         )

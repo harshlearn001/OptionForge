@@ -46,35 +46,21 @@ class ExpectedMoveEngine:
     ) -> ExpectedMoveResult:
 
         expected_move = self.calculator.calculate(
-
             spot=spot,
-
             volatility=volatility,
-
             time=time,
-
         )
 
         return ExpectedMoveResult(
-
             symbol=symbol,
-
             trade_date=trade_date,
-
             expiry=expiry,
-
             spot=spot,
-
             volatility=volatility,
-
             time=time,
-
             expected_move=expected_move,
-
             upper_bound=spot + expected_move,
-
             lower_bound=spot - expected_move,
-
         )
 
     def __repr__(self):

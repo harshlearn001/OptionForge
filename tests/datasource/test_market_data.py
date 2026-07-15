@@ -17,7 +17,6 @@ import pandas as pd
 
 from optionforge.datasource import MarketData
 
-
 print("=" * 60)
 print("OPTIONFORGE")
 print("MARKET DATA LOADER TEST")
@@ -27,19 +26,15 @@ print("=" * 60)
 # Create Sample CSV
 # ---------------------------------------------------------
 
-sample = pd.DataFrame({
-
-    "SYMBOL": ["NIFTY"],
-
-    "STRIKE": [25000],
-
-    "OPTION_TYPE": ["CE"],
-
-    "LTP": [185.25],
-
-    "OI": [250000],
-
-})
+sample = pd.DataFrame(
+    {
+        "SYMBOL": ["NIFTY"],
+        "STRIKE": [25000],
+        "OPTION_TYPE": ["CE"],
+        "LTP": [185.25],
+        "OI": [250000],
+    }
+)
 
 sample_file = Path("sample_market_data.csv")
 

@@ -47,10 +47,4 @@ class BacktestRegistry:
 
     def __repr__(self) -> str:
 
-        return (
-
-            f"BacktestRegistry("
-
-            f"builder={self._builder.__class__.__name__})"
-
-        )
+        return f"BacktestRegistry(" f"builder={self._builder.__class__.__name__})"

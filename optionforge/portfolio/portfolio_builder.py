@@ -60,21 +60,15 @@ class PortfolioBuilder:
         """
 
         return Portfolio(
-
             name=name,
-
             portfolio_type=portfolio_type,
-
             portfolio_risk=portfolio_risk,
-
             positions=positions,
-
             allocations=allocations,
-
             total_capital=total_capital,
-
         )
         # =====================================================
+
     # Convenience
     # =====================================================
 
@@ -91,19 +85,12 @@ class PortfolioBuilder:
         """
 
         return self.build(
-
             name=name,
-
             portfolio_type=portfolio_type,
-
             portfolio_risk=portfolio_risk,
-
             positions=(),
-
             allocations=(),
-
             total_capital=total_capital,
-
         )
 
     def from_positions(
@@ -122,19 +109,12 @@ class PortfolioBuilder:
         """
 
         return self.build(
-
             name=name,
-
             portfolio_type=portfolio_type,
-
             portfolio_risk=portfolio_risk,
-
             positions=positions,
-
             allocations=allocations,
-
             total_capital=total_capital,
-
         )
 
     # =====================================================
@@ -150,9 +130,7 @@ class PortfolioBuilder:
         """
 
         return self.build(
-
             **kwargs,
-
         )
 
     # =====================================================
@@ -163,8 +141,4 @@ class PortfolioBuilder:
         self,
     ) -> str:
 
-        return (
-
-            f"{self.__class__.__name__}()"
-
-        )
+        return f"{self.__class__.__name__}()"

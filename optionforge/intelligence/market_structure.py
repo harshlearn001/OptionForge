@@ -19,21 +19,15 @@ class MarketStructure:
 
     @staticmethod
     def calculate(
-
         support_strength: float,
         resistance_strength: float,
-
         expected_move: float,
-
         iv_rank: float,
         iv_percentile: float,
-
         max_pain: float,
-
         oi_wall_score: float,
         oi_shift_score: float,
         oi_change_score: float,
-
     ) -> MarketStructureResult:
 
         # ======================================================
@@ -41,25 +35,15 @@ class MarketStructure:
         # ======================================================
 
         score = (
-
-            support_strength * 0.15 +
-
-            resistance_strength * 0.15 +
-
-            expected_move * 0.10 +
-
-            iv_rank * 0.10 +
-
-            iv_percentile * 0.10 +
-
-            max_pain * 0.15 +
-
-            oi_wall_score * 0.10 +
-
-            oi_shift_score * 0.10 +
-
-            oi_change_score * 0.05
-
+            support_strength * 0.15
+            + resistance_strength * 0.15
+            + expected_move * 0.10
+            + iv_rank * 0.10
+            + iv_percentile * 0.10
+            + max_pain * 0.15
+            + oi_wall_score * 0.10
+            + oi_shift_score * 0.10
+            + oi_change_score * 0.05
         )
 
         score = max(0.0, min(score, 100.0))
@@ -138,63 +122,35 @@ class MarketStructure:
 
         elif score >= 70:
 
-            recommendation = (
-                "Bullish market structure. "
-                "Look for trend continuation."
-            )
+            recommendation = "Bullish market structure. " "Look for trend continuation."
 
         elif score >= 55:
 
-            recommendation = (
-                "Neutral market. "
-                "Wait for confirmation."
-            )
+            recommendation = "Neutral market. " "Wait for confirmation."
 
         elif score >= 40:
 
-            recommendation = (
-                "Bearish market structure. "
-                "Avoid aggressive longs."
-            )
+            recommendation = "Bearish market structure. " "Avoid aggressive longs."
 
         else:
 
             recommendation = (
-                "High probability bearish market. "
-                "Selling rallies is preferred."
+                "High probability bearish market. " "Selling rallies is preferred."
             )
 
-        interpretation = (
-
-            f"Overall Market Structure Score "
-            f"is {score:.2f}/100."
-
-        )
+        interpretation = f"Overall Market Structure Score " f"is {score:.2f}/100."
 
         return MarketStructureResult(
-
             score=round(score, 2),
-
             bias=bias,
-
             confidence=confidence,
-
             stars=stars,
-
             recommendation=recommendation,
-
             support_strength=support_strength,
-
             resistance_strength=resistance_strength,
-
             expected_move=expected_move,
-
             iv_rank=iv_rank,
-
             iv_percentile=iv_percentile,
-
             max_pain=max_pain,
-
             interpretation=interpretation,
-
         )

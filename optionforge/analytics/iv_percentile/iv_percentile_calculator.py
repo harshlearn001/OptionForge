@@ -30,21 +30,9 @@ class IVPercentileCalculator:
         if not historical_iv:
             return 0.0
 
-        below = sum(
+        below = sum(iv < current_iv for iv in historical_iv)
 
-            iv < current_iv
-
-            for iv in historical_iv
-
-        )
-
-        return (
-
-            below
-
-            / len(historical_iv)
-
-        ) * 100.0
+        return (below / len(historical_iv)) * 100.0
 
     def __repr__(self):
 

@@ -41,56 +41,28 @@ class ExposureRule(RiskRule):
         if exposure <= self._max_exposure:
 
             return RuleResult(
-
                 rule_name=self.__class__.__name__,
-
                 score=5.0,
-
                 passed=True,
-
                 warnings=(),
-
-                reasons=(
-
-                    "Portfolio exposure within limits.",
-
-                ),
-
+                reasons=("Portfolio exposure within limits.",),
             )
 
         return RuleResult(
-
             rule_name=self.__class__.__name__,
-
             score=min(
                 100.0,
                 exposure,
             ),
-
             passed=False,
-
             warnings=(
-
                 f"Portfolio exposure "
                 f"{exposure:.1f}% exceeds "
                 f"{self._max_exposure:.1f}%",
-
             ),
-
-            reasons=(
-
-                "Portfolio exposure exceeds policy.",
-
-            ),
-
+            reasons=("Portfolio exposure exceeds policy.",),
         )
 
     def __repr__(self) -> str:
 
-        return (
-
-            f"ExposureRule("
-
-            f"max_exposure={self._max_exposure})"
-
-        )
+        return f"ExposureRule(" f"max_exposure={self._max_exposure})"

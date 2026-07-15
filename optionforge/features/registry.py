@@ -61,9 +61,7 @@ class FeatureRegistry:
         """
 
         if feature.id in self._features:
-            raise ValueError(
-                f"Feature already registered: {feature.id.name}"
-            )
+            raise ValueError(f"Feature already registered: {feature.id.name}")
 
         self._features[feature.id] = feature
 
@@ -132,8 +130,7 @@ class FeatureRegistry:
     def to_dict(self) -> dict:
 
         return {
-            feature.id.name: feature.to_dict()
-            for feature in self._features.values()
+            feature.id.name: feature.to_dict() for feature in self._features.values()
         }
 
     def values(self) -> Iterable[Feature]:
@@ -158,7 +155,4 @@ class FeatureRegistry:
 
     def __repr__(self) -> str:
 
-        return (
-            f"FeatureRegistry("
-            f"{len(self._features)} features)"
-        )
+        return f"FeatureRegistry(" f"{len(self._features)} features)"

@@ -26,42 +26,25 @@ class VolatilitySurfaceCalculator:
         ivs: list[float],
     ) -> list[tuple[int, float, float]]:
 
-        if not (
-            len(strikes)
-            == len(expiries)
-            == len(ivs)
-        ):
-            raise ValueError(
-                "Input lists must have the same length."
-            )
+        if not (len(strikes) == len(expiries) == len(ivs)):
+            raise ValueError("Input lists must have the same length.")
 
         if not strikes:
             return []
 
         surface = list(
-
             zip(
-
                 expiries,
-
                 strikes,
-
                 ivs,
-
             )
-
         )
 
         surface.sort(
-
             key=lambda row: (
-
                 row[0],
-
                 row[1],
-
             )
-
         )
 
         return surface

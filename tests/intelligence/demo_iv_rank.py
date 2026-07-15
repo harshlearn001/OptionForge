@@ -15,7 +15,6 @@ sys.path.append(str(BASE_DIR))
 
 from optionforge.intelligence import IVRank
 
-
 print("=" * 60)
 print("OPTIONFORGE")
 print("IV RANK TEST")
@@ -24,13 +23,9 @@ print("=" * 60)
 print()
 
 result = IVRank.calculate(
-
     current_iv=18.0,
-
     low_iv=10.0,
-
     high_iv=30.0,
-
 )
 
 print("Current IV :", result.current_iv)

@@ -36,13 +36,9 @@ class AnalyticsConfig:
     def __repr__(self):
 
         return (
-
             f"AnalyticsConfig("
-
             f"risk_free_rate={self.risk_free_rate}, "
-
             f"default_volatility={self.default_volatility})"
-
         )
 
     __str__ = __repr__

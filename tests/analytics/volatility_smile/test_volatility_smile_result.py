@@ -8,27 +8,16 @@ from optionforge.analytics.volatility_smile.volatility_smile_result import (
 def sample():
 
     return VolatilitySmileResult(
-
         symbol="NIFTY",
-
         trade_date=20260715,
-
         expiry=20260723,
-
         points=[
-
             (24000, 0.23),
-
             (24500, 0.21),
-
             (25000, 0.19),
-
             (25500, 0.20),
-
             (26000, 0.22),
-
         ],
-
     )
 
 

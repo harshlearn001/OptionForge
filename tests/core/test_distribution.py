@@ -6,7 +6,6 @@ sys.path.insert(0, str(ROOT))
 
 from optionforge.quant.distributions import NormalDistribution
 
-
 print("=" * 60)
 print("OPTIONFORGE")
 print("NORMAL DISTRIBUTION TEST")

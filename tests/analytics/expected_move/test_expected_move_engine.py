@@ -8,19 +8,12 @@ def test_engine():
     engine = ExpectedMoveEngine()
 
     result = engine.calculate(
-
         symbol="NIFTY",
-
         trade_date=20260714,
-
         expiry=20260721,
-
         spot=25000,
-
         volatility=0.20,
-
         time=7 / 365,
-
     )
 
     assert result.symbol == "NIFTY"
@@ -37,19 +30,12 @@ def test_bounds():
     engine = ExpectedMoveEngine()
 
     result = engine.calculate(
-
         symbol="BANKNIFTY",
-
         trade_date=20260714,
-
         expiry=20260721,
-
         spot=50000,
-
         volatility=0.15,
-
         time=14 / 365,
-
     )
 
     assert result.upper_bound > result.spot

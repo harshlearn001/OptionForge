@@ -70,10 +70,7 @@ class RiskResult:
         if not self.rule_results:
             return 0.0
 
-        return sum(
-            rule.score
-            for rule in self.rule_results
-        ) / len(self.rule_results)
+        return sum(rule.score for rule in self.rule_results) / len(self.rule_results)
 
     @property
     def passed(self) -> bool:
@@ -81,10 +78,7 @@ class RiskResult:
         True if every rule passed.
         """
 
-        return all(
-            rule.passed
-            for rule in self.rule_results
-        )
+        return all(rule.passed for rule in self.rule_results)
 
     @property
     def warnings(self) -> tuple[str, ...]:
@@ -92,15 +86,7 @@ class RiskResult:
         Combined warnings.
         """
 
-        return tuple(
-
-            warning
-
-            for rule in self.rule_results
-
-            for warning in rule.warnings
-
-        )
+        return tuple(warning for rule in self.rule_results for warning in rule.warnings)
 
     @property
     def reasons(self) -> tuple[str, ...]:
@@ -108,15 +94,7 @@ class RiskResult:
         Combined reasons.
         """
 
-        return tuple(
-
-            reason
-
-            for rule in self.rule_results
-
-            for reason in rule.reasons
-
-        )
+        return tuple(reason for rule in self.rule_results for reason in rule.reasons)
 
     @property
     def warning_count(self) -> int:
@@ -137,27 +115,13 @@ class RiskResult:
     ) -> dict[str, Any]:
 
         return {
-
-            "rule_results": [
-
-                rule.to_dict()
-
-                for rule in self.rule_results
-
-            ],
-
+            "rule_results": [rule.to_dict() for rule in self.rule_results],
             "rule_count": self.rule_count,
-
             "overall_score": self.overall_score,
-
             "passed": self.passed,
-
             "warnings": list(self.warnings),
-
             "reasons": list(self.reasons),
-
             "metadata": dict(self.metadata),
-
         }
 
     # -----------------------------------------------------
@@ -169,25 +133,13 @@ class RiskResult:
     ) -> str:
 
         return (
-
             f"RiskResult("
-
             f"{self.rule_count} rules, "
-
             f"score={self.overall_score:.1f})"
-
         )
 
     def __repr__(
         self,
     ) -> str:
 
-        return (
-
-            f"RiskResult("
-
-            f"rules={self.rule_count}, "
-
-            f"passed={self.passed})"
-
-        )
+        return f"RiskResult(" f"rules={self.rule_count}, " f"passed={self.passed})"

@@ -50,11 +50,7 @@ class EvidenceRegistry:
 
         if evidence.id in self._evidence:
 
-            raise ValueError(
-
-                f"Duplicate Evidence id: {evidence.id}"
-
-            )
+            raise ValueError(f"Duplicate Evidence id: {evidence.id}")
 
         self._evidence[evidence.id] = evidence
 
@@ -92,13 +88,9 @@ class EvidenceRegistry:
         """
 
         return tuple(
-
             evidence
-
             for evidence in self._evidence.values()
-
             if evidence.type == evidence_type
-
         )
 
     # -----------------------------------------------------
@@ -111,13 +103,7 @@ class EvidenceRegistry:
         Total evidence score.
         """
 
-        return sum(
-
-            evidence.score
-
-            for evidence in self._evidence.values()
-
-        )
+        return sum(evidence.score for evidence in self._evidence.values())
 
     @property
     def confidence(self) -> float:
@@ -129,18 +115,8 @@ class EvidenceRegistry:
 
             return 0.0
 
-        return (
-
-            sum(
-
-                evidence.confidence
-
-                for evidence in self._evidence.values()
-
-            )
-
-            / len(self._evidence)
-
+        return sum(evidence.confidence for evidence in self._evidence.values()) / len(
+            self._evidence
         )
 
     # -----------------------------------------------------
@@ -149,11 +125,7 @@ class EvidenceRegistry:
 
     def values(self) -> tuple[Evidence, ...]:
 
-        return tuple(
-
-            self._evidence.values()
-
-        )
+        return tuple(self._evidence.values())
 
     def items(self):
 
@@ -163,11 +135,7 @@ class EvidenceRegistry:
         self,
     ) -> Iterator[Evidence]:
 
-        return iter(
-
-            self._evidence.values()
-
-        )
+        return iter(self._evidence.values())
 
     def __len__(
         self,
@@ -188,13 +156,7 @@ class EvidenceRegistry:
 
     def to_dict(self) -> dict[str, dict]:
 
-        return {
-
-            evidence.id: evidence.to_dict()
-
-            for evidence in self._evidence.values()
-
-        }
+        return {evidence.id: evidence.to_dict() for evidence in self._evidence.values()}
 
     # -----------------------------------------------------
     # Representation
@@ -204,10 +166,4 @@ class EvidenceRegistry:
         self,
     ) -> str:
 
-        return (
-
-            f"EvidenceRegistry("
-
-            f"count={len(self)})"
-
-        )
+        return f"EvidenceRegistry(" f"count={len(self)})"

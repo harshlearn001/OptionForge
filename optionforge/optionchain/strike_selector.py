@@ -56,16 +56,12 @@ class StrikeSelector:
         """
 
         if minimum > maximum:
-            raise ValueError(
-                "Minimum strike cannot exceed maximum strike."
-            )
+            raise ValueError("Minimum strike cannot exceed maximum strike.")
 
         return tuple(
             snapshot
             for snapshot in chain
-            if minimum
-            <= snapshot.contract.strike_price
-            <= maximum
+            if minimum <= snapshot.contract.strike_price <= maximum
         )
 
     @staticmethod
@@ -94,22 +90,13 @@ class StrikeSelector:
         """
 
         if width < 0:
-            raise ValueError(
-                "Width cannot be negative."
-            )
+            raise ValueError("Width cannot be negative.")
 
-        strikes = sorted(
-            {
-                snapshot.contract.strike_price
-                for snapshot in chain
-            }
-        )
+        strikes = sorted({snapshot.contract.strike_price for snapshot in chain})
 
         nearest = min(
             strikes,
-            key=lambda strike: abs(
-                strike - center
-            ),
+            key=lambda strike: abs(strike - center),
         )
 
         index = strikes.index(nearest)
@@ -123,7 +110,5 @@ class StrikeSelector:
         selected = set(strikes[left:right])
 
         return tuple(
-            snapshot
-            for snapshot in chain
-            if snapshot.contract.strike_price in selected
+            snapshot for snapshot in chain if snapshot.contract.strike_price in selected
         )

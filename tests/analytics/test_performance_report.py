@@ -31,134 +31,78 @@ from optionforge.backtest.backtest_result import (
 def report():
 
     curve = EquityCurve(
-
         values=(100000, 102000, 105000),
-
     )
 
     backtest = Backtest(
-
         total_return=5,
-
         annual_return=5,
-
         max_drawdown=2,
-
         sharpe_ratio=1.5,
-
         sortino_ratio=2,
-
         win_rate=60,
-
         total_trades=20,
-
         profitable_trades=12,
-
         losing_trades=8,
-
     )
 
     result = BacktestResult(
-
         backtests=(backtest,),
-
     )
 
     drawdown = DrawdownAnalysis(
-
         equity_curve=curve,
-
         max_drawdown=2,
-
         current_drawdown=0,
-
         peak_equity=105000,
-
         lowest_equity=100000,
-
         recovered=True,
-
     )
 
     metrics = PerformanceMetrics(
-
         total_return=5,
-
         annual_return=5,
-
         cagr=5,
-
         volatility=8,
-
         max_drawdown=2,
-
         sharpe_ratio=1.5,
-
         sortino_ratio=2,
-
         calmar_ratio=2.5,
-
         win_rate=60,
-
         profit_factor=1.8,
-
         expectancy=250,
-
         recovery_factor=2.5,
-
     )
 
     trades = TradeStatistics(
-
         total_trades=20,
-
         winning_trades=12,
-
         losing_trades=8,
-
         average_win=300,
-
         average_loss=-150,
-
         largest_win=1000,
-
         largest_loss=-500,
-
         profit_factor=1.8,
-
         expectancy=250,
-
         longest_winning_streak=4,
-
         longest_losing_streak=2,
-
     )
 
     return PerformanceReport(
-
         backtest_result=result,
-
         equity_curve=curve,
-
         drawdown_analysis=drawdown,
-
         performance_metrics=metrics,
-
         trade_statistics=trades,
-
         summary="Institutional report",
-
     )
 
 
 def test_create():
 
     assert isinstance(
-
         report(),
-
         PerformanceReport,
-
     )
 
 

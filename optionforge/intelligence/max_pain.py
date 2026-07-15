@@ -10,9 +10,9 @@ Professional Max Pain Engine
 from __future__ import annotations
 
 
-
 from optionforge.models.max_pain_result import MaxPainResult
 import pandas as pd
+
 
 class MaxPain:
 
@@ -38,9 +38,9 @@ class MaxPain:
 
                 if settlement > row["STRIKE_PRICE"]:
 
-                    call_pain += (
-                        settlement - row["STRIKE_PRICE"]
-                    ) * row["OPEN_INTEREST"]       
+                    call_pain += (settlement - row["STRIKE_PRICE"]) * row[
+                        "OPEN_INTEREST"
+                    ]
 
             # -------------------------
             # Put Pain
@@ -52,9 +52,9 @@ class MaxPain:
 
                 if settlement < row["STRIKE_PRICE"]:
 
-                    put_pain += (
-                        row["STRIKE_PRICE"] - settlement
-                    ) * row["OPEN_INTEREST"]
+                    put_pain += (row["STRIKE_PRICE"] - settlement) * row[
+                        "OPEN_INTEREST"
+                    ]
 
             total = call_pain + put_pain
 
@@ -69,9 +69,7 @@ class MaxPain:
 
         pain_table = pd.DataFrame(pain_rows)
 
-        winner = pain_table.loc[
-            pain_table["TOTAL_PAIN"].idxmin()
-        ]
+        winner = pain_table.loc[pain_table["TOTAL_PAIN"].idxmin()]
 
         # -----------------------------------
         # Highest OI Levels
@@ -95,34 +93,20 @@ class MaxPain:
         total_put_oi = int(put_df["OPEN_INTEREST"].sum())
 
         return MaxPainResult(
-
             max_pain=float(winner["STRIKE"]),
-
             total_pain=float(winner["TOTAL_PAIN"]),
-
             call_pain=float(winner["CALL_PAIN"]),
-
             put_pain=float(winner["PUT_PAIN"]),
-
             evaluated_strikes=len(strikes),
-
             support=float(highest_put_oi),
-
             resistance=float(highest_call_oi),
-
             highest_call_oi=float(highest_call_oi),
-
             highest_put_oi=float(highest_put_oi),
-
             total_call_oi=total_call_oi,
-
             total_put_oi=total_put_oi,
-
             pain_table=pain_table,
-
             interpretation=(
                 "Maximum Pain is the strike where "
                 "combined option writer payout is minimized."
             ),
         )
-    

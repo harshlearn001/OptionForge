@@ -10,17 +10,11 @@ def test_engine():
     engine = IVRankEngine()
 
     result = engine.calculate(
-
         symbol="NIFTY",
-
         trade_date=20260714,
-
         expiry=20260716,
-
         current_iv=30,
-
         historical_iv=[10, 15, 20, 30, 40, 50],
-
     )
 
     assert result.symbol == "NIFTY"
@@ -39,17 +33,11 @@ def test_empty_history():
     with pytest.raises(ValueError):
 
         engine.calculate(
-
             symbol="NIFTY",
-
             trade_date=20260714,
-
             expiry=20260716,
-
             current_iv=20,
-
             historical_iv=[],
-
         )
 
 

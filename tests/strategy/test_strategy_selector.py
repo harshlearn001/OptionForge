@@ -41,56 +41,38 @@ from optionforge.strategy.strategy_type import (
     StrategyType,
 )
 
-
 # ==========================================================
 # Helpers
 # ==========================================================
 
-def decision() -> Decision:
 
+def decision() -> Decision:
     """
     Strong bullish with LOW volatility.
     """
 
     dna = MarketDNA(
-
         regime=MarketRegime.STRONGLY_BULLISH,
-
         trend=TrendRegime.STRONG_UPTREND,
-
         volatility=VolatilityRegime.COMPRESSED,
-
         liquidity=LiquidityRegime.HIGH,
-
         dealer_position="LONG GAMMA",
-
         evidence_score=95.0,
-
         confidence=95.0,
-
     )
 
     return Decision(
-
         decision=DecisionType.STRONG_BUY,
-
         strategy=StrategyType.LONG_CALL,
-
         confidence_level=ConfidenceLevel.VERY_HIGH,
-
         confidence=95.0,
-
         market_dna=dna,
-
         recommendation="Long Call",
-
         rationale=("Bullish",),
-
     )
 
 
 def high_volatility_decision() -> Decision:
-
     """
     Strong bullish with NON-LOW volatility.
 
@@ -99,45 +81,30 @@ def high_volatility_decision() -> Decision:
     """
 
     dna = MarketDNA(
-
         regime=MarketRegime.STRONGLY_BULLISH,
-
         trend=TrendRegime.STRONG_UPTREND,
-
         volatility=VolatilityRegime.HIGH,
-
         liquidity=LiquidityRegime.HIGH,
-
         dealer_position="LONG GAMMA",
-
         evidence_score=95.0,
-
         confidence=95.0,
-
     )
 
     return Decision(
-
         decision=DecisionType.STRONG_BUY,
-
         strategy=StrategyType.LONG_CALL,
-
         confidence_level=ConfidenceLevel.VERY_HIGH,
-
         confidence=95.0,
-
         market_dna=dna,
-
         recommendation="Long Call",
-
         rationale=("Bullish",),
-
     )
 
 
 # ==========================================================
 # Default
 # ==========================================================
+
 
 def test_default_profile():
 
@@ -150,22 +117,18 @@ def test_default_profile():
 # Selection
 # ==========================================================
 
+
 def test_select_returns_strategy_type():
 
     selector = StrategySelector()
 
     result = selector.select(
-
         decision(),
-
     )
 
     assert isinstance(
-
         result,
-
         StrategyType,
-
     )
 
 
@@ -173,20 +136,10 @@ def test_callable():
 
     selector = StrategySelector()
 
-    assert (
-
-        selector(
-
-            decision(),
-
-        )
-
-        == selector.select(
-
-            decision(),
-
-        )
-
+    assert selector(
+        decision(),
+    ) == selector.select(
+        decision(),
     )
 
 
@@ -194,18 +147,15 @@ def test_callable():
 # Risk Profiles
 # ==========================================================
 
+
 def test_conservative():
 
     selector = StrategySelector(
-
         RiskProfile.CONSERVATIVE,
-
     )
 
     result = selector.select(
-
         decision(),
-
     )
 
     assert result == StrategyType.BULL_CALL_SPREAD
@@ -214,15 +164,11 @@ def test_conservative():
 def test_moderate():
 
     selector = StrategySelector(
-
         RiskProfile.MODERATE,
-
     )
 
     result = selector.select(
-
         decision(),
-
     )
 
     assert result == StrategyType.BULL_CALL_SPREAD
@@ -231,15 +177,11 @@ def test_moderate():
 def test_aggressive():
 
     selector = StrategySelector(
-
         RiskProfile.AGGRESSIVE,
-
     )
 
     result = selector.select(
-
         decision(),
-
     )
 
     assert result == StrategyType.LONG_CALL
@@ -248,15 +190,11 @@ def test_aggressive():
 def test_institutional():
 
     selector = StrategySelector(
-
         RiskProfile.INSTITUTIONAL,
-
     )
 
     result = selector.select(
-
         decision(),
-
     )
 
     assert result == StrategyType.SYNTHETIC_LONG
@@ -266,18 +204,15 @@ def test_institutional():
 # High Volatility Branch
 # ==========================================================
 
+
 def test_conservative_high_volatility():
 
     selector = StrategySelector(
-
         RiskProfile.CONSERVATIVE,
-
     )
 
     result = selector.select(
-
         high_volatility_decision(),
-
     )
 
     assert result == StrategyType.BULL_PUT_SPREAD
@@ -287,20 +222,17 @@ def test_conservative_high_volatility():
 # Deterministic
 # ==========================================================
 
+
 def test_selector_is_deterministic():
 
     selector = StrategySelector()
 
     first = selector.select(
-
         decision(),
-
     )
 
     second = selector.select(
-
         decision(),
-
     )
 
     assert first == second
@@ -310,12 +242,11 @@ def test_selector_is_deterministic():
 # Representation
 # ==========================================================
 
+
 def test_repr():
 
     selector = StrategySelector()
 
     assert "StrategySelector" in repr(
-
         selector,
-
     )

@@ -41,19 +41,13 @@ class ATMSelector:
         """
 
         if reference_price <= 0:
-            raise ValueError(
-                "Reference price must be positive."
-            )
+            raise ValueError("Reference price must be positive.")
 
         nearest_strike = min(
             chain.strikes,
-            key=lambda strike: abs(
-                strike.strike_price - reference_price
-            ),
+            key=lambda strike: abs(strike.strike_price - reference_price),
         )
 
         return tuple(
-            snapshot
-            for snapshot in chain
-            if snapshot.strike == nearest_strike
+            snapshot for snapshot in chain if snapshot.strike == nearest_strike
         )

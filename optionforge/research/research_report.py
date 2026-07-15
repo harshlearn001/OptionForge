@@ -33,35 +33,19 @@ class ResearchReport:
 
         if not self.strategy_name.strip():
 
-            raise ValueError(
-                "strategy_name cannot be empty."
-            )
+            raise ValueError("strategy_name cannot be empty.")
 
-        if not (
+        if not (0.0 <= self.overall_score <= 100.0):
 
-            0.0
-
-            <= self.overall_score
-
-            <= 100.0
-
-        ):
-
-            raise ValueError(
-                "overall_score must be between 0 and 100."
-            )
+            raise ValueError("overall_score must be between 0 and 100.")
 
         if not self.overall_grade.strip():
 
-            raise ValueError(
-                "overall_grade cannot be empty."
-            )
+            raise ValueError("overall_grade cannot be empty.")
 
         if not self.recommendation.strip():
 
-            raise ValueError(
-                "recommendation cannot be empty."
-            )
+            raise ValueError("recommendation cannot be empty.")
 
     @property
     def passed(self) -> bool:
@@ -71,43 +55,18 @@ class ResearchReport:
     def to_dict(self) -> dict:
 
         return {
-
-            "strategy_name":
-                self.strategy_name,
-
-            "overall_score":
-                self.overall_score,
-
-            "overall_grade":
-                self.overall_grade,
-
-            "approved":
-                self.approved,
-
-            "recommendation":
-                self.recommendation,
-
-            "passed":
-                self.passed,
-
+            "strategy_name": self.strategy_name,
+            "overall_score": self.overall_score,
+            "overall_grade": self.overall_grade,
+            "approved": self.approved,
+            "recommendation": self.recommendation,
+            "passed": self.passed,
         }
 
     def __str__(self):
 
-        return (
-
-            f"ResearchReport("
-
-            f"{self.strategy_name})"
-
-        )
+        return f"ResearchReport(" f"{self.strategy_name})"
 
     def __repr__(self):
 
-        return (
-
-            f"ResearchReport("
-
-            f"strategy='{self.strategy_name}')"
-
-        )
+        return f"ResearchReport(" f"strategy='{self.strategy_name}')"

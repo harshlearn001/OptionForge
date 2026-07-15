@@ -45,51 +45,27 @@ class CSVValidator:
         """
 
         if dataframe.empty:
-            raise EmptyCSVError(
-                "CSV contains no rows."
-            )
+            raise EmptyCSVError("CSV contains no rows.")
 
         missing = [
-
-            column
-
-            for column in REQUIRED_COLUMNS
-
-            if column not in dataframe.columns
-
+            column for column in REQUIRED_COLUMNS if column not in dataframe.columns
         ]
 
         if missing:
 
-            raise MissingColumnError(
-
-                f"Missing columns: {missing}"
-
-            )
+            raise MissingColumnError(f"Missing columns: {missing}")
 
         duplicates = dataframe.duplicated().sum()
 
         if duplicates:
 
-            raise DuplicateRowError(
-
-                f"{duplicates} duplicate rows found."
-
-            )
+            raise DuplicateRowError(f"{duplicates} duplicate rows found.")
 
         for column in NUMERIC_COLUMNS:
 
-            if not pd.api.types.is_numeric_dtype(
+            if not pd.api.types.is_numeric_dtype(dataframe[column]):
 
-                dataframe[column]
-
-            ):
-
-                raise InvalidDataTypeError(
-
-                    f"{column} must be numeric."
-
-                )
+                raise InvalidDataTypeError(f"{column} must be numeric.")
 
         return True
 

@@ -20,6 +20,7 @@ from optionforge.providers.greeks.gamma_exposure_provider import (
 # Fixtures
 # ---------------------------------------------------------
 
+
 @pytest.fixture
 def context():
     """
@@ -56,6 +57,7 @@ def gamma_result():
 # ---------------------------------------------------------
 # Tests
 # ---------------------------------------------------------
+
 
 def test_provider_returns_expected_features(
     monkeypatch,

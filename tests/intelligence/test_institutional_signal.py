@@ -16,25 +16,15 @@ from optionforge.models import (
 def dashboard():
 
     return DashboardResult(
-
         dealer_bias="SHORT GAMMA",
-
         dealer_direction="SHORT DELTA",
-
         gamma_status="BELOW GAMMA FLIP",
-
         zero_gamma_status="BELOW ZERO GAMMA",
-
         hedging_flow="SELL FUTURES",
-
         institutional_score=15.0,
-
         confidence="★☆☆☆☆",
-
         market_bias="TREND FOLLOWING",
-
         risk_level="EXTREME",
-
         summary="Demo",
     )
 
@@ -42,9 +32,7 @@ def dashboard():
 def result():
 
     return InstitutionalSignal.calculate(
-
         dashboard=dashboard(),
-
     )
 
 
@@ -52,20 +40,19 @@ def result():
 # Result
 # ==========================================================
 
+
 def test_returns_result():
 
     assert isinstance(
-
         result(),
-
         InstitutionalSignalResult,
-
     )
 
 
 # ==========================================================
 # Signal
 # ==========================================================
+
 
 def test_signal():
 
@@ -80,6 +67,7 @@ def test_strength():
 # ==========================================================
 # Market
 # ==========================================================
+
 
 def test_market_regime():
 
@@ -105,6 +93,7 @@ def test_risk():
 # Trading
 # ==========================================================
 
+
 def test_action():
 
     assert result().action == "SELL RALLIES"
@@ -119,29 +108,29 @@ def test_confidence():
 # Summary
 # ==========================================================
 
+
 def test_summary():
 
     assert isinstance(
-
         result().summary,
-
         str,
-
     )
 
 
 def test_summary_not_empty():
 
-    assert len(
-
-        result().summary,
-
-    ) > 20
+    assert (
+        len(
+            result().summary,
+        )
+        > 20
+    )
 
 
 # ==========================================================
 # Bullish Scenario
 # ==========================================================
+
 
 def test_bullish_case():
 
@@ -158,9 +147,7 @@ def test_bullish_case():
     d.confidence = "★★★★★"
 
     r = InstitutionalSignal.calculate(
-
         dashboard=d,
-
     )
 
     assert r.overall_signal == "STRONG BULLISH"
@@ -177,6 +164,7 @@ def test_bullish_case():
 # ==========================================================
 # Integrity
 # ==========================================================
+
 
 def test_fields():
 
@@ -196,6 +184,7 @@ def test_fields():
 # Types
 # ==========================================================
 
+
 def test_string_types():
 
     r = result()
@@ -211,9 +200,6 @@ def test_string_types():
 def test_score_type():
 
     assert isinstance(
-
         result().signal_strength,
-
         float,
-
     )

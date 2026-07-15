@@ -56,37 +56,22 @@ class RiskEngine:
         """
 
         rule_results = tuple(
-
             rule.evaluate(
-
                 portfolio=portfolio,
-
             )
-
             for rule in RiskRegistry.default_rules()
-
         )
 
         result = RiskResult(
-
             rule_results=rule_results,
-
         )
 
         return self._builder.build(
-
             result=result,
-
         )
 
     def __repr__(
         self,
     ) -> str:
 
-        return (
-
-            f"RiskEngine("
-
-            f"builder={self._builder.__class__.__name__})"
-
-        )
+        return f"RiskEngine(" f"builder={self._builder.__class__.__name__})"

@@ -55,59 +55,35 @@ class IVEngine:
         for _, row in option_chain.iterrows():
 
             analytics = self.calculator.calculate(
-
                 spot=spot,
-
                 strike=float(row["STRIKE_PRICE"]),
-
                 time=time,
-
                 rate=rate,
-
                 option_type=row["OPT_TYPE"],
-
                 market_price=float(row["CLOSE_PRICE"]),
-
             )
 
             rows.append(
-
                 {
-
                     "STRIKE_PRICE": row["STRIKE_PRICE"],
-
                     "OPT_TYPE": row["OPT_TYPE"],
-
                     "CLOSE_PRICE": row["CLOSE_PRICE"],
-
                     "IV": analytics.implied_volatility,
-
                     "DELTA": analytics.delta,
-
                     "GAMMA": analytics.gamma,
-
                     "THETA": analytics.theta,
-
                     "VEGA": analytics.vega,
-
                 }
-
             )
 
         chain = pd.DataFrame(rows)
 
         return IVChainResult(
-
             symbol=symbol,
-
             trade_date=trade_date,
-
             expiry=expiry,
-
             spot=spot,
-
             chain=chain,
-
         )
 
     def __repr__(self):

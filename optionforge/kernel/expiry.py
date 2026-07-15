@@ -50,9 +50,7 @@ class Expiry:
         """
 
         if self.expiry_date < self.symbol.trading_session.trading_date:
-            raise InvalidExpiryError(
-                "Expiry date cannot be before trading date."
-            )
+            raise InvalidExpiryError("Expiry date cannot be before trading date.")
 
     @property
     def expiry_id(self) -> str:
@@ -88,10 +86,7 @@ class Expiry:
         Returns days to expiry.
         """
 
-        return (
-            self.expiry_date -
-            reference_date
-        ).days
+        return (self.expiry_date - reference_date).days
 
     def is_expired(
         self,
@@ -102,8 +97,7 @@ class Expiry:
         """
 
         return reference_date > self.expiry_date
-    
-    
+
     def is_expiry_day(
         self,
         reference_date: date,
@@ -133,7 +127,7 @@ class Expiry:
             "is_weekly": self.is_weekly,
             "is_monthly": self.is_monthly,
             "is_expiry_day": self.is_expiry_day(
-        self.symbol.trading_session.trading_date
+                self.symbol.trading_session.trading_date
             ),
         }
 

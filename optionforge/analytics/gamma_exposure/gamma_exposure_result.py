@@ -44,15 +44,10 @@ class GammaExposureResult:
     def __repr__(self):
 
         return (
-
             f"GammaExposureResult("
-
             f"symbol={self.symbol}, "
-
             f"strike={self.strike}, "
-
             f"gamma_exposure={self.gamma_exposure:.2f})"
-
         )
 
     __str__ = __repr__

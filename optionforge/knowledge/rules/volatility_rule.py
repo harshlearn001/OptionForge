@@ -48,9 +48,7 @@ class VolatilityRule(KnowledgeRule):
         builder: KnowledgeBuilder,
     ) -> Knowledge | None:
 
-        volatility = evidence.by_type(
-            EvidenceType.VOLATILITY
-        )
+        volatility = evidence.by_type(EvidenceType.VOLATILITY)
 
         if not volatility:
 
@@ -67,26 +65,17 @@ class VolatilityRule(KnowledgeRule):
         if score >= 90:
 
             return builder.build(
-
                 id="extreme_volatility",
-
                 name="Extreme Volatility",
-
                 type=KnowledgeType.VOLATILITY,
-
                 level=KnowledgeLevel.VERY_STRONG,
-
                 score=score,
-
                 confidence=volatility.confidence,
-
                 description=(
                     "Implied volatility is extremely elevated. "
                     "Expect unusually large price swings."
                 ),
-
                 evidence_ids=(volatility.id,),
-
             )
 
         # ==================================================
@@ -96,26 +85,17 @@ class VolatilityRule(KnowledgeRule):
         if score >= 75:
 
             return builder.build(
-
                 id="elevated_volatility",
-
                 name="Elevated Volatility",
-
                 type=KnowledgeType.VOLATILITY,
-
                 level=KnowledgeLevel.STRONG,
-
                 score=score,
-
                 confidence=volatility.confidence,
-
                 description=(
                     "Implied volatility is elevated. "
                     "Larger-than-normal market movement is expected."
                 ),
-
                 evidence_ids=(volatility.id,),
-
             )
 
         # ==================================================
@@ -125,26 +105,16 @@ class VolatilityRule(KnowledgeRule):
         if score <= 25:
 
             return builder.build(
-
                 id="compressed_volatility",
-
                 name="Compressed Volatility",
-
                 type=KnowledgeType.VOLATILITY,
-
                 level=KnowledgeLevel.STRONG,
-
                 score=score,
-
                 confidence=volatility.confidence,
-
                 description=(
-                    "Implied volatility is compressed. "
-                    "Expansion risk is increasing."
+                    "Implied volatility is compressed. " "Expansion risk is increasing."
                 ),
-
                 evidence_ids=(volatility.id,),
-
             )
 
         # ==================================================
@@ -152,22 +122,12 @@ class VolatilityRule(KnowledgeRule):
         # ==================================================
 
         return builder.build(
-
             id="normal_volatility",
-
             name="Normal Volatility",
-
             type=KnowledgeType.VOLATILITY,
-
             level=KnowledgeLevel.MODERATE,
-
             score=score,
-
             confidence=volatility.confidence,
-
-            description=(
-                "Volatility is within its historical range."
-            ),
-
+            description=("Volatility is within its historical range."),
             evidence_ids=(volatility.id,),
         )

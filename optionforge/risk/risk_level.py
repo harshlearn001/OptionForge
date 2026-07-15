@@ -54,19 +54,12 @@ class RiskLevel(Enum):
         """
 
         return {
-
             RiskLevel.VERY_LOW: 1,
-
             RiskLevel.LOW: 2,
-
             RiskLevel.MODERATE: 3,
-
             RiskLevel.HIGH: 4,
-
             RiskLevel.VERY_HIGH: 5,
-
             RiskLevel.EXTREME: 6,
-
         }[self]
 
     @property
@@ -76,11 +69,8 @@ class RiskLevel(Enum):
         """
 
         return self in (
-
             RiskLevel.VERY_LOW,
-
             RiskLevel.LOW,
-
         )
 
     @property
@@ -90,11 +80,8 @@ class RiskLevel(Enum):
         """
 
         return self in (
-
             RiskLevel.MODERATE,
-
             RiskLevel.HIGH,
-
         )
 
     @property
@@ -104,12 +91,10 @@ class RiskLevel(Enum):
         """
 
         return self in (
-
             RiskLevel.VERY_HIGH,
-
             RiskLevel.EXTREME,
-
         )
+
     @classmethod
     def from_score(
         cls,
@@ -150,9 +135,6 @@ class RiskLevel(Enum):
         """
 
         return self.name.replace(
-
             "_",
-
             " ",
-
         ).title()

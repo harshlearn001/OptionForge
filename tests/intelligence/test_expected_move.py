@@ -34,11 +34,7 @@ def test_expected_move_formula():
     iv = 0.20
     days = 30
 
-    expected = (
-        spot *
-        iv *
-        sqrt(days / 365)
-    )
+    expected = spot * iv * sqrt(days / 365)
 
     result = ExpectedMove.calculate(
         spot=spot,
@@ -57,9 +53,7 @@ def test_upper_68():
         days=30,
     )
 
-    assert result.upper_68 == pytest.approx(
-        25000 + result.expected_move
-    )
+    assert result.upper_68 == pytest.approx(25000 + result.expected_move)
 
 
 def test_lower_68():
@@ -70,9 +64,7 @@ def test_lower_68():
         days=30,
     )
 
-    assert result.lower_68 == pytest.approx(
-        25000 - result.expected_move
-    )
+    assert result.lower_68 == pytest.approx(25000 - result.expected_move)
 
 
 def test_upper_95():
@@ -83,9 +75,7 @@ def test_upper_95():
         days=30,
     )
 
-    assert result.upper_95 == pytest.approx(
-        25000 + (2 * result.expected_move)
-    )
+    assert result.upper_95 == pytest.approx(25000 + (2 * result.expected_move))
 
 
 def test_lower_95():
@@ -96,9 +86,7 @@ def test_lower_95():
         days=30,
     )
 
-    assert result.lower_95 == pytest.approx(
-        25000 - (2 * result.expected_move)
-    )
+    assert result.lower_95 == pytest.approx(25000 - (2 * result.expected_move))
 
 
 def test_daily_move_positive():

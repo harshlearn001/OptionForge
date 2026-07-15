@@ -23,13 +23,9 @@ class Dashboard:
 
     @staticmethod
     def generate(
-
         market: MarketStructureResult,
-
         probability: ProbabilityResult,
-
         strategy: StrategyResult,
-
     ) -> str:
 
         dashboard = f"""

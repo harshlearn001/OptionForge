@@ -16,7 +16,6 @@ sys.path.append(str(BASE_DIR))
 from optionforge.research.signal import Signal
 from optionforge.research.trade import Trade
 
-
 trade = Trade(
     trade_id=uuid4(),
     strategy_id="OF001",

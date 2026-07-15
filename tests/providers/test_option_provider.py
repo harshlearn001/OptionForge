@@ -43,9 +43,7 @@ def test_available_trade_dates():
 
     provider = OptionProvider(repo)
 
-    dates = provider.available_trade_dates(
-        "NIFTY"
-    )
+    dates = provider.available_trade_dates("NIFTY")
 
     assert dates == [
         20260101,
@@ -61,9 +59,7 @@ def test_expiry_list():
 
     provider = OptionProvider(repo)
 
-    expiries = provider.expiry_list(
-        "NIFTY"
-    )
+    expiries = provider.expiry_list("NIFTY")
 
     assert expiries == [
         20260129,
@@ -162,6 +158,7 @@ def test_repr():
     provider = OptionProvider(repo)
 
     assert "OptionProvider" in repr(provider)
+
 
 # ==========================================================
 # Strike Discovery

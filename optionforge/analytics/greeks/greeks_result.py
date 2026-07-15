@@ -50,17 +50,11 @@ class GreeksResult:
     def __repr__(self) -> str:
 
         return (
-
             f"GreeksResult("
-
             f"symbol={self.symbol}, "
-
             f"type='{self.option_type}', "
-
             f"delta={self.delta:.4f}, "
-
             f"gamma={self.gamma:.6f})"
-
         )
 
     __str__ = __repr__

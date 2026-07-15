@@ -97,52 +97,29 @@ class Position:
 
         if not self.symbol.strip():
 
-            raise ValueError(
-
-                "symbol cannot be empty."
-
-            )
+            raise ValueError("symbol cannot be empty.")
 
         if self.lots <= 0:
 
-            raise ValueError(
-
-                "lots must be positive."
-
-            )
+            raise ValueError("lots must be positive.")
 
         if self.quantity <= 0:
 
-            raise ValueError(
-
-                "quantity must be positive."
-
-            )
+            raise ValueError("quantity must be positive.")
 
         if self.entry_price < 0:
 
-            raise ValueError(
-
-                "entry_price cannot be negative."
-
-            )
+            raise ValueError("entry_price cannot be negative.")
 
         if self.current_price < 0:
 
-            raise ValueError(
-
-                "current_price cannot be negative."
-
-            )
+            raise ValueError("current_price cannot be negative.")
 
         if self.capital_used < 0:
 
-            raise ValueError(
-
-                "capital_used cannot be negative."
-
-            )
+            raise ValueError("capital_used cannot be negative.")
         # -----------------------------------------------------
+
     # Convenience
     # -----------------------------------------------------
 
@@ -160,13 +137,7 @@ class Position:
         Total profit/loss.
         """
 
-        return (
-
-            self.realized_pnl
-
-            + self.unrealized_pnl
-
-        )
+        return self.realized_pnl + self.unrealized_pnl
 
     @property
     def return_percentage(self) -> float:
@@ -178,13 +149,7 @@ class Position:
 
             return 0.0
 
-        return (
-
-            self.total_pnl
-
-            / self.capital_used
-
-        ) * 100.0
+        return (self.total_pnl / self.capital_used) * 100.0
 
     @property
     def is_profitable(self) -> bool:
@@ -219,51 +184,22 @@ class Position:
     ) -> dict[str, Any]:
 
         return {
-
             "symbol": self.symbol,
-
-            "strategy_result": (
-
-                self.strategy_result.to_dict()
-
-            ),
-
+            "strategy_result": (self.strategy_result.to_dict()),
             "lots": self.lots,
-
             "quantity": self.quantity,
-
             "entry_price": self.entry_price,
-
             "current_price": self.current_price,
-
             "capital_used": self.capital_used,
-
             "market_value": self.market_value,
-
             "unrealized_pnl": self.unrealized_pnl,
-
             "realized_pnl": self.realized_pnl,
-
             "total_pnl": self.total_pnl,
-
-            "return_percentage": (
-
-                self.return_percentage
-
-            ),
-
-            "opened_at": (
-
-                self.opened_at.isoformat()
-
-            ),
-
+            "return_percentage": (self.return_percentage),
+            "opened_at": (self.opened_at.isoformat()),
             "metadata": dict(
-
                 self.metadata,
-
             ),
-
         }
 
     # -----------------------------------------------------
@@ -274,28 +210,15 @@ class Position:
         self,
     ) -> str:
 
-        return (
-
-            f"Position("
-
-            f"{self.symbol}, "
-
-            f"{self.total_pnl:.2f})"
-
-        )
+        return f"Position(" f"{self.symbol}, " f"{self.total_pnl:.2f})"
 
     def __repr__(
         self,
     ) -> str:
 
         return (
-
             f"Position("
-
             f"symbol={self.symbol}, "
-
             f"lots={self.lots}, "
-
             f"quantity={self.quantity})"
-
         )

@@ -25,14 +25,10 @@ class DeltaExposure:
     ) -> DeltaExposureResult:
 
         if spot_price <= 0:
-            raise ValueError(
-                "Spot price must be positive."
-            )
+            raise ValueError("Spot price must be positive.")
 
         if len(option_chain) == 0:
-            raise ValueError(
-                "Option chain cannot be empty."
-            )
+            raise ValueError("Option chain cannot be empty.")
 
         call_dex = 0.0
         put_dex = 0.0
@@ -47,34 +43,21 @@ class DeltaExposure:
             lot = int(option["lot_size"])
             option_type = option["option_type"]
 
-            exposure = (
-                delta
-                * oi
-                * lot
-                * spot_price
-            )
+            exposure = delta * oi * lot * spot_price
 
             if option_type == "CE":
 
                 call_dex += exposure
-                strike_dex[strike] = (
-                    strike_dex.get(strike, 0.0)
-                    + exposure
-                )
+                strike_dex[strike] = strike_dex.get(strike, 0.0) + exposure
 
             elif option_type == "PE":
 
                 put_dex += exposure
-                strike_dex[strike] = (
-                    strike_dex.get(strike, 0.0)
-                    - exposure
-                )
+                strike_dex[strike] = strike_dex.get(strike, 0.0) - exposure
 
             else:
 
-                raise ValueError(
-                    f"Unknown option type: {option_type}"
-                )
+                raise ValueError(f"Unknown option type: {option_type}")
 
         net_dex = call_dex + put_dex
 
@@ -107,18 +90,11 @@ class DeltaExposure:
             )
 
         return DeltaExposureResult(
-
             total_call_dex=call_dex,
-
             total_put_dex=put_dex,
-
             net_dex=net_dex,
-
             largest_positive_strike=largest_positive,
-
             largest_negative_strike=largest_negative,
-
             dealer_position=dealer_position,
-
             interpretation=interpretation,
         )

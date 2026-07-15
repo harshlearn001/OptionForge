@@ -21,7 +21,6 @@ from optionforge.intelligence import (
 
 from optionforge.reports import ReportEngine
 
-
 print("=" * 60)
 print("OPTIONFORGE")
 print("REPORT ENGINE TEST")
@@ -32,25 +31,15 @@ print("=" * 60)
 # ---------------------------------------------------------
 
 market = MarketStructure.calculate(
-
     support_strength=96,
-
     resistance_strength=91,
-
     expected_move=82,
-
     iv_rank=42,
-
     iv_percentile=51,
-
     max_pain=88,
-
     oi_wall_score=90,
-
     oi_shift_score=84,
-
     oi_change_score=80,
-
 )
 
 # ---------------------------------------------------------
@@ -64,13 +53,9 @@ probability = Probability.calculate(market)
 # ---------------------------------------------------------
 
 strategy = Strategy.calculate(
-
     probability=probability,
-
     spot_price=25000,
-
     expected_move=692,
-
 )
 
 # ---------------------------------------------------------
@@ -78,13 +63,9 @@ strategy = Strategy.calculate(
 # ---------------------------------------------------------
 
 report = ReportEngine.generate(
-
     market,
-
     probability,
-
     strategy,
-
 )
 
 print()

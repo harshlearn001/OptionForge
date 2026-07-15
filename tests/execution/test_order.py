@@ -16,19 +16,12 @@ from optionforge.execution.order_type import OrderType
 def order():
 
     return Order(
-
         symbol="NIFTY",
-
         side=OrderSide.BUY,
-
         order_type=OrderType.MARKET,
-
         status=OrderStatus.PENDING,
-
         quantity=50,
-
         price=250.0,
-
     )
 
 
@@ -71,19 +64,12 @@ def test_empty_symbol():
     with pytest.raises(ValueError):
 
         Order(
-
             symbol="",
-
             side=OrderSide.BUY,
-
             order_type=OrderType.MARKET,
-
             status=OrderStatus.PENDING,
-
             quantity=1,
-
             price=1.0,
-
         )
 
 
@@ -92,19 +78,12 @@ def test_negative_price():
     with pytest.raises(ValueError):
 
         Order(
-
             symbol="ABC",
-
             side=OrderSide.BUY,
-
             order_type=OrderType.MARKET,
-
             status=OrderStatus.PENDING,
-
             quantity=1,
-
             price=-1,
-
         )
 
 
@@ -113,19 +92,12 @@ def test_zero_quantity():
     with pytest.raises(ValueError):
 
         Order(
-
             symbol="ABC",
-
             side=OrderSide.BUY,
-
             order_type=OrderType.MARKET,
-
             status=OrderStatus.PENDING,
-
             quantity=0,
-
             price=100,
-
         )
 
 

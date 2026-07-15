@@ -22,36 +22,28 @@ from __future__ import annotations
 # ============================================================
 
 REQUIRED_COLUMNS = [
-
     # General
     "Date",
     "Symbol",
-
     # Prices
     "Spot",
     "Future",
-
     # ATM
     "ATM Strike",
-
     # PCR
     "PCR",
     "Modified PCR",
-
     # Open Interest
     "Call OI",
     "Put OI",
-
     "Call Change OI",
     "Put Change OI",
-
     # Greeks
     "IV",
     "Delta",
     "Gamma",
     "Theta",
     "Vega",
-
 ]
 
 # ============================================================
@@ -59,21 +51,13 @@ REQUIRED_COLUMNS = [
 # ============================================================
 
 OPTIONAL_COLUMNS = [
-
     "Volume",
-
     "VWAP",
-
     "Max Call OI",
-
     "Max Put OI",
-
     "Expected Move",
-
     "Support",
-
     "Resistance",
-
 ]
 
 # ============================================================
@@ -81,35 +65,20 @@ OPTIONAL_COLUMNS = [
 # ============================================================
 
 NUMERIC_COLUMNS = [
-
     "Spot",
-
     "Future",
-
     "ATM Strike",
-
     "PCR",
-
     "Modified PCR",
-
     "Call OI",
-
     "Put OI",
-
     "Call Change OI",
-
     "Put Change OI",
-
     "IV",
-
     "Delta",
-
     "Gamma",
-
     "Theta",
-
     "Vega",
-
 ]
 
 # ============================================================
@@ -117,7 +86,5 @@ NUMERIC_COLUMNS = [
 # ============================================================
 
 DATE_COLUMNS = [
-
     "Date",
-
 ]

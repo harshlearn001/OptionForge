@@ -10,17 +10,11 @@ def test_engine():
     engine = IVPercentileEngine()
 
     result = engine.calculate(
-
         symbol="NIFTY",
-
         trade_date=20260714,
-
         expiry=20260716,
-
         current_iv=30,
-
         historical_iv=[
-
             10,
             12,
             18,
@@ -31,9 +25,7 @@ def test_engine():
             35,
             40,
             45,
-
         ],
-
     )
 
     assert result.symbol == "NIFTY"
@@ -50,17 +42,11 @@ def test_empty_history():
     with pytest.raises(ValueError):
 
         engine.calculate(
-
             symbol="NIFTY",
-
             trade_date=20260714,
-
             expiry=20260716,
-
             current_iv=20,
-
             historical_iv=[],
-
         )
 
 

@@ -45,27 +45,16 @@ class ScenarioEngine:
             10,
         )
 
-        passed = (
-            excess_return >= 0.0
-            and win_rate >= 50.0
-        )
+        passed = excess_return >= 0.0 and win_rate >= 50.0
 
         return ScenarioAnalysis(
-
             scenario_name=scenario_name,
-
             strategy_return=strategy_return,
-
             benchmark_return=benchmark_return,
-
             win_rate=win_rate,
-
             max_drawdown=max_drawdown,
-
             sharpe_ratio=sharpe_ratio,
-
             passed=passed,
-
         )
 
     def __repr__(self) -> str:

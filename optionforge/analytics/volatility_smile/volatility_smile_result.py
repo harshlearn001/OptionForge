@@ -34,13 +34,9 @@ class VolatilitySmileResult:
     def __repr__(self):
 
         return (
-
             f"VolatilitySmileResult("
-
             f"symbol={self.symbol}, "
-
             f"points={len(self.points)})"
-
         )
 
     __str__ = __repr__

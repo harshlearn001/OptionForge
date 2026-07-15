@@ -21,10 +21,10 @@ from optionforge.kernel.strike import Strike
 from optionforge.kernel.symbol import Symbol
 from optionforge.kernel.trading_session import TradingSession
 
-
 # ==========================================================
 # Builders
 # ==========================================================
+
 
 def build_session() -> TradingSession:
     return TradingSession(
@@ -87,6 +87,7 @@ def build_snapshot() -> MarketSnapshot:
 # Creation
 # ==========================================================
 
+
 def test_creation():
     snapshot = build_snapshot()
 
@@ -98,6 +99,7 @@ def test_creation():
 # Identity
 # ==========================================================
 
+
 def test_exchange():
     assert build_snapshot().exchange is Exchange.NSE
 
@@ -107,15 +109,13 @@ def test_option_type():
 
 
 def test_contract_id():
-    assert (
-        build_snapshot().contract_id
-        == "NSE:NIFTY:20260702:25150:CE"
-    )
+    assert build_snapshot().contract_id == "NSE:NIFTY:20260702:25150:CE"
 
 
 # ==========================================================
 # Candle Properties
 # ==========================================================
+
 
 def test_is_bullish():
     assert build_snapshot().is_bullish is True
@@ -145,6 +145,7 @@ def test_lower_shadow():
 # Serialization
 # ==========================================================
 
+
 def test_to_dict():
     data = build_snapshot().to_dict()
 
@@ -158,6 +159,7 @@ def test_to_dict():
 # String Representation
 # ==========================================================
 
+
 def test_str():
     assert "NIFTY" in str(build_snapshot())
 
@@ -170,6 +172,7 @@ def test_repr():
 # Immutability
 # ==========================================================
 
+
 def test_frozen():
     snapshot = build_snapshot()
 
@@ -180,6 +183,7 @@ def test_frozen():
 # ==========================================================
 # Validation
 # ==========================================================
+
 
 def test_invalid_high_low():
     with pytest.raises(ValueError):

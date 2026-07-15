@@ -25,23 +25,14 @@ print()
 # ----------------------------------------------------------
 
 gamma = GammaExposureResult(
-
     total_call_gex=171562500000.0,
-
     total_put_gex=209062500000.0,
-
     net_gex=-37500000000.0,
-
     largest_positive_strike=25000.0,
-
     largest_negative_strike=25100.0,
-
     gamma_flip=25050.0,
-
     market_regime="NEGATIVE GAMMA",
-
     interpretation="Demo",
-
 )
 
 # ----------------------------------------------------------
@@ -55,11 +46,8 @@ spot = 24980.0
 # ----------------------------------------------------------
 
 result = ZeroGamma.calculate(
-
     gamma=gamma,
-
     current_spot=spot,
-
 )
 
 # ----------------------------------------------------------

@@ -107,9 +107,7 @@ class Knowledge:
 
         if not (0.0 <= self.confidence <= 100.0):
 
-            raise ValueError(
-                "Confidence must be between 0 and 100."
-            )
+            raise ValueError("Confidence must be between 0 and 100.")
 
     # =====================================================
     # Convenience
@@ -133,27 +131,16 @@ class Knowledge:
         """
 
         return {
-
             "id": self.id,
-
             "name": self.name,
-
             "type": self.type.name,
-
             "level": self.level.name,
-
             "score": self.score,
-
             "confidence": self.confidence,
-
             "description": self.description,
-
             "evidence_ids": list(self.evidence_ids),
-
             "timestamp": self.timestamp.isoformat(),
-
             "metadata": dict(self.metadata),
-
         }
 
     # =====================================================
@@ -163,27 +150,17 @@ class Knowledge:
     def __str__(self) -> str:
 
         return (
-
             f"{self.name}("
-
             f"score={self.score:.2f}, "
-
             f"confidence={self.confidence:.1f}%)"
-
         )
 
     def __repr__(self) -> str:
 
         return (
-
             f"Knowledge("
-
             f"id={self.id}, "
-
             f"type={self.type.name}, "
-
             f"score={self.score}, "
-
             f"confidence={self.confidence})"
-
         )

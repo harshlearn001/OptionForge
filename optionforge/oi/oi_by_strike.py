@@ -1,7 +1,36 @@
 """
 ==============================================================
 OptionForge
-Master OI Analytics Engine
+OI By Strike
+--------------------------------------------------------------
+Master Open Interest Analytics Engine
+
+One row = One Strike
+
+Uses the canonical OptionForge domain schema.
+
+Input DataFrame
+---------------
+strike_price
+option_type
+open_interest
+volume
+
+Output Analytics
+----------------
+CALL_OI
+PUT_OI
+TOTAL_OI
+CALL_VOLUME
+PUT_VOLUME
+TOTAL_VOLUME
+CALL_SHARE
+PUT_SHARE
+OI_SHARE
+PCR
+NET_OI
+NET_VOLUME
+DOMINANCE
 ==============================================================
 """
 
@@ -10,17 +39,20 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from optionforge.optionchain import OptionChain
+
+from optionforge.market.option_chain import OptionChain
 
 
 class OIByStrike:
     """
-    Master OI Analytics Engine.
+    Master Open Interest Analytics Engine.
 
-    One row = One Strike
+    This class aggregates an OptionChain into a
+    strike-wise analytics table.
 
-    This is the single source of truth for every
-    Open Interest based engine inside OptionForge.
+    The resulting table acts as the single source
+    of truth for every OI-based engine inside
+    OptionForge.
     """
 
     # ==========================================================
@@ -32,6 +64,7 @@ class OIByStrike:
         self.chain = chain
 
         self.df = self._build()
+
     # ==========================================================
     # Master Builder
     # ==========================================================
@@ -50,62 +83,88 @@ class OIByStrike:
 
         table = self._calculate_dominance(table)
 
-        table = (
-            table
-            .sort_values("STRIKE")
-            .reset_index(drop=True)
-        )
+        table = table.sort_values("strike_price").reset_index(drop=True)
 
         return table
-        # ==========================================================
+
+    # ==========================================================
     # Aggregate Option Chain
     # ==========================================================
 
     def _aggregate(self) -> pd.DataFrame:
 
-        df = self.chain.dataframe()
+        df = self.chain.to_dataframe()
 
         calls = (
-            df[df["OPTION_TYPE"] == "CE"]
-            .groupby("STRIKE", as_index=False)
+            df[
+                df["option_type"].isin(
+                    [
+                        "CALL",
+                        "CE",
+                    ]
+                )
+            ]
+            .groupby(
+                "strike_price",
+                as_index=False,
+            )
             .agg(
-                CALL_OI=("OI", "sum"),
-                CALL_VOLUME=("VOLUME", "sum"),
-                CALL_PREMIUM=("PREMIUM_VALUE", "sum"),
+                CALL_OI=(
+                    "open_interest",
+                    "sum",
+                ),
+                CALL_VOLUME=(
+                    "volume",
+                    "sum",
+                ),
             )
         )
 
         puts = (
-            df[df["OPTION_TYPE"] == "PE"]
-            .groupby("STRIKE", as_index=False)
+            df[
+                df["option_type"].isin(
+                    [
+                        "PUT",
+                        "PE",
+                    ]
+                )
+            ]
+            .groupby(
+                "strike_price",
+                as_index=False,
+            )
             .agg(
-                PUT_OI=("OI", "sum"),
-                PUT_VOLUME=("VOLUME", "sum"),
-                PUT_PREMIUM=("PREMIUM_VALUE", "sum"),
+                PUT_OI=(
+                    "open_interest",
+                    "sum",
+                ),
+                PUT_VOLUME=(
+                    "volume",
+                    "sum",
+                ),
             )
         )
 
-        table = (
-            calls
-            .merge(
-                puts,
-                on="STRIKE",
-                how="outer",
-            )
-            .fillna(0)
-        )
+        table = calls.merge(
+            puts,
+            on="strike_price",
+            how="outer",
+        ).fillna(0)
 
-        for column in [
+        integer_columns = [
             "CALL_OI",
             "PUT_OI",
             "CALL_VOLUME",
             "PUT_VOLUME",
-        ]:
+        ]
+
+        for column in integer_columns:
+
             table[column] = table[column].astype(int)
 
         return table
-    
-        # ==========================================================
+
+    # ==========================================================
     # Totals
     # ==========================================================
 
@@ -114,20 +173,9 @@ class OIByStrike:
         table: pd.DataFrame,
     ) -> pd.DataFrame:
 
-        table["TOTAL_OI"] = (
-            table["CALL_OI"] +
-            table["PUT_OI"]
-        )
+        table["TOTAL_OI"] = table["CALL_OI"] + table["PUT_OI"]
 
-        table["TOTAL_VOLUME"] = (
-            table["CALL_VOLUME"] +
-            table["PUT_VOLUME"]
-        )
-
-        table["TOTAL_PREMIUM"] = (
-            table["CALL_PREMIUM"] +
-            table["PUT_PREMIUM"]
-        )
+        table["TOTAL_VOLUME"] = table["CALL_VOLUME"] + table["PUT_VOLUME"]
 
         return table
 
@@ -141,27 +189,20 @@ class OIByStrike:
     ) -> pd.DataFrame:
 
         total_call = table["CALL_OI"].sum()
+
         total_put = table["PUT_OI"].sum()
+
         total_oi = table["TOTAL_OI"].sum()
 
-        table["CALL_SHARE"] = (
-            table["CALL_OI"] / total_call
-            if total_call > 0 else 0.0
-        )
+        table["CALL_SHARE"] = table["CALL_OI"] / total_call if total_call > 0 else 0.0
 
-        table["PUT_SHARE"] = (
-            table["PUT_OI"] / total_put
-            if total_put > 0 else 0.0
-        )
+        table["PUT_SHARE"] = table["PUT_OI"] / total_put if total_put > 0 else 0.0
 
-        table["OI_SHARE"] = (
-            table["TOTAL_OI"] / total_oi
-            if total_oi > 0 else 0.0
-        )
+        table["OI_SHARE"] = table["TOTAL_OI"] / total_oi if total_oi > 0 else 0.0
 
         return table
+        # ==========================================================
 
-    # ==========================================================
     # Strike PCR
     # ==========================================================
 
@@ -187,15 +228,9 @@ class OIByStrike:
         table: pd.DataFrame,
     ) -> pd.DataFrame:
 
-        table["NET_OI"] = (
-            table["PUT_OI"] -
-            table["CALL_OI"]
-        )
+        table["NET_OI"] = table["PUT_OI"] - table["CALL_OI"]
 
-        table["NET_VOLUME"] = (
-            table["PUT_VOLUME"] -
-            table["CALL_VOLUME"]
-        )
+        table["NET_VOLUME"] = table["PUT_VOLUME"] - table["CALL_VOLUME"]
 
         return table
 
@@ -211,27 +246,26 @@ class OIByStrike:
         table["DOMINANCE"] = "BALANCED"
 
         table.loc[
-            table["CALL_SHARE"] >
-            table["PUT_SHARE"],
-            "DOMINANCE"
+            table["CALL_SHARE"] > table["PUT_SHARE"],
+            "DOMINANCE",
         ] = "CALL"
 
         table.loc[
-            table["PUT_SHARE"] >
-            table["CALL_SHARE"],
-            "DOMINANCE"
+            table["PUT_SHARE"] > table["CALL_SHARE"],
+            "DOMINANCE",
         ] = "PUT"
 
         return table
-    
-        # ==========================================================
+
+    # ==========================================================
     # Public API
     # ==========================================================
 
     def dataframe(self) -> pd.DataFrame:
         """
-        Returns a copy of the Master OI table.
+        Return a copy of the analytics table.
         """
+
         return self.df.copy()
 
     # ==========================================================
@@ -243,11 +277,10 @@ class OIByStrike:
         n: int = 10,
     ) -> pd.DataFrame:
 
-        return (
-            self.df
-            .nlargest(n, "CALL_OI")
-            .reset_index(drop=True)
-        )
+        return self.df.nlargest(
+            n,
+            "CALL_OI",
+        ).reset_index(drop=True)
 
     # ==========================================================
     # Top Put OI
@@ -258,11 +291,10 @@ class OIByStrike:
         n: int = 10,
     ) -> pd.DataFrame:
 
-        return (
-            self.df
-            .nlargest(n, "PUT_OI")
-            .reset_index(drop=True)
-        )
+        return self.df.nlargest(
+            n,
+            "PUT_OI",
+        ).reset_index(drop=True)
 
     # ==========================================================
     # Top Total OI
@@ -273,11 +305,10 @@ class OIByStrike:
         n: int = 10,
     ) -> pd.DataFrame:
 
-        return (
-            self.df
-            .nlargest(n, "TOTAL_OI")
-            .reset_index(drop=True)
-        )
+        return self.df.nlargest(
+            n,
+            "TOTAL_OI",
+        ).reset_index(drop=True)
 
     # ==========================================================
     # Support Candidates
@@ -287,6 +318,9 @@ class OIByStrike:
         self,
         n: int = 10,
     ) -> pd.DataFrame:
+        """
+        Highest Put OI strikes.
+        """
 
         return self.top_put_oi(n)
 
@@ -298,11 +332,14 @@ class OIByStrike:
         self,
         n: int = 10,
     ) -> pd.DataFrame:
+        """
+        Highest Call OI strikes.
+        """
 
         return self.top_call_oi(n)
-    
-        # ==========================================================
-    # Number of Strikes
+
+    # ==========================================================
+    # Collection
     # ==========================================================
 
     def __len__(self) -> int:
@@ -315,8 +352,4 @@ class OIByStrike:
 
     def __repr__(self) -> str:
 
-        return (
-            f"OIByStrike("
-            f"rows={len(self.df)}, "
-            f"columns={len(self.df.columns)})"
-        )
+        return "OIByStrike(" f"rows={len(self.df)}, " f"columns={len(self.df.columns)})"

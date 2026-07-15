@@ -20,46 +20,31 @@ from optionforge.repository.repository_exception import (
     RepositoryNotFoundError,
 )
 
-
 # ==========================================================
 # Fixture
 # ==========================================================
+
 
 @pytest.fixture
 def repository(tmp_path):
 
     root = tmp_path / "MarketForge"
 
-    folder = (
-        root
-        / "data"
-        / "master"
-        / "option_master"
-        / "INDICES"
-    )
+    folder = root / "data" / "master" / "option_master" / "INDICES"
 
     folder.mkdir(parents=True)
 
     pd.DataFrame(
-
         {
-
             "Strike": [25000],
-
             "OI": [1000],
-
         }
-
     ).to_parquet(
-
         folder / "NIFTY.parquet",
-
     )
 
     ctx = RepositoryContext(
-
         marketforge_root=root,
-
     )
 
     return OptionRepository(ctx)
@@ -69,20 +54,16 @@ def repository(tmp_path):
 # Load
 # ==========================================================
 
+
 def test_load(repository):
 
     df = repository.load(
-
         "NIFTY",
-
     )
 
     assert isinstance(
-
         df,
-
         pd.DataFrame,
-
     )
 
     assert len(df) == 1
@@ -92,12 +73,11 @@ def test_load(repository):
 # Exists
 # ==========================================================
 
+
 def test_exists(repository):
 
     assert repository.exists(
-
         "NIFTY",
-
     )
 
 
@@ -105,18 +85,15 @@ def test_exists(repository):
 # Missing
 # ==========================================================
 
+
 def test_missing_symbol(repository):
 
     with pytest.raises(
-
         RepositoryNotFoundError,
-
     ):
 
         repository.load(
-
             "INVALID",
-
         )
 
 
@@ -124,12 +101,11 @@ def test_missing_symbol(repository):
 # Latest
 # ==========================================================
 
+
 def test_latest(repository):
 
     df = repository.latest(
-
         "NIFTY",
-
     )
 
     assert len(df) == 1
@@ -139,24 +115,18 @@ def test_latest(repository):
 # Deterministic
 # ==========================================================
 
+
 def test_deterministic(repository):
 
     first = repository.load(
-
         "NIFTY",
-
     )
 
     second = repository.load(
-
         "NIFTY",
-
     )
 
     pd.testing.assert_frame_equal(
-
         first,
-
         second,
-
     )

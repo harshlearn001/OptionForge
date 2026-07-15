@@ -72,17 +72,10 @@ class GammaFlip:
             )
 
         return GammaFlipResult(
-
             gamma_flip=flip,
-
             current_spot=current_spot,
-
             distance=distance,
-
             flip_status=flip_status,
-
             dealer_regime=dealer_regime,
-
             interpretation=interpretation,
-
         )

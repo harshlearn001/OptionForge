@@ -7,7 +7,6 @@ from time import perf_counter
 def timed(fn):
 
     @wraps(fn)
-
     def wrapper(*args, **kwargs):
 
         start = perf_counter()

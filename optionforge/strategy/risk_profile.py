@@ -49,15 +49,10 @@ class RiskProfile(Enum):
         """
 
         return {
-
             RiskProfile.CONSERVATIVE: 2.0,
-
             RiskProfile.MODERATE: 5.0,
-
             RiskProfile.AGGRESSIVE: 10.0,
-
             RiskProfile.INSTITUTIONAL: 25.0,
-
         }[self]
 
     # -----------------------------------------------------
@@ -73,15 +68,10 @@ class RiskProfile(Enum):
         """
 
         return {
-
             RiskProfile.CONSERVATIVE: 75.0,
-
             RiskProfile.MODERATE: 65.0,
-
             RiskProfile.AGGRESSIVE: 55.0,
-
             RiskProfile.INSTITUTIONAL: 50.0,
-
         }[self]
 
     # -----------------------------------------------------
@@ -95,11 +85,8 @@ class RiskProfile(Enum):
         """
 
         return self in (
-
             RiskProfile.CONSERVATIVE,
-
             RiskProfile.MODERATE,
-
         )
 
     @property
@@ -117,11 +104,8 @@ class RiskProfile(Enum):
         """
 
         return self in (
-
             RiskProfile.CONSERVATIVE,
-
             RiskProfile.MODERATE,
-
         )
 
     @property
@@ -131,11 +115,8 @@ class RiskProfile(Enum):
         """
 
         return self in (
-
             RiskProfile.AGGRESSIVE,
-
             RiskProfile.INSTITUTIONAL,
-
         )
 
     @property
@@ -145,11 +126,8 @@ class RiskProfile(Enum):
         """
 
         return self in (
-
             RiskProfile.AGGRESSIVE,
-
             RiskProfile.INSTITUTIONAL,
-
         )
 
     @property

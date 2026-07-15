@@ -47,13 +47,7 @@ class IVChainResult:
     def __repr__(self) -> str:
 
         return (
-
-            f"IVChainResult("
-
-            f"symbol={self.symbol}, "
-
-            f"contracts={self.contracts})"
-
+            f"IVChainResult(" f"symbol={self.symbol}, " f"contracts={self.contracts})"
         )
 
     __str__ = __repr__

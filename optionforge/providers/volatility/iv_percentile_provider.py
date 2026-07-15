@@ -32,9 +32,7 @@ class IVPercentileProvider(BaseProvider):
 
     GROUP = FeatureGroup.IMPLIED_VOLATILITY
 
-    PRODUCES = (
-        FeatureId.IV_PERCENTILE,
-    )
+    PRODUCES = (FeatureId.IV_PERCENTILE,)
 
     REQUIRES = (
         "current_iv",
@@ -47,33 +45,19 @@ class IVPercentileProvider(BaseProvider):
     ) -> Iterable[Feature]:
 
         result = IVPercentile.calculate(
-
             current_iv=context.snapshot.current_iv,
-
             historical_iv=context.snapshot.historical_iv,
-
         )
 
         return [
-
             Feature(
-
                 id=FeatureId.IV_PERCENTILE,
-
                 group=self.GROUP,
-
                 value=result.iv_percentile,
-
                 metadata={
-
                     "current_iv": result.current_iv,
-
                     "lookback": result.lookback,
-
                     "observations": result.observations,
-
                 },
-
             )
-
         ]

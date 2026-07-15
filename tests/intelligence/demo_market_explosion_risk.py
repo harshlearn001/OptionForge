@@ -31,19 +31,12 @@ print()
 # ----------------------------------------------------------
 
 pressure = DealerPressureResult(
-
     pressure_score=100.0,
-
     pressure_level="EXTREME",
-
     pressure_direction="DOWNSIDE",
-
     volatility_bias="EXPANDING",
-
     confidence="★☆☆☆☆",
-
     interpretation="Demo",
-
 )
 
 # ----------------------------------------------------------
@@ -51,25 +44,15 @@ pressure = DealerPressureResult(
 # ----------------------------------------------------------
 
 signal = InstitutionalSignalResult(
-
     overall_signal="STRONG BEARISH",
-
     signal_strength=15.0,
-
     market_regime="TREND FOLLOWING",
-
     volatility_outlook="EXPANDING",
-
     dealer_regime="SHORT GAMMA",
-
     risk_level="EXTREME",
-
     confidence="★☆☆☆☆",
-
     action="SELL RALLIES",
-
     summary="Demo",
-
 )
 
 # ----------------------------------------------------------
@@ -77,27 +60,16 @@ signal = InstitutionalSignalResult(
 # ----------------------------------------------------------
 
 hedging = DealerHedgingFlowResult(
-
     hedging_bias="PRO-CYCLICAL",
-
     flow_direction="SELL FUTURES",
-
     flow_strength="WEAK",
-
     volatility_effect="VOLATILITY EXPANSION",
-
     market_support="UNSUPPORTED",
-
     trend_effect="TREND ACCELERATION",
-
     institutional_score=15.0,
-
     confidence="★☆☆☆☆",
-
     recommendation="Demo",
-
     interpretation="Demo",
-
 )
 
 # ----------------------------------------------------------
@@ -105,25 +77,15 @@ hedging = DealerHedgingFlowResult(
 # ----------------------------------------------------------
 
 dealer = DealerPositionResult(
-
     dealer_bias="SHORT GAMMA",
-
     dealer_direction="SHORT DELTA",
-
     market_condition="TRENDING",
-
     market_stability="LOW",
-
     directional_risk="VERY HIGH",
-
     institutional_score=15.0,
-
     confidence="★☆☆☆☆",
-
     recommendation="Demo",
-
     interpretation="Demo",
-
 )
 
 # ----------------------------------------------------------
@@ -131,15 +93,10 @@ dealer = DealerPositionResult(
 # ----------------------------------------------------------
 
 result = MarketExplosionRisk.calculate(
-
     pressure=pressure,
-
     signal=signal,
-
     hedging=hedging,
-
     dealer=dealer,
-
 )
 
 # ----------------------------------------------------------

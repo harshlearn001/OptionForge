@@ -10,9 +10,7 @@ market = MarketIntelligence(
         "Price above trend",
         "Support holding",
     ),
-    risks=(
-        "Resistance nearby",
-    ),
+    risks=("Resistance nearby",),
     summary="Market remains in a bullish trend.",
 )
 

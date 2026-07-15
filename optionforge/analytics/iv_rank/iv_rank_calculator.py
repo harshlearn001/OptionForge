@@ -34,11 +34,7 @@ class IVRankCalculator:
         if highest_iv <= lowest_iv:
             return 0.0
 
-        return (
-            (current_iv - lowest_iv)
-            /
-            (highest_iv - lowest_iv)
-        ) * 100.0
+        return ((current_iv - lowest_iv) / (highest_iv - lowest_iv)) * 100.0
 
     def __repr__(self):
 

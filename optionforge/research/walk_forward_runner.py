@@ -47,50 +47,31 @@ class WalkForwardRunner:
         """
 
         if not windows:
-            raise ValueError(
-                "windows cannot be empty."
-            )
+            raise ValueError("windows cannot be empty.")
 
         successful = sum(windows)
 
         failed = len(windows) - successful
 
-        success_rate = (
-            successful / len(windows)
-        ) * 100.0
+        success_rate = (successful / len(windows)) * 100.0
 
         stability_score = round(
             success_rate,
             10,
         )
 
-        passed = (
-            success_rate
-            >= self.PASS_THRESHOLD
-        )
+        passed = success_rate >= self.PASS_THRESHOLD
 
         return WalkForwardAnalysis(
-
             windows=len(windows),
-
             successful_windows=successful,
-
             failed_windows=failed,
-
             stability_score=stability_score,
-
             passed=passed,
-
         )
 
     def __repr__(self) -> str:
 
-        return (
-
-            "WalkForwardRunner("
-
-            f"pass_threshold={self.PASS_THRESHOLD})"
-
-        )
+        return "WalkForwardRunner(" f"pass_threshold={self.PASS_THRESHOLD})"
 
     __str__ = __repr__

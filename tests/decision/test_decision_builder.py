@@ -35,71 +35,47 @@ from optionforge.marketdna.liquidity_regime import (
     LiquidityRegime,
 )
 
-
 # ==========================================================
 # Helpers
 # ==========================================================
 
+
 def bullish_dna():
 
     return MarketDNA(
-
         regime=MarketRegime.STRONGLY_BULLISH,
-
         trend=TrendRegime.STRONG_UPTREND,
-
         volatility=VolatilityRegime.COMPRESSED,
-
         liquidity=LiquidityRegime.HIGH,
-
         dealer_position="LONG GAMMA",
-
         evidence_score=91.0,
-
         confidence=95.0,
-
     )
 
 
 def bearish_dna():
 
     return MarketDNA(
-
         regime=MarketRegime.STRONGLY_BEARISH,
-
         trend=TrendRegime.STRONG_DOWNTREND,
-
         volatility=VolatilityRegime.EXTREME,
-
         liquidity=LiquidityRegime.LOW,
-
         dealer_position="SHORT GAMMA",
-
         evidence_score=-92.0,
-
         confidence=94.0,
-
     )
 
 
 def neutral_dna():
 
     return MarketDNA(
-
         regime=MarketRegime.NEUTRAL,
-
         trend=TrendRegime.SIDEWAYS,
-
         volatility=VolatilityRegime.NORMAL,
-
         liquidity=LiquidityRegime.NORMAL,
-
         dealer_position="UNKNOWN",
-
         evidence_score=0.0,
-
         confidence=55.0,
-
     )
 
 
@@ -107,20 +83,14 @@ def neutral_dna():
 # Result
 # ==========================================================
 
+
 def test_returns_decision():
 
-    result = DecisionBuilder().build(
-
-        bullish_dna()
-
-    )
+    result = DecisionBuilder().build(bullish_dna())
 
     assert isinstance(
-
         result,
-
         Decision,
-
     )
 
 
@@ -128,24 +98,17 @@ def test_returns_decision():
 # Bullish
 # ==========================================================
 
+
 def test_strong_buy():
 
-    result = DecisionBuilder().build(
-
-        bullish_dna()
-
-    )
+    result = DecisionBuilder().build(bullish_dna())
 
     assert result.decision == DecisionType.STRONG_BUY
 
 
 def test_bullish_strategy():
 
-    result = DecisionBuilder().build(
-
-        bullish_dna()
-
-    )
+    result = DecisionBuilder().build(bullish_dna())
 
     assert result.strategy == StrategyType.LONG_CALL
 
@@ -154,24 +117,17 @@ def test_bullish_strategy():
 # Bearish
 # ==========================================================
 
+
 def test_strong_sell():
 
-    result = DecisionBuilder().build(
-
-        bearish_dna()
-
-    )
+    result = DecisionBuilder().build(bearish_dna())
 
     assert result.decision == DecisionType.STRONG_SELL
 
 
 def test_bearish_strategy():
 
-    result = DecisionBuilder().build(
-
-        bearish_dna()
-
-    )
+    result = DecisionBuilder().build(bearish_dna())
 
     assert result.strategy == StrategyType.LONG_PUT
 
@@ -180,24 +136,17 @@ def test_bearish_strategy():
 # Neutral
 # ==========================================================
 
+
 def test_hold():
 
-    result = DecisionBuilder().build(
-
-        neutral_dna()
-
-    )
+    result = DecisionBuilder().build(neutral_dna())
 
     assert result.decision == DecisionType.HOLD
 
 
 def test_cash_strategy():
 
-    result = DecisionBuilder().build(
-
-        neutral_dna()
-
-    )
+    result = DecisionBuilder().build(neutral_dna())
 
     assert result.strategy == StrategyType.CASH
 
@@ -206,30 +155,17 @@ def test_cash_strategy():
 # Confidence
 # ==========================================================
 
+
 def test_confidence_level():
 
-    result = DecisionBuilder().build(
+    result = DecisionBuilder().build(bullish_dna())
 
-        bullish_dna()
-
-    )
-
-    assert (
-
-        result.confidence_level
-
-        == ConfidenceLevel.VERY_HIGH
-
-    )
+    assert result.confidence_level == ConfidenceLevel.VERY_HIGH
 
 
 def test_confidence_propagation():
 
-    result = DecisionBuilder().build(
-
-        bullish_dna()
-
-    )
+    result = DecisionBuilder().build(bullish_dna())
 
     assert result.confidence == 95.0
 
@@ -238,20 +174,14 @@ def test_confidence_propagation():
 # Recommendation
 # ==========================================================
 
+
 def test_recommendation():
 
-    result = DecisionBuilder().build(
-
-        bullish_dna()
-
-    )
+    result = DecisionBuilder().build(bullish_dna())
 
     assert isinstance(
-
         result.recommendation,
-
         str,
-
     )
 
 
@@ -259,13 +189,10 @@ def test_recommendation():
 # Rationale
 # ==========================================================
 
+
 def test_rationale():
 
-    result = DecisionBuilder().build(
-
-        bullish_dna()
-
-    )
+    result = DecisionBuilder().build(bullish_dna())
 
     assert len(result.rationale) > 0
 
@@ -274,18 +201,11 @@ def test_rationale():
 # Deterministic
 # ==========================================================
 
+
 def test_builder_is_deterministic():
 
-    first = DecisionBuilder().build(
+    first = DecisionBuilder().build(bullish_dna())
 
-        bullish_dna()
-
-    )
-
-    second = DecisionBuilder().build(
-
-        bullish_dna()
-
-    )
+    second = DecisionBuilder().build(bullish_dna())
 
     assert first == second

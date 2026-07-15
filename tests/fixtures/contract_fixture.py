@@ -9,9 +9,7 @@ from __future__ import annotations
 from optionforge.common.enums import OptionType
 from optionforge.kernel.option_contract import OptionContract
 
-from tests.fixtures.strike_fixture import (
-    build_strike,
-)
+from tests.fixtures.strike_fixture import build_strike
 
 
 def build_contract(
@@ -19,7 +17,7 @@ def build_contract(
     option_type: OptionType = OptionType.CALL,
 ) -> OptionContract:
     """
-    Build a reusable option contract.
+    Build a reusable OptionContract.
     """
 
     return OptionContract(

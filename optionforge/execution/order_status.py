@@ -33,13 +33,9 @@ class OrderStatus(Enum):
     def is_open(self) -> bool:
 
         return self in (
-
             OrderStatus.PENDING,
-
             OrderStatus.SUBMITTED,
-
             OrderStatus.PARTIALLY_FILLED,
-
         )
 
     @property

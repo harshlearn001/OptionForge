@@ -30,21 +30,13 @@ print()
 # ----------------------------------------------------------
 
 gamma = GammaExposureResult(
-
     total_call_gex=100.0,
-
     total_put_gex=-150.0,
-
     net_gex=-50.0,
-
     largest_positive_strike=25000.0,
-
     largest_negative_strike=25100.0,
-
     gamma_flip=25050.0,
-
     market_regime="NEGATIVE GAMMA",
-
     interpretation="Demo",
 )
 
@@ -53,19 +45,12 @@ gamma = GammaExposureResult(
 # ----------------------------------------------------------
 
 delta = DeltaExposureResult(
-
     total_call_dex=120.0,
-
     total_put_dex=-180.0,
-
     net_dex=-60.0,
-
     largest_positive_strike=25000.0,
-
     largest_negative_strike=25100.0,
-
     dealer_position="SHORT DELTA",
-
     interpretation="Demo",
 )
 
@@ -74,19 +59,12 @@ delta = DeltaExposureResult(
 # ----------------------------------------------------------
 
 vanna = VannaExposureResult(
-
     total_call_vanna=50.0,
-
     total_put_vanna=-80.0,
-
     net_vanna=-30.0,
-
     largest_positive_strike=25000.0,
-
     largest_negative_strike=25100.0,
-
     vanna_regime="NEGATIVE VANNA",
-
     interpretation="Demo",
 )
 
@@ -95,19 +73,12 @@ vanna = VannaExposureResult(
 # ----------------------------------------------------------
 
 charm = CharmExposureResult(
-
     total_call_charm=40.0,
-
     total_put_charm=-70.0,
-
     net_charm=-30.0,
-
     largest_positive_strike=25000.0,
-
     largest_negative_strike=25100.0,
-
     charm_regime="NEGATIVE CHARM",
-
     interpretation="Demo",
 )
 
@@ -116,15 +87,10 @@ charm = CharmExposureResult(
 # ----------------------------------------------------------
 
 result = DealerPosition.calculate(
-
     gamma=gamma,
-
     delta=delta,
-
     vanna=vanna,
-
     charm=charm,
-
 )
 
 # ----------------------------------------------------------

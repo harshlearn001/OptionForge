@@ -44,15 +44,10 @@ class IVResult:
     def __repr__(self) -> str:
 
         return (
-
             f"IVResult("
-
             f"symbol={self.symbol}, "
-
             f"type='{self.option_type}', "
-
             f"iv={self.implied_volatility:.4f})"
-
         )
 
     __str__ = __repr__

@@ -31,6 +31,7 @@ from optionforge.market_snapshot.market_snapshot import (
     MarketSnapshot,
 )
 
+
 class InstitutionalSnapshotBuilder:
     """
     Builder for immutable InstitutionalSnapshot objects.
@@ -69,23 +70,13 @@ class InstitutionalSnapshotBuilder:
             stage = InstitutionalStage.COMPLETE
 
         return InstitutionalSnapshot(
-
             market_snapshot=market_snapshot,
-
             analytics=analytics,
-
             evidence=evidence,
-
             market_dna=market_dna,
-
             decision=decision,
-
             strategy=strategy,
-
             execution=execution,
-
             metadata=InstitutionalMetadata(),
-
             stage=stage,
-
         )

@@ -49,9 +49,7 @@ class DealerRule(KnowledgeRule):
         builder: KnowledgeBuilder,
     ) -> Knowledge | None:
 
-        dealer = evidence.by_type(
-            EvidenceType.DEALER
-        )
+        dealer = evidence.by_type(EvidenceType.DEALER)
 
         if not dealer:
 
@@ -68,27 +66,18 @@ class DealerRule(KnowledgeRule):
         if "long gamma" in name:
 
             return builder.build(
-
                 id="volatility_suppression",
-
                 name="Volatility Suppression",
-
                 type=KnowledgeType.DEALER,
-
                 level=KnowledgeLevel.VERY_STRONG,
-
                 score=dealer.score,
-
                 confidence=dealer.confidence,
-
                 description=(
                     "Dealer positioning indicates "
                     "hedging activity is likely to "
                     "suppress short-term volatility."
                 ),
-
                 evidence_ids=(dealer.id,),
-
             )
 
         # ==================================================
@@ -98,27 +87,18 @@ class DealerRule(KnowledgeRule):
         if "short gamma" in name:
 
             return builder.build(
-
                 id="volatility_expansion",
-
                 name="Volatility Expansion",
-
                 type=KnowledgeType.DEALER,
-
                 level=KnowledgeLevel.VERY_STRONG,
-
                 score=dealer.score,
-
                 confidence=dealer.confidence,
-
                 description=(
                     "Dealer positioning indicates "
                     "hedging activity may amplify "
                     "market volatility."
                 ),
-
                 evidence_ids=(dealer.id,),
-
             )
 
         return None

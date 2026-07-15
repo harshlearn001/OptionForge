@@ -38,13 +38,9 @@ class IVPercentileResult:
     def __repr__(self) -> str:
 
         return (
-
             f"IVPercentileResult("
-
             f"symbol={self.symbol}, "
-
             f"iv_percentile={self.iv_percentile:.2f})"
-
         )
 
     __str__ = __repr__

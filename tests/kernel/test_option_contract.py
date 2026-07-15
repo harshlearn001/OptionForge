@@ -20,10 +20,10 @@ from optionforge.kernel.expiry import Expiry
 from optionforge.kernel.strike import Strike
 from optionforge.kernel.option_contract import OptionContract
 
-
 # ==========================================================
 # Builders
 # ==========================================================
+
 
 def build_session() -> TradingSession:
     return TradingSession(
@@ -80,6 +80,7 @@ def build_put_contract() -> OptionContract:
 # Creation
 # ==========================================================
 
+
 def test_contract_creation():
     contract = build_call_contract()
 
@@ -91,6 +92,7 @@ def test_contract_creation():
 # ==========================================================
 # Properties
 # ==========================================================
+
 
 def test_exchange_property():
     assert build_call_contract().exchange is Exchange.NSE
@@ -116,18 +118,17 @@ def test_is_put():
 # Contract ID
 # ==========================================================
 
+
 def test_contract_id():
     contract = build_call_contract()
 
-    assert (
-        contract.contract_id
-        == "NSE:NIFTY:20260702:25150:CE"
-    )
+    assert contract.contract_id == "NSE:NIFTY:20260702:25150:CE"
 
 
 # ==========================================================
 # Serialization
 # ==========================================================
+
 
 def test_to_dict():
     data = build_call_contract().to_dict()
@@ -142,13 +143,11 @@ def test_to_dict():
 # String Representation
 # ==========================================================
 
+
 def test_string_representation():
     contract = build_call_contract()
 
-    assert (
-        str(contract)
-        == "NIFTY 2026-07-02 25150 CE"
-    )
+    assert str(contract) == "NIFTY 2026-07-02 25150 CE"
 
 
 def test_repr():
@@ -160,6 +159,7 @@ def test_repr():
 # ==========================================================
 # Immutability
 # ==========================================================
+
 
 def test_frozen_dataclass():
     contract = build_call_contract()

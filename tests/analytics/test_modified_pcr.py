@@ -12,48 +12,34 @@ from optionforge.snapshot.institutional_snapshot import (
 def snapshot():
 
     option_chain = pd.DataFrame(
-
         {
-
             "OPT_TYPE": [
                 "CE",
                 "CE",
                 "PE",
                 "PE",
             ],
-
             "OPEN_INT": [
                 100,
                 300,
                 200,
                 400,
             ],
-
             "STRIKE_PRICE": [
                 25000,
                 25100,
                 25000,
                 25100,
             ],
-
         }
-
     )
 
     return InstitutionalSnapshot(
-
         symbol="NIFTY",
-
         trade_date=20260101,
-
         expiry=20260129,
-
-        spot=pd.DataFrame(
-            {"CLOSE": [25050]}
-        ),
-
+        spot=pd.DataFrame({"CLOSE": [25050]}),
         option_chain=option_chain,
-
     )
 
 
@@ -61,9 +47,7 @@ def test_calculate():
 
     engine = ModifiedPCREngine()
 
-    result = engine.calculate(
-        snapshot()
-    )
+    result = engine.calculate(snapshot())
 
     assert result.call_oi == 400
 
@@ -78,9 +62,7 @@ def test_symbol():
 
     engine = ModifiedPCREngine()
 
-    result = engine.calculate(
-        snapshot()
-    )
+    result = engine.calculate(snapshot())
 
     assert result.symbol == "NIFTY"
 

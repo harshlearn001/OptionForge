@@ -72,17 +72,10 @@ class ZeroGamma:
             )
 
         return ZeroGammaResult(
-
             zero_gamma=zero_gamma,
-
             current_spot=current_spot,
-
             distance=distance,
-
             status=status,
-
             dealer_regime=dealer_regime,
-
             interpretation=interpretation,
-
         )

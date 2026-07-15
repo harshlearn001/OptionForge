@@ -14,7 +14,6 @@ from optionforge.models import GammaExposureResult
 def sample_chain():
 
     return [
-
         {
             "strike": 25000,
             "option_type": "CE",
@@ -22,7 +21,6 @@ def sample_chain():
             "open_interest": 150000,
             "lot_size": 75,
         },
-
         {
             "strike": 25000,
             "option_type": "PE",
@@ -30,7 +28,6 @@ def sample_chain():
             "open_interest": 120000,
             "lot_size": 75,
         },
-
         {
             "strike": 25100,
             "option_type": "CE",
@@ -38,7 +35,6 @@ def sample_chain():
             "open_interest": 80000,
             "lot_size": 75,
         },
-
         {
             "strike": 24900,
             "option_type": "PE",
@@ -46,7 +42,6 @@ def sample_chain():
             "open_interest": 140000,
             "lot_size": 75,
         },
-
     ]
 
 
@@ -165,9 +160,7 @@ def test_regime_type():
 
 def test_interpretation_not_empty():
 
-    assert len(
-        result().interpretation
-    ) > 10
+    assert len(result().interpretation) > 10
 
 
 def test_positive_strike_float():
@@ -190,9 +183,7 @@ def test_net_equals_difference():
 
     r = result()
 
-    assert r.net_gex == pytest.approx(
-        r.total_call_gex - r.total_put_gex
-    )
+    assert r.net_gex == pytest.approx(r.total_call_gex - r.total_put_gex)
 
 
 def test_result_fields():

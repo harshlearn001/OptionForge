@@ -84,33 +84,19 @@ class TradeStatistics:
     def __post_init__(self) -> None:
 
         if self.total_trades < 0:
-            raise ValueError(
-                "total_trades cannot be negative."
-            )
+            raise ValueError("total_trades cannot be negative.")
 
         if self.winning_trades < 0:
-            raise ValueError(
-                "winning_trades cannot be negative."
-            )
+            raise ValueError("winning_trades cannot be negative.")
 
         if self.losing_trades < 0:
-            raise ValueError(
-                "losing_trades cannot be negative."
-            )
+            raise ValueError("losing_trades cannot be negative.")
 
-        if (
-            self.winning_trades
-            + self.losing_trades
-            > self.total_trades
-        ):
-            raise ValueError(
-                "Winning and losing trades exceed total trades."
-            )
+        if self.winning_trades + self.losing_trades > self.total_trades:
+            raise ValueError("Winning and losing trades exceed total trades.")
 
         if self.profit_factor < 0:
-            raise ValueError(
-                "profit_factor cannot be negative."
-            )
+            raise ValueError("profit_factor cannot be negative.")
 
     # =====================================================
     # Convenience
@@ -122,13 +108,7 @@ class TradeStatistics:
         if self.total_trades == 0:
             return 0.0
 
-        return (
-
-            self.winning_trades
-
-            / self.total_trades
-
-        ) * 100.0
+        return (self.winning_trades / self.total_trades) * 100.0
 
     @property
     def loss_rate(self) -> float:
@@ -136,13 +116,7 @@ class TradeStatistics:
         if self.total_trades == 0:
             return 0.0
 
-        return (
-
-            self.losing_trades
-
-            / self.total_trades
-
-        ) * 100.0
+        return (self.losing_trades / self.total_trades) * 100.0
 
     @property
     def is_profitable(self) -> bool:
@@ -156,35 +130,20 @@ class TradeStatistics:
     def to_dict(self) -> dict[str, Any]:
 
         return {
-
             "total_trades": self.total_trades,
-
             "winning_trades": self.winning_trades,
-
             "losing_trades": self.losing_trades,
-
             "win_rate": self.win_rate,
-
             "loss_rate": self.loss_rate,
-
             "average_win": self.average_win,
-
             "average_loss": self.average_loss,
-
             "largest_win": self.largest_win,
-
             "largest_loss": self.largest_loss,
-
             "profit_factor": self.profit_factor,
-
             "expectancy": self.expectancy,
-
             "longest_winning_streak": self.longest_winning_streak,
-
             "longest_losing_streak": self.longest_losing_streak,
-
             "metadata": dict(self.metadata),
-
         }
 
     # =====================================================
@@ -194,23 +153,15 @@ class TradeStatistics:
     def __str__(self) -> str:
 
         return (
-
             f"TradeStatistics("
-
             f"trades={self.total_trades}, "
-
             f"win_rate={self.win_rate:.1f}%)"
-
         )
 
     def __repr__(self) -> str:
 
         return (
-
             f"TradeStatistics("
-
             f"trades={self.total_trades}, "
-
             f"profit_factor={self.profit_factor:.2f})"
-
         )

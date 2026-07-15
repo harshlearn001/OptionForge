@@ -10,41 +10,25 @@ from optionforge.intelligence.models.market_intelligence import (
     MarketIntelligence,
 )
 
-
 dealer = DealerIntelligence(
-
     state=DealerState.LONG_GAMMA,
-
     confidence=95.0,
-
     evidence=("Positive Gamma",),
-
     risks=("Watch Gamma Flip",),
-
     summary="Dealers are long gamma.",
-
 )
 
 market = MarketIntelligence(
-
     state=MarketState.BULLISH_TREND,
-
     confidence=90.0,
-
     evidence=("Bullish Structure",),
-
     risks=("Resistance Ahead",),
-
     summary="Market is bullish.",
-
 )
 
 decision = DecisionEngine.evaluate(
-
     dealer=dealer,
-
     market=market,
-
 )
 
 print()

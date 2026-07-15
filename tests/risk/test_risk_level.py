@@ -9,10 +9,10 @@ from optionforge.risk.risk_level import (
     RiskLevel,
 )
 
-
 # ==========================================================
 # Enum
 # ==========================================================
+
 
 def test_enum_members():
 
@@ -33,6 +33,7 @@ def test_enum_members():
 # Score
 # ==========================================================
 
+
 def test_score():
 
     assert RiskLevel.VERY_LOW.score == 1
@@ -51,6 +52,7 @@ def test_score():
 # ==========================================================
 # Safe
 # ==========================================================
+
 
 def test_is_safe():
 
@@ -71,6 +73,7 @@ def test_is_safe():
 # Attention
 # ==========================================================
 
+
 def test_requires_attention():
 
     assert RiskLevel.MODERATE.requires_attention
@@ -85,9 +88,11 @@ def test_requires_attention():
 
     assert not RiskLevel.EXTREME.requires_attention
 
+
 # ==========================================================
 # Critical
 # ==========================================================
+
 
 def test_is_critical():
 
@@ -107,6 +112,7 @@ def test_is_critical():
 # ==========================================================
 # From Score
 # ==========================================================
+
 
 def test_from_score():
 
@@ -139,40 +145,47 @@ def test_from_score():
 # String
 # ==========================================================
 
+
 def test_str():
 
-    assert str(
+    assert (
+        str(
+            RiskLevel.VERY_LOW,
+        )
+        == "Very Low"
+    )
 
-        RiskLevel.VERY_LOW,
+    assert (
+        str(
+            RiskLevel.LOW,
+        )
+        == "Low"
+    )
 
-    ) == "Very Low"
+    assert (
+        str(
+            RiskLevel.MODERATE,
+        )
+        == "Moderate"
+    )
 
-    assert str(
+    assert (
+        str(
+            RiskLevel.HIGH,
+        )
+        == "High"
+    )
 
-        RiskLevel.LOW,
+    assert (
+        str(
+            RiskLevel.VERY_HIGH,
+        )
+        == "Very High"
+    )
 
-    ) == "Low"
-
-    assert str(
-
-        RiskLevel.MODERATE,
-
-    ) == "Moderate"
-
-    assert str(
-
-        RiskLevel.HIGH,
-
-    ) == "High"
-
-    assert str(
-
-        RiskLevel.VERY_HIGH,
-
-    ) == "Very High"
-
-    assert str(
-
-        RiskLevel.EXTREME,
-
-    ) == "Extreme"
+    assert (
+        str(
+            RiskLevel.EXTREME,
+        )
+        == "Extreme"
+    )

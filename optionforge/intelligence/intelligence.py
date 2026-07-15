@@ -85,19 +85,13 @@ class Intelligence:
     # -----------------------------------------------------
 
     timestamp: datetime = field(
-
         default_factory=lambda: datetime.now(UTC),
-
         compare=False,
-
     )
 
     metadata: Mapping[str, Any] = field(
-
         default_factory=dict,
-
         compare=False,
-
     )
 
     # -----------------------------------------------------
@@ -108,11 +102,7 @@ class Intelligence:
 
         if not (0.0 <= self.confidence <= 100.0):
 
-            raise ValueError(
-
-                "Confidence must be between 0 and 100."
-
-            )
+            raise ValueError("Confidence must be between 0 and 100.")
 
     # -----------------------------------------------------
     # Convenience
@@ -134,27 +124,16 @@ class Intelligence:
     ) -> dict[str, Any]:
 
         return {
-
             "id": self.id,
-
             "name": self.name,
-
             "type": self.type.name,
-
             "level": self.level.name,
-
             "score": self.score,
-
             "confidence": self.confidence,
-
             "description": self.description,
-
             "knowledge_ids": self.knowledge_ids,
-
             "timestamp": self.timestamp.isoformat(),
-
             "metadata": dict(self.metadata),
-
         }
 
     # -----------------------------------------------------
@@ -166,13 +145,9 @@ class Intelligence:
     ) -> str:
 
         return (
-
             f"{self.name}("
-
             f"score={self.score:.2f}, "
-
             f"confidence={self.confidence:.1f}%)"
-
         )
 
     def __repr__(
@@ -180,15 +155,9 @@ class Intelligence:
     ) -> str:
 
         return (
-
             f"Intelligence("
-
             f"id={self.id}, "
-
             f"type={self.type.name}, "
-
             f"score={self.score}, "
-
             f"confidence={self.confidence})"
-
         )

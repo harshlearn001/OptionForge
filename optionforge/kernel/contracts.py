@@ -11,14 +11,10 @@ from __future__ import annotations
 from typing import Protocol, Any
 
 
-class Snapshot(Protocol):
-
-    ...
+class Snapshot(Protocol): ...
 
 
-class Result(Protocol):
-
-    ...
+class Result(Protocol): ...
 
 
 class Executable(Protocol):
@@ -26,5 +22,4 @@ class Executable(Protocol):
     def execute(
         self,
         snapshot: Snapshot,
-    ) -> Result:
-        ...
+    ) -> Result: ...

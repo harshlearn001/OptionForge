@@ -14,7 +14,6 @@ from optionforge.models import DeltaExposureResult
 def sample_chain():
 
     return [
-
         {
             "strike": 25000,
             "option_type": "CE",
@@ -22,7 +21,6 @@ def sample_chain():
             "open_interest": 150000,
             "lot_size": 75,
         },
-
         {
             "strike": 25000,
             "option_type": "PE",
@@ -30,7 +28,6 @@ def sample_chain():
             "open_interest": 120000,
             "lot_size": 75,
         },
-
         {
             "strike": 25100,
             "option_type": "CE",
@@ -38,7 +35,6 @@ def sample_chain():
             "open_interest": 80000,
             "lot_size": 75,
         },
-
         {
             "strike": 24900,
             "option_type": "PE",
@@ -46,7 +42,6 @@ def sample_chain():
             "open_interest": 140000,
             "lot_size": 75,
         },
-
     ]
 
 
@@ -158,9 +153,7 @@ def test_net_equals_sum():
 
     r = result()
 
-    assert r.net_dex == pytest.approx(
-        r.total_call_dex + r.total_put_dex
-    )
+    assert r.net_dex == pytest.approx(r.total_call_dex + r.total_put_dex)
 
 
 def test_positive_strike_float():
@@ -189,9 +182,7 @@ def test_dealer_position_type():
 
 def test_interpretation_not_empty():
 
-    assert len(
-        result().interpretation
-    ) > 10
+    assert len(result().interpretation) > 10
 
 
 def test_large_spot():

@@ -79,49 +79,29 @@ class Probability:
 
         if bullish_probability >= 80:
 
-            recommendation = (
-                "Bullish setup with favorable probability."
-            )
+            recommendation = "Bullish setup with favorable probability."
 
         elif bullish_probability >= 60:
 
-            recommendation = (
-                "Moderately bullish. Confirmation is advised."
-            )
+            recommendation = "Moderately bullish. Confirmation is advised."
 
         elif bullish_probability >= 40:
 
-            recommendation = (
-                "Balanced market. Wait for stronger signals."
-            )
+            recommendation = "Balanced market. Wait for stronger signals."
 
         else:
 
-            recommendation = (
-                "Bearish setup. Avoid aggressive long positions."
-            )
+            recommendation = "Bearish setup. Avoid aggressive long positions."
 
-        interpretation = (
-            f"Bullish probability is "
-            f"{bullish_probability:.2f}%."
-        )
+        interpretation = f"Bullish probability is " f"{bullish_probability:.2f}%."
 
         return ProbabilityResult(
-
             bullish_probability=bullish_probability,
-
             bearish_probability=bearish_probability,
-
             confidence=confidence,
-
             stars=stars,
-
             trade_quality=trade_quality,
-
             risk_level=risk_level,
-
             recommendation=recommendation,
-
             interpretation=interpretation,
-
         )

@@ -59,15 +59,7 @@ class Greeks:
             volatility,
         )
 
-        return (
-            NormalDistribution.pdf(d1)
-            /
-            (
-                spot
-                * volatility
-                * math.sqrt(time)
-            )
-        )
+        return NormalDistribution.pdf(d1) / (spot * volatility * math.sqrt(time))
 
     @staticmethod
     def vega(
@@ -87,11 +79,7 @@ class Greeks:
             volatility,
         )
 
-        return (
-            spot
-            * NormalDistribution.pdf(d1)
-            * math.sqrt(time)
-        )
+        return spot * NormalDistribution.pdf(d1) * math.sqrt(time)
 
     @staticmethod
     def theta(
@@ -120,32 +108,19 @@ class Greeks:
         )
 
         first_term = (
-            -spot
-            * NormalDistribution.pdf(d1)
-            * volatility
-            /
-            (
-                2
-                * math.sqrt(time)
-            )
+            -spot * NormalDistribution.pdf(d1) * volatility / (2 * math.sqrt(time))
         )
 
         if option_type.upper() == "CE":
 
             second_term = (
-                rate
-                * strike
-                * math.exp(-rate * time)
-                * NormalDistribution.cdf(d2)
+                rate * strike * math.exp(-rate * time) * NormalDistribution.cdf(d2)
             )
 
             return first_term - second_term
 
         second_term = (
-            rate
-            * strike
-            * math.exp(-rate * time)
-            * NormalDistribution.cdf(-d2)
+            rate * strike * math.exp(-rate * time) * NormalDistribution.cdf(-d2)
         )
 
         return first_term + second_term

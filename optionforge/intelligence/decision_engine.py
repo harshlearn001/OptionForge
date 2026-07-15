@@ -49,37 +49,30 @@ class DecisionEngine:
     # ---------------------------------------------------------
 
     DECISION_MATRIX = {
-
         (
             DealerState.LONG_GAMMA,
             MarketState.BULLISH_TREND,
         ): InstitutionalState.STRONGLY_BULLISH,
-
         (
             DealerState.LONG_GAMMA,
             MarketState.BREAKOUT,
         ): InstitutionalState.BULLISH,
-
         (
             DealerState.LONG_GAMMA,
             MarketState.RANGE_BOUND,
         ): InstitutionalState.BULLISH,
-
         (
             DealerState.TRANSITION,
             MarketState.TRANSITION,
         ): InstitutionalState.NEUTRAL,
-
         (
             DealerState.SHORT_GAMMA,
             MarketState.BEARISH_TREND,
         ): InstitutionalState.STRONGLY_BEARISH,
-
         (
             DealerState.SHORT_GAMMA,
             MarketState.RANGE_BOUND,
         ): InstitutionalState.BEARISH,
-
     }
 
     @classmethod
@@ -91,50 +84,28 @@ class DecisionEngine:
     ) -> InstitutionalDecision:
 
         state = cls.DECISION_MATRIX.get(
-
             (dealer.state, market.state),
-
             InstitutionalState.NEUTRAL,
-
         )
 
         evidence = (
-
             f"Dealer = {dealer.state.name}",
-
             f"Market = {market.state.name}",
-
         )
 
         confidence = round(
-
             (dealer.confidence + market.confidence) / 2,
-
             1,
-
         )
 
-        risks = (
-            "Monitor for changing market conditions.",
-        )
+        risks = ("Monitor for changing market conditions.",)
 
-        summary = (
-
-            f"Institutional assessment is "
-            f"{state.name.replace('_', ' ')}."
-
-        )
+        summary = f"Institutional assessment is " f"{state.name.replace('_', ' ')}."
 
         return InstitutionalDecision(
-
             state=state,
-
             confidence=confidence,
-
             evidence=evidence,
-
             risks=risks,
-
             summary=summary,
-
         )

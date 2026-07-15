@@ -111,15 +111,7 @@ class KnowledgeRegistry:
         Return all Knowledge of one type.
         """
 
-        return [
-
-            knowledge
-
-            for knowledge in self
-
-            if knowledge.type == knowledge_type
-
-        ]
+        return [knowledge for knowledge in self if knowledge.type == knowledge_type]
 
     # =====================================================
     # Aggregation
@@ -135,13 +127,7 @@ class KnowledgeRegistry:
 
             return 0.0
 
-        return sum(
-
-            knowledge.score
-
-            for knowledge in self
-
-        ) / len(self)
+        return sum(knowledge.score for knowledge in self) / len(self)
 
     @property
     def confidence(self) -> float:
@@ -153,13 +139,7 @@ class KnowledgeRegistry:
 
             return 0.0
 
-        return sum(
-
-            knowledge.confidence
-
-            for knowledge in self
-
-        ) / len(self)
+        return sum(knowledge.confidence for knowledge in self) / len(self)
 
     # =====================================================
     # Serialization
@@ -170,13 +150,7 @@ class KnowledgeRegistry:
         Serialize registry.
         """
 
-        return [
-
-            knowledge.to_dict()
-
-            for knowledge in self
-
-        ]
+        return [knowledge.to_dict() for knowledge in self]
 
     # =====================================================
     # Dunder
@@ -188,11 +162,7 @@ class KnowledgeRegistry:
 
     def __iter__(self) -> Iterator[Knowledge]:
 
-        return iter(
-
-            self._registry.values()
-
-        )
+        return iter(self._registry.values())
 
     def __contains__(
         self,
@@ -203,10 +173,4 @@ class KnowledgeRegistry:
 
     def __repr__(self) -> str:
 
-        return (
-
-            f"KnowledgeRegistry("
-
-            f"{len(self)} knowledge)"
-
-        )
+        return f"KnowledgeRegistry(" f"{len(self)} knowledge)"

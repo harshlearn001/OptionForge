@@ -16,47 +16,32 @@ def portfolio(
 ):
 
     return SimpleNamespace(
-
         capital_utilization=exposure,
-
     )
 
 
 def test_returns_rule_result():
 
     result = ExposureRule().evaluate(
-
         portfolio=portfolio(
-
             40.0,
-
         ),
-
     )
 
     assert isinstance(
-
         result,
-
         RuleResult,
-
     )
 
 
 def test_within_limit():
 
     result = ExposureRule(
-
         max_exposure=75.0,
-
     ).evaluate(
-
         portfolio=portfolio(
-
             50.0,
-
         ),
-
     )
 
     assert result.passed
@@ -67,17 +52,11 @@ def test_within_limit():
 def test_above_limit():
 
     result = ExposureRule(
-
         max_exposure=75.0,
-
     ).evaluate(
-
         portfolio=portfolio(
-
             90.0,
-
         ),
-
     )
 
     assert not result.passed
@@ -88,17 +67,11 @@ def test_above_limit():
 def test_exact_boundary():
 
     result = ExposureRule(
-
         max_exposure=75.0,
-
     ).evaluate(
-
         portfolio=portfolio(
-
             75.0,
-
         ),
-
     )
 
     assert result.passed
@@ -107,9 +80,7 @@ def test_exact_boundary():
 def test_property():
 
     rule = ExposureRule(
-
         max_exposure=60.0,
-
     )
 
     assert rule.max_exposure == 60.0
@@ -118,13 +89,9 @@ def test_property():
 def test_rule_name():
 
     result = ExposureRule().evaluate(
-
         portfolio=portfolio(
-
             40.0,
-
         ),
-
     )
 
     assert result.rule_name == "ExposureRule"
@@ -132,14 +99,6 @@ def test_rule_name():
 
 def test_repr():
 
-    assert (
-
-        "ExposureRule"
-
-        in repr(
-
-            ExposureRule(),
-
-        )
-
+    assert "ExposureRule" in repr(
+        ExposureRule(),
     )

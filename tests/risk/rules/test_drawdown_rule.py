@@ -16,47 +16,32 @@ def portfolio(
 ):
 
     return SimpleNamespace(
-
         return_percentage=return_percentage,
-
     )
 
 
 def test_returns_rule_result():
 
     result = DrawdownRule().evaluate(
-
         portfolio=portfolio(
-
             -10.0,
-
         ),
-
     )
 
     assert isinstance(
-
         result,
-
         RuleResult,
-
     )
 
 
 def test_within_limit():
 
     result = DrawdownRule(
-
         max_drawdown=20.0,
-
     ).evaluate(
-
         portfolio=portfolio(
-
             -10.0,
-
         ),
-
     )
 
     assert result.passed
@@ -67,17 +52,11 @@ def test_within_limit():
 def test_above_limit():
 
     result = DrawdownRule(
-
         max_drawdown=20.0,
-
     ).evaluate(
-
         portfolio=portfolio(
-
             -30.0,
-
         ),
-
     )
 
     assert not result.passed
@@ -88,17 +67,11 @@ def test_above_limit():
 def test_exact_boundary():
 
     result = DrawdownRule(
-
         max_drawdown=20.0,
-
     ).evaluate(
-
         portfolio=portfolio(
-
             -20.0,
-
         ),
-
     )
 
     assert result.passed
@@ -107,9 +80,7 @@ def test_exact_boundary():
 def test_property():
 
     rule = DrawdownRule(
-
         max_drawdown=15.0,
-
     )
 
     assert rule.max_drawdown == 15.0
@@ -118,13 +89,9 @@ def test_property():
 def test_rule_name():
 
     result = DrawdownRule().evaluate(
-
         portfolio=portfolio(
-
             -5.0,
-
         ),
-
     )
 
     assert result.rule_name == "DrawdownRule"
@@ -132,14 +99,6 @@ def test_rule_name():
 
 def test_repr():
 
-    assert (
-
-        "DrawdownRule"
-
-        in repr(
-
-            DrawdownRule(),
-
-        )
-
+    assert "DrawdownRule" in repr(
+        DrawdownRule(),
     )

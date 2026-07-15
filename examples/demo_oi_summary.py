@@ -5,11 +5,7 @@ OI SUMMARY TEST
 ======================================================================
 """
 
-import sys
-from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parents[2]
-sys.path.append(str(BASE_DIR))
 
 from optionforge.optionchain import OptionChain
 from optionforge.oi.oi_summary import OISummary
@@ -41,7 +37,7 @@ print(chain)
 # Summary
 # ==========================================================
 
-summary = OISummary(chain.df)
+summary = OISummary(chain.to_dataframe())
 
 print("\nSUMMARY OBJECT")
 print("-" * 70)

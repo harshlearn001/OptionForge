@@ -29,42 +29,27 @@ from optionforge.execution.trade import Trade
 def order():
 
     return Order(
-
         symbol="NIFTY",
-
         side=OrderSide.BUY,
-
         order_type=OrderType.MARKET,
-
         status=OrderStatus.PENDING,
-
         quantity=100,
-
         price=250.0,
-
     )
 
 
 def trade():
 
     fill = Fill(
-
         order=order(),
-
         quantity=100,
-
         price=250.0,
-
         status=FillStatus.COMPLETE,
-
     )
 
     return Trade(
-
         order=order(),
-
         fills=(fill,),
-
     )
 
 
@@ -76,37 +61,27 @@ def engine():
 def test_registry():
 
     assert isinstance(
-
         engine().registry,
-
         ExecutionRegistry,
-
     )
 
 
 def test_execute_returns_result():
 
     result = engine().execute(
-
         trades=(trade(),),
-
     )
 
     assert isinstance(
-
         result,
-
         ExecutionResult,
-
     )
 
 
 def test_trade_count():
 
     result = engine().execute(
-
         trades=(trade(),),
-
     )
 
     assert result.trade_count == 1
@@ -115,9 +90,7 @@ def test_trade_count():
 def test_quantity():
 
     result = engine().execute(
-
         trades=(trade(),),
-
     )
 
     assert result.total_quantity == 100
@@ -126,9 +99,7 @@ def test_quantity():
 def test_notional():
 
     result = engine().execute(
-
         trades=(trade(),),
-
     )
 
     assert result.total_notional == 25000.0
@@ -146,24 +117,13 @@ def test_builder_type():
     builder = engine().registry.get_builder()
 
     assert isinstance(
-
         builder,
-
         ExecutionBuilder,
-
     )
 
 
 def test_repr():
 
-    assert (
-
-        "ExecutionEngine"
-
-        in repr(
-
-            engine(),
-
-        )
-
+    assert "ExecutionEngine" in repr(
+        engine(),
     )

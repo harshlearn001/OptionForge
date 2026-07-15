@@ -64,7 +64,7 @@ class RiskType(Enum):
         """
 
         return self is RiskType.REJECTED
-    
+
     @classmethod
     def from_score(
         cls,
@@ -102,9 +102,6 @@ class RiskType(Enum):
         """
 
         return self.name.replace(
-
             "_",
-
             " ",
-
         ).title()

@@ -15,7 +15,6 @@ sys.path.append(str(BASE_DIR))
 
 from optionforge.intelligence import MarketStructure
 
-
 print("=" * 60)
 print("OPTIONFORGE")
 print("MARKET STRUCTURE TEST")
@@ -26,25 +25,15 @@ print("=" * 60)
 # ---------------------------------------------------------
 
 result = MarketStructure.calculate(
-
     support_strength=96,
-
     resistance_strength=91,
-
     expected_move=82,
-
     iv_rank=42,
-
     iv_percentile=51,
-
     max_pain=88,
-
     oi_wall_score=90,
-
     oi_shift_score=84,
-
     oi_change_score=80,
-
 )
 
 print()

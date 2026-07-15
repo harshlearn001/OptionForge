@@ -79,25 +79,14 @@ class Dashboard:
         )
 
         return DashboardResult(
-
             dealer_bias=dealer.dealer_bias,
-
             dealer_direction=dealer.dealer_direction,
-
             gamma_status=gamma_flip.flip_status,
-
             zero_gamma_status=zero_gamma.status,
-
             hedging_flow=hedging.flow_direction,
-
             institutional_score=score,
-
             confidence=dealer.confidence,
-
             market_bias=market_bias,
-
             risk_level=risk,
-
             summary=summary,
-
         )

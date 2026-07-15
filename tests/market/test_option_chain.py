@@ -23,10 +23,10 @@ from optionforge.kernel.trading_session import TradingSession
 from optionforge.market.market_snapshot import MarketSnapshot
 from optionforge.market.option_chain import OptionChain
 
-
 # ==========================================================
 # Builders
 # ==========================================================
+
 
 def build_session() -> TradingSession:
     return TradingSession(
@@ -110,6 +110,7 @@ def build_chain() -> OptionChain:
 # Creation
 # ==========================================================
 
+
 def test_creation():
 
     chain = build_chain()
@@ -120,6 +121,7 @@ def test_creation():
 # ==========================================================
 # Identity
 # ==========================================================
+
 
 def test_symbol():
 
@@ -133,23 +135,18 @@ def test_exchange():
 
 def test_expiry():
 
-    assert (
-        build_chain().expiry.expiry_date
-        == date(2026, 7, 2)
-    )
+    assert build_chain().expiry.expiry_date == date(2026, 7, 2)
 
 
 def test_trading_date():
 
-    assert (
-        build_chain().trading_date
-        == date(2026, 7, 1)
-    )
+    assert build_chain().trading_date == date(2026, 7, 1)
 
 
 # ==========================================================
 # Collection
 # ==========================================================
+
 
 def test_len():
 
@@ -176,6 +173,7 @@ def test_contains():
 # ==========================================================
 # Lookup
 # ==========================================================
+
 
 def test_get():
 
@@ -205,6 +203,7 @@ def test_exists():
 # Serialization
 # ==========================================================
 
+
 def test_to_dict():
 
     data = build_chain().to_dict()
@@ -224,6 +223,7 @@ def test_to_list():
 # Representation
 # ==========================================================
 
+
 def test_str():
 
     assert "NIFTY" in str(build_chain())
@@ -237,6 +237,7 @@ def test_repr():
 # ==========================================================
 # Validation
 # ==========================================================
+
 
 def test_empty_chain():
 
@@ -263,6 +264,7 @@ def test_duplicate_contract():
 # ==========================================================
 # Frozen
 # ==========================================================
+
 
 def test_frozen():
 

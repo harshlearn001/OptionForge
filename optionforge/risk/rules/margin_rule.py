@@ -41,59 +41,28 @@ class MarginRule(RiskRule):
         if margin <= self._max_margin:
 
             return RuleResult(
-
                 rule_name=self.__class__.__name__,
-
                 score=5.0,
-
                 passed=True,
-
                 warnings=(),
-
-                reasons=(
-
-                    "Margin utilization within limits.",
-
-                ),
-
+                reasons=("Margin utilization within limits.",),
             )
 
         return RuleResult(
-
             rule_name=self.__class__.__name__,
-
             score=min(
-
                 100.0,
-
                 margin,
-
             ),
-
             passed=False,
-
             warnings=(
-
                 f"Margin utilization "
                 f"{margin:.1f}% exceeds "
                 f"{self._max_margin:.1f}%",
-
             ),
-
-            reasons=(
-
-                "Margin utilization exceeds policy.",
-
-            ),
-
+            reasons=("Margin utilization exceeds policy.",),
         )
 
     def __repr__(self) -> str:
 
-        return (
-
-            f"MarginRule("
-
-            f"max_margin={self._max_margin})"
-
-        )
+        return f"MarginRule(" f"max_margin={self._max_margin})"

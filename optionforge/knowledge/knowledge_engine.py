@@ -70,11 +70,8 @@ class KnowledgeEngine:
         for rule in self._rules:
 
             knowledge = rule.evaluate(
-
                 evidence=evidence,
-
                 builder=self._builder,
-
             )
 
             if knowledge is not None:
@@ -99,7 +96,6 @@ class KnowledgeEngine:
 
     @property
     def rules(self):
-
         """
         Registered rules.
         """
@@ -116,10 +112,4 @@ class KnowledgeEngine:
 
     def __repr__(self) -> str:
 
-        return (
-
-            f"KnowledgeEngine("
-
-            f"rules={len(self)})"
-
-        )
+        return f"KnowledgeEngine(" f"rules={len(self)})"

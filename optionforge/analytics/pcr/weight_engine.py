@@ -40,13 +40,11 @@ class WeightEngine:
     ) -> int:
 
         return int(
-
             self.distance(
                 strike,
                 atm,
             )
             / self.strike_interval
-
         )
 
     # -----------------------------------------------------
@@ -58,47 +56,28 @@ class WeightEngine:
     ) -> float:
 
         level = self.levels_from_atm(
-
             strike,
-
             atm,
-
         )
 
         table = {
-
             0: 1.00,
-
             1: 0.95,
-
             2: 0.90,
-
             3: 0.85,
-
             4: 0.80,
-
             5: 0.75,
-
         }
 
         return table.get(
-
             level,
-
             0.50,
-
         )
 
     # -----------------------------------------------------
 
     def __repr__(self):
 
-        return (
-
-            f"WeightEngine("
-
-            f"interval={self.strike_interval})"
-
-        )
+        return f"WeightEngine(" f"interval={self.strike_interval})"
 
     __str__ = __repr__
