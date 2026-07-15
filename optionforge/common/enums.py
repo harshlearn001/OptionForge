@@ -150,6 +150,25 @@ class ShiftDirection(str, Enum):
     def __str__(self) -> str:
         return self.value
 
+@unique
+class TrendDirection(str, Enum):
+    """
+    Multi-day Open Interest trend.
+    """
+
+    STRONG_BULLISH = "STRONG_BULLISH"
+
+    BULLISH = "BULLISH"
+
+    SIDEWAYS = "SIDEWAYS"
+
+    BEARISH = "BEARISH"
+
+    STRONG_BEARISH = "STRONG_BEARISH"
+
+    def __str__(self) -> str:
+        return self.value
+
 __all__ = [
     "Exchange",
     "InstrumentType",
@@ -159,6 +178,7 @@ __all__ = [
     "BuildUp",
     "WallType",
     "ConcentrationLevel",
-    "ShiftDirection"
+    "ShiftDirection",
+    "TrendDirection",
 ]
 
