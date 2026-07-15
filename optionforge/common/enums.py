@@ -24,7 +24,6 @@ from __future__ import annotations
 
 from enum import Enum, unique
 
-
 @unique
 class Exchange(str, Enum):
     """Supported stock exchanges."""
@@ -89,11 +88,26 @@ class MarketStatus(str, Enum):
     def __str__(self) -> str:
         return self.value
 
+@unique
+class BuildUp(str, Enum):
+    """Open Interest build-up classification."""
 
+    LONG_BUILDUP = "LONG_BUILDUP"
+    SHORT_BUILDUP = "SHORT_BUILDUP"
+    SHORT_COVERING = "SHORT_COVERING"
+    LONG_UNWINDING = "LONG_UNWINDING"
+    NEUTRAL = "NEUTRAL"
+
+    def __str__(self) -> str:
+        return self.value
+    
+    
 __all__ = [
     "Exchange",
     "InstrumentType",
     "OptionType",
     "ExpiryType",
     "MarketStatus",
+    "BuildUp"
 ]
+
