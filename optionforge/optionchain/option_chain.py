@@ -325,14 +325,21 @@ class OptionChain:
     # Expiry Selector
     # ==========================================================
 
-    def expiry(self, expiry_date) -> "OptionChain":
+    def by_expiry(
+        self,
+        expiry_date,
+    ) -> "OptionChain":
         """
         Returns a chain for any expiry date.
         """
 
         expiry = pd.Timestamp(expiry_date)
 
-        dataframe = self.df[self.df["EXPIRY"] == expiry].copy().reset_index(drop=True)
+        dataframe = (
+            self.df[self.df["EXPIRY"] == expiry]
+            .copy()
+            .reset_index(drop=True)
+        )
 
         return OptionChain(dataframe)
 

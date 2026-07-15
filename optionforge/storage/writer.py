@@ -9,7 +9,6 @@ Historical Storage Writer
 
 from pathlib import Path
 
-import pandas as pd
 
 from optionforge.storage.schema import OptionChainSchema
 

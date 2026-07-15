@@ -54,3 +54,10 @@ SAVE_SCANNER = True
 SAVE_ANALYTICS = True
 
 SAVE_PARQUET = True
+# ==========================================================
+# Backward Compatibility
+# ==========================================================
+
+DATA_DIR = DATA_FOLDER
+
+CONFIG_DIR = PROJECT_ROOT / "optionforge" / "config"

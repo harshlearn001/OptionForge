@@ -25,7 +25,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date
-from typing import Iterable, Iterator
+from typing import Iterator
 
 from optionforge.common.enums import Exchange, OptionType
 from optionforge.kernel.expiry import Expiry

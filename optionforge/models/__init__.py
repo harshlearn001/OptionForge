@@ -26,9 +26,6 @@ from .dashboard_result import DashboardResult
 from .institutional_signal_result import InstitutionalSignalResult
 from .dealer_pressure_result import DealerPressureResult
 from .market_explosion_risk_result import MarketExplosionRiskResult
-from optionforge.models.dealer_position_result import (
-    DealerPositionResult,
-)
 
 __all__ = [
     "OptionContract",

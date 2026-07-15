@@ -33,9 +33,6 @@ from __future__ import annotations
 from optionforge.portfolio.capital_allocator import (
     CapitalAllocator,
 )
-from optionforge.portfolio.portfolio import (
-    Portfolio,
-)
 from optionforge.portfolio.portfolio_builder import (
     PortfolioBuilder,
 )

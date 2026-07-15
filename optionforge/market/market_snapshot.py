@@ -26,7 +26,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-
+from optionforge.common.enums import (
+    OptionType,
+)
 from optionforge.kernel.expiry import Expiry
 from optionforge.kernel.option_contract import OptionContract
 from optionforge.kernel.strike import Strike

@@ -49,17 +49,6 @@ class ChainFilters:
             snapshot for snapshot in chain if snapshot.option_type is OptionType.PUT
         )
 
-    @staticmethod
-    def puts(
-        chain: OptionChain,
-    ) -> tuple[MarketSnapshot, ...]:
-        """
-        Return all Put snapshots.
-        """
-
-        return tuple(
-            snapshot for snapshot in chain if snapshot.option_type is OptionType.PUT
-        )
 
     @staticmethod
     def by_strike(

@@ -7,7 +7,7 @@ Capital Rule
 
 from __future__ import annotations
 
-from optionforge import portfolio
+
 from optionforge.portfolio.portfolio import Portfolio
 from optionforge.risk.rule_result import RuleResult
 from optionforge.risk.rules.risk_rule import RiskRule
