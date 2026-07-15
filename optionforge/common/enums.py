@@ -100,14 +100,29 @@ class BuildUp(str, Enum):
 
     def __str__(self) -> str:
         return self.value
-    
-    
+
+@unique
+class WallType(str, Enum):
+    """
+    OI Wall classification.
+    """
+
+    CALL_WALL = "CALL_WALL"
+
+    PUT_WALL = "PUT_WALL"
+
+    BALANCED = "BALANCED"
+
+    def __str__(self) -> str:
+        return self.value  
+
 __all__ = [
     "Exchange",
     "InstrumentType",
     "OptionType",
     "ExpiryType",
     "MarketStatus",
-    "BuildUp"
+    "BuildUp",
+    "WallType",
 ]
 
