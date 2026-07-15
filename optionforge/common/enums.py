@@ -115,6 +115,21 @@ class WallType(str, Enum):
 
     def __str__(self) -> str:
         return self.value  
+    
+@unique
+class ConcentrationLevel(str, Enum):
+    """
+    OI concentration classification.
+    """
+
+    VERY_HIGH = "VERY_HIGH"
+    HIGH = "HIGH"
+    MEDIUM = "MEDIUM"
+    LOW = "LOW"
+    VERY_LOW = "VERY_LOW"
+
+    def __str__(self) -> str:
+        return self.value
 
 __all__ = [
     "Exchange",
@@ -124,5 +139,6 @@ __all__ = [
     "MarketStatus",
     "BuildUp",
     "WallType",
+    "ConcentrationLevel",
 ]
 
