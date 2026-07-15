@@ -130,6 +130,25 @@ class ConcentrationLevel(str, Enum):
 
     def __str__(self) -> str:
         return self.value
+    
+@unique
+class ShiftDirection(str, Enum):
+    """
+    Open Interest migration direction.
+    """
+
+    STRONG_UP = "STRONG_UP"
+
+    UP = "UP"
+
+    NEUTRAL = "NEUTRAL"
+
+    DOWN = "DOWN"
+
+    STRONG_DOWN = "STRONG_DOWN"
+
+    def __str__(self) -> str:
+        return self.value
 
 __all__ = [
     "Exchange",
@@ -140,5 +159,6 @@ __all__ = [
     "BuildUp",
     "WallType",
     "ConcentrationLevel",
+    "ShiftDirection"
 ]
 
