@@ -19,7 +19,8 @@ from __future__ import annotations
 from collections.abc import Iterator
 
 from optionforge.evidence.evidence import Evidence
-from optionforge.evidence.evidence_type import EvidenceType
+from optionforge.evidence.evidence_direction import EvidenceDirection
+from optionforge.evidence.evidence_source import EvidenceSource
 
 
 class EvidenceRegistry:
@@ -68,10 +69,13 @@ class EvidenceRegistry:
 
         return self._evidence[evidence_id]
 
-    def contains(
+    def exists(
         self,
         evidence_id: str,
     ) -> bool:
+        """
+        Returns True if the evidence exists.
+        """
 
         return evidence_id in self._evidence
 
@@ -79,21 +83,39 @@ class EvidenceRegistry:
     # Filtering
     # -----------------------------------------------------
 
-    def by_type(
+# -----------------------------------------------------
+# Filtering
+# -----------------------------------------------------
+
+    def by_source(
         self,
-        evidence_type: EvidenceType,
+        source: EvidenceSource,
     ) -> tuple[Evidence, ...]:
         """
-        Return all evidence of a given type.
+        Return all evidence from a given source.
         """
 
         return tuple(
             evidence
             for evidence in self._evidence.values()
-            if evidence.type == evidence_type
+            if evidence.source == source
         )
 
-    # -----------------------------------------------------
+
+    def by_direction(
+        self,
+        direction: EvidenceDirection,
+    ) -> tuple[Evidence, ...]:
+        """
+        Return all evidence with a given direction.
+        """
+
+        return tuple(
+            evidence
+            for evidence in self._evidence.values()
+            if evidence.direction == direction
+        )
+        # -----------------------------------------------------
     # Statistics
     # -----------------------------------------------------
 

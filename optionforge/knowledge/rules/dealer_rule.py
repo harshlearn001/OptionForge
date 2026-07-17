@@ -26,7 +26,8 @@ It performs NO analytics.
 
 from __future__ import annotations
 
-from optionforge.evidence.evidence_type import EvidenceType
+from optionforge.evidence.evidence_direction import EvidenceDirection
+from optionforge.evidence.evidence_source import EvidenceSource
 from optionforge.evidence.evidence_registry import EvidenceRegistry
 
 from optionforge.knowledge.knowledge import Knowledge
@@ -49,7 +50,9 @@ class DealerRule(KnowledgeRule):
         builder: KnowledgeBuilder,
     ) -> Knowledge | None:
 
-        dealer = evidence.by_type(EvidenceType.DEALER)
+        dealer = evidence.by_source(
+    EvidenceSource.DEALER_GAMMA,
+)
 
         if not dealer:
 
@@ -57,13 +60,16 @@ class DealerRule(KnowledgeRule):
 
         dealer = dealer[0]
 
-        name = dealer.name.lower()
+        title = dealer.title.lower()
 
         # ==================================================
         # Dealer Long Gamma
         # ==================================================
 
-        if "long gamma" in name:
+        if (
+    dealer.direction == EvidenceDirection.BULLISH
+    and "long gamma" in title
+):
 
             return builder.build(
                 id="volatility_suppression",
@@ -84,7 +90,10 @@ class DealerRule(KnowledgeRule):
         # Dealer Short Gamma
         # ==================================================
 
-        if "short gamma" in name:
+        if (
+    dealer.direction == EvidenceDirection.BEARISH
+    and "short gamma" in title
+):
 
             return builder.build(
                 id="volatility_expansion",

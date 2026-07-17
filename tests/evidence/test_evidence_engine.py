@@ -3,45 +3,112 @@
 OptionForge
 Evidence Engine Tests
 ============================================================
+
+Tests the orchestration performed by EvidenceEngine.
+
+============================================================
 """
 
-from types import SimpleNamespace
+from optionforge.evidence.evidence import Evidence
+from optionforge.evidence.evidence_collection import (
+    EvidenceCollection,
+)
+from optionforge.evidence.evidence_direction import (
+    EvidenceDirection,
+)
+from optionforge.evidence.evidence_engine import (
+    EvidenceEngine,
+)
+from optionforge.evidence.evidence_level import (
+    EvidenceLevel,
+)
+from optionforge.evidence.evidence_provider_registry import (
+    EvidenceProviderRegistry,
+)
+from optionforge.evidence.evidence_source import (
+    EvidenceSource,
+)
 
-from optionforge.evidence.evidence_engine import EvidenceEngine
-from optionforge.evidence.evidence_level import EvidenceLevel
-from optionforge.evidence.evidence_type import EvidenceType
-from optionforge.features.feature import Feature
-from optionforge.features.feature_group import FeatureGroup
-from optionforge.features.feature_id import FeatureId
-from optionforge.features.registry import FeatureRegistry
 
 # ==========================================================
-# Helpers
+# Dummy Analytics Result
 # ==========================================================
 
 
-def dealer_feature():
-
-    return Feature(
-        id=FeatureId.DEALER_POSITION,
-        group=FeatureGroup.DEALER,
-        value=-170.0,
-        metadata={
-            "dealer_bias": "LONG GAMMA",
-            "confidence": 95.0,
-            "institutional_score": 90.0,
-        },
-    )
+class DummyResult:
+    pass
 
 
-def volatility_feature():
+# ==========================================================
+# Dummy Execution
+# ==========================================================
 
-    return Feature(
-        id=FeatureId.IV_RANK,
-        group=FeatureGroup.VOLATILITY,
-        value=82.0,
-        confidence=88.0,
-    )
+
+class DummyExecution:
+
+    def __init__(
+        self,
+        succeeded: bool = True,
+    ) -> None:
+
+        self.succeeded = succeeded
+
+        self.result = DummyResult()
+
+
+# ==========================================================
+# Dummy Result Collection
+# ==========================================================
+
+
+class DummyResultCollection:
+
+    def __init__(self):
+
+        self._items = [
+            DummyExecution(),
+        ]
+
+    def __iter__(self):
+
+        return iter(self._items)
+
+
+# ==========================================================
+# Dummy Provider
+# ==========================================================
+
+
+class DummyProvider:
+
+    def build(
+        self,
+        result,
+    ) -> EvidenceCollection:
+
+        evidence = Evidence(
+
+            id="TEST001",
+
+            title="Dummy Evidence",
+
+            source=EvidenceSource.GREEKS,
+
+            direction=EvidenceDirection.BULLISH,
+
+            level=EvidenceLevel.STRONG,
+
+            score=1.0,
+
+            confidence=1.0,
+
+            description="Dummy provider.",
+
+        )
+
+        return EvidenceCollection().add(
+            evidence,
+        )
 
 
 # ==========================================================
@@ -51,84 +118,120 @@ def volatility_feature():
 
 def test_build_returns_registry():
 
-    registry = FeatureRegistry()
+    providers = EvidenceProviderRegistry()
 
-    registry.add(dealer_feature())
+    providers.register(
+        DummyResult,
+        DummyProvider(),
+    )
 
-    evidence = EvidenceEngine().build(registry)
+    engine = EvidenceEngine(
+        providers,
+    )
 
-    assert len(evidence) == 1
+    registry = engine.build(
+        DummyResultCollection(),
+    )
 
-
-def test_dealer_evidence():
-
-    registry = FeatureRegistry()
-
-    registry.add(dealer_feature())
-
-    evidence = EvidenceEngine().build(registry)
-
-    item = evidence.get("dealer_long_gamma")
-
-    assert item.type == EvidenceType.DEALER
-
-    assert item.level == EvidenceLevel.VERY_STRONG
-
-    assert item.source == FeatureId.DEALER_POSITION
+    assert len(registry) == 1
 
 
-def test_volatility_evidence():
+def test_registry_contains_evidence():
 
-    registry = FeatureRegistry()
+    providers = EvidenceProviderRegistry()
 
-    registry.add(volatility_feature())
+    providers.register(
+        DummyResult,
+        DummyProvider(),
+    )
 
-    evidence = EvidenceEngine().build(registry)
+    engine = EvidenceEngine(
+        providers,
+    )
 
-    item = evidence.get("iv_rank")
+    registry = engine.build(
+        DummyResultCollection(),
+    )
 
-    assert item.type == EvidenceType.VOLATILITY
+    assert registry.exists(
+        "TEST001",
+    )
 
-    assert item.source == FeatureId.IV_RANK
+
+def test_evidence_fields():
+
+    providers = EvidenceProviderRegistry()
+
+    providers.register(
+        DummyResult,
+        DummyProvider(),
+    )
+
+    engine = EvidenceEngine(
+        providers,
+    )
+
+    registry = engine.build(
+        DummyResultCollection(),
+    )
+
+    evidence = registry.get(
+        "TEST001",
+    )
+
+    assert evidence.title == "Dummy Evidence"
+
+    assert evidence.source is EvidenceSource.GREEKS
+
+    assert evidence.direction is EvidenceDirection.BULLISH
+
+    assert evidence.level is EvidenceLevel.STRONG
+
+    assert evidence.score == 1.0
+
+    assert evidence.confidence == 1.0
 
 
-def test_empty_registry():
+def test_empty_results():
 
-    evidence = EvidenceEngine().build(FeatureRegistry())
+    class EmptyResults:
 
-    assert len(evidence) == 0
+        def __iter__(self):
+
+            return iter(())
+
+    providers = EvidenceProviderRegistry()
+
+    engine = EvidenceEngine(
+        providers,
+    )
+
+    registry = engine.build(
+        EmptyResults(),
+    )
+
+    assert len(registry) == 0
 
 
 def test_engine_is_deterministic():
 
-    registry = FeatureRegistry()
+    providers = EvidenceProviderRegistry()
 
-    registry.add(dealer_feature())
+    providers.register(
+        DummyResult,
+        DummyProvider(),
+    )
 
-    first = EvidenceEngine().build(registry)
+    engine = EvidenceEngine(
+        providers,
+    )
 
-    second = EvidenceEngine().build(registry)
+    first = engine.build(
+        DummyResultCollection(),
+    )
+
+    second = engine.build(
+        DummyResultCollection(),
+    )
 
     assert tuple(first) == tuple(second)
-
-
-def test_registry_score():
-
-    registry = FeatureRegistry()
-
-    registry.add(dealer_feature())
-
-    evidence = EvidenceEngine().build(registry)
-
-    assert evidence.score == 90.0
-
-
-def test_registry_confidence():
-
-    registry = FeatureRegistry()
-
-    registry.add(dealer_feature())
-
-    evidence = EvidenceEngine().build(registry)
-
-    assert evidence.confidence == 95.0

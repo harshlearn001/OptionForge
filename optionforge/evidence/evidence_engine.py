@@ -6,159 +6,73 @@ Evidence Engine
 
 Author      : OptionForge
 Module      : evidence_engine.py
-Purpose     : Converts quantitative Features into
-              institutional Evidence.
+Purpose     : Convert analytical results into evidence.
 
-This engine is the bridge between FeatureRegistry
-and MarketDNA.
 ============================================================
 """
 
 from __future__ import annotations
 
-from optionforge.evidence.evidence import Evidence
-from optionforge.evidence.evidence_level import EvidenceLevel
-from optionforge.evidence.evidence_registry import EvidenceRegistry
-from optionforge.evidence.evidence_type import EvidenceType
+from optionforge.evidence.evidence_registry import (
+    EvidenceRegistry,
+)
 
-from optionforge.features.feature_group import FeatureGroup
-from optionforge.features.feature_id import FeatureId
-from optionforge.features.registry import FeatureRegistry
+from optionforge.evidence.evidence_provider_registry import (
+    EvidenceProviderRegistry,
+)
 
 
 class EvidenceEngine:
     """
-    Builds institutional evidence from Features.
+    Converts analytical results into institutional evidence.
     """
+
+    def __init__(
+        self,
+        registry: EvidenceProviderRegistry,
+    ) -> None:
+
+        self._providers = registry
+
+    @property
+    def providers(self) -> EvidenceProviderRegistry:
+
+        return self._providers
 
     def build(
         self,
-        registry: FeatureRegistry,
+        results,
     ) -> EvidenceRegistry:
+        """
+        Build EvidenceRegistry from ResultCollection.
+        """
 
-        evidence = EvidenceRegistry()
+        registry = EvidenceRegistry()
 
-        for feature in registry:
+        for execution in results:
 
-            generated = self._build_feature_evidence(feature)
+            if not execution.succeeded:
 
-            if generated is not None:
+                continue
 
-                evidence.add(generated)
-
-        return evidence
-
-    # -----------------------------------------------------
-    # Feature Routing
-    # -----------------------------------------------------
-
-    def _build_feature_evidence(
-        self,
-        feature,
-    ) -> Evidence | None:
-
-        if feature.id == FeatureId.DEALER_POSITION:
-
-            return self._dealer_evidence(feature)
-
-        if feature.group == FeatureGroup.VOLATILITY:
-
-            return self._volatility_evidence(feature)
-
-        return None
-
-    # -----------------------------------------------------
-    # Dealer Evidence
-    # -----------------------------------------------------
-
-    def _dealer_evidence(
-        self,
-        feature,
-    ) -> Evidence:
-
-        bias = feature.metadata["dealer_bias"]
-
-        confidence = feature.metadata["confidence"]
-
-        score = feature.metadata["institutional_score"]
-
-        if bias == "LONG GAMMA":
-
-            return Evidence(
-                id="dealer_long_gamma",
-                name="Dealer Long Gamma",
-                type=EvidenceType.DEALER,
-                level=self._level(score),
-                score=score,
-                confidence=confidence,
-                description=(
-                    "Dealers are positioned long gamma. "
-                    "Hedging activity is expected to dampen volatility."
-                ),
-                source=FeatureId.DEALER_POSITION,
-                metadata=feature.metadata,
+            provider = self.providers.resolve(
+                execution.result,
             )
-        return Evidence(
-            id="dealer_short_gamma",
-            name="Dealer Short Gamma",
-            type=EvidenceType.DEALER,
-            level=self._level(score),
-            score=score,
-            confidence=confidence,
-            description=(
-                "Dealers are positioned short gamma. "
-                "Hedging activity may amplify price movement."
-            ),
-            source=FeatureId.DEALER_POSITION,
-            metadata=feature.metadata,
-        )
 
-    # -----------------------------------------------------
-    # Volatility Evidence
-    # -----------------------------------------------------
+            collection = provider.build(
+                execution.result,
+            )
 
-    def _volatility_evidence(
-        self,
-        feature,
-    ) -> Evidence:
+            for evidence in collection:
 
-        return Evidence(
-            id=feature.id.name.lower(),
-            name=feature.name,
-            type=EvidenceType.VOLATILITY,
-            level=self._level(feature.confidence),
-            score=feature.value,
-            confidence=feature.confidence,
-            description=(
-                f"{feature.name} indicates elevated implied volatility conditions."
-            ),
-            source=feature.id,
-            metadata=feature.metadata,
-        )
+                registry.add(
+                    evidence,
+                )
 
-    # -----------------------------------------------------
-    # Strength
-    # -----------------------------------------------------
+        return registry
 
-    @staticmethod
-    def _level(
-        score: float,
-    ) -> EvidenceLevel:
+    def __repr__(self):
 
-        if score >= 80:
+        return "EvidenceEngine()"
 
-            return EvidenceLevel.VERY_STRONG
-
-        if score >= 60:
-
-            return EvidenceLevel.STRONG
-
-        if score >= 40:
-
-            return EvidenceLevel.MODERATE
-
-        if score >= 20:
-
-            return EvidenceLevel.WEAK
-
-        return EvidenceLevel.VERY_WEAK
+    __str__ = __repr__

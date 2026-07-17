@@ -27,7 +27,7 @@ It performs NO analytics.
 from __future__ import annotations
 
 from optionforge.evidence.evidence_registry import EvidenceRegistry
-from optionforge.evidence.evidence_type import EvidenceType
+from optionforge.evidence.evidence_source import EvidenceSource
 
 from optionforge.knowledge.knowledge import Knowledge
 from optionforge.knowledge.knowledge_builder import KnowledgeBuilder
@@ -48,10 +48,11 @@ class VolatilityRule(KnowledgeRule):
         builder: KnowledgeBuilder,
     ) -> Knowledge | None:
 
-        volatility = evidence.by_type(EvidenceType.VOLATILITY)
+        volatility = evidence.by_source(
+            EvidenceSource.IV_RANK,
+        )
 
         if not volatility:
-
             return None
 
         volatility = volatility[0]
@@ -112,7 +113,8 @@ class VolatilityRule(KnowledgeRule):
                 score=score,
                 confidence=volatility.confidence,
                 description=(
-                    "Implied volatility is compressed. " "Expansion risk is increasing."
+                    "Implied volatility is compressed. "
+                    "Expansion risk is increasing."
                 ),
                 evidence_ids=(volatility.id,),
             )
@@ -128,6 +130,8 @@ class VolatilityRule(KnowledgeRule):
             level=KnowledgeLevel.MODERATE,
             score=score,
             confidence=volatility.confidence,
-            description=("Volatility is within its historical range."),
+            description=(
+                "Volatility is within its historical range."
+            ),
             evidence_ids=(volatility.id,),
         )

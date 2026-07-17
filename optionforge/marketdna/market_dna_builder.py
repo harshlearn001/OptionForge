@@ -14,20 +14,19 @@ MarketDNA object.
 
 This is the ONLY component responsible for producing
 MarketDNA.
-
 ============================================================
 """
 
 from __future__ import annotations
 
 from optionforge.evidence.evidence_registry import EvidenceRegistry
-from optionforge.evidence.evidence_type import EvidenceType
+from optionforge.evidence.evidence_source import EvidenceSource
 
+from optionforge.marketdna.liquidity_regime import LiquidityRegime
 from optionforge.marketdna.market_dna import MarketDNA
 from optionforge.marketdna.market_regime import MarketRegime
 from optionforge.marketdna.trend_regime import TrendRegime
 from optionforge.marketdna.volatility_regime import VolatilityRegime
-from optionforge.marketdna.liquidity_regime import LiquidityRegime
 
 
 class MarketDNABuilder:
@@ -67,13 +66,14 @@ class MarketDNABuilder:
         registry: EvidenceRegistry,
     ) -> str:
 
-        dealer = registry.by_type(EvidenceType.DEALER)
+        dealer = registry.by_source(
+            EvidenceSource.DEALER_GAMMA,
+        )
 
         if not dealer:
-
             return "UNKNOWN"
 
-        return dealer[0].name
+        return dealer[0].title
 
     # --------------------------------------------------
 
@@ -85,19 +85,15 @@ class MarketDNABuilder:
         score = registry.score
 
         if score >= 80:
-
             return MarketRegime.STRONGLY_BULLISH
 
         if score >= 60:
-
             return MarketRegime.BULLISH
 
         if score <= -80:
-
             return MarketRegime.STRONGLY_BEARISH
 
         if score <= -60:
-
             return MarketRegime.BEARISH
 
         return MarketRegime.NEUTRAL
@@ -112,27 +108,21 @@ class MarketDNABuilder:
         score = registry.score
 
         if score >= 80:
-
             return TrendRegime.STRONG_UPTREND
 
         if score >= 60:
-
             return TrendRegime.UPTREND
 
         if score >= 30:
-
             return TrendRegime.WEAK_UPTREND
 
         if score <= -80:
-
             return TrendRegime.STRONG_DOWNTREND
 
         if score <= -60:
-
             return TrendRegime.DOWNTREND
 
         if score <= -30:
-
             return TrendRegime.WEAK_DOWNTREND
 
         return TrendRegime.SIDEWAYS
@@ -144,36 +134,31 @@ class MarketDNABuilder:
         registry: EvidenceRegistry,
     ) -> VolatilityRegime:
 
-        volatility = registry.by_type(EvidenceType.VOLATILITY)
+        volatility = registry.by_source(
+            EvidenceSource.IV_RANK,
+        )
 
         if not volatility:
-
             return VolatilityRegime.NORMAL
 
         score = volatility[0].score
 
         if score >= 90:
-
             return VolatilityRegime.EXTREME
 
         if score >= 75:
-
             return VolatilityRegime.EXPANDING
 
         if score >= 60:
-
             return VolatilityRegime.HIGH
 
         if score <= 10:
-
             return VolatilityRegime.EXTREMELY_COMPRESSED
 
         if score <= 25:
-
             return VolatilityRegime.COMPRESSED
 
         if score <= 40:
-
             return VolatilityRegime.LOW
 
         return VolatilityRegime.NORMAL
@@ -187,28 +172,22 @@ class MarketDNABuilder:
 
         confidence = registry.confidence
 
-        if confidence >= 95:
-
+        if confidence >= 0.95:
             return LiquidityRegime.EXTREMELY_HIGH
 
-        if confidence >= 85:
-
+        if confidence >= 0.85:
             return LiquidityRegime.HIGH
 
-        if confidence >= 70:
-
+        if confidence >= 0.70:
             return LiquidityRegime.ABOVE_AVERAGE
 
-        if confidence >= 50:
-
+        if confidence >= 0.50:
             return LiquidityRegime.NORMAL
 
-        if confidence >= 35:
-
+        if confidence >= 0.35:
             return LiquidityRegime.BELOW_AVERAGE
 
-        if confidence >= 20:
-
+        if confidence >= 0.20:
             return LiquidityRegime.LOW
 
         return LiquidityRegime.EXTREMELY_LOW
