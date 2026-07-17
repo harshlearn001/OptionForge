@@ -17,11 +17,7 @@ from quantitative evidence scores.
 
 from __future__ import annotations
 
-from enum import Enum, auto
-
-
 from enum import IntEnum
-
 
 class EvidenceLevel(IntEnum):
 

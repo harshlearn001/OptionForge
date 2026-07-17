@@ -26,7 +26,6 @@ from optionforge.portfolio.portfolio import (
 from optionforge.risk.rules.risk_rule import (
     RiskRule,
 )
-from tests.portfolio.test_portfolio import portfolio
 
 
 class CapitalRule(RiskRule):
@@ -69,7 +68,7 @@ class CapitalRule(RiskRule):
                 (),
                 ("Capital allocation within limits",),
             )
-        warnings = (
+        warning = (
             f"Capital utilization "
             f"{utilization:.1f}% "
             f"exceeds "
@@ -84,7 +83,6 @@ class CapitalRule(RiskRule):
             (warning,),
             ("Capital allocation exceeds policy.",),
         )
-
     # =====================================================
     # Convenience
     # =====================================================

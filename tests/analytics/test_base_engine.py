@@ -1,4 +1,3 @@
-from dataclasses import FrozenInstanceError
 
 import pandas as pd
 

@@ -5,9 +5,6 @@ Intelligence Engine Integration Tests
 ============================================================
 """
 
-from optionforge.intelligence.intelligence_builder import (
-    IntelligenceBuilder,
-)
 from optionforge.intelligence.intelligence_engine import (
     IntelligenceEngine,
 )
