@@ -1,11 +1,11 @@
 """
 ============================================================
 OptionForge
-Snapshot Builder
+Institutional Snapshot Builder
 ============================================================
 
 Author      : OptionForge
-Module      : snapshot_builder.py
+Module      : institutional_snapshot_builder.py
 
 Purpose
 -------
@@ -36,7 +36,7 @@ from optionforge.snapshot.institutional_snapshot import (
 )
 
 
-class SnapshotBuilder:
+class InstitutionalSnapshotBuilder:
     """
     Builder for InstitutionalSnapshot.
     """
@@ -49,6 +49,8 @@ class SnapshotBuilder:
 
         self._option_provider = option_provider
         self._spot_provider = spot_provider
+
+    # =====================================================
 
     @property
     def option_provider(self) -> OptionProvider:
@@ -67,7 +69,7 @@ class SnapshotBuilder:
         expiry,
     ) -> InstitutionalSnapshot:
         """
-        Build an immutable market snapshot.
+        Build an immutable InstitutionalSnapshot.
         """
 
         option_chain = self.option_provider.option_chain(
@@ -123,3 +125,12 @@ class SnapshotBuilder:
         )
 
     __str__ = __repr__
+
+
+# ==========================================================
+# Backward Compatibility
+# ==========================================================
+
+# Existing code importing SnapshotBuilder will continue
+# to work during the migration.
+SnapshotBuilder = InstitutionalSnapshotBuilder

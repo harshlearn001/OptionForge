@@ -2,10 +2,9 @@ from unittest.mock import Mock
 
 import pandas as pd
 
-from optionforge.snapshot.snapshot_builder import (
-    SnapshotBuilder,
+from optionforge.snapshot.institutional_snapshot_builder import (
+    InstitutionalSnapshotBuilder,
 )
-
 
 def option_df():
 
@@ -27,14 +26,12 @@ def spot_df():
 def builder():
 
     option_provider = Mock()
-
     spot_provider = Mock()
 
     option_provider.option_chain.return_value = option_df()
-
     spot_provider.latest.return_value = spot_df()
 
-    return SnapshotBuilder(
+    return InstitutionalSnapshotBuilder(
         option_provider,
         spot_provider,
     )

@@ -28,7 +28,9 @@ from __future__ import annotations
 
 from typing import Any
 
-from optionforge.market_snapshot.snapshot_builder import SnapshotBuilder
+from optionforge.institutional.institutional_snapshot_builder import (
+    InstitutionalSnapshotBuilder,
+)
 from optionforge.institutional.institutional_snapshot_builder import (
     InstitutionalSnapshotBuilder,
 )
@@ -60,19 +62,25 @@ class OptionForgePipeline:
     # Stage 1
     # ==========================================================
 
-    def build_snapshot(
-        self,
-        symbol: str,
-    ):
+    def build_snapshot(self, symbol: str):
 
         market_snapshot = self._snapshot_builder.build(symbol)
+
+        import inspect
+
+        print("=" * 80)
+        print("Builder object :", self._institutional_snapshot_builder)
+        print("Builder class  :", type(self._institutional_snapshot_builder))
+        print("Builder module :", self._institutional_snapshot_builder.__class__.__module__)
+        print("Builder file   :", inspect.getfile(self._institutional_snapshot_builder.__class__))
+        print("Build signature:", inspect.signature(self._institutional_snapshot_builder.build))
+        print("=" * 80)
 
         institutional_snapshot = self._institutional_snapshot_builder.build(
             market_snapshot=market_snapshot,
         )
 
         self._context.market_snapshot = market_snapshot
-
         self._context.institutional_snapshot = institutional_snapshot
 
         return institutional_snapshot

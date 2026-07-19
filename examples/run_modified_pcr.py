@@ -40,7 +40,7 @@ from optionforge.repository.repository_context import (
     RepositoryContext,
 )
 
-from optionforge.snapshot.snapshot_builder import (
+from optionforge.snapshot.institutional_snapshot_builder import (
     SnapshotBuilder,
 )
 

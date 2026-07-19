@@ -7,7 +7,7 @@ Snapshot Builder Latest Tests
 
 import pandas as pd
 
-from optionforge.snapshot.snapshot_builder import (
+from optionforge.snapshot.institutional_snapshot_builder import (
     SnapshotBuilder,
 )
 

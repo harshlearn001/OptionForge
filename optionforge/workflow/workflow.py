@@ -32,8 +32,8 @@ from optionforge.repository import (
 
 from optionforge.utils.loader import Loader
 
-from optionforge.market_snapshot.snapshot_builder import (
-    SnapshotBuilder,
+from optionforge.market_snapshot.market_snapshot_builder import (
+    MarketSnapshotBuilder,
 )
 
 from optionforge.institutional import (
@@ -96,10 +96,9 @@ class WorkflowEngine:
         # Snapshot Builder
         # -------------------------------------------------
 
-        snapshot_builder = SnapshotBuilder(
+        snapshot_builder = MarketSnapshotBuilder(
             loader,
         )
-
         # -------------------------------------------------
         # Institutional Snapshot Builder
         # -------------------------------------------------

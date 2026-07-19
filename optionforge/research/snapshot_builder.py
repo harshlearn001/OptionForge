@@ -33,7 +33,7 @@ from optionforge.research.institutional_snapshot import InstitutionalSnapshot
 from optionforge.research.signal import Signal
 
 
-class SnapshotBuilder:
+class MarketSnapshotBuilder:
     """
     Builder for immutable InstitutionalSnapshot objects.
 
